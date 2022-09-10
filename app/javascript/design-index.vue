@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="text-red-500 text-center">テスト</h1>
     <div v-for="design in designs" :key="design.id">
       <h2>{{ design.title }}</h2>
       {{ design.created_at }}&ensp;登録<br />
