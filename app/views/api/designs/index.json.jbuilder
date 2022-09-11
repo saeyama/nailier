@@ -5,5 +5,6 @@ json.set! :designs do
     updated_at = design.updated_at.strftime('%Y %m %d %H:%M')
     json.created_at create_at
     json.updated_at updated_at
+    json.images rails_blob_url(design.images[0]) if design.images.attached?
   end
 end
