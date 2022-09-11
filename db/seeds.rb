@@ -9,9 +9,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 10.times do |i|
-  Design.create!(
-    title: "title#{i + 1}",
-    nail_part: 'hand',
-    description: "description#{i + 1}"
-  )
+  design =
+    Design.create!(
+      title: "title#{i + 1}",
+      nail_part: 'hand',
+      description: "description#{i + 1}"
+    )
+  2.times do
+    design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail.jpeg')), filename: 'nail.jpeg')
+  end
 end
