@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <h2>{{ design.title }}</h2>
+  <div class="container text-gray-600 py-10 mx-auto">
+    <h1 class="text-xl font-bold text-center py-10">{{ design.title }}</h1>
     {{ design.nail_part }}<br />
+    <div v-for="(image, index) in design.images" :key="index">
+      <img :src="image" />
+    </div>
     調べた内容・メモ<br />
     {{ design.description }}<br />
   </div>
