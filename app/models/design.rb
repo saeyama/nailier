@@ -4,4 +4,15 @@ class Design < ApplicationRecord
   validates :title, presence: true
   validates :nail_part, presence: true
   has_many_attached :images
+
+  def attach_blob(image_data_urls)
+    image_data_urls.map do |image_data_url|
+      image_blob = ImageBlob.new(image_data_url)
+      images.attach(
+        io: image_blob.to_io,
+        filename: Time.zone.now,
+        content_type: image_blob.mime_type
+      )
+    end
+  end
 end
