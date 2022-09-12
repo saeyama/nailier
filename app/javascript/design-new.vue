@@ -27,6 +27,19 @@
           v-model="design.nail_part" />
       </div>
       <div class="p-2 w-full text-lg">
+        <lable>画像&#40;複数登録可&#41;</lable><br />
+        <input
+          type="file"
+          name="image"
+          multiple="multiple"
+          @change="uploadFile" /><br />
+        <div class="grid grid-cols-4 mb-4">
+          <div class="full" v-for="(url, index) in design.urls" :key="index">
+            <img :src="url" />
+          </div>
+        </div>
+      </div>
+      <div class="p-2 w-full text-lg">
         <lable>調べた内容・メモ</lable>
         <textarea
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -52,22 +65,40 @@ export default {
       design: {
         title: '',
         description: '',
-        nail_part: ''
+        nail_part: '',
+        images: [],
+        urls: []
       }
     }
   },
   methods: {
+    uploadFile(e) {
+      const image = e.target.files[0]
+      const reader = new FileReader()
+      this.design.urls.push(URL.createObjectURL(image))
+      reader.readAsDataURL(image)
+      reader.onload = () => {
+        this.design.images.push(reader.result)
+      }
+    },
     createDesign() {
       const params = {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
-        'design[nail_part]': this.design.nail_part
+        'design[nail_part]': this.design.nail_part,
+        'design[images]': this.design.images
       }
 
       const formData = new FormData()
 
       Object.entries(params).forEach(([key, value]) => {
-        formData.append(key, value)
+        if (Array.isArray(value)) {
+          value.forEach((v) => {
+            formData.append(key + '[]', v)
+          })
+        } else {
+          formData.append(key, value)
+        }
       })
 
       axios
