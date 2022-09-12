@@ -4,7 +4,7 @@ class Api::DesignsController < ApplicationController
   before_action :set_design, only: %i[show]
   skip_before_action :verify_authenticity_token
   def index
-    @designs = Design.all
+    @designs = Design.with_attached_images
   end
 
   def show; end
@@ -15,6 +15,7 @@ class Api::DesignsController < ApplicationController
 
   def create
     @design = Design.new(design_params)
+    @design.attach_blob(image_data_urls)
     if @design.save
       render json: @design, status: :created
     else
@@ -26,6 +27,10 @@ class Api::DesignsController < ApplicationController
 
   def design_params
     params.require(:design).permit(:title, :nail_part, :description)
+  end
+
+  def image_data_urls
+    params.require(:design).permit(images: [])[:images]
   end
 
   def set_design
