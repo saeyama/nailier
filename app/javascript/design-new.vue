@@ -40,6 +40,10 @@
         </div>
       </div>
       <div class="p-2 w-full text-lg">
+        <h3>カラーイメージを登録する</h3>
+        <chrome-picker class="mx-auto" :value="hex_number"></chrome-picker>
+      </div>
+      <div class="p-2 w-full text-lg">
         <lable>調べた内容・メモ</lable>
         <textarea
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -59,7 +63,11 @@
 
 <script>
 import axios from 'axios'
+import { Chrome } from 'vue-color'
 export default {
+  components: {
+    'chrome-picker': Chrome
+  },
   data() {
     return {
       design: {
@@ -68,7 +76,8 @@ export default {
         nail_part: '',
         images: [],
         urls: []
-      }
+      },
+      hex_number: '#194d33'
     }
   },
   methods: {
