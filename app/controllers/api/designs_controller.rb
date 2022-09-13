@@ -26,7 +26,10 @@ class Api::DesignsController < ApplicationController
   private
 
   def design_params
-    params.require(:design).permit(:title, :nail_part, :description)
+    params.require(:design).permit(
+      :title, :nail_part, :description,
+      colors_attributes: %i[lame hex_number]
+    )
   end
 
   def image_data_urls
