@@ -39,10 +39,19 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full text-lg">
-        <h3>カラーイメージを登録する</h3>
-        <chrome-picker class="mx-auto" :value="hex_number"></chrome-picker>
+      <h3 class="p-2 text-lg">カラーイメージを登録する</h3>
+      <div class="p-2 w-full text-lg border border-gray-300 rounded">
+        <div class="my-4 pl-4">
+          <lable>ラメ</lable>&emsp;
+          なし&nbsp;<input type="radio" v-model="lame" :value="false" />&emsp;
+          あり&nbsp;<input type="radio" v-model="lame" :value="true" />
+        </div>
+        <chrome-picker class="mx-auto" :value="hex_number" v-model="hex_number"></chrome-picker>
+        <button class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30" @click="colorData">決定</button>      
       </div>
+      <div v-for="(color, index) in design.colors" :key="index">
+        {{ color.hex_number }}
+      </div>      
       <div class="p-2 w-full text-lg">
         <lable>調べた内容・メモ</lable>
         <textarea
@@ -53,7 +62,7 @@
         </textarea>
       </div>
       <button
-        class="flex font-bold mx-auto text-white bg-gray-500 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30"
+        class="flex font-bold mx-auto text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30"
         @click="createDesign">
         ネイルデザインを登録
       </button>
@@ -75,8 +84,10 @@ export default {
         description: '',
         nail_part: '',
         images: [],
-        urls: []
+        urls: [],
+        colors: []
       },
+      lame: '',
       hex_number: '#194d33'
     }
   },
@@ -90,16 +101,25 @@ export default {
         this.design.images.push(reader.result)
       }
     },
+    colorData() {
+      if (this.lame !== '' && this.hex_number !== '') {
+        this.design.colors.push({
+          lame: this.lame,
+          hex_number: this.hex_number.hex8
+        })
+        this.lame = ''
+        this.hex_number = '#194d33'
+      }
+    },
     createDesign() {
+      const formData = new FormData()
+        
       const params = {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
         'design[nail_part]': this.design.nail_part,
         'design[images]': this.design.images
       }
-
-      const formData = new FormData()
-
       Object.entries(params).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           value.forEach((v) => {
@@ -109,6 +129,12 @@ export default {
           formData.append(key, value)
         }
       })
+
+      const colorParams = this.design.colors
+      colorParams.forEach((color) => {
+        formData.append('design[colors_attributes][][lame]', color.lame)
+        formData.append('design[colors_attributes][][hex_number]', color.hex_number)
+      })      
 
       axios
         .post('/api/designs', formData, {
