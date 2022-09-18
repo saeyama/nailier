@@ -99,7 +99,7 @@
             v-for="(color, index) in design.colors"
             :key="index"
             :style="colorShowHexNumber(color.hex_number)"
-            class="w-8 h-8 rounded-full">
+            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
             <div v-if="color.lame == true" class="relative">
               <img
                 src="~lame.png"
