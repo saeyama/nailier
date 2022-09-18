@@ -46,6 +46,8 @@
           <input type="radio" v-model="lame" :value="false" />&emsp; あり&nbsp;
           <input type="radio" v-model="lame" :value="true" />
         </div>
+        <img src="~color-picker-lame.png" class="pointer-events-none">
+        <img src="~lame.png">
         <chrome-picker
           class="mx-auto"
           :value="hex_number"
@@ -86,6 +88,8 @@
 <script>
 import axios from 'axios'
 import { Chrome } from 'vue-color'
+import 'color-picker-lame.png'
+import 'lame.png'
 export default {
   components: {
     'chrome-picker': Chrome
