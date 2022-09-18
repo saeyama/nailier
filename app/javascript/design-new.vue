@@ -41,31 +41,50 @@
       </div>
       <h3 class="p-2 text-lg">カラーイメージを登録する</h3>
       <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
-        <div class="my-4 pl-4">
+        <div class="my-4 pl-2 md:pl-4">
           <lable>ラメ</lable>&emsp; なし&nbsp;
           <input type="radio" v-model="lame" :value="false" />&emsp; あり&nbsp;
           <input type="radio" v-model="lame" :value="true" />
         </div>
-        <div v-if="colorLameStyle" class="relative h-64">
-          <img
-            src="~color-picker-lame.png"
-            class="color-picker-img absolute z-10 pointer-events-none" />
-          <chrome-picker
-            class="absolute z-0 color-picker-img"
-            :value="hex_number"
-            v-model="hex_number">
-          </chrome-picker>
+        <div class="flex justify-around mb-4 md:mx-4">
+          <button
+            @click="switchToChrome"
+            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            カラーピッカー
+          </button>
+          <button
+            @click="switchToSwatches"
+            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            カラーパレット
+          </button>
         </div>
-        <div v-else class="h-64 mb-3">
-          <chrome-picker
-            class="mx-auto"
-            :value="hex_number"
-            v-model="hex_number">
-          </chrome-picker>
+
+        <div v-show="showChrome">
+          <div v-if="colorLameStyle" class="relative h-64">
+            <img
+              src="~color-picker-lame.png"
+              class="color-picker-img absolute z-10 pointer-events-none" />
+            <chrome-picker
+              class="absolute z-0 color-picker-img"
+              :value="hex_number"
+              v-model="hex_number">
+            </chrome-picker>
+          </div>
+          <div v-else class="h-64 mb-3">
+            <chrome-picker
+              class="mx-auto"
+              :value="hex_number"
+              v-model="hex_number">
+            </chrome-picker>
+          </div>
         </div>
-        <swatches-picker :value="hex_number" v-model="hex_number" class="mx-auto"></swatches-picker>        
+        <swatches-picker
+          :value="hex_number"
+          v-model="hex_number"
+          class="mx-auto"
+          v-show="showSwatches"></swatches-picker>
         <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30"
+          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
           @click="colorData">
           決定
         </button>
@@ -111,7 +130,7 @@
         </textarea>
       </div>
       <button
-        class="flex font-bold mx-auto text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30"
+        class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
         @click="createDesign">
         ネイルデザインを登録
       </button>
@@ -128,7 +147,7 @@ import 'lame.png'
 export default {
   components: {
     'chrome-picker': Chrome,
-    'swatches-picker': Swatches    
+    'swatches-picker': Swatches
   },
   data() {
     return {
@@ -141,7 +160,9 @@ export default {
         colors: []
       },
       lame: '',
-      hex_number: '#194d33'
+      hex_number: '#194d33',
+      showChrome: true,
+      showSwatches: false
     }
   },
   computed: {
@@ -165,6 +186,14 @@ export default {
       reader.onload = () => {
         this.design.images.push(reader.result)
       }
+    },
+    switchToChrome() {
+      this.showChrome = true
+      this.showSwatches = false
+    },
+    switchToSwatches() {
+      this.showSwatches = true
+      this.showChrome = false
     },
     colorData() {
       if (this.lame !== '' && this.hex_number !== '') {
