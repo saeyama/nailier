@@ -63,6 +63,7 @@
             v-model="hex_number">
           </chrome-picker>
         </div>
+        <swatches-picker :value="hex_number" v-model="hex_number" class="mx-auto"></swatches-picker>        
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30"
           @click="colorData">
@@ -121,11 +122,13 @@
 <script>
 import axios from 'axios'
 import { Chrome } from 'vue-color'
+import { Swatches } from 'vue-color'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
   components: {
-    'chrome-picker': Chrome
+    'chrome-picker': Chrome,
+    'swatches-picker': Swatches    
   },
   data() {
     return {
