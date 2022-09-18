@@ -56,8 +56,14 @@
           決定
         </button>
       </div>
-      <div v-for="(color, index) in design.colors" :key="index">
-        {{ color.hex_number }}
+      <div class="flex space-x-12">
+        <div
+          v-for="color in design.colors"
+          :key="color.id"
+          :style="colorShowHexNumber(color.hex_number)"
+          class="w-8 h-8 rounded-full">
+          <div class="hidden">{{ color.hex_number }}</div>
+        </div>
       </div>
       <div class="p-2 w-full text-lg">
         <lable>調べた内容・メモ</lable>
@@ -96,6 +102,15 @@ export default {
       },
       lame: '',
       hex_number: '#194d33'
+    }
+  },
+  computed: {
+    colorShowHexNumber() {
+      return function (hexNumber) {
+        return {
+          'background-color': hexNumber
+        }
+      }
     }
   },
   methods: {
