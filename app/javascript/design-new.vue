@@ -39,84 +39,90 @@
           </div>
         </div>
       </div>
-      <h3 class="p-2 text-lg">カラーイメージを登録する</h3>
-      <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
-        <div class="my-4 pl-2 md:pl-4">
-          <lable>ラメ</lable>&emsp; なし&nbsp;
-          <input type="radio" v-model="lame" :value="false" />&emsp; あり&nbsp;
-          <input type="radio" v-model="lame" :value="true" />
-        </div>
-        <div class="flex justify-around mb-4 md:mx-4">
-          <button
-            @click="switchToChrome"
-            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
-            カラーピッカー
-          </button>
-          <button
-            @click="switchToSwatches"
-            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
-            カラーパレット
-          </button>
-        </div>
+      <h3 class="p-2 text-lg">
+        カラーイメージを登録する
+        <input type="checkbox" @change="showColorContent" />
+      </h3>
+      <div v-show="colorContent">
+        <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
+          <div class="my-4 pl-2 md:pl-4">
+            <lable>ラメ</lable>&emsp; なし&nbsp;
+            <input type="radio" v-model="lame" :value="false" />&emsp;
+            あり&nbsp;
+            <input type="radio" v-model="lame" :value="true" />
+          </div>
+          <div class="flex justify-around mb-4 md:mx-4">
+            <button
+              @click="switchToChrome"
+              class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+              カラーピッカー
+            </button>
+            <button
+              @click="switchToSwatches"
+              class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+              カラーパレット
+            </button>
+          </div>
 
-        <div v-show="showChrome">
-          <div v-if="colorLameStyle" class="relative h-64">
-            <img
-              src="~color-picker-lame.png"
-              class="color-picker-img absolute z-10 pointer-events-none" />
-            <chrome-picker
-              class="absolute z-0 color-picker-img"
-              :value="hex_number"
-              v-model="hex_number">
-            </chrome-picker>
+          <div v-show="showChrome">
+            <div v-if="colorLameStyle" class="relative h-64">
+              <img
+                src="~color-picker-lame.png"
+                class="color-picker-img absolute z-10 pointer-events-none" />
+              <chrome-picker
+                class="absolute z-0 color-picker-img"
+                :value="hex_number"
+                v-model="hex_number">
+              </chrome-picker>
+            </div>
+            <div v-else class="h-64 mb-3">
+              <chrome-picker
+                class="mx-auto"
+                :value="hex_number"
+                v-model="hex_number">
+              </chrome-picker>
+            </div>
           </div>
-          <div v-else class="h-64 mb-3">
-            <chrome-picker
-              class="mx-auto"
-              :value="hex_number"
-              v-model="hex_number">
-            </chrome-picker>
-          </div>
+          <swatches-picker
+            :value="hex_number"
+            v-model="hex_number"
+            class="mx-auto"
+            v-show="showSwatches"></swatches-picker>
+          <button
+            class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+            @click="colorData">
+            決定
+          </button>
         </div>
-        <swatches-picker
-          :value="hex_number"
-          v-model="hex_number"
-          class="mx-auto"
-          v-show="showSwatches"></swatches-picker>
-        <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
-          @click="colorData">
-          決定
-        </button>
-      </div>
-      <div class="flex space-x-12">
-        <div
-          v-for="(color, index) in design.colors"
-          :key="index"
-          :style="colorShowHexNumber(color.hex_number)"
-          class="w-8 h-8 rounded-full">
-          <div v-if="color.lame == true" class="relative">
-            <img
-              src="~lame.png"
-              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-            <div class="hidden absolute z-10">{{ color.hex_number }}</div>
-          </div>
-          <div v-else-if="color.lame == false">
-            <div class="hidden">{{ color.hex_number }}</div>
-          </div>
-          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
-            </svg>
+        <div class="flex space-x-12 mb-8">
+          <div
+            v-for="(color, index) in design.colors"
+            :key="index"
+            :style="colorShowHexNumber(color.hex_number)"
+            class="w-8 h-8 rounded-full">
+            <div v-if="color.lame == true" class="relative">
+              <img
+                src="~lame.png"
+                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+              <div class="hidden absolute z-10">{{ color.hex_number }}</div>
+            </div>
+            <div v-else-if="color.lame == false">
+              <div class="hidden">{{ color.hex_number }}</div>
+            </div>
+            <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -162,7 +168,8 @@ export default {
       lame: '',
       hex_number: '#194d33',
       showChrome: true,
-      showSwatches: false
+      showSwatches: false,
+      colorContent: false
     }
   },
   computed: {
@@ -186,6 +193,9 @@ export default {
       reader.onload = () => {
         this.design.images.push(reader.result)
       }
+    },
+    showColorContent() {
+      this.colorContent = !this.colorContent
     },
     switchToChrome() {
       this.showChrome = true
