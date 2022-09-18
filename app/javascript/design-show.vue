@@ -15,6 +15,13 @@
           <img :src="image" />
         </div>
       </div>
+      <h3 class="text-lg font-bold mb-4">カラー</h3>
+      <div class="grid grid-cols-6 mb-12">
+        <div v-for="(color, index) in design.colors" :key="index">
+          {{ color.hex_number }}
+        </div>
+      </div>
+
       <h3 class="text-lg font-bold mb-4">調べた内容・メモ</h3>
       {{ design.description }}
     </div>

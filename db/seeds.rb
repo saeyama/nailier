@@ -13,7 +13,11 @@
     Design.create!(
       title: "title#{i + 1}",
       nail_part: 'hand',
-      description: "description#{i + 1}"
+      description: "description#{i + 1}",
+      colors_attributes: [
+        { lame: true, hex_number: '#000000' },
+        { lame: false, hex_number: '#FFFFFF' }
+      ]
     )
   2.times do
     design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail.jpeg')), filename: 'nail.jpeg')
