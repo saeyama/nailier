@@ -71,18 +71,32 @@
       </div>
       <div class="flex space-x-12">
         <div
-          v-for="color in design.colors"
-          :key="color.id"
+          v-for="(color, index) in design.colors"
+          :key="index"
           :style="colorShowHexNumber(color.hex_number)"
           class="w-8 h-8 rounded-full">
           <div v-if="color.lame == true" class="relative">
             <img
               src="~lame.png"
-              class="w-8 h-8 rounded-full opacity-90 absolute z-10" />
-            <div class="hidden z-0">{{ color.hex_number }}</div>
+              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+            <div class="hidden absolute z-10">{{ color.hex_number }}</div>
           </div>
           <div v-else-if="color.lame == false">
             <div class="hidden">{{ color.hex_number }}</div>
+          </div>
+          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </div>
         </div>
       </div>
@@ -159,6 +173,9 @@ export default {
         this.hex_number = '#194d33'
       }
     },
+    deleteColor(index) {
+      this.design.colors.splice(index, 1)
+    },
     createDesign() {
       const formData = new FormData()
 
@@ -200,7 +217,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .color-picker-img {
   top: 0;
   left: 50%;
