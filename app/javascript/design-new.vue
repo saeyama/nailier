@@ -40,24 +40,65 @@
         </div>
       </div>
       <h3 class="p-2 text-lg">カラーイメージを登録する</h3>
-      <div class="p-2 w-full text-lg border border-gray-300 rounded">
+      <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
         <div class="my-4 pl-4">
           <lable>ラメ</lable>&emsp; なし&nbsp;
           <input type="radio" v-model="lame" :value="false" />&emsp; あり&nbsp;
           <input type="radio" v-model="lame" :value="true" />
         </div>
-        <chrome-picker
-          class="mx-auto"
-          :value="hex_number"
-          v-model="hex_number"></chrome-picker>
+        <div v-if="colorLameStyle" class="relative h-64">
+          <img
+            src="~color-picker-lame.png"
+            class="color-picker-img absolute z-10 pointer-events-none" />
+          <chrome-picker
+            class="absolute z-0 color-picker-img"
+            :value="hex_number"
+            v-model="hex_number">
+          </chrome-picker>
+        </div>
+        <div v-else class="h-64 mb-3">
+          <chrome-picker
+            class="mx-auto"
+            :value="hex_number"
+            v-model="hex_number">
+          </chrome-picker>
+        </div>
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30"
           @click="colorData">
           決定
         </button>
       </div>
-      <div v-for="(color, index) in design.colors" :key="index">
-        {{ color.hex_number }}
+      <div class="flex space-x-12">
+        <div
+          v-for="(color, index) in design.colors"
+          :key="index"
+          :style="colorShowHexNumber(color.hex_number)"
+          class="w-8 h-8 rounded-full">
+          <div v-if="color.lame == true" class="relative">
+            <img
+              src="~lame.png"
+              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+            <div class="hidden absolute z-10">{{ color.hex_number }}</div>
+          </div>
+          <div v-else-if="color.lame == false">
+            <div class="hidden">{{ color.hex_number }}</div>
+          </div>
+          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+        </div>
       </div>
       <div class="p-2 w-full text-lg">
         <lable>調べた内容・メモ</lable>
@@ -80,6 +121,8 @@
 <script>
 import axios from 'axios'
 import { Chrome } from 'vue-color'
+import 'color-picker-lame.png'
+import 'lame.png'
 export default {
   components: {
     'chrome-picker': Chrome
@@ -96,6 +139,18 @@ export default {
       },
       lame: '',
       hex_number: '#194d33'
+    }
+  },
+  computed: {
+    colorShowHexNumber() {
+      return function (hexNumber) {
+        return {
+          'background-color': hexNumber
+        }
+      }
+    },
+    colorLameStyle() {
+      return this.lame === true
     }
   },
   methods: {
@@ -117,6 +172,9 @@ export default {
         this.lame = ''
         this.hex_number = '#194d33'
       }
+    },
+    deleteColor(index) {
+      this.design.colors.splice(index, 1)
     },
     createDesign() {
       const formData = new FormData()
@@ -159,4 +217,10 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.color-picker-img {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+</style>
