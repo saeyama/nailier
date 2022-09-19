@@ -6,6 +6,8 @@ class Design < ApplicationRecord
   has_many_attached :images
   has_many :colors, dependent: :destroy
   accepts_nested_attributes_for :colors, allow_destroy: true
+  has_many :parts, dependent: :destroy
+  accepts_nested_attributes_for :parts, allow_destroy: true
 
   def attach_blob(image_data_urls)
     image_data_urls.map do |image_data_url|
