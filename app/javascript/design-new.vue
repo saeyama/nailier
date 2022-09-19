@@ -51,13 +51,15 @@
             あり&nbsp;
             <input type="radio" v-model="lame" :value="true" />
           </div>
-          <div class="flex justify-around mb-4 md:mx-4">
+          <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
             <button
+              :class="!showChrome ? 'switch-color-button' : ''"
               @click="switchToChrome"
               class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
               カラーピッカー
             </button>
             <button
+              :class="!showSwatches ? 'switch-color-button' : ''"
               @click="switchToSwatches"
               class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
               カラーパレット
@@ -264,5 +266,10 @@ export default {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+.switch-color-button {
+  background: #ffffff;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
 }
 </style>
