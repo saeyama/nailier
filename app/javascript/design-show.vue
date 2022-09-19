@@ -17,11 +17,18 @@
       </div>
       <h3 class="text-lg font-bold mb-4">カラー</h3>
       <div class="grid grid-cols-6 mb-12">
-        <div v-for="(color, index) in design.colors" :key="index">
+        <div v-for="color in design.colors" :key="color.id">
           {{ color.hex_number }}
         </div>
       </div>
-
+      <h3 class="text-lg font-bold mb-4">パーツ</h3>
+      <div class="mb-12">
+        <div v-for="part in design.parts" :key="part.id">
+          {{ part.name }}&nbsp; {{ part.size }}&nbsp;
+          {{ part.quantity }}個&nbsp;
+          {{ part.hex_number }}
+        </div>
+      </div>
       <h3 class="text-lg font-bold mb-4">調べた内容・メモ</h3>
       {{ design.description }}
     </div>

@@ -17,6 +17,10 @@
       colors_attributes: [
         { lame: true, hex_number: '#000000' },
         { lame: false, hex_number: '#FFFFFF' }
+      ],
+      parts_attributes: [
+        { name: 'ラインストーン', size: 'pp21', quantity: 1, hex_number: '#000000' },
+        { name: 'Vカットストーン', size: 'ss24', quantity: 1, hex_number: '#FFFFFF' }
       ]
     )
   2.times do
