@@ -158,11 +158,19 @@
         決定
       </button>
 
-      <div class="flex space-x-12 mb-8">
+      <div class="mb-4 flex justify-start content-center">
         <div v-for="(part, index) in design.parts" :key="index">
-          {{ part.name }}&nbsp; {{ part.size }}&nbsp;
-          {{ part.quantity }}個&nbsp;
-          {{ part.hexNumber }}
+          <div class="mt-1">
+            {{ part.name }}&nbsp; {{ part.size }}&nbsp;
+            {{ part.quantity }}個&nbsp;
+          </div>
+        </div>
+        <div
+          v-for="(part, index) in design.parts"
+          :key="index"
+          :style="colorShowHexNumber(part.hexNumber)"
+          class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8">
+          <div class="hidden">{{ part.hexNumber }}</div>
         </div>
       </div>
 
