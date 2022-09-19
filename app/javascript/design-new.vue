@@ -47,9 +47,9 @@
         <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
           <div class="my-4 pl-2 md:pl-4">
             <lable>ラメ</lable>&emsp; なし&nbsp;
-            <input type="radio" v-model="lame" :value="false" />&emsp;
+            <input type="radio" v-model="color.lame" :value="false" />&emsp;
             あり&nbsp;
-            <input type="radio" v-model="lame" :value="true" />
+            <input type="radio" v-model="color.lame" :value="true" />
           </div>
           <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
             <button
@@ -73,21 +73,21 @@
                 class="color-picker-img absolute z-10 pointer-events-none" />
               <chrome-picker
                 class="absolute z-0 color-picker-img"
-                :value="hex_number"
-                v-model="hex_number">
+                :value="color.hexNumber"
+                v-model="color.hexNumber">
               </chrome-picker>
             </div>
             <div v-else class="h-64 mb-3">
               <chrome-picker
                 class="mx-auto"
-                :value="hex_number"
-                v-model="hex_number">
+                :value="color.hexNumber"
+                v-model="color.hexNumber">
               </chrome-picker>
             </div>
           </div>
           <swatches-picker
-            :value="hex_number"
-            v-model="hex_number"
+            :value="color.hexNumber"
+            v-model="color.hexNumber"
             class="mx-auto"
             v-show="showSwatches"></swatches-picker>
           <button
@@ -100,16 +100,16 @@
           <div
             v-for="(color, index) in design.colors"
             :key="index"
-            :style="colorShowHexNumber(color.hex_number)"
+            :style="colorShowHexNumber(color.hexNumber)"
             class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
             <div v-if="color.lame == true" class="relative">
               <img
                 src="~lame.png"
                 class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-              <div class="hidden absolute z-10">{{ color.hex_number }}</div>
+              <div class="hidden absolute z-10">{{ color.hexNumber }}</div>
             </div>
             <div v-else-if="color.lame == false">
-              <div class="hidden">{{ color.hex_number }}</div>
+              <div class="hidden">{{ color.hexNumber }}</div>
             </div>
             <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
               <svg
@@ -128,6 +128,44 @@
           </div>
         </div>
       </div>
+      <h3 class="p-2 text-lg">パーツ内容を登録する</h3>
+      <input
+        class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        type="text"
+        name="name"
+        placeholder="パーツ名を入力してください。"
+        v-model="part.name" />
+      <input
+        class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        type="text"
+        name="size"
+        placeholder="大きさを入力してください。"
+        v-model="part.size" />
+      <label>個数</label>
+      <input
+        class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        type="number"
+        name="quantity"
+        placeholder="1"
+        v-model="part.quantity" /><br />
+      <label>カラー</label>
+      <swatches-picker v-model="part.hexNumber" class="mx-auto">
+      </swatches-picker>
+
+      <button
+        class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+        @click="partData">
+        決定
+      </button>
+
+      <div class="flex space-x-12 mb-8">
+        <div v-for="(part, index) in design.parts" :key="index">
+          {{ part.name }}&nbsp; {{ part.size }}&nbsp;
+          {{ part.quantity }}個&nbsp;
+          {{ part.hexNumber }}
+        </div>
+      </div>
+
       <div class="p-2 w-full text-lg">
         <lable>調べた内容・メモ</lable>
         <textarea
@@ -165,10 +203,19 @@ export default {
         nail_part: '',
         images: [],
         urls: [],
-        colors: []
+        colors: [],
+        parts: []
       },
-      lame: '',
-      hex_number: '#194d33',
+      color: {
+        lame: '',
+        hexNumber: '#FF7003'
+      },
+      part: {
+        name: '',
+        size: '',
+        quantity: 0,
+        hexNumber: ''
+      },
       showChrome: true,
       showSwatches: false,
       colorContent: false
@@ -183,7 +230,7 @@ export default {
       }
     },
     colorLameStyle() {
-      return this.lame === true
+      return this.color.lame === true
     }
   },
   methods: {
@@ -208,17 +255,31 @@ export default {
       this.showChrome = false
     },
     colorData() {
-      if (this.lame !== '' && this.hex_number !== '') {
+      if (this.color.lame !== '' && this.color.hexNumber !== '') {
         this.design.colors.push({
-          lame: this.lame,
-          hex_number: this.hex_number.hex8
+          lame: this.color.lame,
+          hexNumber: this.color.hexNumber.hex8
         })
-        this.lame = ''
-        this.hex_number = '#194d33'
+        this.color.lame = ''
+        this.color.hexNumber = '#E0E0E0'
       }
     },
     deleteColor(index) {
       this.design.colors.splice(index, 1)
+    },
+    partData() {
+      if (this.part.name !== '' && this.part.quantity !== '') {
+        this.design.parts.push({
+          name: this.part.name,
+          size: this.part.size,
+          quantity: this.part.quantity,
+          hexNumber: this.part.hexNumber.hex8
+        })
+        this.part.name = ''
+        ;(this.part.size = ''),
+          (this.part.quantity = ''),
+          (this.part.hexNumber = '')
+      }
     },
     createDesign() {
       const formData = new FormData()
@@ -244,7 +305,18 @@ export default {
         formData.append('design[colors_attributes][][lame]', color.lame)
         formData.append(
           'design[colors_attributes][][hex_number]',
-          color.hex_number
+          color.hexNumber
+        )
+      })
+
+      const partParams = this.design.parts
+      partParams.forEach((part) => {
+        formData.append('design[parts_attributes][][name]', part.name)
+        formData.append('design[parts_attributes][][size]', part.size)
+        formData.append('design[parts_attributes][][quantity]', part.quantity)
+        formData.append(
+          'design[parts_attributes][][hex_number]',
+          part.hexNumber
         )
       })
 
