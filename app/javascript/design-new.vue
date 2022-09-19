@@ -39,64 +39,92 @@
           </div>
         </div>
       </div>
-      <h3 class="p-2 text-lg">カラーイメージを登録する</h3>
-      <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
-        <div class="my-4 pl-4">
-          <lable>ラメ</lable>&emsp; なし&nbsp;
-          <input type="radio" v-model="lame" :value="false" />&emsp; あり&nbsp;
-          <input type="radio" v-model="lame" :value="true" />
-        </div>
-        <div v-if="colorLameStyle" class="relative h-64">
-          <img
-            src="~color-picker-lame.png"
-            class="color-picker-img absolute z-10 pointer-events-none" />
-          <chrome-picker
-            class="absolute z-0 color-picker-img"
+      <h3 class="p-2 text-lg">
+        カラーイメージを登録する
+        <input type="checkbox" @change="showColorContent" />
+      </h3>
+      <div v-show="colorContent">
+        <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
+          <div class="my-4 pl-2 md:pl-4">
+            <lable>ラメ</lable>&emsp; なし&nbsp;
+            <input type="radio" v-model="lame" :value="false" />&emsp;
+            あり&nbsp;
+            <input type="radio" v-model="lame" :value="true" />
+          </div>
+          <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
+            <button
+              :class="!showChrome ? 'switch-color-button' : ''"
+              @click="switchToChrome"
+              class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+              カラーピッカー
+            </button>
+            <button
+              :class="!showSwatches ? 'switch-color-button' : ''"
+              @click="switchToSwatches"
+              class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+              カラーパレット
+            </button>
+          </div>
+
+          <div v-show="showChrome">
+            <div v-if="colorLameStyle" class="relative h-64">
+              <img
+                src="~color-picker-lame.png"
+                class="color-picker-img absolute z-10 pointer-events-none" />
+              <chrome-picker
+                class="absolute z-0 color-picker-img"
+                :value="hex_number"
+                v-model="hex_number">
+              </chrome-picker>
+            </div>
+            <div v-else class="h-64 mb-3">
+              <chrome-picker
+                class="mx-auto"
+                :value="hex_number"
+                v-model="hex_number">
+              </chrome-picker>
+            </div>
+          </div>
+          <swatches-picker
             :value="hex_number"
-            v-model="hex_number">
-          </chrome-picker>
-        </div>
-        <div v-else class="h-64 mb-3">
-          <chrome-picker
+            v-model="hex_number"
             class="mx-auto"
-            :value="hex_number"
-            v-model="hex_number">
-          </chrome-picker>
+            v-show="showSwatches"></swatches-picker>
+          <button
+            class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+            @click="colorData">
+            決定
+          </button>
         </div>
-        <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30"
-          @click="colorData">
-          決定
-        </button>
-      </div>
-      <div class="flex space-x-12">
-        <div
-          v-for="(color, index) in design.colors"
-          :key="index"
-          :style="colorShowHexNumber(color.hex_number)"
-          class="w-8 h-8 rounded-full">
-          <div v-if="color.lame == true" class="relative">
-            <img
-              src="~lame.png"
-              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-            <div class="hidden absolute z-10">{{ color.hex_number }}</div>
-          </div>
-          <div v-else-if="color.lame == false">
-            <div class="hidden">{{ color.hex_number }}</div>
-          </div>
-          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
-            </svg>
+        <div class="flex space-x-12 mb-8">
+          <div
+            v-for="(color, index) in design.colors"
+            :key="index"
+            :style="colorShowHexNumber(color.hex_number)"
+            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+            <div v-if="color.lame == true" class="relative">
+              <img
+                src="~lame.png"
+                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+              <div class="hidden absolute z-10">{{ color.hex_number }}</div>
+            </div>
+            <div v-else-if="color.lame == false">
+              <div class="hidden">{{ color.hex_number }}</div>
+            </div>
+            <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -110,7 +138,7 @@
         </textarea>
       </div>
       <button
-        class="flex font-bold mx-auto text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30"
+        class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
         @click="createDesign">
         ネイルデザインを登録
       </button>
@@ -121,11 +149,13 @@
 <script>
 import axios from 'axios'
 import { Chrome } from 'vue-color'
+import { Swatches } from 'vue-color'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
   components: {
-    'chrome-picker': Chrome
+    'chrome-picker': Chrome,
+    'swatches-picker': Swatches
   },
   data() {
     return {
@@ -138,7 +168,10 @@ export default {
         colors: []
       },
       lame: '',
-      hex_number: '#194d33'
+      hex_number: '#194d33',
+      showChrome: true,
+      showSwatches: false,
+      colorContent: false
     }
   },
   computed: {
@@ -162,6 +195,17 @@ export default {
       reader.onload = () => {
         this.design.images.push(reader.result)
       }
+    },
+    showColorContent() {
+      this.colorContent = !this.colorContent
+    },
+    switchToChrome() {
+      this.showChrome = true
+      this.showSwatches = false
+    },
+    switchToSwatches() {
+      this.showSwatches = true
+      this.showChrome = false
     },
     colorData() {
       if (this.lame !== '' && this.hex_number !== '') {
@@ -222,5 +266,10 @@ export default {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+.switch-color-button {
+  background: #ffffff;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
 }
 </style>
