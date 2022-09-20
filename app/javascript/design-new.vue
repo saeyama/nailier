@@ -206,13 +206,15 @@
         <div
           v-for="(part, index) in design.parts"
           :key="index"
-          class="flex mb-2">
-          <div class="flex mr-4">
-            <div class="mt-1 mr-4">
+          class="flex mb-2 mr-4 space-x-8">
+          <div class="flex w-full">
+            <div class="mt-1 w-3/4">
               {{ part.name }}&nbsp; {{ part.size }}&nbsp;
               {{ part.quantity }}個&nbsp;
             </div>
+            <div v-if="!part.hexNumber" class="w-8 h-8"></div>
             <div
+              v-else
               :style="colorShowHexNumber(part.hexNumber)"
               class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8"></div>
           </div>
