@@ -41,139 +41,197 @@
       </div>
       <h3 class="p-2 text-lg">
         カラーイメージを登録する
-        <input type="checkbox" @change="showColorContent" />
+        <input type="checkbox" @click="showColorContent" />
       </h3>
-      <div v-show="colorContent">
-        <div class="p-2 mb-4 w-full text-lg border border-gray-300 rounded">
-          <div class="my-4 pl-2 md:pl-4">
-            <lable>ラメ</lable>&emsp; なし&nbsp;
-            <input type="radio" v-model="color.lame" :value="false" />&emsp;
-            あり&nbsp;
-            <input type="radio" v-model="color.lame" :value="true" />
-          </div>
-          <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
-            <button
-              :class="!showChrome ? 'switch-color-button' : ''"
-              @click="switchToChrome"
-              class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
-              カラーピッカー
-            </button>
-            <button
-              :class="!showSwatches ? 'switch-color-button' : ''"
-              @click="switchToSwatches"
-              class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
-              カラーパレット
-            </button>
-          </div>
-
-          <div v-show="showChrome">
-            <div v-if="colorLameStyle" class="relative h-64">
-              <img
-                src="~color-picker-lame.png"
-                class="color-picker-img absolute z-10 pointer-events-none" />
-              <chrome-picker
-                class="absolute z-0 color-picker-img"
-                :value="color.hexNumber"
-                v-model="color.hexNumber">
-              </chrome-picker>
-            </div>
-            <div v-else class="h-64 mb-3">
-              <chrome-picker
-                class="mx-auto"
-                :value="color.hexNumber"
-                v-model="color.hexNumber">
-              </chrome-picker>
-            </div>
-          </div>
-          <swatches-picker
-            :value="color.hexNumber"
-            v-model="color.hexNumber"
-            class="mx-auto"
-            v-show="showSwatches"></swatches-picker>
+      <div
+        class="mb-4 w-full text-lg border border-gray-300 rounded"
+        v-show="colorContent">
+        <div class="my-4 pl-2 md:pl-4">
+          <lable>ラメ</lable>&emsp; なし&nbsp;
+          <input type="radio" v-model="color.lame" :value="false" />&emsp;
+          あり&nbsp;
+          <input type="radio" v-model="color.lame" :value="true" />
+        </div>
+        <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
           <button
-            class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
-            @click="colorData">
-            決定
+            :class="!showChrome ? 'switch-color-button' : ''"
+            @click="switchToChrome"
+            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            カラーピッカー
+          </button>
+          <button
+            :class="!showSwatches ? 'switch-color-button' : ''"
+            @click="switchToSwatches"
+            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            カラーパレット
           </button>
         </div>
-        <div class="flex space-x-12 mb-8">
-          <div
-            v-for="(color, index) in design.colors"
-            :key="index"
-            :style="colorShowHexNumber(color.hexNumber)"
-            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
-            <div v-if="color.lame == true" class="relative">
-              <img
-                src="~lame.png"
-                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-              <div class="hidden absolute z-10">{{ color.hexNumber }}</div>
-            </div>
-            <div v-else-if="color.lame == false">
-              <div class="hidden">{{ color.hexNumber }}</div>
-            </div>
-            <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
+        <div v-show="showChrome">
+          <div v-if="colorLameStyle" class="relative h-64">
+            <img
+              src="~color-picker-lame.png"
+              class="color-picker-img absolute z-10 pointer-events-none" />
+            <chrome-picker
+              class="absolute z-0 color-picker-img"
+              :value="color.hexNumber"
+              v-model="color.hexNumber">
+            </chrome-picker>
+          </div>
+          <div v-else class="h-64 mb-3">
+            <chrome-picker
+              class="mx-auto"
+              :value="color.hexNumber"
+              v-model="color.hexNumber">
+            </chrome-picker>
+          </div>
+        </div>
+        <swatches-picker
+          :value="color.hexNumber"
+          v-model="color.hexNumber"
+          class="mx-auto"
+          v-show="showSwatches"></swatches-picker>
+        <button
+          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+          @click="colorData">
+          決定
+        </button>
+      </div>
+      <div class="flex space-x-12 mb-2">
+        <div
+          v-for="(color, index) in design.colors"
+          :key="index"
+          :style="colorShowHexNumber(color.hexNumber)"
+          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+          <div v-if="color.lame == true" class="relative">
+            <img
+              src="~lame.png"
+              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+          </div>
+          <div v-else-if="color.lame == false"></div>
+          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </div>
         </div>
       </div>
-      <h3 class="p-2 text-lg">パーツ内容を登録する</h3>
-      <input
-        class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        type="text"
-        name="name"
-        placeholder="パーツ名を入力してください。"
-        v-model="part.name" />
-      <input
-        class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        type="text"
-        name="size"
-        placeholder="大きさを入力してください。"
-        v-model="part.size" />
-      <label>個数</label>
-      <input
-        class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        type="number"
-        name="quantity"
-        placeholder="1"
-        v-model="part.quantity" /><br />
-      <label>カラー</label>
-      <swatches-picker v-model="part.hexNumber" class="mx-auto">
-      </swatches-picker>
-
-      <button
-        class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
-        @click="partData">
-        決定
-      </button>
-
-      <div class="mb-4 flex justify-start content-center">
-        <div v-for="(part, index) in design.parts" :key="index">
-          <div class="mt-1">
-            {{ part.name }}&nbsp; {{ part.size }}&nbsp;
-            {{ part.quantity }}個&nbsp;
-          </div>
+      <h3 class="p-2 text-lg">
+        パーツ内容を登録する
+        <input type="checkbox" @click="showPartContent" />
+      </h3>
+      <div
+        class="p-4 mb-4 w-full px-8 text-lg border border-gray-300 rounded"
+        v-show="partContent">
+        <input
+          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          type="text"
+          name="name"
+          placeholder="パーツ名を入力してください。"
+          v-model="part.name" />
+        <div class="my-4">
+          <button
+            v-for="(candidateName, index) in part.candidateNamesList.name"
+            :key="index"
+            @click="selectPartName(index)"
+            class="cursor-pointer mr-4 my-1 hover:font-bold text-base">
+            {{ candidateName }}
+          </button>
         </div>
+        <input
+          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          type="text"
+          name="size"
+          placeholder="大きさを入力してください。"
+          v-model="part.size" />
+        <div class="my-4">
+          <button
+            v-for="(candidateSize, index) in part.candidateNamesList.size"
+            :key="index"
+            @click="selectPartSize(index)"
+            class="cursor-pointer mr-4 my-1 hover:font-bold">
+            {{ candidateSize }}
+          </button>
+        </div>
+        <div
+          class="flex justify-between content-center mb-6 rounded border border-gray-300 px-4 py-2">
+          <label class="mt-2">個数</label>
+          <input
+            class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
+            type="number"
+            name="quantity"
+            placeholder="1"
+            v-model="part.quantity" />
+        </div>
+
+        <div
+          class="flex justify-between w-full rounded border border-gray-300 px-4 py-2">
+          <label>カラー</label>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+            :class="{ 'rotate-to-open': partColorContent }"
+            @click="showPartColorContent">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </div>
+        <div
+          class="rounded-b-lg border border-gray-300 px-4 py-2"
+          v-show="partColorContent">
+          <swatches-picker v-model="part.hexNumber" class="mx-auto my-8">
+          </swatches-picker>
+        </div>
+        <button
+          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+          @click="partData">
+          決定
+        </button>
+      </div>
+      <div class="mb-4">
         <div
           v-for="(part, index) in design.parts"
           :key="index"
-          :style="colorShowHexNumber(part.hexNumber)"
-          class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8">
-          <div class="hidden">{{ part.hexNumber }}</div>
+          class="flex mb-2">
+          <div class="flex mr-4">
+            <div class="mt-1 mr-4">
+              {{ part.name }}&nbsp; {{ part.size }}&nbsp;
+              {{ part.quantity }}個&nbsp;
+            </div>
+            <div
+              :style="colorShowHexNumber(part.hexNumber)"
+              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8"></div>
+          </div>
+          <div @click="deletePart(index)" class="cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 my-1">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
         </div>
       </div>
-
       <div class="p-2 w-full text-lg">
         <lable>調べた内容・メモ</lable>
         <textarea
@@ -222,11 +280,23 @@ export default {
         name: '',
         size: '',
         quantity: 0,
-        hexNumber: ''
+        hexNumber: '',
+        candidateNamesList: {
+          name: [
+            'ラインストーン',
+            'Vカットストーン',
+            'スタッズ',
+            '丸カン',
+            'パール'
+          ],
+          size: ['ss3', 'ss5', 'ss9', 'ss12', 'ss16', 'ss20', 'ss26']
+        }
       },
       showChrome: true,
       showSwatches: false,
-      colorContent: false
+      colorContent: false,
+      partContent: false,
+      partColorContent: false
     }
   },
   computed: {
@@ -284,10 +354,26 @@ export default {
           hexNumber: this.part.hexNumber.hex8
         })
         this.part.name = ''
-        ;(this.part.size = ''),
-          (this.part.quantity = ''),
-          (this.part.hexNumber = '')
+        this.part.size = ''
+        this.part.quantity = '0'
+        this.part.hexNumber = ''
+        this.partColorContent = false
       }
+    },
+    selectPartName(index) {
+      this.part.name = this.part.candidateNamesList.name[index]
+    },
+    selectPartSize(index) {
+      this.part.size = this.part.candidateNamesList.size[index]
+    },
+    showPartContent() {
+      this.partContent = !this.partContent
+    },
+    showPartColorContent() {
+      this.partColorContent = !this.partColorContent
+    },
+    deletePart(index) {
+      this.design.parts.splice(index, 1)
     },
     createDesign() {
       const formData = new FormData()
@@ -351,5 +437,9 @@ export default {
   background: #ffffff;
   color: #4b5563;
   border: 1px solid #d1d5db;
+}
+.rotate-to-open {
+  transform: rotate(90deg);
+  transition: all 0.5s ease-in-out;
 }
 </style>
