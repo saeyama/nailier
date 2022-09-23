@@ -167,8 +167,10 @@
           <input
             class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
             type="number"
+            min="0"
+            onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
             name="quantity"
-            placeholder="1"
+            placeholder="0"
             v-model="part.quantity" />
         </div>
 
