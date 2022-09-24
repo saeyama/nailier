@@ -15,6 +15,15 @@
           <img :src="image" />
         </div>
       </div>
+      <h3 class="text-lg font-bold mb-4">動画</h3>
+      <div class="grid grid-cols-2">
+        <div
+          class="w-4/6 drop-shadow-lg mb-12"
+          v-for="(video, index) in design.videos"
+          :key="index">
+          <video :src="video" controls></video>
+        </div>
+      </div>
       <h3 class="text-lg font-bold mb-4">カラー</h3>
       <div class="grid grid-cols-6 mb-12">
         <div v-for="color in design.colors" :key="color.id">
