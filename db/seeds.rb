@@ -26,4 +26,7 @@
   2.times do
     design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail.jpeg')), filename: 'nail.jpeg')
   end
+  2.times do
+    design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mov')), filename: 'nail.mov')
+  end
 end
