@@ -8,7 +8,7 @@ class ImageBlob
   end
 
   def mime_type
-    image_data_url[%r/(image\/[a-z]{3,4})/]
+    image_data_url[%r/(image|video)\/[a-z]{3,4}/]
   end
 
   def to_io
@@ -22,6 +22,6 @@ class ImageBlob
   end
 
   def content
-    image_data_url.sub(%r/data:image\/.{3,},/, '')
+    image_data_url.sub(%r/data:(image|video)\/.{3,},/, '')
   end
 end

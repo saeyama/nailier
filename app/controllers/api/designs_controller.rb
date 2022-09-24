@@ -5,6 +5,7 @@ class Api::DesignsController < ApplicationController
   skip_before_action :verify_authenticity_token
   def index
     @designs = Design.with_attached_images
+    @designs = Design.with_attached_videos
   end
 
   def show; end
@@ -16,6 +17,7 @@ class Api::DesignsController < ApplicationController
   def create
     @design = Design.new(design_params)
     @design.attach_blob(image_data_urls)
+    @design.attach_blob(video_data_urls)
     if @design.save
       render json: @design, status: :created
     else
@@ -35,6 +37,10 @@ class Api::DesignsController < ApplicationController
 
   def image_data_urls
     params.require(:design).permit(images: [])[:images]
+  end
+
+  def video_data_urls
+    params.require(:design).permit(videos: [])[:videos]
   end
 
   def set_design
