@@ -10,18 +10,18 @@
       <div class="grid grid-cols-4">
         <div
           class="w-5/6 drop-shadow-lg mb-12"
-          v-for="(image, index) in design.images"
-          :key="index">
-          <img :src="image" />
+          v-for="image in design.images"
+          :key="image.id">
+          <img :src="image.url" />
         </div>
       </div>
       <h3 class="text-lg font-bold mb-4">動画</h3>
       <div class="grid grid-cols-2">
         <div
           class="w-4/6 drop-shadow-lg mb-12"
-          v-for="(video, index) in design.videos"
-          :key="index">
-          <video :src="video" controls></video>
+          v-for="video in design.videos"
+          :key="video.id">
+          <video :src="video.url" controls></video>
         </div>
       </div>
       <h3 class="text-lg font-bold mb-4">カラー</h3>

@@ -10,14 +10,24 @@ class Design < ApplicationRecord
   has_many :parts, dependent: :destroy
   accepts_nested_attributes_for :parts, allow_destroy: true
 
-  def attach_blob(image_data_urls)
-    image_data_urls.map do |image_data_url|
-      image_blob = ImageBlob.new(image_data_url)
-      images.attach(
-        io: image_blob.to_io,
-        filename: Time.zone.now,
-        content_type: image_blob.mime_type
-      )
+  def file_attach(file_type, file_blob)
+    file_type.attach(
+      io: file_blob.to_io,
+      filename: Time.zone.now,
+      content_type: file_blob.mime_type
+    )
+  end
+
+  def attach_blob(file_data_urls)
+    return if file_data_urls.blank?
+
+    file_data_urls.map do |file_data_url|
+      file_blob = FileBlob.new(file_data_url)
+      if file_data_url.start_with?('data:image')
+        file_attach(images, file_blob)
+      elsif file_data_url.start_with?('data:video')
+        file_attach(videos, file_blob)
+      end
     end
   end
 end

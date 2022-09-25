@@ -32,10 +32,31 @@
           type="file"
           name="image"
           multiple="multiple"
-          @change="uploadFile" /><br />
-        <div class="grid grid-cols-4 mb-4">
-          <div class="full" v-for="(url, index) in design.urls" :key="index">
+          accept="image/*"
+          @change="uploadImageFile" /><br />
+        <div class="grid grid-cols-4 mb-2">
+          <div
+            class="w-full mt-4"
+            v-for="(url, index) in design.imageUrls"
+            :key="index">
             <img :src="url" />
+          </div>
+        </div>
+      </div>
+      <div class="p-2 w-full text-lg">
+        <lable>動画&#40;複数登録可&#41;</lable><br />
+        <input
+          type="file"
+          name="video"
+          multiple="multiple"
+          accept="video/*"
+          @change="uploadVideoFile" /><br />
+        <div class="w-4/6 grid grid-cols-2 mb-2">
+          <div
+            class="w-full mt-4"
+            v-for="(url, index) in design.videoUrls"
+            :key="index">
+            <video :src="url"></video>
           </div>
         </div>
       </div>
@@ -129,7 +150,7 @@
         <input type="checkbox" @click="showPartContent" />
       </h3>
       <div
-        class="p-4 mb-4 w-full px-8 text-lg border border-gray-300 rounded"
+        class="p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
         v-show="partContent">
         <input
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -193,7 +214,7 @@
           </svg>
         </div>
         <div
-          class="rounded-b-lg border border-gray-300 px-4 py-2"
+          class="rounded-b-lg border border-gray-300 py-2"
           v-show="partColorContent">
           <swatches-picker v-model="part.hexNumber" class="mx-auto my-8">
           </swatches-picker>
@@ -272,7 +293,9 @@ export default {
         description: '',
         nail_part: '',
         images: [],
-        urls: [],
+        imageUrls: [],
+        videos: [],
+        videoUrls: [],
         colors: [],
         parts: []
       },
@@ -316,13 +339,22 @@ export default {
     }
   },
   methods: {
-    uploadFile(e) {
+    uploadImageFile(e) {
       const image = e.target.files[0]
       const reader = new FileReader()
-      this.design.urls.push(URL.createObjectURL(image))
+      this.design.imageUrls.push(URL.createObjectURL(image))
       reader.readAsDataURL(image)
       reader.onload = () => {
         this.design.images.push(reader.result)
+      }
+    },
+    uploadVideoFile(e) {
+      const video = e.target.files[0]
+      const reader = new FileReader()
+      this.design.videoUrls.push(URL.createObjectURL(video))
+      reader.readAsDataURL(video)
+      reader.onload = () => {
+        this.design.videos.push(reader.result)
       }
     },
     showColorContent() {
@@ -386,7 +418,8 @@ export default {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
         'design[nail_part]': this.design.nail_part,
-        'design[images]': this.design.images
+        'design[images]': this.design.images,
+        'design[videos]': this.design.videos
       }
       Object.entries(params).forEach(([key, value]) => {
         if (Array.isArray(value)) {
