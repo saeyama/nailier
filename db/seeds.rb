@@ -21,6 +21,9 @@
       parts_attributes: [
         { name: 'ラインストーン', size: 'pp21', quantity: 1, hex_number: '#000000' },
         { name: 'Vカットストーン', size: 'ss24', quantity: 1, hex_number: '#FFFFFF' }
+      ],
+      youtube_videos_attributes: [
+        { access_code: 'MQJU9quj3l4' }
       ]
     )
   2.times do
