@@ -6,6 +6,10 @@ json.set! :parts do
   json.array! @design.parts, :id, :name, :size, :quantity, :hex_number 
 end
 
+json.set! :youtube_videos do
+  json.array! @design.youtube_videos, :id, :access_code
+end
+
 image_urls = @design.images.map { |image| { 'id': image.id, 'url': rails_blob_url(image)} }
 json.images image_urls if @design.images.attached?
 

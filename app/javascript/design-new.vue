@@ -60,6 +60,26 @@
           </div>
         </div>
       </div>
+      <div class="p-2 w-full">
+        <input
+          type="text"
+          name="youtubeVideo"
+          placeholder="youtubeのURL"
+          class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          v-model="youtubeVideo.url" />
+        <button
+          @click="youtubeVideoData"
+          class="font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30">
+          登録
+        </button>
+      </div>
+      <div class="grid grid-cols-2">
+        <div v-for="(youtubeVideo, index) in design.youtubeVideos" :key="index">
+          <youtube
+            :video-id="youtubeVideo.accessCode"
+            class="w-28 h-16 md:w-72 md:h-48" />
+        </div>
+      </div>
       <h3 class="p-2 text-lg">
         カラーイメージを登録する
         <input type="checkbox" @click="showColorContent" />
@@ -277,6 +297,9 @@
 
 <script>
 import axios from 'axios'
+import Vue from 'vue'
+import VueYoutube from 'vue-youtube'
+Vue.use(VueYoutube)
 import { Chrome } from 'vue-color'
 import { Swatches } from 'vue-color'
 import 'color-picker-lame.png'
@@ -296,6 +319,7 @@ export default {
         imageUrls: [],
         videos: [],
         videoUrls: [],
+        youtubeVideos: [],
         colors: [],
         parts: []
       },
@@ -318,6 +342,9 @@ export default {
           ],
           size: ['ss3', 'ss5', 'ss9', 'ss12', 'ss16', 'ss20', 'ss26']
         }
+      },
+      youtubeVideo: {
+        url: ''
       },
       showChrome: true,
       showSwatches: false,
@@ -355,6 +382,14 @@ export default {
       reader.readAsDataURL(video)
       reader.onload = () => {
         this.design.videos.push(reader.result)
+      }
+    },
+    youtubeVideoData() {
+      if (this.youtubeVideo.url !== '') {
+        this.design.youtubeVideos.push({
+          accessCode: this.youtubeVideo.url.slice(-11)
+        })
+        this.youtubeVideo.url = ''
       }
     },
     showColorContent() {
@@ -429,6 +464,14 @@ export default {
         } else {
           formData.append(key, value)
         }
+      })
+
+      const youTubeVideoParams = this.design.youtubeVideos
+      youTubeVideoParams.forEach((youTubeVideo) => {
+        formData.append(
+          'design[youtube_videos_attributes][][access_code]',
+          youTubeVideo.accessCode
+        )
       })
 
       const colorParams = this.design.colors
