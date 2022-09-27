@@ -23,7 +23,8 @@
         { name: 'Vカットストーン', size: 'ss24', quantity: 1, hex_number: '#FFFFFF' }
       ],
       youtube_videos_attributes: [
-        { access_code: 'MQJU9quj3l4' }
+        { access_code: 'MQJU9quj3l4' },
+        { access_code: 'N2iDvU2HjQk' }
       ]
     )
   2.times do

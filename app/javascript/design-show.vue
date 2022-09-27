@@ -24,6 +24,16 @@
           <video :src="video.url" controls></video>
         </div>
       </div>
+      <div class="grid grid-cols-2">
+        <div
+          class="w-4/6 drop-shadow-lg mb-12"
+          v-for="youtube_video in design.youtube_videos"
+          :key="youtube_video.id">
+          <youtube
+            :video-id="youtube_video.access_code"
+            class="w-full h-full" />
+        </div>
+      </div>
       <h3 class="text-lg font-bold mb-4">カラー</h3>
       <div class="grid grid-cols-6 mb-12">
         <div v-for="color in design.colors" :key="color.id">
@@ -46,6 +56,9 @@
 
 <script>
 import axios from 'axios'
+import Vue from 'vue'
+import VueYoutube from 'vue-youtube'
+Vue.use(VueYoutube)
 export default {
   data() {
     return {
