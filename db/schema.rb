@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_19_051532) do
+ActiveRecord::Schema.define(version: 2022_09_27_120203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,8 +80,17 @@ ActiveRecord::Schema.define(version: 2022_09_19_051532) do
     t.index ["design_id"], name: "index_parts_on_design_id"
   end
 
+  create_table "videos", force: :cascade do |t|
+    t.bigint "design_id", null: false
+    t.string "access_code", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["design_id"], name: "index_videos_on_design_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "colors", "designs"
   add_foreign_key "parts", "designs"
+  add_foreign_key "videos", "designs"
 end
