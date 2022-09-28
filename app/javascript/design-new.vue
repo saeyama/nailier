@@ -33,7 +33,8 @@
           name="image"
           multiple="multiple"
           accept="image/*"
-          @change="uploadImageFile" /><br />
+          @change="uploadImageFile"
+          class="text-sm md:text-lg" />
         <div class="grid grid-cols-4 mb-2">
           <div
             class="w-full mt-4"
@@ -50,7 +51,8 @@
           name="video"
           multiple="multiple"
           accept="video/*"
-          @change="uploadVideoFile" /><br />
+          @change="uploadVideoFile"
+          class="text-sm md:text-lg" />
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4"
@@ -69,15 +71,37 @@
           v-model="youtubeVideo.url" />
         <button
           @click="youtubeVideoData"
-          class="font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30">
+          class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30">
           登録
         </button>
       </div>
-      <div class="grid grid-cols-2">
-        <div v-for="(youtubeVideo, index) in design.youtubeVideos" :key="index">
-          <youtube
-            :video-id="youtubeVideo.accessCode"
-            class="w-28 h-16 md:w-72 md:h-48" />
+      <div class="grid grid-cols-2 gap-8 mb-2">
+        <div
+          v-for="(youtubeVideo, index) in design.youtubeVideos"
+          :key="index"
+          class="h-32 md:h-48">
+          <div class="relative">
+            <youtube
+              :video-id="youtubeVideo.accessCode"
+              class="w-32 h-28 md:w-64 md:h-48 absolute z-1 left-2">
+            </youtube>
+            <div
+              @click="deleteYoutubeVideo(index)"
+              class="cursor-pointer absolute z-0 top-1 -right-4 md:right-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <h3 class="p-2 text-lg">
@@ -392,6 +416,9 @@ export default {
         this.youtubeVideo.url = ''
       }
     },
+    deleteYoutubeVideo(index) {
+      this.design.youtubeVideos.splice(index, 1)
+    },
     showColorContent() {
       this.colorContent = !this.colorContent
     },
@@ -466,11 +493,11 @@ export default {
         }
       })
 
-      const youTubeVideoParams = this.design.youtubeVideos
-      youTubeVideoParams.forEach((youTubeVideo) => {
+      const youtubeVideoParams = this.design.youtubeVideos
+      youtubeVideoParams.forEach((youtubeVideo) => {
         formData.append(
           'design[youtube_videos_attributes][][access_code]',
-          youTubeVideo.accessCode
+          youtubeVideo.accessCode
         )
       })
 
