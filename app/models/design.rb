@@ -11,7 +11,9 @@ class Design < ApplicationRecord
   accepts_nested_attributes_for :parts, allow_destroy: true
   has_many :youtube_videos, dependent: :destroy
   accepts_nested_attributes_for :youtube_videos, allow_destroy: true
-
+  has_many :design_tags, dependent: :destroy
+  has_many :tags, through: :design_tags
+  accepts_nested_attributes_for :tags
   def file_attach(file_type, file_blob)
     file_type.attach(
       io: file_blob.to_io,

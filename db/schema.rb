@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_27_123835) do
+ActiveRecord::Schema.define(version: 2022_09_29_113901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 2022_09_27_123835) do
     t.index ["design_id"], name: "index_colors_on_design_id"
   end
 
+  create_table "design_tags", force: :cascade do |t|
+    t.bigint "design_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["design_id"], name: "index_design_tags_on_design_id"
+    t.index ["tag_id"], name: "index_design_tags_on_tag_id"
+  end
+
   create_table "designs", force: :cascade do |t|
     t.string "title", null: false
     t.string "nail_part", null: false
@@ -80,6 +89,13 @@ ActiveRecord::Schema.define(version: 2022_09_27_123835) do
     t.index ["design_id"], name: "index_parts_on_design_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "youtube_videos", force: :cascade do |t|
     t.bigint "design_id", null: false
     t.string "access_code", null: false
@@ -91,6 +107,8 @@ ActiveRecord::Schema.define(version: 2022_09_27_123835) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "colors", "designs"
+  add_foreign_key "design_tags", "designs"
+  add_foreign_key "design_tags", "tags"
   add_foreign_key "parts", "designs"
   add_foreign_key "youtube_videos", "designs"
 end
