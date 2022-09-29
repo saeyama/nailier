@@ -56,8 +56,8 @@
         <div
           v-for="tag in design.tags"
           :key="tag.id"
-          class="border border-gray-800 mr-4 p-2 rounded">
-          {{ tag.name }}&nbsp;
+          class="border border-gray-300 mr-4 px-2 py-1 rounded">
+          {{ tag.name }}
         </div>
       </div>
     </div>

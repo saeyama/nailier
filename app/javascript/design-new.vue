@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-gray-600 py-10 mx-auto">
+  <div class="container text-gray-600 py-10 mx-auto mb-4">
     <h2 class="text-2xl font-bold text-center py-10">ネイルデザインを登録</h2>
     <div class="w-11/12 md:w-3/4 mx-auto">
       <div class="p-2 w-full text-lg">
@@ -310,6 +310,28 @@
           v-model="design.description">
         </textarea>
       </div>
+      <div class="p-2 w-full text-lg mb-8">
+        <lable>タグ</lable><br />
+        <input
+          class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          type="text"
+          name="title"
+          placeholder="入力してください"
+          v-model="tag" />
+        <button
+          class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30"
+          @click="tagData">
+          決定
+        </button>
+        <div class="flex justify-start">
+          <div
+            v-for="(tag, index) in design.tags"
+            :key="index"
+            class="border border-gray-300 mr-4 px-2 py-1 rounded">
+            {{ tag.name }}
+          </div>
+        </div>
+      </div>
       <button
         class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
         @click="createDesign">
@@ -345,7 +367,11 @@ export default {
         videoUrls: [],
         youtubeVideos: [],
         colors: [],
-        parts: []
+        parts: [],
+        tags: []
+      },
+      youtubeVideo: {
+        url: ''
       },
       color: {
         lame: '',
@@ -367,9 +393,7 @@ export default {
           size: ['ss3', 'ss5', 'ss9', 'ss12', 'ss16', 'ss20', 'ss26']
         }
       },
-      youtubeVideo: {
-        url: ''
-      },
+      tag: '',
       showChrome: true,
       showSwatches: false,
       colorContent: false,
@@ -473,6 +497,12 @@ export default {
     deletePart(index) {
       this.design.parts.splice(index, 1)
     },
+    tagData() {
+      this.design.tags.push({
+        name: this.tag
+      })
+      this.tag = ''
+    },
     createDesign() {
       const formData = new FormData()
 
@@ -519,6 +549,11 @@ export default {
           'design[parts_attributes][][hex_number]',
           part.hexNumber
         )
+      })
+
+      const tagParams = this.design.tags
+      tagParams.forEach((tag) => {
+        formData.append('design[tags_attributes][][name]', tag.name)
       })
 
       axios
