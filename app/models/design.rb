@@ -34,4 +34,13 @@ class Design < ApplicationRecord
       end
     end
   end
+
+  def tags_attributes=(tag_attributes)
+    tag_attributes.uniq.each do |tag_params|
+      next if tag_params[:name].blank?
+
+      tag = Tag.find_or_create_by(tag_params)
+      tags << tag if tags.where(name: tag[:name]).blank?
+    end
+  end
 end

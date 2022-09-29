@@ -32,8 +32,8 @@ class Api::DesignsController < ApplicationController
       :title, :nail_part, :description,
       colors_attributes: %i[lame hex_number],
       parts_attributes: %i[name size quantity hex_number],
-      youtube_videos_attributes: [:access_code],
-      tags_attributes: [:name]
+      tags_attributes: [:name],
+      youtube_videos_attributes: [:access_code]
     )
   end
 
