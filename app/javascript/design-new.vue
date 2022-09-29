@@ -327,8 +327,24 @@
           <div
             v-for="(tag, index) in design.tags"
             :key="index"
-            class="border border-gray-300 mr-4 px-2 py-1 rounded">
-            {{ tag.name }}
+            class="border border-gray-300 mr-4 px-2 py-1 rounded flex justify-center items-center">
+            <div class="mr-1">
+              {{ tag.name }}
+            </div>
+            <div @click="deleteTag(index)" class="cursor-pointer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 my-1">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -502,6 +518,9 @@ export default {
         name: this.tag
       })
       this.tag = ''
+    },
+    deleteTag(index) {
+      this.design.tags.splice(index, 1)
     },
     createDesign() {
       const formData = new FormData()
