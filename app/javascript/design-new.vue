@@ -227,8 +227,8 @@
           </button>
         </div>
         <div
-          class="flex justify-between content-center mb-6 rounded border border-gray-300 px-4 py-2">
-          <label class="mt-2">個数</label>
+          class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
+          <label>個数</label>
           <input
             class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
             type="number"
@@ -240,7 +240,7 @@
         </div>
 
         <div
-          class="flex justify-between w-full rounded border border-gray-300 px-4 py-2">
+          class="flex justify-between items-center w-full rounded border border-gray-300 px-4 py-2">
           <label>カラー</label>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -273,9 +273,9 @@
         <div
           v-for="(part, index) in design.parts"
           :key="index"
-          class="flex mb-2 mr-4 space-x-8">
-          <div class="flex w-full">
-            <div class="mt-1 w-3/4">
+          class="flex items-center mb-2 mr-4 space-x-8">
+          <div class="flex items-center w-full">
+            <div class="w-3/4">
               {{ part.name }}&nbsp; {{ part.size }}&nbsp;
               {{ part.quantity }}個&nbsp;
             </div>
