@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-gray-600 py-10 mx-auto">
+  <div class="container text-gray-600 py-10 mx-auto mb-4">
     <h2 class="text-2xl font-bold text-center py-10">ネイルデザインを登録</h2>
     <div class="w-11/12 md:w-3/4 mx-auto">
       <div class="p-2 w-full text-lg">
@@ -227,8 +227,8 @@
           </button>
         </div>
         <div
-          class="flex justify-between content-center mb-6 rounded border border-gray-300 px-4 py-2">
-          <label class="mt-2">個数</label>
+          class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
+          <label>個数</label>
           <input
             class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
             type="number"
@@ -240,7 +240,7 @@
         </div>
 
         <div
-          class="flex justify-between w-full rounded border border-gray-300 px-4 py-2">
+          class="flex justify-between items-center w-full rounded border border-gray-300 px-4 py-2">
           <label>カラー</label>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -273,9 +273,9 @@
         <div
           v-for="(part, index) in design.parts"
           :key="index"
-          class="flex mb-2 mr-4 space-x-8">
-          <div class="flex w-full">
-            <div class="mt-1 w-3/4">
+          class="flex items-center mb-2 mr-4 space-x-8">
+          <div class="flex items-center w-full">
+            <div class="w-3/4">
               {{ part.name }}&nbsp; {{ part.size }}&nbsp;
               {{ part.quantity }}個&nbsp;
             </div>
@@ -309,6 +309,44 @@
           name="description"
           v-model="design.description">
         </textarea>
+      </div>
+      <div class="p-2 w-full text-lg mb-8">
+        <lable>タグ</lable><br />
+        <input
+          class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          type="text"
+          name="title"
+          placeholder="入力してください"
+          v-model="tag" />
+        <button
+          class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30"
+          @click="tagData">
+          決定
+        </button>
+        <div class="flex justify-start">
+          <div
+            v-for="(tag, index) in design.tags"
+            :key="index"
+            class="border border-gray-300 mr-4 px-2 py-1 rounded flex justify-center items-center">
+            <div class="mr-1">
+              {{ tag.name }}
+            </div>
+            <div @click="deleteTag(index)" class="cursor-pointer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 my-1">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
       <button
         class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
@@ -345,7 +383,11 @@ export default {
         videoUrls: [],
         youtubeVideos: [],
         colors: [],
-        parts: []
+        parts: [],
+        tags: []
+      },
+      youtubeVideo: {
+        url: ''
       },
       color: {
         lame: '',
@@ -367,9 +409,7 @@ export default {
           size: ['ss3', 'ss5', 'ss9', 'ss12', 'ss16', 'ss20', 'ss26']
         }
       },
-      youtubeVideo: {
-        url: ''
-      },
+      tag: '',
       showChrome: true,
       showSwatches: false,
       colorContent: false,
@@ -473,6 +513,15 @@ export default {
     deletePart(index) {
       this.design.parts.splice(index, 1)
     },
+    tagData() {
+      this.design.tags.push({
+        name: this.tag
+      })
+      this.tag = ''
+    },
+    deleteTag(index) {
+      this.design.tags.splice(index, 1)
+    },
     createDesign() {
       const formData = new FormData()
 
@@ -519,6 +568,11 @@ export default {
           'design[parts_attributes][][hex_number]',
           part.hexNumber
         )
+      })
+
+      const tagParams = this.design.tags
+      tagParams.forEach((tag) => {
+        formData.append('design[tags_attributes][][name]', tag.name)
       })
 
       axios

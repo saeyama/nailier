@@ -5,7 +5,9 @@ end
 json.set! :parts do
   json.array! @design.parts, :id, :name, :size, :quantity, :hex_number 
 end
-
+json.set! :tags do
+  json.array! @design.tags, :id, :name
+end
 json.set! :youtube_videos do
   json.array! @design.youtube_videos, :id, :access_code
 end

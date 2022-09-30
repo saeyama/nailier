@@ -49,7 +49,17 @@
         </div>
       </div>
       <h3 class="text-lg font-bold mb-4">調べた内容・メモ</h3>
-      {{ design.description }}
+      <div class="mb-8">
+        {{ design.description }}
+      </div>
+      <div class="mb-12 flex justify-start">
+        <div
+          v-for="tag in design.tags"
+          :key="tag.id"
+          class="border border-gray-300 mr-4 px-2 py-1 rounded">
+          {{ tag.name }}
+        </div>
+      </div>
     </div>
   </div>
 </template>

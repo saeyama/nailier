@@ -15,16 +15,17 @@
       nail_part: 'hand',
       description: "description#{i + 1}",
       colors_attributes: [
-        { lame: true, hex_number: '#000000' },
-        { lame: false, hex_number: '#FFFFFF' }
+        { lame: true, hex_number: '#000000' }, { lame: false, hex_number: '#FFFFFF' }
       ],
       parts_attributes: [
         { name: 'ラインストーン', size: 'pp21', quantity: 1, hex_number: '#000000' },
         { name: 'Vカットストーン', size: 'ss24', quantity: 1, hex_number: '#FFFFFF' }
       ],
+      tags_attributes: [
+        { name: 'tag1' }, { name: 'tag2' }
+      ],
       youtube_videos_attributes: [
-        { access_code: 'MQJU9quj3l4' },
-        { access_code: 'N2iDvU2HjQk' }
+        { access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }
       ]
     )
   2.times do
