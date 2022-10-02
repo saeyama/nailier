@@ -33,12 +33,12 @@
           name="image"
           multiple="multiple"
           accept="image/*"
-          @change="uploadImageFile"
+          @change="uploadFiles"
           class="text-sm md:text-lg" />
         <div class="grid grid-cols-4 mb-2">
           <div
             class="w-full mt-4"
-            v-for="(url, index) in design.imageUrls"
+            v-for="(url, index) in design.images"
             :key="index">
             <img :src="url" />
           </div>
@@ -51,12 +51,12 @@
           name="video"
           multiple="multiple"
           accept="video/*"
-          @change="uploadVideoFile"
+          @change="uploadFiles"
           class="text-sm md:text-lg" />
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4"
-            v-for="(url, index) in design.videoUrls"
+            v-for="(url, index) in design.videos"
             :key="index">
             <video :src="url"></video>
           </div>
@@ -378,9 +378,7 @@ export default {
         description: '',
         nail_part: '',
         images: [],
-        imageUrls: [],
         videos: [],
-        videoUrls: [],
         youtubeVideos: [],
         colors: [],
         parts: [],
@@ -430,22 +428,21 @@ export default {
     }
   },
   methods: {
-    uploadImageFile(e) {
-      const image = e.target.files[0]
-      const reader = new FileReader()
-      this.design.imageUrls.push(URL.createObjectURL(image))
-      reader.readAsDataURL(image)
-      reader.onload = () => {
-        this.design.images.push(reader.result)
+    uploadFiles(e) {
+      const files = e.target.files
+      if (files === 0) {
+        return
       }
-    },
-    uploadVideoFile(e) {
-      const video = e.target.files[0]
-      const reader = new FileReader()
-      this.design.videoUrls.push(URL.createObjectURL(video))
-      reader.readAsDataURL(video)
-      reader.onload = () => {
-        this.design.videos.push(reader.result)
+      for (const file of files) {
+        const fileReader = new FileReader()
+        fileReader.readAsDataURL(file)
+        fileReader.onload = () => {
+          if (fileReader.result.startsWith('data:image')) {
+            this.design.images.push(fileReader.result)
+          } else {
+            this.design.videos.push(fileReader.result)
+          }
+        }
       }
     },
     youtubeVideoData() {
