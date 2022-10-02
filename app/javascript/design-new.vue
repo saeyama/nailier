@@ -33,7 +33,7 @@
           name="image"
           multiple="multiple"
           accept="image/*"
-          @change="uploadImageFile"
+          @change="uploadFiles"
           class="text-sm md:text-lg" />
         <div class="grid grid-cols-4 mb-2">
           <div
@@ -51,7 +51,7 @@
           name="video"
           multiple="multiple"
           accept="video/*"
-          @change="uploadVideoFile"
+          @change="uploadFiles"
           class="text-sm md:text-lg" />
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
@@ -428,9 +428,8 @@ export default {
     }
   },
   methods: {
-    uploadImageFile(e) {
+    uploadFiles(e) {
       const files = e.target.files
-      console.log(files)
       if (files === 0) {
         return
       }
@@ -438,21 +437,11 @@ export default {
         const fileReader = new FileReader()
         fileReader.readAsDataURL(file)
         fileReader.onload = () => {
-          this.design.images.push(fileReader.result)
-        }
-      }
-    },
-    uploadVideoFile(e) {
-      const files = e.target.files
-      console.log(files)
-      if (files === 0) {
-        return
-      }
-      for (const file of files) {
-        const fileReader = new FileReader()
-        fileReader.readAsDataURL(file)
-        fileReader.onload = () => {
-          this.design.videos.push(fileReader.result)
+          if (fileReader.result.startsWith('data:image')) {
+            this.design.images.push(fileReader.result)
+          } else {
+            this.design.videos.push(fileReader.result)
+          }
         }
       }
     },
