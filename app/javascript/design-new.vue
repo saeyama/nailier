@@ -37,10 +37,26 @@
           class="text-sm md:text-lg" />
         <div class="grid grid-cols-4 mb-2">
           <div
-            class="w-full mt-4"
+            class="w-full mt-4 relative h-36"
             v-for="(url, index) in design.images"
             :key="index">
-            <img :src="url" />
+            <img :src="url" class="absolute z-0 h-32" />
+            <div
+              @click="deleteImage(index)"
+              class="cursor-pointer absolute z-10 top-1 right-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -55,10 +71,28 @@
           class="text-sm md:text-lg" />
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
-            class="w-full mt-4"
-            v-for="(url, index) in design.videos"
-            :key="index">
-            <video class="h-32"><source :src="url" type="video/mp4" /></video>
+            class="w-full mt-4 relative h-36"
+            v-for="url in design.videos"
+            :key="url">
+            <video class="h-32 absolute z-0">
+              <source :src="url" type="video/mp4" />
+            </video>
+            <div
+              @click="deleteVideo(url)"
+              class="cursor-pointer absolute z-10 top-1 right-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -83,11 +117,11 @@
           <div class="relative">
             <youtube
               :video-id="youtubeVideo.accessCode"
-              class="w-32 h-28 md:w-64 md:h-48 absolute z-1 left-2">
+              class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
             </youtube>
             <div
               @click="deleteYoutubeVideo(index)"
-              class="cursor-pointer absolute z-0 top-1 -right-4 md:right-4">
+              class="cursor-pointer absolute z-10 top-1 -right-4 md:right-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -444,6 +478,12 @@ export default {
           }
         }
       }
+    },
+    deleteImage(index) {
+      this.design.images.splice(index, 1)
+    },
+    deleteVideo(url) {
+      this.design.videos.splice(url, 1)
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
