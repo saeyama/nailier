@@ -58,7 +58,7 @@
             class="w-full mt-4"
             v-for="(url, index) in design.videos"
             :key="index">
-            <video :src="url"></video>
+            <video class="h-32"><source :src="url" type="video/mp4" /></video>
           </div>
         </div>
       </div>
