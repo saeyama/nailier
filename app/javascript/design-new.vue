@@ -35,9 +35,12 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm md:text-lg" />
-        <div class="grid grid-cols-4 mb-2">
+        <draggable
+          v-model="design.images"
+          draggable=".item"
+          class="grid grid-cols-4 mb-2">
           <div
-            class="w-full mt-4 relative h-36"
+            class="item w-full mt-4 relative h-36"
             v-for="(url, index) in design.images"
             :key="index">
             <img :src="url" class="absolute z-0 h-32" />
@@ -58,7 +61,7 @@
               </svg>
             </div>
           </div>
-        </div>
+        </draggable>
       </div>
       <div class="p-2 w-full text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
@@ -398,12 +401,14 @@ import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
 import { Chrome } from 'vue-color'
 import { Swatches } from 'vue-color'
+import draggable from 'vuedraggable'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
   components: {
     'chrome-picker': Chrome,
-    'swatches-picker': Swatches
+    'swatches-picker': Swatches,
+    draggable
   },
   data() {
     return {
