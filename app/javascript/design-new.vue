@@ -194,15 +194,15 @@
               class="color-picker-img absolute z-10 pointer-events-none" />
             <chrome-picker
               class="absolute z-0 color-picker-img"
-              :value="color.hexNumber"
-              v-model="color.hexNumber">
+              :value="color.pickerHexNumber"
+              v-model="color.pickerHexNumber">
             </chrome-picker>
           </div>
           <div v-else class="h-64 mb-3">
             <chrome-picker
               class="mx-auto"
-              :value="color.hexNumber"
-              v-model="color.hexNumber">
+              :value="color.pickerHexNumber"
+              v-model="color.pickerHexNumber">
             </chrome-picker>
           </div>
         </div>
@@ -211,7 +211,7 @@
             <ul
               class="grid gap-2 place-items-center grid-cols-6 border border-gray-300 m-2 p-4">
               <li
-                v-for="(color, index) in colorPalettes"
+                v-for="(color, index) in colorPaletteHexNumbers"
                 :key="index"
                 :style="colorShowHexNumber(color)"
                 @click="selectColorPaletteHexNumber(index)"
@@ -221,25 +221,19 @@
                   class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
               </li>
             </ul>
-            <input
-              type="text"
-              v-model="color.paletteHexNumber"
-              class="hidden" />
+            <input type="text" v-model="color.paletteHexNumber" />
           </div>
           <div v-else class="h-64 mb-3">
             <ul
               class="grid gap-2 place-items-center grid-cols-6 border border-gray-300 m-2 p-4">
               <li
-                v-for="(color, index) in colorPalettes"
+                v-for="(color, index) in colorPaletteHexNumbers"
                 :key="index"
                 :style="colorShowHexNumber(color)"
                 @click="selectColorPaletteHexNumber(index)"
                 class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30"></li>
             </ul>
-            <input
-              type="text"
-              v-model="color.paletteHexNumber"
-              class="hidden" />
+            <input type="text" v-model="color.paletteHexNumber" />
           </div>
         </div>
         <button
@@ -349,7 +343,7 @@
           v-show="partColorContent">
           <ul class="grid gap-2 place-items-center grid-cols-6 m-1">
             <li
-              v-for="(color, index) in colorPalettes"
+              v-for="(color, index) in colorPaletteHexNumbers"
               :key="index"
               :style="colorShowHexNumber(color)"
               @click="selectPartColor(index)"
@@ -483,11 +477,11 @@ export default {
       },
       color: {
         lame: '',
-        hexNumber: '#FF7003',
+        pickerHexNumber: '#FF7003',
         paletteHexNumber: '',
         hexNumberHex8: ''
       },
-      colorPalettes: [
+      colorPaletteHexNumbers: [
         '#000000FF',
         '#333333FF',
         '#4D4D4DFF',
@@ -597,7 +591,7 @@ export default {
       this.design.youtubeVideos.splice(index, 1)
     },
     selectColorPaletteHexNumber(index) {
-      this.color.paletteHexNumber = this.colorPalettes[index]
+      this.color.paletteHexNumber = this.colorPaletteHexNumbers[index]
     },
     showColorContent() {
       this.colorContent = !this.colorContent
@@ -611,8 +605,8 @@ export default {
       this.showChrome = false
     },
     colorData() {
-      if (this.color.hexNumber !== '') {
-        this.color.hexNumberHex8 = this.color.hexNumber.hex8
+      if (this.color.pickerHexNumber !== '') {
+        this.color.hexNumberHex8 = this.color.pickerHexNumber.hex8
       }
       if (this.color.paletteHexNumber !== '') {
         this.color.hexNumberHex8 = this.color.paletteHexNumber
@@ -620,7 +614,8 @@ export default {
 
       if (
         this.color.lame !== '' &&
-        (this.color.hexNumber !== '' || this.color.paletteHexNumber !== '')
+        (this.color.pickerHexNumber !== '' ||
+          this.color.paletteHexNumber !== '')
       ) {
         this.design.colors.push({
           lame: this.color.lame,
@@ -655,7 +650,7 @@ export default {
       this.part.size = this.part.candidateNamesList.size[index]
     },
     selectPartColor(index) {
-      this.part.hexNumber = this.colorPalettes[index]
+      this.part.hexNumber = this.colorPaletteHexNumbers[index]
     },
     showPartContent() {
       this.partContent = !this.partContent
