@@ -347,10 +347,10 @@
               v-for="(color, index) in colorPalette"
               :key="index"
               :style="colorShowHexNumber(color)"
+              @click="selectPartColor(index)"
               class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30"></li>
           </ul>
-          <!-- <swatches-picker v-model="part.hexNumber" class="mx-auto my-8">
-          </swatches-picker> -->
+          <input type="text" v-model="part.hexNumber">
         </div>
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
@@ -619,7 +619,7 @@ export default {
           name: this.part.name,
           size: this.part.size,
           quantity: this.part.quantity,
-          hexNumber: this.part.hexNumber.hex8
+          hexNumber: this.part.hexNumber
         })
         this.part.name = ''
         this.part.size = ''
@@ -634,6 +634,9 @@ export default {
     selectPartSize(index) {
       this.part.size = this.part.candidateNamesList.size[index]
     },
+    selectPartColor(index) {
+      this.part.hexNumber = this.colorPalette[index]
+    },    
     showPartContent() {
       this.partContent = !this.partContent
     },
