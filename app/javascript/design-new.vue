@@ -206,11 +206,37 @@
             </chrome-picker>
           </div>
         </div>
-        <swatches-picker
+        <div v-show="showSwatches">
+          <div v-if="colorLameStyle" class="relative h-64">
+            <ul
+              class="grid gap-2 place-items-center grid-cols-6 border border-gray-300 m-2 p-4">
+              <li
+                v-for="(color, index) in colorPalette"
+                :key="index"
+                :style="colorShowHexNumber(color)"
+                class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+                <img
+                  src="~lame.png"
+                  class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+              </li>
+            </ul>
+          </div>
+          <div v-else class="h-64 mb-3">
+            <ul
+              class="grid gap-2 place-items-center grid-cols-6 border border-gray-300 m-2 p-4">
+              <li
+                v-for="(color, index) in colorPalette"
+                :key="index"
+                :style="colorShowHexNumber(color)"
+                class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30"></li>
+            </ul>
+          </div>
+        </div>
+        <!-- <swatches-picker
           :value="color.hexNumber"
           v-model="color.hexNumber"
           class="mx-auto"
-          v-show="showSwatches"></swatches-picker>
+          v-show="showSwatches"></swatches-picker> -->
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
           @click="colorData">
@@ -316,8 +342,15 @@
         <div
           class="rounded-b-lg border border-gray-300 py-2"
           v-show="partColorContent">
-          <swatches-picker v-model="part.hexNumber" class="mx-auto my-8">
-          </swatches-picker>
+          <ul class="grid gap-2 place-items-center grid-cols-6 m-1">
+            <li
+              v-for="(color, index) in colorPalette"
+              :key="index"
+              :style="colorShowHexNumber(color)"
+              class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30"></li>
+          </ul>
+          <!-- <swatches-picker v-model="part.hexNumber" class="mx-auto my-8">
+          </swatches-picker> -->
         </div>
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
@@ -419,14 +452,12 @@ import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
 import { Chrome } from 'vue-color'
-import { Swatches } from 'vue-color'
 import draggable from 'vuedraggable'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
   components: {
     'chrome-picker': Chrome,
-    'swatches-picker': Swatches,
     draggable
   },
   data() {
@@ -449,6 +480,44 @@ export default {
         lame: '',
         hexNumber: '#FF7003'
       },
+      colorPalette: [
+        '#000000FF',
+        '#333333FF',
+        '#4D4D4DFF',
+        '#666666FF',
+        '#808080FF',
+        '#999999FF',
+        '#B3B3B3FF',
+        '#CCCCCCFF',
+        '#FFFFFFFF',
+        '#9F0500FF',
+        '#D33115FF',
+        '#F44E3BFF',
+        '#C45100FF',
+        '#E27300FF',
+        '#FE9200FF',
+        '#FB9E00FF',
+        '#FCC400FF',
+        '#FCDC00FF',
+        '#DBDF00FF',
+        '#A4DD00FF',
+        '#68CCCAFF',
+        '#73D8FFFF',
+        '#AEA1FFFF',
+        '#FDA1FFFF',
+        '#B0BC00FF',
+        '#68BC00FF',
+        '#16A5A5FF',
+        '#009CE0FF',
+        '#7B64FFFF',
+        '#FA28FFFF',
+        '#808900FF',
+        '#194D33FF',
+        '#0C797DFF',
+        '#0062B1FF',
+        '#653294FF',
+        '#AB149EFF'
+      ],
       part: {
         name: '',
         size: '',
