@@ -34,7 +34,7 @@
           multiple="multiple"
           accept="image/*"
           @change="uploadFiles"
-          class="text-sm md:text-lg" />
+          class="text-sm w-64 md:text-lg md:w-full" />
         <draggable
           v-model="design.images"
           draggable=".item"
@@ -71,7 +71,7 @@
           multiple="multiple"
           accept="video/*"
           @change="uploadFiles"
-          class="text-sm md:text-lg" />
+          class="text-sm w-64 md:text-lg md:w-full" />
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4 relative h-36"
@@ -141,6 +141,25 @@
           </div>
         </div>
       </div>
+      <h3 class="p-2 text-lg">カラー・パーツ</h3>
+      <ul class="mb-4">
+        <li>
+          <a
+            href="https://www.nailtat.com/"
+            class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
+            target="_blank">
+            TATから探す
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.nail-partner.com/"
+            class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
+            target="_blank">
+            ネイルパートナーから探す
+          </a>
+        </li>
+      </ul>
       <h3 class="p-2 text-lg">
         カラーイメージを登録する
         <input type="checkbox" @click="showColorContent" />
@@ -148,7 +167,7 @@
       <div
         class="mb-4 w-full text-lg border border-gray-300 rounded"
         v-show="colorContent">
-        <div class="my-4 pl-2 md:pl-4">
+        <div class="text-sm my-4 pl-2 md:pl-4 md:text-lg">
           <lable>ラメ</lable>&emsp; なし&nbsp;
           <input type="radio" v-model="color.lame" :value="false" />&emsp;
           あり&nbsp;
@@ -156,42 +175,73 @@
         </div>
         <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
           <button
-            :class="!showChrome ? 'switch-color-button' : ''"
-            @click="switchToChrome"
-            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            :class="!showColorPicker ? 'switch-color-button' : ''"
+            @click="switchToColorPicker"
+            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
             カラーピッカー
           </button>
           <button
-            :class="!showSwatches ? 'switch-color-button' : ''"
-            @click="switchToSwatches"
-            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            :class="!showColorPalette ? 'switch-color-button' : ''"
+            @click="switchToColorPalette"
+            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
             カラーパレット
           </button>
         </div>
-        <div v-show="showChrome">
+        <div v-show="showColorPicker">
           <div v-if="colorLameStyle" class="relative h-64">
             <img
               src="~color-picker-lame.png"
               class="color-picker-img absolute z-10 pointer-events-none" />
             <chrome-picker
               class="absolute z-0 color-picker-img"
-              :value="color.hexNumber"
-              v-model="color.hexNumber">
+              :value="color.pickerHexNumber"
+              v-model="color.pickerHexNumber">
             </chrome-picker>
           </div>
           <div v-else class="h-64 mb-3">
             <chrome-picker
               class="mx-auto"
-              :value="color.hexNumber"
-              v-model="color.hexNumber">
+              :value="color.pickerHexNumber"
+              v-model="color.pickerHexNumber">
             </chrome-picker>
           </div>
         </div>
-        <swatches-picker
-          :value="color.hexNumber"
-          v-model="color.hexNumber"
-          class="mx-auto"
-          v-show="showSwatches"></swatches-picker>
+        <div v-show="showColorPalette">
+          <div v-if="colorLameStyle" class="relative h-80">
+            <ul
+              class="grid gap-2 place-items-center grid-cols-5 border border-gray-300 m-2 p-4">
+              <li
+                v-for="(hexNumber, index) in colorPaletteHexNumbers"
+                :key="index"
+                :style="colorShowHexNumber(hexNumber)"
+                class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+                <img
+                  src="~lame.png"
+                  class="w-8 h-8 rounded-full opacity-80 absolute z-10 pointer-events-none" />
+                <input
+                  type="radio"
+                  v-model="color.paletteHexNumber"
+                  :value="hexNumber"
+                  class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
+              </li>
+            </ul>
+          </div>
+          <div v-else class="h-80 mb-3">
+            <ul class="grid gap-2 place-items-center grid-cols-5 m-2 p-4">
+              <li
+                v-for="(hexNumber, index) in colorPaletteHexNumbers"
+                :key="index"
+                :style="colorShowHexNumber(hexNumber)"
+                class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+                <input
+                  type="radio"
+                  v-model="color.paletteHexNumber"
+                  :value="hexNumber"
+                  class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
+              </li>
+            </ul>
+          </div>
+        </div>
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
           @click="colorData">
@@ -231,7 +281,7 @@
         <input type="checkbox" @click="showPartContent" />
       </h3>
       <div
-        class="p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
+        class="p-2 md:p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
         v-show="partContent">
         <input
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -239,7 +289,7 @@
           name="name"
           placeholder="パーツ名を入力してください。"
           v-model="part.name" />
-        <div class="my-4">
+        <div class="my-4 px-2">
           <button
             v-for="(candidateName, index) in part.candidateNamesList.name"
             :key="index"
@@ -254,7 +304,7 @@
           name="size"
           placeholder="大きさを入力してください。"
           v-model="part.size" />
-        <div class="my-4">
+        <div class="my-4 px-2">
           <button
             v-for="(candidateSize, index) in part.candidateNamesList.size"
             :key="index"
@@ -297,8 +347,19 @@
         <div
           class="rounded-b-lg border border-gray-300 py-2"
           v-show="partColorContent">
-          <swatches-picker v-model="part.hexNumber" class="mx-auto my-8">
-          </swatches-picker>
+          <ul class="grid gap-2 place-items-center grid-cols-5 m-1">
+            <li
+              v-for="(hexNumber, index) in colorPaletteHexNumbers"
+              :key="index"
+              :style="colorShowHexNumber(hexNumber)"
+              class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+              <input
+                type="radio"
+                v-model="part.hexNumber"
+                :value="hexNumber"
+                class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
+            </li>
+          </ul>
         </div>
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
@@ -400,14 +461,12 @@ import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
 import { Chrome } from 'vue-color'
-import { Swatches } from 'vue-color'
 import draggable from 'vuedraggable'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
   components: {
     'chrome-picker': Chrome,
-    'swatches-picker': Swatches,
     draggable
   },
   data() {
@@ -428,8 +487,52 @@ export default {
       },
       color: {
         lame: '',
-        hexNumber: '#FF7003'
+        pickerHexNumber: '#FF7003',
+        paletteHexNumber: '',
+        hexNumberHex8: ''
       },
+      colorPaletteHexNumbers: [
+        '#000000FF',
+        '#7F7F7FFF',
+        '#AAAAAAFF',
+        '#DFDFDFFF',
+        '#FFFFFFFF',
+        '#B12323FF',
+        '#D52B2BFF',
+        '#E27272FF',
+        '#F1B8B8FF',
+        '#F8DCDCFF',
+        '#AA5500FF',
+        '#FF8000FF',
+        '#FFAA55FF',
+        '#FFD5AAFF',
+        '#FFEAD5FF',
+        '#808000FF',
+        '#D5D500FF',
+        '#FFFF80FF',
+        '#FFFFAAFF',
+        '#FFFFD5FF',
+        '#1D8D8DFF',
+        '#23B1B1FF',
+        '#95EAEAFF',
+        '#B8F1F1FF',
+        '#DCF8F8FF',
+        '#15156AFF',
+        '#2B2BD5FF',
+        '#7272E2FF',
+        '#B8B8F1FF',
+        '#DCDCF8FF',
+        '#8D1D8DFF',
+        '#B123B1FF',
+        '#E272E2FF',
+        '#F1B8F1FF',
+        '#F8DCF8FF',
+        '#800040FF',
+        '#AA0055FF',
+        '#FF0080FF',
+        '#FF80BFFF',
+        '#FFD5EAFF'
+      ],
       part: {
         name: '',
         size: '',
@@ -447,8 +550,8 @@ export default {
         }
       },
       tag: '',
-      showChrome: true,
-      showSwatches: false,
+      showColorPicker: true,
+      showColorPalette: false,
       colorContent: false,
       partContent: false,
       partColorContent: false
@@ -504,19 +607,30 @@ export default {
     showColorContent() {
       this.colorContent = !this.colorContent
     },
-    switchToChrome() {
-      this.showChrome = true
-      this.showSwatches = false
+    switchToColorPicker() {
+      this.showColorPicker = true
+      this.showColorPalette = false
     },
-    switchToSwatches() {
-      this.showSwatches = true
-      this.showChrome = false
+    switchToColorPalette() {
+      this.showColorPalette = true
+      this.showColorPicker = false
     },
     colorData() {
-      if (this.color.lame !== '' && this.color.hexNumber !== '') {
+      if (this.color.pickerHexNumber !== '') {
+        this.color.hexNumberHex8 = this.color.pickerHexNumber.hex8
+      }
+      if (this.color.paletteHexNumber !== '') {
+        this.color.hexNumberHex8 = this.color.paletteHexNumber
+      }
+
+      if (
+        this.color.lame !== '' &&
+        (this.color.pickerHexNumber !== '' ||
+          this.color.paletteHexNumber !== '')
+      ) {
         this.design.colors.push({
           lame: this.color.lame,
-          hexNumber: this.color.hexNumber.hex8
+          hexNumber: this.color.hexNumberHex8
         })
         this.color.lame = ''
         this.color.hexNumber = '#E0E0E0'
@@ -531,7 +645,7 @@ export default {
           name: this.part.name,
           size: this.part.size,
           quantity: this.part.quantity,
-          hexNumber: this.part.hexNumber.hex8
+          hexNumber: this.part.hexNumber
         })
         this.part.name = ''
         this.part.size = ''
@@ -644,5 +758,11 @@ export default {
 .rotate-to-open {
   transform: rotate(90deg);
   transition: all 0.5s ease-in-out;
+}
+.external-link {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25' /%3E%3C/svg%3E%0A");
+}
+.checkbox:checked {
+  border: none;
 }
 </style>
