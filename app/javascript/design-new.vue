@@ -211,29 +211,35 @@
             <ul
               class="grid gap-2 place-items-center grid-cols-6 border border-gray-300 m-2 p-4">
               <li
-                v-for="(color, index) in colorPaletteHexNumbers"
+                v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
-                :style="colorShowHexNumber(color)"
-                @click="selectColorPaletteHexNumber(index)"
+                :style="colorShowHexNumber(hexNumber)"
                 class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
                 <img
                   src="~lame.png"
-                  class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+                  class="w-8 h-8 rounded-full opacity-80 absolute z-10 pointer-events-none" />
+                <input
+                  type="radio"
+                  v-model="color.paletteHexNumber"
+                  :value="hexNumber"
+                  class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
               </li>
             </ul>
-            <input type="text" v-model="color.paletteHexNumber" />
           </div>
           <div v-else class="h-64 mb-3">
-            <ul
-              class="grid gap-2 place-items-center grid-cols-6 border border-gray-300 m-2 p-4">
+            <ul class="grid gap-2 place-items-center grid-cols-6 m-2 p-4">
               <li
-                v-for="(color, index) in colorPaletteHexNumbers"
+                v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
-                :style="colorShowHexNumber(color)"
-                @click="selectColorPaletteHexNumber(index)"
-                class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30"></li>
+                :style="colorShowHexNumber(hexNumber)"
+                class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+                <input
+                  type="radio"
+                  v-model="color.paletteHexNumber"
+                  :value="hexNumber"
+                  class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
+              </li>
             </ul>
-            <input type="text" v-model="color.paletteHexNumber" />
           </div>
         </div>
         <button
@@ -343,13 +349,17 @@
           v-show="partColorContent">
           <ul class="grid gap-2 place-items-center grid-cols-6 m-1">
             <li
-              v-for="(color, index) in colorPaletteHexNumbers"
+              v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
-              :style="colorShowHexNumber(color)"
-              @click="selectPartColor(index)"
-              class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30"></li>
+              :style="colorShowHexNumber(hexNumber)"
+              class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+              <input
+                type="radio"
+                v-model="part.hexNumber"
+                :value="hexNumber"
+                class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
+            </li>
           </ul>
-          <input type="text" v-model="part.hexNumber" />
         </div>
         <button
           class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
@@ -590,9 +600,6 @@ export default {
     deleteYoutubeVideo(index) {
       this.design.youtubeVideos.splice(index, 1)
     },
-    selectColorPaletteHexNumber(index) {
-      this.color.paletteHexNumber = this.colorPaletteHexNumbers[index]
-    },
     showColorContent() {
       this.colorContent = !this.colorContent
     },
@@ -648,9 +655,6 @@ export default {
     },
     selectPartSize(index) {
       this.part.size = this.part.candidateNamesList.size[index]
-    },
-    selectPartColor(index) {
-      this.part.hexNumber = this.colorPaletteHexNumbers[index]
     },
     showPartContent() {
       this.partContent = !this.partContent
@@ -753,5 +757,8 @@ export default {
 }
 .external-link {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25' /%3E%3C/svg%3E%0A");
+}
+.checkbox:checked {
+  border: none;
 }
 </style>
