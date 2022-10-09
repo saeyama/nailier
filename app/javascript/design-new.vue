@@ -34,7 +34,7 @@
           multiple="multiple"
           accept="image/*"
           @change="uploadFiles"
-          class="text-sm md:text-lg" />
+          class="text-sm w-64 md:text-lg md:w-full" />
         <draggable
           v-model="design.images"
           draggable=".item"
@@ -71,7 +71,7 @@
           multiple="multiple"
           accept="video/*"
           @change="uploadFiles"
-          class="text-sm md:text-lg" />
+          class="text-sm w-64 md:text-lg md:w-full" />
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4 relative h-36"
@@ -167,7 +167,7 @@
       <div
         class="mb-4 w-full text-lg border border-gray-300 rounded"
         v-show="colorContent">
-        <div class="my-4 pl-2 md:pl-4">
+        <div class="text-sm my-4 pl-2 md:pl-4 md:text-lg">
           <lable>ラメ</lable>&emsp; なし&nbsp;
           <input type="radio" v-model="color.lame" :value="false" />&emsp;
           あり&nbsp;
@@ -175,19 +175,19 @@
         </div>
         <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
           <button
-            :class="!showChrome ? 'switch-color-button' : ''"
-            @click="switchToChrome"
-            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            :class="!showColorPicker ? 'switch-color-button' : ''"
+            @click="switchToColorPicker"
+            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
             カラーピッカー
           </button>
           <button
-            :class="!showSwatches ? 'switch-color-button' : ''"
-            @click="switchToSwatches"
-            class="text-white bg-gray-800 border-0 py-2 px-4 rounded-full shadow-lg shadow-gray-500/30 md:px-16">
+            :class="!showColorPalette ? 'switch-color-button' : ''"
+            @click="switchToColorPalette"
+            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
             カラーパレット
           </button>
         </div>
-        <div v-show="showChrome">
+        <div v-show="showColorPicker">
           <div v-if="colorLameStyle" class="relative h-64">
             <img
               src="~color-picker-lame.png"
@@ -206,7 +206,7 @@
             </chrome-picker>
           </div>
         </div>
-        <div v-show="showSwatches">
+        <div v-show="showColorPalette">
           <div v-if="colorLameStyle" class="relative h-80">
             <ul
               class="grid gap-2 place-items-center grid-cols-5 border border-gray-300 m-2 p-4">
@@ -281,7 +281,7 @@
         <input type="checkbox" @click="showPartContent" />
       </h3>
       <div
-        class="p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
+        class="p-2 md:p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
         v-show="partContent">
         <input
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -289,7 +289,7 @@
           name="name"
           placeholder="パーツ名を入力してください。"
           v-model="part.name" />
-        <div class="my-4">
+        <div class="my-4 px-2">
           <button
             v-for="(candidateName, index) in part.candidateNamesList.name"
             :key="index"
@@ -304,7 +304,7 @@
           name="size"
           placeholder="大きさを入力してください。"
           v-model="part.size" />
-        <div class="my-4">
+        <div class="my-4 px-2">
           <button
             v-for="(candidateSize, index) in part.candidateNamesList.size"
             :key="index"
@@ -550,8 +550,8 @@ export default {
         }
       },
       tag: '',
-      showChrome: true,
-      showSwatches: false,
+      showColorPicker: true,
+      showColorPalette: false,
       colorContent: false,
       partContent: false,
       partColorContent: false
@@ -607,13 +607,13 @@ export default {
     showColorContent() {
       this.colorContent = !this.colorContent
     },
-    switchToChrome() {
-      this.showChrome = true
-      this.showSwatches = false
+    switchToColorPicker() {
+      this.showColorPicker = true
+      this.showColorPalette = false
     },
-    switchToSwatches() {
-      this.showSwatches = true
-      this.showChrome = false
+    switchToColorPalette() {
+      this.showColorPalette = true
+      this.showColorPicker = false
     },
     colorData() {
       if (this.color.pickerHexNumber !== '') {
