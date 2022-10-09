@@ -207,9 +207,9 @@
           </div>
         </div>
         <div v-show="showSwatches">
-          <div v-if="colorLameStyle" class="relative h-64">
+          <div v-if="colorLameStyle" class="relative h-80">
             <ul
-              class="grid gap-2 place-items-center grid-cols-6 border border-gray-300 m-2 p-4">
+              class="grid gap-2 place-items-center grid-cols-5 border border-gray-300 m-2 p-4">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -226,8 +226,8 @@
               </li>
             </ul>
           </div>
-          <div v-else class="h-64 mb-3">
-            <ul class="grid gap-2 place-items-center grid-cols-6 m-2 p-4">
+          <div v-else class="h-80 mb-3">
+            <ul class="grid gap-2 place-items-center grid-cols-5 m-2 p-4">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -347,7 +347,7 @@
         <div
           class="rounded-b-lg border border-gray-300 py-2"
           v-show="partColorContent">
-          <ul class="grid gap-2 place-items-center grid-cols-6 m-1">
+          <ul class="grid gap-2 place-items-center grid-cols-5 m-1">
             <li
               v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
@@ -493,41 +493,45 @@ export default {
       },
       colorPaletteHexNumbers: [
         '#000000FF',
-        '#333333FF',
-        '#4D4D4DFF',
-        '#666666FF',
-        '#808080FF',
-        '#999999FF',
-        '#B3B3B3FF',
-        '#CCCCCCFF',
+        '#7F7F7FFF',
+        '#AAAAAAFF',
+        '#DFDFDFFF',
         '#FFFFFFFF',
-        '#9F0500FF',
-        '#D33115FF',
-        '#F44E3BFF',
-        '#C45100FF',
-        '#E27300FF',
-        '#FE9200FF',
-        '#FB9E00FF',
-        '#FCC400FF',
-        '#FCDC00FF',
-        '#DBDF00FF',
-        '#A4DD00FF',
-        '#68CCCAFF',
-        '#73D8FFFF',
-        '#AEA1FFFF',
-        '#FDA1FFFF',
-        '#B0BC00FF',
-        '#68BC00FF',
-        '#16A5A5FF',
-        '#009CE0FF',
-        '#7B64FFFF',
-        '#FA28FFFF',
-        '#808900FF',
-        '#194D33FF',
-        '#0C797DFF',
-        '#0062B1FF',
-        '#653294FF',
-        '#AB149EFF'
+        '#B12323FF',
+        '#D52B2BFF',
+        '#E27272FF',
+        '#F1B8B8FF',
+        '#F8DCDCFF',
+        '#AA5500FF',
+        '#FF8000FF',
+        '#FFAA55FF',
+        '#FFD5AAFF',
+        '#FFEAD5FF',
+        '#808000FF',
+        '#D5D500FF',
+        '#FFFF80FF',
+        '#FFFFAAFF',
+        '#FFFFD5FF',
+        '#1D8D8DFF',
+        '#23B1B1FF',
+        '#95EAEAFF',
+        '#B8F1F1FF',
+        '#DCF8F8FF',
+        '#15156AFF',
+        '#2B2BD5FF',
+        '#7272E2FF',
+        '#B8B8F1FF',
+        '#DCDCF8FF',
+        '#8D1D8DFF',
+        '#B123B1FF',
+        '#E272E2FF',
+        '#F1B8F1FF',
+        '#F8DCF8FF',
+        '#800040FF',
+        '#AA0055FF',
+        '#FF0080FF',
+        '#FF80BFFF',
+        '#FFD5EAFF'
       ],
       part: {
         name: '',
