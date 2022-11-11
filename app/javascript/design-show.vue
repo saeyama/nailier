@@ -5,7 +5,7 @@
       <div class="text-sm text-center underline underline-offset-2 pb-10">
         ネイルデザインを複製
       </div>
-      <div class="text-lg font-bold mb-12">{{ design.nail_part }}</div>
+      <div class="text-lg font-bold mb-12">{{ design.nailPart }}</div>
       <h3 class="text-lg font-bold mb-4">画像</h3>
       <div class="grid grid-cols-4">
         <div
@@ -27,17 +27,15 @@
       <div class="grid grid-cols-2">
         <div
           class="w-4/6 drop-shadow-lg mb-12"
-          v-for="youtube_video in design.youtube_videos"
-          :key="youtube_video.id">
-          <youtube
-            :video-id="youtube_video.access_code"
-            class="w-full h-full" />
+          v-for="youtubeVideo in design.youtubeVideos"
+          :key="youtubeVideo.id">
+          <youtube :video-id="youtubeVideo.accessCode" class="w-full h-full" />
         </div>
       </div>
       <h3 class="text-lg font-bold mb-4">カラー</h3>
       <div class="grid grid-cols-6 mb-12">
         <div v-for="color in design.colors" :key="color.id">
-          {{ color.hex_number }}
+          {{ color.hexNumber }}
         </div>
       </div>
       <h3 class="text-lg font-bold mb-4">パーツ</h3>
@@ -45,7 +43,7 @@
         <div v-for="part in design.parts" :key="part.id">
           {{ part.name }}&nbsp; {{ part.size }}&nbsp;
           {{ part.quantity }}個&nbsp;
-          {{ part.hex_number }}
+          {{ part.hexNumber }}
         </div>
       </div>
       <h3 class="text-lg font-bold mb-4">調べた内容・メモ</h3>

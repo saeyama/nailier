@@ -33,8 +33,8 @@
           </div>
         </div>
         <div>
-          {{ design.created_at }}&ensp;登録<br />
-          {{ design.updated_at }}&ensp;更新
+          {{ design.createdAt }}&ensp;登録<br />
+          {{ design.updatedAt }}&ensp;更新
         </div>
       </div>
     </div>

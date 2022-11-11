@@ -18,13 +18,13 @@
           type="radio"
           name="nail_part"
           value="hand"
-          v-model="design.nail_part" />&emsp; <label>フット</label>&nbsp;
+          v-model="design.nailPart" />&emsp; <label>フット</label>&nbsp;
         <input
           class="w-4 h-4"
           type="radio"
           name="nail_part"
           value="foot"
-          v-model="design.nail_part" />
+          v-model="design.nailPart" />
       </div>
       <div class="p-2 w-full text-lg">
         <lable>画像&#40;複数登録可&#41;</lable><br />
@@ -102,7 +102,7 @@
       <div class="p-2 w-full">
         <input
           type="text"
-          name="youtubeVideo"
+          name="youtube_video"
           placeholder="youtubeのURL"
           class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           v-model="youtubeVideo.url" />
@@ -474,7 +474,7 @@ export default {
       design: {
         title: '',
         description: '',
-        nail_part: '',
+        nailPart: '',
         images: [],
         videos: [],
         youtubeVideos: [],
@@ -684,7 +684,7 @@ export default {
       const params = {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
-        'design[nail_part]': this.design.nail_part,
+        'design[nail_part]': this.design.nailPart,
         'design[images]': this.design.images,
         'design[videos]': this.design.videos
       }
