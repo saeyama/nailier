@@ -14,6 +14,8 @@ class Api::DesignsController < ApplicationController
     @design = Design.new
   end
 
+  def edit; end
+
   def create
     @design = Design.new(design_params)
     @design.attach_blob(image_data_urls)
