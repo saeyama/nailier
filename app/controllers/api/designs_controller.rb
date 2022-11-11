@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::DesignsController < ApplicationController
-  before_action :set_design, only: %i[show]
+  before_action :set_design, only: %i[show edit update]
   skip_before_action :verify_authenticity_token
   def index
     @designs = Design.with_attached_images
@@ -24,6 +24,14 @@ class Api::DesignsController < ApplicationController
       render json: @design, status: :created
     else
       render json: @design.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @design.update!(design_params)
+      render json: { status: 'SUCCESS', data: @design }
+    else
+      render json: { status: 'ERROR', data: @design.errors }
     end
   end
 

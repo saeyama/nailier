@@ -472,6 +472,7 @@ export default {
   data() {
     return {
       design: {
+        id: '',
         title: '',
         nailPart: '',
         description: '',
@@ -707,9 +708,9 @@ export default {
       const params = {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
-        'design[nail_part]': this.design.nailPart,
-        'design[images]': this.design.images,
-        'design[videos]': this.design.videos
+        'design[nail_part]': this.design.nailPart
+        // 'design[images]': this.design.images,
+        // 'design[videos]': this.design.videos
       }
       Object.entries(params).forEach(([key, value]) => {
         if (Array.isArray(value)) {
@@ -721,41 +722,41 @@ export default {
         }
       })
 
-      const youtubeVideoParams = this.design.youtubeVideos
-      youtubeVideoParams.forEach((youtubeVideo) => {
-        formData.append(
-          'design[youtube_videos_attributes][][access_code]',
-          youtubeVideo.accessCode
-        )
-      })
+      // const youtubeVideoParams = this.design.youtubeVideos
+      // youtubeVideoParams.forEach((youtubeVideo) => {
+      //   formData.append(
+      //     'design[youtube_videos_attributes][][access_code]',
+      //     youtubeVideo.accessCode
+      //   )
+      // })
 
-      const colorParams = this.design.colors
-      colorParams.forEach((color) => {
-        formData.append('design[colors_attributes][][lame]', color.lame)
-        formData.append(
-          'design[colors_attributes][][hex_number]',
-          color.hexNumber
-        )
-      })
+      // const colorParams = this.design.colors
+      // colorParams.forEach((color) => {
+      //   formData.append('design[colors_attributes][][lame]', color.lame)
+      //   formData.append(
+      //     'design[colors_attributes][][hex_number]',
+      //     color.hexNumber
+      //   )
+      // })
 
-      const partParams = this.design.parts
-      partParams.forEach((part) => {
-        formData.append('design[parts_attributes][][name]', part.name)
-        formData.append('design[parts_attributes][][size]', part.size)
-        formData.append('design[parts_attributes][][quantity]', part.quantity)
-        formData.append(
-          'design[parts_attributes][][hex_number]',
-          part.hexNumber
-        )
-      })
+      // const partParams = this.design.parts
+      // partParams.forEach((part) => {
+      //   formData.append('design[parts_attributes][][name]', part.name)
+      //   formData.append('design[parts_attributes][][size]', part.size)
+      //   formData.append('design[parts_attributes][][quantity]', part.quantity)
+      //   formData.append(
+      //     'design[parts_attributes][][hex_number]',
+      //     part.hexNumber
+      //   )
+      // })
 
-      const tagParams = this.design.tags
-      tagParams.forEach((tag) => {
-        formData.append('design[tags_attributes][][name]', tag.name)
-      })
+      // const tagParams = this.design.tags
+      // tagParams.forEach((tag) => {
+      //   formData.append('design[tags_attributes][][name]', tag.name)
+      // })
 
       axios
-        .post('/api/designs', formData, {
+        .patch(`/api/designs/${this.design.id}`, formData, {
           headers: {
             'content-type': 'multipart/form-data'
           }
