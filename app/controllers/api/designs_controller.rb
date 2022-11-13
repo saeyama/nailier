@@ -45,7 +45,8 @@ class Api::DesignsController < ApplicationController
       parts_attributes: %i[name size quantity hex_number],
       tags_attributes: [:name],
       youtube_videos_attributes: [:access_code],
-      images_attachments_attributes: %i[id _destroy]
+      images_attachments_attributes: %i[id _destroy],
+      videos_attachments_attributes: %i[id _destroy]
     )
   end
 

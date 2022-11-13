@@ -80,27 +80,34 @@
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4 relative h-36"
-            v-for="video in design.videos"
-            :key="video">
+            v-for="(video, index) in saveVideos"
+            :key="index">
             <video class="h-32 absolute z-0">
               <source :src="video.url" type="video/mp4" />
             </video>
-            <div
-              @click="deleteVideo(url)"
-              class="cursor-pointer absolute z-10 top-1 right-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="video._destroy"
+              class="cursor-pointer absolute z-10 top-1 right-2" />
+          </div>
+        </div>
+        <div>削除する動画</div>
+        <div class="w-4/6 grid grid-cols-2 mb-2">
+          <div
+            class="w-full mt-4 relative h-36"
+            v-for="(video, index) in deleteVideos"
+            :key="index">
+            <video class="h-32 absolute z-0">
+              <source :src="video.url" type="video/mp4" />
+            </video>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="video._destroy"
+              class="cursor-pointer absolute z-10 top-1 right-2" />
           </div>
         </div>
       </div>
@@ -587,6 +594,16 @@ export default {
       return this.design.images.filter(function (image) {
         return image._destroy == '1'
       })
+    },
+    saveVideos() {
+      return this.design.videos.filter(function (video) {
+        return video._destroy == '0'
+      })
+    },
+    deleteVideos() {
+      return this.design.videos.filter(function (video) {
+        return video._destroy == '1'
+      })
     }
   },
   mounted() {
@@ -637,9 +654,6 @@ export default {
           }
         }
       }
-    },
-    deleteVideo(url) {
-      this.design.videos.splice(url, 1)
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
@@ -751,6 +765,22 @@ export default {
           formData.append(
             'design[images_attachments_attributes][][_destroy]',
             image._destroy
+          )
+        }
+      })
+
+      const videoParams = this.design.videos
+      videoParams.forEach((video) => {
+        if (video.id === '' && video._destroy === '0') {
+          formData.append('design[videos][]', video.url)
+        } else if (video.id !== '' && video._destroy === '1') {
+          formData.append(
+            'design[videos_attachments_attributes][][id]',
+            video.id
+          )
+          formData.append(
+            'design[videos_attachments_attributes][][_destroy]',
+            video._destroy
           )
         }
       })

@@ -6,6 +6,7 @@ class Design < ApplicationRecord
   has_many_attached :images
   accepts_nested_attributes_for :images_attachments, allow_destroy: true
   has_many_attached :videos
+  accepts_nested_attributes_for :videos_attachments, allow_destroy: true
   has_many :colors, dependent: :destroy
   accepts_nested_attributes_for :colors, allow_destroy: true
   has_many :parts, dependent: :destroy
