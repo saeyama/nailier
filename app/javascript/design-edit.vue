@@ -41,27 +41,32 @@
           class="grid grid-cols-4 mb-2">
           <div
             class="item w-full mt-4 relative h-36"
-            v-for="(image, index) in design.images"
-            :key="index">
+            v-for="image in saveImages"
+            :key="image">
             <img :src="image.url" class="absolute z-0 h-32" />
-            <div
-              @click="deleteImage(index)"
-              class="cursor-pointer absolute z-10 top-1 right-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="image._destroy"
+              class="cursor-pointer absolute z-10 top-1 right-2" />
           </div>
         </draggable>
+        <div>削除する画像</div>
+        <div class="grid grid-cols-4 mb-2">
+          <div
+            class="item w-full mt-4 relative h-36"
+            v-for="(image, index) in deleteImages"
+            :key="index">
+            <img :src="image.url" class="absolute z-0 h-32" />
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="image._destroy"
+              class="cursor-pointer absolute z-10 top-1 right-2" />
+          </div>
+        </div>
       </div>
       <div class="p-2 w-full text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
@@ -118,10 +123,12 @@
           :key="index"
           class="h-32 md:h-48">
           <div class="relative">
-            <youtube
-              :video-id="youtubeVideo.accessCode"
-              class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
-            </youtube>
+            <span>
+              <youtube
+                :video-id="youtubeVideo.accessCode"
+                class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
+              </youtube>
+            </span>
             <div
               @click="deleteYoutubeVideo(index)"
               class="cursor-pointer absolute z-10 top-1 -right-4 md:right-4">
@@ -537,7 +544,7 @@ export default {
       part: {
         name: '',
         size: '',
-        quantity: 0,
+        quantity: '0',
         hexNumber: '',
         candidateNamesList: {
           name: [
@@ -555,7 +562,9 @@ export default {
       showColorPalette: false,
       colorContent: false,
       partContent: false,
-      partColorContent: false
+      partColorContent: false,
+      value: 0,
+      destroy: false
     }
   },
   computed: {
@@ -568,6 +577,16 @@ export default {
     },
     colorLameStyle() {
       return this.color.lame === true
+    },
+    saveImages() {
+      return this.design.images.filter(function (image) {
+        return image._destroy == '0'
+      })
+    },
+    deleteImages() {
+      return this.design.images.filter(function (image) {
+        return image._destroy == '1'
+      })
     }
   },
   mounted() {
@@ -604,15 +623,20 @@ export default {
         fileReader.readAsDataURL(file)
         fileReader.onload = () => {
           if (fileReader.result.startsWith('data:image')) {
-            this.design.images.push(fileReader.result)
+            this.design.images.push({
+              id: '',
+              url: fileReader.result,
+              _destroy: '0'
+            })
           } else {
-            this.design.videos.push(fileReader.result)
+            this.design.videos.push({
+              id: '',
+              url: fileReader.result,
+              _destroy: '0'
+            })
           }
         }
       }
-    },
-    deleteImage(index) {
-      this.design.images.splice(index, 1)
     },
     deleteVideo(url) {
       this.design.videos.splice(url, 1)
@@ -646,7 +670,6 @@ export default {
       if (this.color.paletteHexNumber !== '') {
         this.color.hexNumberHex8 = this.color.paletteHexNumber
       }
-
       if (
         this.color.lame !== '' &&
         (this.color.pickerHexNumber !== '' ||
@@ -705,20 +728,30 @@ export default {
     updateDesign() {
       const formData = new FormData()
 
-      const params = {
+      const designParams = {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
         'design[nail_part]': this.design.nailPart
         // 'design[images]': this.design.images,
         // 'design[videos]': this.design.videos
       }
-      Object.entries(params).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          value.forEach((v) => {
-            formData.append(key + '[]', v)
-          })
-        } else {
-          formData.append(key, value)
+      Object.entries(designParams).forEach(([key, value]) => {
+        formData.append(key, value)
+      })
+
+      const imageParams = this.design.images
+      imageParams.forEach((image) => {
+        if (image.id === '' && image._destroy === '0') {
+          formData.append('design[images][]', image.url)
+        } else if (image.id !== '' && image._destroy === '1') {
+          formData.append(
+            'design[images_attachments_attributes][][id]',
+            image.id
+          )
+          formData.append(
+            'design[images_attachments_attributes][][_destroy]',
+            image._destroy
+          )
         }
       })
 
@@ -788,5 +821,8 @@ export default {
 }
 .checkbox:checked {
   border: none;
+}
+.delete {
+  opacity: 0.5;
 }
 </style>

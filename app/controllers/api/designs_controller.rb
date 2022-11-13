@@ -19,7 +19,6 @@ class Api::DesignsController < ApplicationController
   def create
     @design = Design.new(design_params)
     @design.attach_blob(image_data_urls)
-    @design.attach_blob(video_data_urls)
     if @design.save
       render json: @design, status: :created
     else
@@ -28,7 +27,9 @@ class Api::DesignsController < ApplicationController
   end
 
   def update
-    if @design.update!(design_params)
+    @design.attach_blob(image_data_urls)
+    @design.attach_blob(video_data_urls)
+    if @design.update(design_params)
       render json: { status: 'SUCCESS', data: @design }
     else
       render json: { status: 'ERROR', data: @design.errors }
@@ -43,7 +44,8 @@ class Api::DesignsController < ApplicationController
       colors_attributes: %i[lame hex_number],
       parts_attributes: %i[name size quantity hex_number],
       tags_attributes: [:name],
-      youtube_videos_attributes: [:access_code]
+      youtube_videos_attributes: [:access_code],
+      images_attachments_attributes: %i[id _destroy]
     )
   end
 
