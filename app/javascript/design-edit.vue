@@ -49,7 +49,7 @@
               true-value="1"
               false-value="0"
               v-model="image._destroy"
-              class="cursor-pointer absolute z-10 top-1 right-2" />
+              class="cursor-pointer absolute z-10 top-1 left-24" />
           </div>
         </draggable>
         <div>削除する画像</div>
@@ -64,7 +64,7 @@
               true-value="1"
               false-value="0"
               v-model="image._destroy"
-              class="cursor-pointer absolute z-10 top-1 right-2" />
+              class="cursor-pointer absolute z-10 top-1 left-24" />
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
               true-value="1"
               false-value="0"
               v-model="video._destroy"
-              class="cursor-pointer absolute z-10 top-1 right-2" />
+              class="cursor-pointer absolute z-10 top-1 left-32" />
           </div>
         </div>
         <div>削除する動画</div>
@@ -107,7 +107,7 @@
               true-value="1"
               false-value="0"
               v-model="video._destroy"
-              class="cursor-pointer absolute z-10 top-1 right-2" />
+              class="cursor-pointer absolute z-10 top-1 left-32" />
           </div>
         </div>
       </div>
@@ -408,15 +408,28 @@
           決定
         </button>
       </div>
+      {{ design.parts }}
       <div class="mb-4">
         <div
-          v-for="(part, index) in design.parts"
+          v-for="(part, index) in saveParts"
           :key="index"
           class="flex items-center mb-2 mr-4 space-x-8">
           <div class="flex items-center w-full">
             <div class="w-3/4">
-              {{ part.name }}&nbsp; {{ part.size }}&nbsp;
-              {{ part.quantity }}個&nbsp;
+              {{ part.name }}&nbsp;
+              <input
+                class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
+                type="text"
+                name="size"
+                v-model="part.size" />&nbsp;
+              <input
+                class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 pl-2 leading-8 transition-colors duration-200 ease-in-out w-16"
+                type="number"
+                min="0"
+                onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+                name="quantity"
+                placeholder="0"
+                v-model="part.quantity" />&nbsp;個
             </div>
             <div v-if="!part.hexNumber" class="w-8 h-8"></div>
             <div
@@ -462,7 +475,6 @@
           @click="tagData">
           決定</button
         ><br />
-        {{ design.tags }}
         <div class="flex justify-start">
           <div
             v-for="(tag, index) in saveTags"
@@ -657,12 +669,12 @@ export default {
       return this.design.tags.filter(function (tag) {
         return tag._destroy == '0'
       })
+    },
+    saveParts() {
+      return this.design.parts.filter(function (part) {
+        return part._destroy == '0'
+      })
     }
-    // deleteTags() {
-    //   return this.design.tags.filter(function (tag) {
-    //     return tag._destroy == '1'
-    //   })
-    // }
   },
   mounted() {
     this.getDesign()
@@ -759,10 +771,12 @@ export default {
     partData() {
       if (this.part.name !== '' && this.part.quantity !== '') {
         this.design.parts.push({
+          id: '',
           name: this.part.name,
           size: this.part.size,
           quantity: this.part.quantity,
-          hexNumber: this.part.hexNumber
+          hexNumber: this.part.hexNumber,
+          _destroy: '0'
         })
         this.part.name = ''
         this.part.size = ''
@@ -784,7 +798,8 @@ export default {
       this.partColorContent = !this.partColorContent
     },
     deletePart(index) {
-      this.design.parts.splice(index, 1)
+      this.$set(this.design.parts[index], '_destroy', '1')
+      // this.design.parts.splice(index, 1)
     },
     tagData() {
       this.design.tags.push({
@@ -842,14 +857,6 @@ export default {
         }
       })
 
-      // const youtubeVideoParams = this.design.youtubeVideos
-      // youtubeVideoParams.forEach((youtubeVideo) => {
-      //   formData.append(
-      //     'design[youtube_videos_attributes][][access_code]',
-      //     youtubeVideo.accessCode
-      //   )
-      // })
-
       const youtubeVideoParams = this.design.youtubeVideos
       youtubeVideoParams.forEach((youtubeVideo) => {
         if (youtubeVideo._destroy === '0') {
@@ -899,21 +906,23 @@ export default {
         }
       })
 
-      // const partParams = this.design.parts
-      // partParams.forEach((part) => {
-      //   formData.append('design[parts_attributes][][name]', part.name)
-      //   formData.append('design[parts_attributes][][size]', part.size)
-      //   formData.append('design[parts_attributes][][quantity]', part.quantity)
-      //   formData.append(
-      //     'design[parts_attributes][][hex_number]',
-      //     part.hexNumber
-      //   )
-      // })
-
-      // const tagParams = this.design.tags
-      // tagParams.forEach((tag) => {
-      //   formData.append('design[tags_attributes][][name]', tag.name)
-      // })
+      const partParams = this.design.parts
+      partParams.forEach((part) => {
+        if (part._destroy === '0') {
+          formData.append('design[parts_attributes][][id]', part.id)
+          formData.append('design[parts_attributes][][name]', part.name)
+          formData.append('design[parts_attributes][][size]', part.size)
+          formData.append('design[parts_attributes][][quantity]', part.quantity)
+          formData.append(
+            'design[parts_attributes][][hex_number]',
+            part.hexNumber
+          )
+          formData.append('design[parts_attributes][][_destroy]', part._destroy)
+        } else if (part.id !== '' && part._destroy === '1') {
+          formData.append('design[parts_attributes][][id]', part.id)
+          formData.append('design[parts_attributes][][_destroy]', part._destroy)
+        }
+      })
 
       const tagParams = this.design.tags
       tagParams.forEach((tag) => {

@@ -42,7 +42,7 @@ class Api::DesignsController < ApplicationController
     params.require(:design).permit(
       :title, :nail_part, :description,
       colors_attributes: %i[lame hex_number id _destroy],
-      parts_attributes: %i[name size quantity hex_number],
+      parts_attributes: %i[name size quantity hex_number id _destroy],
       tags_attributes: %i[name id],
       design_tags_attributes: %i[id _destroy],
       youtube_videos_attributes: %i[access_code id _destroy],
