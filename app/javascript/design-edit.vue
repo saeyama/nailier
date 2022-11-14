@@ -262,9 +262,10 @@
           決定
         </button>
       </div>
+      {{ design.colors }}
       <div class="flex space-x-12 mb-2">
         <div
-          v-for="(color, index) in design.colors"
+          v-for="(color, index) in saveColors"
           :key="index"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
@@ -274,19 +275,34 @@
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
           <div v-else-if="color.lame == false"></div>
-          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
-            </svg>
+          <div class="ml-10 cursor-pointer">
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="color._destroy" />
+          </div>
+        </div>
+      </div>
+      <div>カラーを削除する</div>
+      <div class="flex space-x-12 mb-2">
+        <div
+          v-for="(color, index) in deleteColors"
+          :key="index"
+          :style="colorShowHexNumber(color.hexNumber)"
+          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+          <div v-if="color.lame == true" class="relative">
+            <img
+              src="~lame.png"
+              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+          </div>
+          <div v-else-if="color.lame == false"></div>
+          <div class="ml-10 cursor-pointer">
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="color._destroy" />
           </div>
         </div>
       </div>
@@ -604,6 +620,16 @@ export default {
       return this.design.videos.filter(function (video) {
         return video._destroy == '1'
       })
+    },
+    saveColors() {
+      return this.design.colors.filter(function (color) {
+        return color._destroy == '0'
+      })
+    },
+    deleteColors() {
+      return this.design.colors.filter(function (color) {
+        return color._destroy == '1'
+      })
     }
   },
   mounted() {
@@ -690,15 +716,14 @@ export default {
           this.color.paletteHexNumber !== '')
       ) {
         this.design.colors.push({
+          id: '',
           lame: this.color.lame,
-          hexNumber: this.color.hexNumberHex8
+          hexNumber: this.color.hexNumberHex8,
+          _destroy: '0'
         })
         this.color.lame = ''
         this.color.hexNumber = '#E0E0E0'
       }
-    },
-    deleteColor(index) {
-      this.design.colors.splice(index, 1)
     },
     partData() {
       if (this.part.name !== '' && this.part.quantity !== '') {
@@ -746,8 +771,6 @@ export default {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
         'design[nail_part]': this.design.nailPart
-        // 'design[images]': this.design.images,
-        // 'design[videos]': this.design.videos
       }
       Object.entries(designParams).forEach(([key, value]) => {
         formData.append(key, value)
@@ -801,6 +824,28 @@ export default {
       //     color.hexNumber
       //   )
       // })
+
+      const colorParams = this.design.colors
+      colorParams.forEach((color) => {
+        if (color._destroy === '0') {
+          formData.append('design[colors_attributes][][id]', color.id)
+          formData.append('design[colors_attributes][][lame]', color.lame)
+          formData.append(
+            'design[colors_attributes][][hex_number]',
+            color.hexNumber
+          )
+          formData.append(
+            'design[colors_attributes][][_destroy]',
+            color._destroy
+          )
+        } else if (color.id !== '' && color._destroy === '1') {
+          formData.append('design[colors_attributes][][id]', color.id)
+          formData.append(
+            'design[colors_attributes][][_destroy]',
+            color._destroy
+          )
+        }
+      })
 
       // const partParams = this.design.parts
       // partParams.forEach((part) => {
