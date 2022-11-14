@@ -460,11 +460,12 @@
         <button
           class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30"
           @click="tagData">
-          決定
-        </button>
+          決定</button
+        ><br />
+        {{ design.tags }}
         <div class="flex justify-start">
           <div
-            v-for="(tag, index) in design.tags"
+            v-for="(tag, index) in saveTags"
             :key="index"
             class="border border-gray-300 mr-4 px-2 py-1 rounded flex justify-center items-center">
             <div class="mr-1">
@@ -651,7 +652,17 @@ export default {
       return this.design.youtubeVideos.filter(function (youtubeVideo) {
         return youtubeVideo._destroy == '1'
       })
+    },
+    saveTags() {
+      return this.design.tags.filter(function (tag) {
+        return tag._destroy == '0'
+      })
     }
+    // deleteTags() {
+    //   return this.design.tags.filter(function (tag) {
+    //     return tag._destroy == '1'
+    //   })
+    // }
   },
   mounted() {
     this.getDesign()
@@ -712,9 +723,6 @@ export default {
         this.youtubeVideo.url = ''
       }
     },
-    // deleteYoutubeVideo(index) {
-    //   this.design.youtubeVideos.splice(index, 1)
-    // },
     showColorContent() {
       this.colorContent = !this.colorContent
     },
@@ -780,12 +788,15 @@ export default {
     },
     tagData() {
       this.design.tags.push({
-        name: this.tag
+        id: '',
+        name: this.tag,
+        design_tag_id: '',
+        _destroy: '0'
       })
       this.tag = ''
     },
     deleteTag(index) {
-      this.design.tags.splice(index, 1)
+      this.$set(this.design.tags[index], '_destroy', '1')
     },
     updateDesign() {
       const formData = new FormData()
@@ -903,6 +914,23 @@ export default {
       // tagParams.forEach((tag) => {
       //   formData.append('design[tags_attributes][][name]', tag.name)
       // })
+
+      const tagParams = this.design.tags
+      tagParams.forEach((tag) => {
+        if (tag._destroy === '0') {
+          formData.append('design[tags_attributes][][id]', tag.id)
+          formData.append('design[tags_attributes][][name]', tag.name)
+        } else if (tag.id !== '' && tag._destroy === '1') {
+          formData.append(
+            'design[design_tags_attributes][][id]',
+            tag.design_tag_id
+          )
+          formData.append(
+            'design[design_tags_attributes][][_destroy]',
+            tag._destroy
+          )
+        }
+      })
 
       axios
         .patch(`/api/designs/${this.design.id}`, formData, {
