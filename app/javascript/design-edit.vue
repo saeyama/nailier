@@ -56,8 +56,8 @@
         <div class="grid grid-cols-4 mb-2">
           <div
             class="item w-full mt-4 relative h-36"
-            v-for="(image, index) in deleteImages"
-            :key="index">
+            v-for="image in deleteImages"
+            :key="image">
             <img :src="image.url" class="absolute z-0 h-32" />
             <input
               type="checkbox"
@@ -80,8 +80,8 @@
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4 relative h-36"
-            v-for="(video, index) in saveVideos"
-            :key="index">
+            v-for="video in saveVideos"
+            :key="video">
             <video class="h-32 absolute z-0">
               <source :src="video.url" type="video/mp4" />
             </video>
@@ -97,8 +97,8 @@
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4 relative h-36"
-            v-for="(video, index) in deleteVideos"
-            :key="index">
+            v-for="video in deleteVideos"
+            :key="video">
             <video class="h-32 absolute z-0">
               <source :src="video.url" type="video/mp4" />
             </video>
@@ -126,8 +126,8 @@
       </div>
       <div class="grid grid-cols-2 gap-8 mb-2">
         <div
-          v-for="(youtubeVideo, index) in design.youtubeVideos"
-          :key="index"
+          v-for="youtubeVideo in saveYoutubeVideos"
+          :key="youtubeVideo"
           class="h-32 md:h-48">
           <div class="relative">
             <span>
@@ -136,22 +136,34 @@
                 class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
               </youtube>
             </span>
-            <div
-              @click="deleteYoutubeVideo(index)"
-              class="cursor-pointer absolute z-10 top-1 -right-4 md:right-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="youtubeVideo._destroy"
+              class="cursor-pointer absolute z-10 top-1 left-28 md:left-60" />
+          </div>
+        </div>
+      </div>
+      <div>削除するyoutube動画</div>
+      <div class="grid grid-cols-2 gap-8 mb-2">
+        <div
+          v-for="youtubeVideo in deleteYoutubeVideos"
+          :key="youtubeVideo"
+          class="h-32 md:h-48">
+          <div class="relative">
+            <span>
+              <youtube
+                :video-id="youtubeVideo.accessCode"
+                class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
+              </youtube>
+            </span>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="youtubeVideo._destroy"
+              class="cursor-pointer absolute z-10 top-1 left-28 md:left-60" />
           </div>
         </div>
       </div>
@@ -262,11 +274,10 @@
           決定
         </button>
       </div>
-      {{ design.colors }}
       <div class="flex space-x-12 mb-2">
         <div
-          v-for="(color, index) in saveColors"
-          :key="index"
+          v-for="color in saveColors"
+          :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
           <div v-if="color.lame == true" class="relative">
@@ -287,8 +298,8 @@
       <div>カラーを削除する</div>
       <div class="flex space-x-12 mb-2">
         <div
-          v-for="(color, index) in deleteColors"
-          :key="index"
+          v-for="color in deleteColors"
+          :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
           <div v-if="color.lame == true" class="relative">
@@ -630,6 +641,16 @@ export default {
       return this.design.colors.filter(function (color) {
         return color._destroy == '1'
       })
+    },
+    saveYoutubeVideos() {
+      return this.design.youtubeVideos.filter(function (youtubeVideo) {
+        return youtubeVideo._destroy == '0'
+      })
+    },
+    deleteYoutubeVideos() {
+      return this.design.youtubeVideos.filter(function (youtubeVideo) {
+        return youtubeVideo._destroy == '1'
+      })
     }
   },
   mounted() {
@@ -684,14 +705,16 @@ export default {
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
         this.design.youtubeVideos.push({
-          accessCode: this.youtubeVideo.url.slice(-11)
+          id: '',
+          accessCode: this.youtubeVideo.url.slice(-11),
+          _destroy: '0'
         })
         this.youtubeVideo.url = ''
       }
     },
-    deleteYoutubeVideo(index) {
-      this.design.youtubeVideos.splice(index, 1)
-    },
+    // deleteYoutubeVideo(index) {
+    //   this.design.youtubeVideos.splice(index, 1)
+    // },
     showColorContent() {
       this.colorContent = !this.colorContent
     },
@@ -816,14 +839,32 @@ export default {
       //   )
       // })
 
-      // const colorParams = this.design.colors
-      // colorParams.forEach((color) => {
-      //   formData.append('design[colors_attributes][][lame]', color.lame)
-      //   formData.append(
-      //     'design[colors_attributes][][hex_number]',
-      //     color.hexNumber
-      //   )
-      // })
+      const youtubeVideoParams = this.design.youtubeVideos
+      youtubeVideoParams.forEach((youtubeVideo) => {
+        if (youtubeVideo._destroy === '0') {
+          formData.append(
+            'design[youtube_videos_attributes][][id]',
+            youtubeVideo.id
+          )
+          formData.append(
+            'design[youtube_videos_attributes][][access_code]',
+            youtubeVideo.accessCode
+          )
+          formData.append(
+            'design[youtube_videos_attributes][][_destroy]',
+            youtubeVideo._destroy
+          )
+        } else if (youtubeVideo.id !== '' && youtubeVideo._destroy === '1') {
+          formData.append(
+            'design[youtube_videos_attributes][][id]',
+            youtubeVideo.id
+          )
+          formData.append(
+            'design[youtube_videos_attributes][][_destroy]',
+            youtubeVideo._destroy
+          )
+        }
+      })
 
       const colorParams = this.design.colors
       colorParams.forEach((color) => {
