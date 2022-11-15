@@ -14,7 +14,7 @@
           <div class="w-1/2 md:w-full">
             <img
               class="w-5/6 drop-shadow-lg mx-auto md:w-3/4"
-              :src="design.images" />
+              :src="design.image" />
           </div>
           <div
             class="w-1/2 justify-between items-center md:flex md:justify-between md:w-full md:mb-2">

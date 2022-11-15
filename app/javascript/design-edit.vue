@@ -35,13 +35,17 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
+        <div>
+          画像削除をする場合はチェックを入れてください。<br />
+          削除・追加・並び替え後の内容は更新後の画像に表示されます。
+        </div>
         <draggable
           v-model="design.images"
           draggable=".item"
           class="grid grid-cols-4 mb-2">
           <div
             class="item w-full mt-4 relative h-36"
-            v-for="image in saveImages"
+            v-for="image in design.images"
             :key="image">
             <img :src="image.url" class="absolute z-0 h-32" />
             <input
@@ -52,19 +56,13 @@
               class="cursor-pointer absolute z-10 top-1 left-24" />
           </div>
         </draggable>
-        <div>削除する画像</div>
+        <div>更新後の画像</div>
         <div class="grid grid-cols-4 mb-2">
           <div
             class="item w-full mt-4 relative h-36"
-            v-for="image in deleteImages"
+            v-for="image in saveImages()"
             :key="image">
             <img :src="image.url" class="absolute z-0 h-32" />
-            <input
-              type="checkbox"
-              true-value="1"
-              false-value="0"
-              v-model="image._destroy"
-              class="cursor-pointer absolute z-10 top-1 left-24" />
           </div>
         </div>
       </div>
@@ -531,6 +529,7 @@ export default {
         nailPart: '',
         description: '',
         images: [],
+        sortImages: [],
         videos: [],
         youtubeVideos: [],
         colors: [],
@@ -625,16 +624,6 @@ export default {
     colorLameStyle() {
       return this.color.lame === true
     },
-    saveImages() {
-      return this.design.images.filter(function (image) {
-        return image._destroy == '0'
-      })
-    },
-    deleteImages() {
-      return this.design.images.filter(function (image) {
-        return image._destroy == '1'
-      })
-    },
     saveVideos() {
       return this.design.videos.filter(function (video) {
         return video._destroy == '0'
@@ -724,6 +713,13 @@ export default {
           }
         }
       }
+    },
+    saveImages() {
+      return (this.design.sortImages = this.design.images.filter(function (
+        image
+      ) {
+        return image._destroy == '0'
+      }))
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
@@ -823,6 +819,11 @@ export default {
       }
       Object.entries(designParams).forEach(([key, value]) => {
         formData.append(key, value)
+      })
+
+      const sortImageIdParams = this.design.sortImages
+      sortImageIdParams.forEach((image) => {
+        formData.append('design[sort_image_ids][]', image.id)
       })
 
       const imageParams = this.design.images

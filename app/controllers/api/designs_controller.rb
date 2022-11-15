@@ -30,6 +30,7 @@ class Api::DesignsController < ApplicationController
     @design.attach_blob(image_data_urls)
     @design.attach_blob(video_data_urls)
     if @design.update(design_params)
+      @design.images_set(sort_image_ids)
       render json: { status: 'SUCCESS', data: @design }
     else
       render json: { status: 'ERROR', data: @design.errors }
@@ -61,5 +62,9 @@ class Api::DesignsController < ApplicationController
 
   def set_design
     @design = Design.find(params[:id])
+  end
+
+  def sort_image_ids
+    params.require(:design).permit(sort_image_ids: [])[:sort_image_ids]
   end
 end

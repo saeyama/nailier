@@ -47,4 +47,14 @@ class Design < ApplicationRecord
       tags << tag if tags.where(name: tag[:name]).blank?
     end
   end
+
+  def images_set(sort_image_ids)
+    return unless sort_image_ids
+
+    sort_images = SortImages.new(sort_image_ids)
+    sort_images.temporary_new_ids if sort_image_ids.include?('')
+    sort_images.index_of_ids.each.with_index(1) do |id, index|
+      images[id].blob.update(filename: index)
+    end
+  end
 end
