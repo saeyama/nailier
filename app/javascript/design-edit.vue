@@ -406,11 +406,10 @@
           決定
         </button>
       </div>
-      {{ design.parts }}
       <div class="mb-4">
         <div
-          v-for="(part, index) in saveParts"
-          :key="index"
+          v-for="part in saveParts"
+          :key="part"
           class="flex items-center mb-2 mr-4 space-x-8">
           <div class="flex items-center w-full">
             <div class="w-3/4">
@@ -435,7 +434,7 @@
               :style="colorShowHexNumber(part.hexNumber)"
               class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8"></div>
           </div>
-          <div @click="deletePart(index)" class="cursor-pointer">
+          <div @click="deletePart(part)" class="cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -475,13 +474,13 @@
         ><br />
         <div class="flex justify-start">
           <div
-            v-for="(tag, index) in saveTags"
-            :key="index"
+            v-for="tag in saveTags"
+            :key="tag"
             class="border border-gray-300 mr-4 px-2 py-1 rounded flex justify-center items-center">
             <div class="mr-1">
               {{ tag.name }}
             </div>
-            <div @click="deleteTag(index)" class="cursor-pointer">
+            <div @click="deleteTag(tag)" class="cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -793,9 +792,8 @@ export default {
     showPartColorContent() {
       this.partColorContent = !this.partColorContent
     },
-    deletePart(index) {
-      this.$set(this.design.parts[index], '_destroy', '1')
-      // this.design.parts.splice(index, 1)
+    deletePart(part) {
+      this.$set(part, '_destroy', '1')
     },
     tagData() {
       this.design.tags.push({
@@ -806,8 +804,8 @@ export default {
       })
       this.tag = ''
     },
-    deleteTag(index) {
-      this.$set(this.design.tags[index], '_destroy', '1')
+    deleteTag(tag) {
+      this.$set(tag, '_destroy', '1')
     },
     updateDesign() {
       const formData = new FormData()
