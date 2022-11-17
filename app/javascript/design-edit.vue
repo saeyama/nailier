@@ -1,6 +1,6 @@
 <template>
   <div class="container text-gray-600 py-10 mx-auto mb-4">
-    <h2 class="text-2xl font-bold text-center py-10">ネイルデザインを登録</h2>
+    <h2 class="text-2xl font-bold text-center py-10">ネイルデザインを編集</h2>
     <div class="w-11/12 md:w-3/4 mx-auto">
       <div class="p-2 w-full text-lg">
         <lable>タイトル</lable>
@@ -35,33 +35,36 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
+        <div>
+          画像削除をする場合はチェックを入れてください。<br />
+          削除・追加・並び替え後の内容は更新後の画像に表示されます。
+        </div>
         <draggable
           v-model="design.images"
           draggable=".item"
           class="grid grid-cols-4 mb-2">
           <div
             class="item w-full mt-4 relative h-36"
-            v-for="(url, index) in design.images"
-            :key="index">
-            <img :src="url" class="absolute z-0 h-32" />
-            <div
-              @click="deleteImage(index)"
-              class="cursor-pointer absolute z-10 top-1 right-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
+            v-for="image in design.images"
+            :key="image">
+            <img :src="image.url" class="absolute z-0 h-32" />
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="image._destroy"
+              class="cursor-pointer absolute z-10 top-1 left-24" />
           </div>
         </draggable>
+        <div>更新後の画像</div>
+        <div class="grid grid-cols-4 mb-2">
+          <div
+            class="item w-full mt-4 relative h-36"
+            v-for="image in saveImages"
+            :key="image">
+            <img :src="image.url" class="absolute z-0 h-32" />
+          </div>
+        </div>
       </div>
       <div class="p-2 w-full text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
@@ -75,27 +78,34 @@
         <div class="w-4/6 grid grid-cols-2 mb-2">
           <div
             class="w-full mt-4 relative h-36"
-            v-for="url in design.videos"
-            :key="url">
+            v-for="video in saveVideos"
+            :key="video">
             <video class="h-32 absolute z-0">
-              <source :src="url" type="video/mp4" />
+              <source :src="video.url" type="video/mp4" />
             </video>
-            <div
-              @click="deleteVideo(url)"
-              class="cursor-pointer absolute z-10 top-1 right-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="video._destroy"
+              class="cursor-pointer absolute z-10 top-1 left-32" />
+          </div>
+        </div>
+        <div>削除する動画</div>
+        <div class="w-4/6 grid grid-cols-2 mb-2">
+          <div
+            class="w-full mt-4 relative h-36"
+            v-for="video in deleteVideos"
+            :key="video">
+            <video class="h-32 absolute z-0">
+              <source :src="video.url" type="video/mp4" />
+            </video>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="video._destroy"
+              class="cursor-pointer absolute z-10 top-1 left-32" />
           </div>
         </div>
       </div>
@@ -114,30 +124,44 @@
       </div>
       <div class="grid grid-cols-2 gap-8 mb-2">
         <div
-          v-for="(youtubeVideo, index) in design.youtubeVideos"
-          :key="index"
+          v-for="youtubeVideo in saveYoutubeVideos"
+          :key="youtubeVideo"
           class="h-32 md:h-48">
           <div class="relative">
-            <youtube
-              :video-id="youtubeVideo.accessCode"
-              class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
-            </youtube>
-            <div
-              @click="deleteYoutubeVideo(index)"
-              class="cursor-pointer absolute z-10 top-1 -right-4 md:right-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
+            <span>
+              <youtube
+                :video-id="youtubeVideo.accessCode"
+                class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
+              </youtube>
+            </span>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="youtubeVideo._destroy"
+              class="cursor-pointer absolute z-10 top-1 left-28 md:left-60" />
+          </div>
+        </div>
+      </div>
+      <div>削除するyoutube動画</div>
+      <div class="grid grid-cols-2 gap-8 mb-2">
+        <div
+          v-for="youtubeVideo in deleteYoutubeVideos"
+          :key="youtubeVideo"
+          class="h-32 md:h-48">
+          <div class="relative">
+            <span>
+              <youtube
+                :video-id="youtubeVideo.accessCode"
+                class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
+              </youtube>
+            </span>
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="youtubeVideo._destroy"
+              class="cursor-pointer absolute z-10 top-1 left-28 md:left-60" />
           </div>
         </div>
       </div>
@@ -250,29 +274,44 @@
       </div>
       <div class="flex space-x-12 mb-2">
         <div
-          v-for="(color, index) in design.colors"
-          :key="index"
+          v-for="color in saveColors"
+          :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
-          <div v-if="color.lame == true" class="relative">
+          <div v-if="color.lame === true" class="relative">
             <img
               src="~lame.png"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
-          <div v-else-if="color.lame == false"></div>
-          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
-            </svg>
+          <div v-else-if="color.lame === false"></div>
+          <div class="ml-10 cursor-pointer">
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="color._destroy" />
+          </div>
+        </div>
+      </div>
+      <div>カラーを削除する</div>
+      <div class="flex space-x-12 mb-2">
+        <div
+          v-for="color in deleteColors"
+          :key="color"
+          :style="colorShowHexNumber(color.hexNumber)"
+          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+          <div v-if="color.lame === true" class="relative">
+            <img
+              src="~lame.png"
+              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+          </div>
+          <div v-else-if="color.lame === false"></div>
+          <div class="ml-10 cursor-pointer">
+            <input
+              type="checkbox"
+              true-value="1"
+              false-value="0"
+              v-model="color._destroy" />
           </div>
         </div>
       </div>
@@ -320,7 +359,7 @@
             class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
             type="number"
             min="0"
-            onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+            onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
             name="quantity"
             placeholder="0"
             v-model="part.quantity" />
@@ -369,13 +408,25 @@
       </div>
       <div class="mb-4">
         <div
-          v-for="(part, index) in design.parts"
-          :key="index"
+          v-for="part in saveParts"
+          :key="part"
           class="flex items-center mb-2 mr-4 space-x-8">
           <div class="flex items-center w-full">
             <div class="w-3/4">
-              {{ part.name }}&nbsp; {{ part.size }}&nbsp;
-              {{ part.quantity }}個&nbsp;
+              {{ part.name }}&nbsp;
+              <input
+                class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
+                type="text"
+                name="size"
+                v-model="part.size" />&nbsp;
+              <input
+                class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 pl-2 leading-8 transition-colors duration-200 ease-in-out w-16"
+                type="number"
+                min="0"
+                onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+                name="quantity"
+                placeholder="0"
+                v-model="part.quantity" />&nbsp;個
             </div>
             <div v-if="!part.hexNumber" class="w-8 h-8"></div>
             <div
@@ -383,7 +434,7 @@
               :style="colorShowHexNumber(part.hexNumber)"
               class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8"></div>
           </div>
-          <div @click="deletePart(index)" class="cursor-pointer">
+          <div @click="deletePart(part)" class="cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -419,17 +470,17 @@
         <button
           class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30"
           @click="tagData">
-          決定
-        </button>
+          決定</button
+        ><br />
         <div class="flex justify-start">
           <div
-            v-for="(tag, index) in design.tags"
-            :key="index"
+            v-for="tag in saveTags"
+            :key="tag"
             class="border border-gray-300 mr-4 px-2 py-1 rounded flex justify-center items-center">
             <div class="mr-1">
               {{ tag.name }}
             </div>
-            <div @click="deleteTag(index)" class="cursor-pointer">
+            <div @click="deleteTag(tag)" class="cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -448,8 +499,8 @@
       </div>
       <button
         class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
-        @click="createDesign">
-        ネイルデザインを登録
+        @click="updateDesign">
+        ネイルデザインを更新
       </button>
     </div>
   </div>
@@ -472,9 +523,10 @@ export default {
   data() {
     return {
       design: {
+        id: '',
         title: '',
-        description: '',
         nailPart: '',
+        description: '',
         images: [],
         videos: [],
         youtubeVideos: [],
@@ -536,7 +588,7 @@ export default {
       part: {
         name: '',
         size: '',
-        quantity: 0,
+        quantity: '0',
         hexNumber: '',
         candidateNamesList: {
           name: [
@@ -554,7 +606,9 @@ export default {
       showColorPalette: false,
       colorContent: false,
       partContent: false,
-      partColorContent: false
+      partColorContent: false,
+      value: 0,
+      destroy: false
     }
   },
   computed: {
@@ -567,9 +621,77 @@ export default {
     },
     colorLameStyle() {
       return this.color.lame === true
+    },
+    saveImages() {
+      return this.design.images.filter(function (image) {
+        return image._destroy === '0'
+      })
+    },
+    saveVideos() {
+      return this.design.videos.filter(function (video) {
+        return video._destroy === '0'
+      })
+    },
+    deleteVideos() {
+      return this.design.videos.filter(function (video) {
+        return video._destroy === '1'
+      })
+    },
+    saveColors() {
+      return this.design.colors.filter(function (color) {
+        return color._destroy === '0'
+      })
+    },
+    deleteColors() {
+      return this.design.colors.filter(function (color) {
+        return color._destroy === '1'
+      })
+    },
+    saveYoutubeVideos() {
+      return this.design.youtubeVideos.filter(function (youtubeVideo) {
+        return youtubeVideo._destroy === '0'
+      })
+    },
+    deleteYoutubeVideos() {
+      return this.design.youtubeVideos.filter(function (youtubeVideo) {
+        return youtubeVideo._destroy === '1'
+      })
+    },
+    saveTags() {
+      return this.design.tags.filter(function (tag) {
+        return tag._destroy === '0'
+      })
+    },
+    saveParts() {
+      return this.design.parts.filter(function (part) {
+        return part._destroy === '0'
+      })
     }
   },
+  mounted() {
+    this.getDesign()
+  },
   methods: {
+    getDesign() {
+      const url = location.pathname.split('/')
+      const id = url[url.length - 2]
+      axios.get(`/api/designs/${id}.json`).then((response) => {
+        ;(this.design.id = response.data.id),
+          (this.design.title = response.data.title),
+          (this.design.nailPart = response.data.nailPart),
+          (this.design.description = response.data.description),
+          (this.design.images = response.data.images.map(
+            (imageData) => imageData
+          )),
+          (this.design.videos = response.data.videos.map(
+            (videoData) => videoData
+          )),
+          (this.design.youtubeVideos = response.data.youtubeVideos),
+          (this.design.colors = response.data.colors),
+          (this.design.parts = response.data.parts),
+          (this.design.tags = response.data.tags)
+      })
+    },
     uploadFiles(e) {
       const files = e.target.files
       if (files === 0) {
@@ -580,29 +702,30 @@ export default {
         fileReader.readAsDataURL(file)
         fileReader.onload = () => {
           if (fileReader.result.startsWith('data:image')) {
-            this.design.images.push(fileReader.result)
+            this.design.images.push({
+              id: '',
+              url: fileReader.result,
+              _destroy: '0'
+            })
           } else {
-            this.design.videos.push(fileReader.result)
+            this.design.videos.push({
+              id: '',
+              url: fileReader.result,
+              _destroy: '0'
+            })
           }
         }
       }
     },
-    deleteImage(index) {
-      this.design.images.splice(index, 1)
-    },
-    deleteVideo(url) {
-      this.design.videos.splice(url, 1)
-    },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
         this.design.youtubeVideos.push({
-          accessCode: this.youtubeVideo.url.slice(-11)
+          id: '',
+          accessCode: this.youtubeVideo.url.slice(-11),
+          _destroy: '0'
         })
         this.youtubeVideo.url = ''
       }
-    },
-    deleteYoutubeVideo(index) {
-      this.design.youtubeVideos.splice(index, 1)
     },
     showColorContent() {
       this.colorContent = !this.colorContent
@@ -622,30 +745,30 @@ export default {
       if (this.color.paletteHexNumber !== '') {
         this.color.hexNumberHex8 = this.color.paletteHexNumber
       }
-
       if (
         this.color.lame !== '' &&
         (this.color.pickerHexNumber !== '' ||
           this.color.paletteHexNumber !== '')
       ) {
         this.design.colors.push({
+          id: '',
           lame: this.color.lame,
-          hexNumber: this.color.hexNumberHex8
+          hexNumber: this.color.hexNumberHex8,
+          _destroy: '0'
         })
         this.color.lame = ''
         this.color.hexNumber = '#E0E0E0'
       }
     },
-    deleteColor(index) {
-      this.design.colors.splice(index, 1)
-    },
     partData() {
       if (this.part.name !== '' && this.part.quantity !== '') {
         this.design.parts.push({
+          id: '',
           name: this.part.name,
           size: this.part.size,
           quantity: this.part.quantity,
-          hexNumber: this.part.hexNumber
+          hexNumber: this.part.hexNumber,
+          _destroy: '0'
         })
         this.part.name = ''
         this.part.size = ''
@@ -666,73 +789,158 @@ export default {
     showPartColorContent() {
       this.partColorContent = !this.partColorContent
     },
-    deletePart(index) {
-      this.design.parts.splice(index, 1)
+    deletePart(part) {
+      this.$set(part, '_destroy', '1')
     },
     tagData() {
       this.design.tags.push({
-        name: this.tag
+        id: '',
+        name: this.tag,
+        design_tag_id: '',
+        _destroy: '0'
       })
       this.tag = ''
     },
-    deleteTag(index) {
-      this.design.tags.splice(index, 1)
+    deleteTag(tag) {
+      this.$set(tag, '_destroy', '1')
     },
-    createDesign() {
+    updateDesign() {
       const formData = new FormData()
 
-      const params = {
+      const designParams = {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
-        'design[nail_part]': this.design.nailPart,
-        'design[images]': this.design.images,
-        'design[videos]': this.design.videos
+        'design[nail_part]': this.design.nailPart
       }
-      Object.entries(params).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          value.forEach((v) => {
-            formData.append(key + '[]', v)
-          })
-        } else {
-          formData.append(key, value)
+      Object.entries(designParams).forEach(([key, value]) => {
+        formData.append(key, value)
+      })
+
+      const imageParams = this.design.images
+      imageParams.forEach((image) => {
+        if (image.id === '' && image._destroy === '0') {
+          formData.append('design[images][]', image.url)
+        } else if (image.id !== '' && image._destroy === '1') {
+          formData.append(
+            'design[images_attachments_attributes][][id]',
+            image.id
+          )
+          formData.append(
+            'design[images_attachments_attributes][][_destroy]',
+            image._destroy
+          )
         }
+      })
+
+      const videoParams = this.design.videos
+      videoParams.forEach((video) => {
+        if (video.id === '' && video._destroy === '0') {
+          formData.append('design[videos][]', video.url)
+        } else if (video.id !== '' && video._destroy === '1') {
+          formData.append(
+            'design[videos_attachments_attributes][][id]',
+            video.id
+          )
+          formData.append(
+            'design[videos_attachments_attributes][][_destroy]',
+            video._destroy
+          )
+        }
+      })
+
+      const sortImageIdParams = this.design.images.filter(
+        (image) => image._destroy === '0'
+      )
+      sortImageIdParams.forEach((image) => {
+        formData.append('design[sort_image_ids][]', image.id)
       })
 
       const youtubeVideoParams = this.design.youtubeVideos
       youtubeVideoParams.forEach((youtubeVideo) => {
-        formData.append(
-          'design[youtube_videos_attributes][][access_code]',
-          youtubeVideo.accessCode
-        )
+        if (youtubeVideo._destroy === '0') {
+          formData.append(
+            'design[youtube_videos_attributes][][id]',
+            youtubeVideo.id
+          )
+          formData.append(
+            'design[youtube_videos_attributes][][access_code]',
+            youtubeVideo.accessCode
+          )
+          formData.append(
+            'design[youtube_videos_attributes][][_destroy]',
+            youtubeVideo._destroy
+          )
+        } else if (youtubeVideo.id !== '' && youtubeVideo._destroy === '1') {
+          formData.append(
+            'design[youtube_videos_attributes][][id]',
+            youtubeVideo.id
+          )
+          formData.append(
+            'design[youtube_videos_attributes][][_destroy]',
+            youtubeVideo._destroy
+          )
+        }
       })
 
       const colorParams = this.design.colors
       colorParams.forEach((color) => {
-        formData.append('design[colors_attributes][][lame]', color.lame)
-        formData.append(
-          'design[colors_attributes][][hex_number]',
-          color.hexNumber
-        )
+        if (color._destroy === '0') {
+          formData.append('design[colors_attributes][][id]', color.id)
+          formData.append('design[colors_attributes][][lame]', color.lame)
+          formData.append(
+            'design[colors_attributes][][hex_number]',
+            color.hexNumber
+          )
+          formData.append(
+            'design[colors_attributes][][_destroy]',
+            color._destroy
+          )
+        } else if (color.id !== '' && color._destroy === '1') {
+          formData.append('design[colors_attributes][][id]', color.id)
+          formData.append(
+            'design[colors_attributes][][_destroy]',
+            color._destroy
+          )
+        }
       })
 
       const partParams = this.design.parts
       partParams.forEach((part) => {
-        formData.append('design[parts_attributes][][name]', part.name)
-        formData.append('design[parts_attributes][][size]', part.size)
-        formData.append('design[parts_attributes][][quantity]', part.quantity)
-        formData.append(
-          'design[parts_attributes][][hex_number]',
-          part.hexNumber
-        )
+        if (part._destroy === '0') {
+          formData.append('design[parts_attributes][][id]', part.id)
+          formData.append('design[parts_attributes][][name]', part.name)
+          formData.append('design[parts_attributes][][size]', part.size)
+          formData.append('design[parts_attributes][][quantity]', part.quantity)
+          formData.append(
+            'design[parts_attributes][][hex_number]',
+            part.hexNumber
+          )
+          formData.append('design[parts_attributes][][_destroy]', part._destroy)
+        } else if (part.id !== '' && part._destroy === '1') {
+          formData.append('design[parts_attributes][][id]', part.id)
+          formData.append('design[parts_attributes][][_destroy]', part._destroy)
+        }
       })
 
       const tagParams = this.design.tags
       tagParams.forEach((tag) => {
-        formData.append('design[tags_attributes][][name]', tag.name)
+        if (tag._destroy === '0') {
+          formData.append('design[tags_attributes][][id]', tag.id)
+          formData.append('design[tags_attributes][][name]', tag.name)
+        } else if (tag.id !== '' && tag._destroy === '1') {
+          formData.append(
+            'design[design_tags_attributes][][id]',
+            tag.design_tag_id
+          )
+          formData.append(
+            'design[design_tags_attributes][][_destroy]',
+            tag._destroy
+          )
+        }
       })
 
       axios
-        .post('/api/designs', formData, {
+        .patch(`/api/designs/${this.design.id}`, formData, {
           headers: {
             'content-type': 'multipart/form-data'
           }
@@ -764,5 +972,8 @@ export default {
 }
 .checkbox:checked {
   border: none;
+}
+.delete {
+  opacity: 0.5;
 }
 </style>
