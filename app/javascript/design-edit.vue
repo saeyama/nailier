@@ -60,7 +60,7 @@
         <div class="grid grid-cols-4 mb-2">
           <div
             class="item w-full mt-4 relative h-36"
-            v-for="image in saveImages()"
+            v-for="image in saveImages"
             :key="image">
             <img :src="image.url" class="absolute z-0 h-32" />
           </div>
@@ -278,12 +278,12 @@
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
-          <div v-if="color.lame == true" class="relative">
+          <div v-if="color.lame === true" class="relative">
             <img
               src="~lame.png"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
-          <div v-else-if="color.lame == false"></div>
+          <div v-else-if="color.lame === false"></div>
           <div class="ml-10 cursor-pointer">
             <input
               type="checkbox"
@@ -300,12 +300,12 @@
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
-          <div v-if="color.lame == true" class="relative">
+          <div v-if="color.lame === true" class="relative">
             <img
               src="~lame.png"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
-          <div v-else-if="color.lame == false"></div>
+          <div v-else-if="color.lame === false"></div>
           <div class="ml-10 cursor-pointer">
             <input
               type="checkbox"
@@ -359,7 +359,7 @@
             class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
             type="number"
             min="0"
-            onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+            onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
             name="quantity"
             placeholder="0"
             v-model="part.quantity" />
@@ -423,7 +423,7 @@
                 class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 pl-2 leading-8 transition-colors duration-200 ease-in-out w-16"
                 type="number"
                 min="0"
-                onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+                onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
                 name="quantity"
                 placeholder="0"
                 v-model="part.quantity" />&nbsp;個
@@ -528,7 +528,6 @@ export default {
         nailPart: '',
         description: '',
         images: [],
-        sortImages: [],
         videos: [],
         youtubeVideos: [],
         colors: [],
@@ -623,44 +622,49 @@ export default {
     colorLameStyle() {
       return this.color.lame === true
     },
+    saveImages() {
+      return this.design.images.filter(function (image) {
+        return image._destroy === '0'
+      })
+    },
     saveVideos() {
       return this.design.videos.filter(function (video) {
-        return video._destroy == '0'
+        return video._destroy === '0'
       })
     },
     deleteVideos() {
       return this.design.videos.filter(function (video) {
-        return video._destroy == '1'
+        return video._destroy === '1'
       })
     },
     saveColors() {
       return this.design.colors.filter(function (color) {
-        return color._destroy == '0'
+        return color._destroy === '0'
       })
     },
     deleteColors() {
       return this.design.colors.filter(function (color) {
-        return color._destroy == '1'
+        return color._destroy === '1'
       })
     },
     saveYoutubeVideos() {
       return this.design.youtubeVideos.filter(function (youtubeVideo) {
-        return youtubeVideo._destroy == '0'
+        return youtubeVideo._destroy === '0'
       })
     },
     deleteYoutubeVideos() {
       return this.design.youtubeVideos.filter(function (youtubeVideo) {
-        return youtubeVideo._destroy == '1'
+        return youtubeVideo._destroy === '1'
       })
     },
     saveTags() {
       return this.design.tags.filter(function (tag) {
-        return tag._destroy == '0'
+        return tag._destroy === '0'
       })
     },
     saveParts() {
       return this.design.parts.filter(function (part) {
-        return part._destroy == '0'
+        return part._destroy === '0'
       })
     }
   },
@@ -712,13 +716,6 @@ export default {
           }
         }
       }
-    },
-    saveImages() {
-      return (this.design.sortImages = this.design.images.filter(function (
-        image
-      ) {
-        return image._destroy == '0'
-      }))
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
@@ -819,11 +816,6 @@ export default {
         formData.append(key, value)
       })
 
-      const sortImageIdParams = this.design.sortImages
-      sortImageIdParams.forEach((image) => {
-        formData.append('design[sort_image_ids][]', image.id)
-      })
-
       const imageParams = this.design.images
       imageParams.forEach((image) => {
         if (image.id === '' && image._destroy === '0') {
@@ -854,6 +846,13 @@ export default {
             video._destroy
           )
         }
+      })
+
+      const sortImageIdParams = this.design.images.filter(
+        (image) => image._destroy === '0'
+      )
+      sortImageIdParams.forEach((image) => {
+        formData.append('design[sort_image_ids][]', image.id)
       })
 
       const youtubeVideoParams = this.design.youtubeVideos

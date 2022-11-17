@@ -18,10 +18,10 @@ class Design < ApplicationRecord
   accepts_nested_attributes_for :design_tags, allow_destroy: true
   accepts_nested_attributes_for :tags
 
-  def file_attach(file_type, file_blob)
+  def file_attach(file_type, file_blob, index)
     file_type.attach(
       io: file_blob.to_io,
-      filename: Time.zone.now,
+      filename: index,
       content_type: file_blob.mime_type
     )
   end
@@ -29,12 +29,12 @@ class Design < ApplicationRecord
   def attach_blob(file_data_urls)
     return if file_data_urls.blank?
 
-    file_data_urls.map do |file_data_url|
+    file_data_urls.map.with_index do |file_data_url, index|
       file_blob = FileBlob.new(file_data_url)
       if file_data_url.start_with?('data:image')
-        file_attach(images, file_blob)
+        file_attach(images, file_blob, index)
       elsif file_data_url.start_with?('data:video')
-        file_attach(videos, file_blob)
+        file_attach(videos, file_blob, index)
       end
     end
   end
@@ -52,8 +52,8 @@ class Design < ApplicationRecord
     return unless sort_image_ids
 
     sort_images = SortImages.new(sort_image_ids)
-    sort_images.temporary_new_ids if sort_image_ids.include?('')
-    sort_images.index_of_ids.each.with_index(1) do |id, index|
+    sort_images.temporary_new_ids(sort_images.blank_ids) if sort_image_ids.include?('')
+    sort_images.index_of_ids.each.with_index do |id, index|
       images[id].blob.update(filename: index)
     end
   end

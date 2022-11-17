@@ -28,10 +28,7 @@
         { access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }
       ]
     )
-  2.times do
-    design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail.jpeg')), filename: 'nail.jpeg')
-  end
-  2.times do
-    design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: 'nail.mp4')
-  end
+  design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail1.jpg')), filename: '0')
+  design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail2.jpg')), filename: '1')
+  design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: '0')
 end
