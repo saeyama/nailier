@@ -42,7 +42,7 @@ foot_design =
       { lame: true, hex_number: '#000000' }, { lame: false, hex_number: '#FFFFFF' }
     ],
     tags_attributes: [
-      { name: 'tag1' }, { name: 'tag2' }
+      { name: 'tag1' }, { name: 'tag3' }
     ],
     youtube_videos_attributes: [
       { access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }

@@ -47,15 +47,15 @@
           <div
             class="w-1/2 justify-between items-center md:flex md:justify-between md:w-full md:mb-2">
             <button
-              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-12">
+              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
               詳細
             </button>
             <button
-              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-12">
+              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
               編集
             </button>
             <button
-              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-12">
+              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
               削除
             </button>
           </div>
@@ -65,7 +65,7 @@
           {{ design.updatedAt }}&ensp;更新
         </div>
         <div v-for="tag in design.tags" :key="tag">
-          {{ tag }}
+          <div class="hidden">{{ tag }}</div>
         </div>
       </div>
     </div>
@@ -77,6 +77,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      designs: [],
       handDesigns: [],
       footDesigns: [],
       tags: [],
@@ -87,7 +88,13 @@ export default {
   },
   computed: {
     selectedNailPartDesigns() {
-      return this.showhandDesigns === true ? this.handDesigns : this.footDesigns
+      const nailPartDesigns =
+        this.showhandDesigns === true ? this.handDesigns : this.footDesigns
+      return this.selectedTag === ''
+        ? nailPartDesigns
+        : nailPartDesigns.filter((design) => {
+            return design.tags.includes(this.selectedTag)
+          })
     }
   },
   mounted() {
@@ -96,9 +103,10 @@ export default {
   methods: {
     getDesigns() {
       axios.get(`/api/designs`).then((response) => {
-        ;(this.handDesigns = response.data.designs.filter(
-          (design) => design.nailPart === 'hand'
-        )),
+        ;(this.designs = response.data.designs),
+          (this.handDesigns = response.data.designs.filter(
+            (design) => design.nailPart === 'hand'
+          )),
           (this.footDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'foot'
           ))
