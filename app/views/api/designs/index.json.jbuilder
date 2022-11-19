@@ -6,8 +6,13 @@ json.set! :designs do
     json.created_at created_at
     json.updated_at updated_at
 
+    tags = design.tags.map { |tag| tag.name }
+    json.tags tags
+
     image_urls = design.images.map { |image| { 'url': rails_blob_url(image), 'index': rails_blob_url(image).split('/')[8].to_i } }
     sort_image = image_urls.select { |image| image[:index] == 0 }[0][:url]
     json.image sort_image if design.images.attached?
   end
 end
+
+json.tags @tags.map.map(&:name)

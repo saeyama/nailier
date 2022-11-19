@@ -1,20 +1,32 @@
 <template>
   <div class="container text-gray-600 py-10 mx-auto">
-    <h1 class="text-2xl font-bold text-center py-10">ネイルデザインリスト</h1>
-    <div class="flex justify-around mb-4 mx-2 md:mx-4 lg:mx-48">
+    <h1 class="text-2xl font-bold text-center py-8 md:py-10">
+      ネイルデザインリスト
+    </h1>
+    <div class="flex justify-around mb-4 mx-2 md:mb-10 md:mx-24 lg:mx-32">
       <button
         :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
         @click="switchToHandDesigns"
-        class="text-white bg-gray-800 border-0 py-2 px-10 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-24 lg:px-40 lg:py-4 lg:text-xl">
+        class="text-white bg-gray-800 border-0 py-2 px-10 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-24 lg:px-36 lg:py-4 lg:text-xl">
         ハンド
       </button>
       <button
         :class="!showfootDesigns ? 'switch-nail-part-button' : ''"
         @click="switchToFootDesigns"
-        class="text-white bg-gray-800 border-0 py-2 px-10 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-24 lg:px-40 lg:py-4 lg:text-xl">
+        class="text-white bg-gray-800 border-0 py-2 px-10 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-24 lg:px-36 lg:py-4 lg:text-xl">
         フット
       </button>
     </div>
+
+    <select
+      v-model="selectedTag"
+      class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 mb-4 leading-8 transition-colors duration-200 ease-in-out">
+      <option disabled value="">タグで絞り込む</option>
+      <option v-for="tag in tags" :key="tag">
+        {{ tag }}
+      </option>
+    </select>
+
     <div class="md:grid md:grid-cols-3">
       <div
         class="m-4 p-2 shadow-xl md:max-w-md"
@@ -52,6 +64,9 @@
           {{ design.createdAt }}&ensp;登録<br />
           {{ design.updatedAt }}&ensp;更新
         </div>
+        <div v-for="tag in design.tags" :key="tag">
+          {{ tag }}
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +79,8 @@ export default {
     return {
       handDesigns: [],
       footDesigns: [],
+      tags: [],
+      selectedTag: '',
       showhandDesigns: true,
       showfootDesigns: false
     }
@@ -85,6 +102,7 @@ export default {
           (this.footDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'foot'
           ))
+        this.tags = response.data.tags
       })
     },
     switchToHandDesigns() {
