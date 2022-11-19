@@ -8,8 +8,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-10.times do |i|
-  design =
+5.times do |i|
+  hand_design =
     Design.create!(
       title: "title#{i + 1}",
       nail_part: 'hand',
@@ -28,7 +28,26 @@
         { access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }
       ]
     )
-  design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail1.jpg')), filename: '0')
-  design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail2.jpg')), filename: '1')
-  design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: '0')
+  hand_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail1.jpg')), filename: '0')
+  hand_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail2.jpg')), filename: '1')
+  hand_design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: '0')
 end
+
+foot_design =
+  Design.create!(
+    title: 'title6',
+    nail_part: 'foot',
+    description: 'description6',
+    colors_attributes: [
+      { lame: true, hex_number: '#000000' }, { lame: false, hex_number: '#FFFFFF' }
+    ],
+    tags_attributes: [
+      { name: 'tag1' }, { name: 'tag2' }
+    ],
+    youtube_videos_attributes: [
+      { access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }
+    ]
+  )
+foot_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail1.jpg')), filename: '0')
+foot_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail2.jpg')), filename: '1')
+foot_design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: '0')
