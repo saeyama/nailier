@@ -6,6 +6,7 @@ class Api::DesignsController < ApplicationController
   def index
     @designs = Design.with_attached_images
     @designs = Design.with_attached_videos
+    @tags = Tag.all
   end
 
   def show; end
