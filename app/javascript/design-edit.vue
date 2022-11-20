@@ -925,7 +925,6 @@ export default {
       const tagParams = this.design.tags
       tagParams.forEach((tag) => {
         if (tag._destroy === '0') {
-          formData.append('design[tags_attributes][][id]', tag.id)
           formData.append('design[tags_attributes][][name]', tag.name)
         } else if (tag.id !== '' && tag._destroy === '1') {
           formData.append(
