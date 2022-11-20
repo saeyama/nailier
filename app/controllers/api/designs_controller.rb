@@ -4,8 +4,7 @@ class Api::DesignsController < ApplicationController
   before_action :set_design, only: %i[show edit update]
   skip_before_action :verify_authenticity_token
   def index
-    @designs = Design.with_attached_images
-    @designs = Design.with_attached_videos
+    @designs = Design.order(updated_at: :DESC).with_attached_images
     @tags = Tag.all
   end
 
