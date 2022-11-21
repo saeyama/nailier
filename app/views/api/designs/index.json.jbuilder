@@ -14,5 +14,3 @@ json.set! :designs do
     json.image sort_image if design.images.attached?
   end
 end
-
-json.tags @tags.map.map(&:name)

@@ -21,8 +21,8 @@
     <select
       v-model="selectedTag"
       class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 mb-4 leading-8 transition-colors duration-200 ease-in-out">
-      <option disabled value="">タグで絞り込む</option>
-      <option v-for="tag in tags" :key="tag">
+      <option>タグで絞り込む</option>
+      <option v-for="tag in nailPartTags" :key="tag">
         {{ tag }}
       </option>
     </select>
@@ -77,16 +77,19 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      designs: [],
       handDesigns: [],
       footDesigns: [],
-      tags: [],
       selectedTag: '',
-      showhandDesigns: true,
-      showfootDesigns: false
+      showhandDesigns: '',
+      showfootDesigns: ''
     }
   },
   computed: {
+    nailPartTags() {
+      return this.showhandDesigns === true
+        ? this.uniqueTags(this.handDesigns)
+        : this.uniqueTags(this.footDesigns)
+    },
     selectedNailPartDesigns() {
       const nailPartDesigns =
         this.showhandDesigns === true ? this.handDesigns : this.footDesigns
@@ -103,27 +106,38 @@ export default {
   methods: {
     getDesigns() {
       axios.get(`/api/designs`).then((response) => {
-        ;(this.designs = response.data.designs),
+        response.data.designs[0].nailPart === 'hand'
+          ? (this.showhandDesigns = true)
+          : (this.showfootDesigns = true),
           (this.handDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'hand'
           )),
           (this.footDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'foot'
           ))
-        this.tags = response.data.tags
       })
     },
     switchToHandDesigns() {
-      ;(this.showhandDesigns = true), (this.showfootDesigns = false)
+      this.showhandDesigns = true
+      this.showfootDesigns = false
+      this.selectedTag = ''
     },
     switchToFootDesigns() {
-      ;(this.showhandDesigns = false), (this.showfootDesigns = true)
+      this.showhandDesigns = false
+      this.showfootDesigns = true
+      this.selectedTag = ''
+    },
+    uniqueTags(nailPart) {
+      const nailPartTags = nailPart.map((design) => design.tags)
+      const flatPartTags = [].concat(...nailPartTags)
+      const deleteDuplicateTags = Array.from(new Set(flatPartTags))
+      return deleteDuplicateTags
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .switch-nail-part-button {
   background: #ffffff;
   color: #4b5563;
