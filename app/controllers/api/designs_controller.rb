@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::DesignsController < ApplicationController
-  before_action :set_design, only: %i[show edit update]
+  before_action :set_design, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token
   def index
     @designs = Design.order(updated_at: :DESC).with_attached_images
@@ -35,6 +35,12 @@ class Api::DesignsController < ApplicationController
     else
       render json: { status: 'ERROR', data: @design.errors }
     end
+  end
+
+  def destroy
+    @design.images.map(&:purge_later)
+    @design.videos.map(&:purge_later)
+    @design.destroy
   end
 
   private
