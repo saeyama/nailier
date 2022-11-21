@@ -80,8 +80,8 @@ export default {
       handDesigns: [],
       footDesigns: [],
       selectedTag: '',
-      showhandDesigns: true,
-      showfootDesigns: false
+      showhandDesigns: '',
+      showfootDesigns: ''
     }
   },
   computed: {
@@ -106,9 +106,12 @@ export default {
   methods: {
     getDesigns() {
       axios.get(`/api/designs`).then((response) => {
-        ;(this.handDesigns = response.data.designs.filter(
-          (design) => design.nailPart === 'hand'
-        )),
+        response.data.designs[0].nailPart === 'hand'
+          ? (this.showhandDesigns = true)
+          : (this.showfootDesigns = true),
+          (this.handDesigns = response.data.designs.filter(
+            (design) => design.nailPart === 'hand'
+          )),
           (this.footDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'foot'
           ))
@@ -134,7 +137,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .switch-nail-part-button {
   background: #ffffff;
   color: #4b5563;
