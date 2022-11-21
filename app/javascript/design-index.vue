@@ -21,7 +21,7 @@
     <select
       v-model="selectedTag"
       class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 mb-4 leading-8 transition-colors duration-200 ease-in-out">
-      <option>タグで絞り込む</option>
+      <option value="" selected>タグで絞り込む</option>
       <option v-for="tag in nailPartTags" :key="tag">
         {{ tag }}
       </option>
@@ -47,15 +47,16 @@
           <div
             class="w-1/2 justify-between items-center md:flex md:justify-between md:w-full md:mb-2">
             <button
-              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
+              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
               詳細
             </button>
             <button
-              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
+              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
               編集
             </button>
             <button
-              class="flex mx-auto mb-2 text-gray-600 border border-gray-600 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
+              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10"
+              @click="deleteDesign(design.id)">
               削除
             </button>
           </div>
@@ -81,7 +82,8 @@ export default {
       footDesigns: [],
       selectedTag: '',
       showhandDesigns: '',
-      showfootDesigns: ''
+      showfootDesigns: '',
+      id: ''
     }
   },
   computed: {
@@ -116,6 +118,11 @@ export default {
             (design) => design.nailPart === 'foot'
           ))
       })
+    },
+    deleteDesign(id) {
+      axios
+        .delete(`/api/designs/${id}`, {})
+        .then(() => (window.location.href = '/designs'))
     },
     switchToHandDesigns() {
       this.showhandDesigns = true
