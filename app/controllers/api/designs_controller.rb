@@ -5,7 +5,6 @@ class Api::DesignsController < ApplicationController
   skip_before_action :verify_authenticity_token
   def index
     @designs = Design.order(updated_at: :DESC).with_attached_images
-    @tags = Tag.all
   end
 
   def show; end
