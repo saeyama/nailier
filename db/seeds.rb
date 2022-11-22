@@ -48,6 +48,4 @@ foot_design =
       { access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }
     ]
   )
-foot_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail1.jpg')), filename: '0')
-foot_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail2.jpg')), filename: '1')
 foot_design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: '0')
