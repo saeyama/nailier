@@ -12,4 +12,7 @@ html
                           'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    main
+      = yield
+    footer
+      = render 'layouts/footer'
