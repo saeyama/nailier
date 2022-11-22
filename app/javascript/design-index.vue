@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold text-center py-8 md:py-10">
       ネイルデザインリスト
     </h1>
-    <div class="flex justify-around mb-4 mx-2 md:mb-10 md:mx-24 lg:mx-32">
+    <div class="flex justify-around mb-4 mx-2 md:mb-10 md:mx-24">
       <button
         :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
         @click="switchToHandDesigns"
@@ -17,7 +17,6 @@
         フット
       </button>
     </div>
-
     <select
       v-model="selectedTag"
       class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 mb-4 leading-8 transition-colors duration-200 ease-in-out">
@@ -26,10 +25,9 @@
         {{ tag }}
       </option>
     </select>
-
     <div class="md:grid md:grid-cols-3">
       <div
-        class="m-4 p-2 shadow-xl md:max-w-md"
+        class="m-4 p-2 shadow-xl"
         v-for="design in selectedNailPartDesigns"
         :key="design.id">
         <div class="flex justify-between items-center m-2">
@@ -39,7 +37,13 @@
           </div>
         </div>
         <div class="flex justify-center items-center md:block">
-          <div class="w-1/2 md:w-full">
+          <div v-if="!design.image" class="w-1/2 md:w-full">
+            <div
+              class="w-5/6 py-[42%] mb-[2%] text-lg bg-slate-200 drop-shadow-lg text-white text-center mx-auto md:text-2xl md:w-3/4 md:py-[44%] xl:py-[46%]">
+              no image
+            </div>
+          </div>
+          <div v-else class="w-1/2 md:w-full max-w-md">
             <img
               class="w-5/6 drop-shadow-lg mx-auto md:w-3/4"
               :src="design.image" />
