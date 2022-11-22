@@ -10,7 +10,7 @@ json.set! :designs do
     json.tags tags
 
     image_urls = design.images.map { |image| { 'url': rails_blob_url(image), 'index': rails_blob_url(image).split('/')[8].to_i } }
-    sort_image = image_urls.select { |image| image[:index] == 0 }[0][:url]
-    json.image sort_image if design.images.attached?
+    sort_image = image_urls.select { |image| image[:index] == 0 }[0][:url] if design.images.attached?
+    json.image sort_image
   end
 end
