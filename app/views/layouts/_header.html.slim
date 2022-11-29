@@ -1,0 +1,21 @@
+.flex
+  h1.text-2xl.pt-2.pl-2 ロゴ
+  #nav-toggle.visible.absolute.top-2.right-2.h-8.md:hidden
+    div
+      span
+      span
+      span
+  #nav-menu
+    .nav-bak
+    nav.bg-white.md:visible.md:bg-transparent.md:ml-8.lg:ml-48.xl:ml-80
+      ul.md:flex.text-sm.md:text-xs.lg:text-sm.xl:text-base
+        li
+          =link_to 'ネイルデザインを登録', '#'
+        li
+          =link_to 'ネイルデザインリスト', '#'
+        li
+          =link_to 'ユーザー情報', '#'
+        li
+          =link_to 'ログアウト', '#'
+        li
+          =link_to 'お問い合わせ', '#'
