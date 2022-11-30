@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full text-lg">
+      <div class="p-2 text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -104,38 +104,63 @@
           multiple="multiple"
           accept="video/*"
           @change="uploadFiles"
-          class="text-sm w-64 md:text-lg md:w-full" />
-        <div class="w-4/6 grid grid-cols-2 mb-2">
+          class="text-sm md:text-lg" />
+        <div class="text-sm my-6">
+          &plus;&minus;ボタンで登録したい画像を選択できます。
+        </div>
+        <div class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="w-full mt-4 relative h-36"
+            class="mb-4 relative md:mb-8"
             v-for="video in saveVideos"
             :key="video">
-            <video class="h-32 absolute z-0">
+            <video class="mt-2 z-0 h-20 block mx-auto md:h-36">
               <source :src="video.url" type="video/mp4" />
             </video>
-            <input
-              type="checkbox"
-              true-value="1"
-              false-value="0"
-              v-model="video._destroy"
-              class="cursor-pointer absolute z-10 top-1 left-32" />
+            <div
+              @click="deleteVideo(video)"
+              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 12H6" />
+              </svg>
+            </div>
           </div>
         </div>
-        <div>削除する動画</div>
-        <div class="w-4/6 grid grid-cols-2 mb-2">
-          <div
-            class="w-full mt-4 relative h-36"
-            v-for="video in deleteVideos"
-            :key="video">
-            <video class="h-32 absolute z-0">
-              <source :src="video.url" type="video/mp4" />
-            </video>
-            <input
-              type="checkbox"
-              true-value="1"
-              false-value="0"
-              v-model="video._destroy"
-              class="cursor-pointer absolute z-10 top-1 left-32" />
+        <div v-if="deleteVideos.length > 0">
+          <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
+          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
+            <div
+              class="mb-4 relative md:mb-8"
+              v-for="video in deleteVideos"
+              :key="video">
+              <video class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60">
+                <source :src="video.url" type="video/mp4" />
+              </video>
+              <div
+                @click="saveVideo(video)"
+                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v12m6-6H6" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -759,6 +784,12 @@ export default {
       this.design.images.push(image)
       const index = this.design.imageToDelete.indexOf(image)
       this.design.imageToDelete.splice(index, 1)
+    },
+    deleteVideo(video) {
+      this.$set(video, '_destroy', '1')
+    },
+    saveVideo(video) {
+      this.$set(video, '_destroy', '0')
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
