@@ -35,22 +35,22 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div class="text-sm my-4">
+        <div class="text-sm my-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。<br />
-          ドラッグアンドドロップで並び替え可能です。
+          ドラッグ&amp;ドロップで並び替え可能です。
         </div>
         <draggable
           v-model="design.images"
           draggable=".item"
-          class="grid grid-cols-3 mb-2 md:grid-cols-4">
+          class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="item relative"
+            class="item mb-4 relative md:mb-8"
             v-for="image in design.images"
             :key="image">
-            <img :src="image.url" class="z-0 h-20 block mx-auto mb-2 md:h-36" />
+            <img :src="image.url" class="mt-2 z-0 h-20 block mx-auto md:h-36" />
             <div
               @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 left-[80%] -top-[4%]">
+              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -67,18 +67,18 @@
           </div>
         </draggable>
         <div v-if="design.imageToDelete.length > 0">
-          <div class="text-sm my-4">削除する画像</div>
-          <div class="grid grid-cols-3 mb-2 md:grid-cols-4 md:h-36">
+          <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
+          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
             <div
-              class="relative h-24"
+              class="mb-4 relative md:mb-8"
               v-for="image in design.imageToDelete"
               :key="image">
               <img
                 :src="image.url"
-                class="z-0 h-20 block mx-auto md:h-36 opacity-60" />
+                class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60" />
               <div
                 @click="saveImage(image)"
-                class="cursor-pointer absolute z-10 left-[80%] -top-[10%]">
+                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

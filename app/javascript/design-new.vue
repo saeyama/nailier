@@ -35,33 +35,66 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
+        <div class="text-sm my-6">
+          &plus;&minus;ボタンで登録したい画像を選択できます。<br />
+          ドラッグ&amp;ドロップで並び替え可能です。
+        </div>
         <draggable
           v-model="design.images"
           draggable=".item"
-          class="grid grid-cols-4 mb-2">
+          class="grid grid-cols-3 mb-2 md:grid-cols-4">
           <div
-            class="item w-full mt-4 relative h-36"
-            v-for="(url, index) in design.images"
-            :key="index">
-            <img :src="url" class="absolute z-0 h-32" />
+            class="item mb-4 relative md:mb-8"
+            v-for="image in design.images"
+            :key="image">
+            <img :src="image" class="mt-2 z-0 h-20 block mx-auto md:h-36" />
             <div
-              @click="deleteImage(index)"
-              class="cursor-pointer absolute z-10 top-1 right-2">
+              @click="deleteImage(image)"
+              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
+                  d="M18 12H6" />
               </svg>
             </div>
           </div>
         </draggable>
+        <div v-if="design.imageToDelete.length > 0">
+          <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
+          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
+            <div
+              class="mb-4 relative md:mb-8"
+              v-for="image in design.imageToDelete"
+              :key="image">
+              <img
+                :src="image"
+                class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60" />
+              <div
+                @click="saveImage(image)"
+                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v12m6-6H6" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="p-2 w-full text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
@@ -476,6 +509,7 @@ export default {
         description: '',
         nailPart: '',
         images: [],
+        imageToDelete: [],
         videos: [],
         youtubeVideos: [],
         colors: [],
@@ -587,8 +621,15 @@ export default {
         }
       }
     },
-    deleteImage(index) {
+    deleteImage(image) {
+      this.design.imageToDelete.push(image)
+      const index = this.design.images.indexOf(image)
       this.design.images.splice(index, 1)
+    },
+    saveImage(image) {
+      this.design.images.push(image)
+      const index = this.design.imageToDelete.indexOf(image)
+      this.design.imageToDelete.splice(index, 1)
     },
     deleteVideo(url) {
       this.design.videos.splice(url, 1)
