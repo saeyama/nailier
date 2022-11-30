@@ -12,9 +12,9 @@ html
                           'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    header
+    header.max-w-screen-lg.mx-auto
       = render 'layouts/header'
-    main
+    main.max-w-screen-lg.mx-auto
       = yield
     footer
       = render 'layouts/footer'
