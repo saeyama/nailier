@@ -182,46 +182,67 @@
           登録
         </button>
       </div>
-      <div class="grid grid-cols-2 gap-8 mb-2">
+      <div
+        v-if="design.youtubeVideos.length > 0"
+        class="text-sm mt-2 mb-6 ml-2">
+        &plus;&minus;ボタンで登録したい画像を選択できます。
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
         <div
           v-for="youtubeVideo in saveYoutubeVideos"
           :key="youtubeVideo"
-          class="h-32 md:h-48">
-          <div class="relative">
-            <span>
-              <youtube
-                :video-id="youtubeVideo.accessCode"
-                class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
-              </youtube>
-            </span>
-            <input
-              type="checkbox"
-              true-value="1"
-              false-value="0"
-              v-model="youtubeVideo._destroy"
-              class="cursor-pointer absolute z-10 top-1 left-28 md:left-60" />
+          class="relative">
+          <youtube
+            :video-id="youtubeVideo.accessCode"
+            class="w-[100%] h-24 md:h-36">
+          </youtube>
+          <div
+            @click="deleteYoutubeVideo(youtubeVideo)"
+            class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 12H6" />
+            </svg>
           </div>
         </div>
       </div>
-      <div>削除するyoutube動画</div>
-      <div class="grid grid-cols-2 gap-8 mb-2">
-        <div
-          v-for="youtubeVideo in deleteYoutubeVideos"
-          :key="youtubeVideo"
-          class="h-32 md:h-48">
-          <div class="relative">
-            <span>
-              <youtube
-                :video-id="youtubeVideo.accessCode"
-                class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
-              </youtube>
-            </span>
-            <input
-              type="checkbox"
-              true-value="1"
-              false-value="0"
-              v-model="youtubeVideo._destroy"
-              class="cursor-pointer absolute z-10 top-1 left-28 md:left-60" />
+      <div v-if="deleteYoutubeVideos.length > 0">
+        <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
+          削除するyoutube動画
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
+          <div
+            v-for="youtubeVideo in deleteYoutubeVideos"
+            :key="youtubeVideo"
+            class="relative">
+            <youtube
+              :video-id="youtubeVideo.accessCode"
+              class="w-[100%] h-24 md:h-36">
+            </youtube>
+            <div
+              @click="saveYoutubeVideo(youtubeVideo)"
+              class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6v12m6-6H6" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -805,6 +826,12 @@ export default {
         })
         this.youtubeVideo.url = ''
       }
+    },
+    deleteYoutubeVideo(youtubeVideo) {
+      this.$set(youtubeVideo, '_destroy', '1')
+    },
+    saveYoutubeVideo(youtubeVideo) {
+      this.$set(youtubeVideo, '_destroy', '0')
     },
     showColorContent() {
       this.colorContent = !this.colorContent
