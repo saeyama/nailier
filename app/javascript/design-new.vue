@@ -35,9 +35,14 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div class="text-sm my-6">
-          &plus;&minus;ボタンで登録したい画像を選択できます。<br />
-          ドラッグ&amp;ドロップで並び替え可能です。
+        <div
+          v-if="design.images.length > 0 || design.imageToDelete.length > 0"
+          class="text-sm mt-6 inline-block">
+          &plus;&minus;ボタンで登録したい画像を選択できます。
+        </div>
+        <br />
+        <div v-if="design.images.length > 0" class="text-sm mb-6 inline-block">
+          複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。
         </div>
         <draggable
           v-model="design.images"
@@ -96,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full text-lg">
+      <div class="p-2 text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -104,30 +109,62 @@
           multiple="multiple"
           accept="video/*"
           @change="uploadFiles"
-          class="text-sm w-64 md:text-lg md:w-full" />
-        <div class="w-4/6 grid grid-cols-2 mb-2">
+          class="text-sm md:text-lg" />
+        <div v-if="design.videos.length > 0" class="text-sm my-6">
+          &plus;&minus;ボタンで登録したい画像を選択できます。
+        </div>
+        <div class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="w-full mt-4 relative h-36"
-            v-for="url in design.videos"
-            :key="url">
-            <video class="h-32 absolute z-0">
-              <source :src="url" type="video/mp4" />
+            class="mb-4 relative md:mb-8"
+            v-for="video in design.videos"
+            :key="video">
+            <video class="mt-2 z-0 h-20 block mx-auto md:h-36">
+              <source :src="video" type="video/mp4" />
             </video>
             <div
-              @click="deleteVideo(url)"
-              class="cursor-pointer absolute z-10 top-1 right-2">
+              @click="deleteVideo(video)"
+              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
+                  d="M18 12H6" />
               </svg>
+            </div>
+          </div>
+        </div>
+        <div v-if="design.videoToDelete.length > 0">
+          <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
+          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
+            <div
+              class="mb-4 relative md:mb-8"
+              v-for="video in design.videoToDelete"
+              :key="video">
+              <video class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60">
+                <source :src="video" type="video/mp4" />
+              </video>
+              <div
+                @click="saveVideo(video)"
+                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v12m6-6H6" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -511,6 +548,7 @@ export default {
         images: [],
         imageToDelete: [],
         videos: [],
+        videoToDelete: [],
         youtubeVideos: [],
         colors: [],
         parts: [],
@@ -631,9 +669,19 @@ export default {
       const index = this.design.imageToDelete.indexOf(image)
       this.design.imageToDelete.splice(index, 1)
     },
-    deleteVideo(url) {
-      this.design.videos.splice(url, 1)
+    deleteVideo(video) {
+      this.design.videoToDelete.push(video)
+      const index = this.design.videos.indexOf(video)
+      this.design.videos.splice(index, 1)
     },
+    saveVideo(video) {
+      this.design.videos.push(video)
+      const index = this.design.videoToDelete.indexOf(video)
+      this.design.videoToDelete.splice(index, 1)
+    },
+    // deleteVideo(url) {
+    //   this.design.videos.splice(url, 1)
+    // },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
         this.design.youtubeVideos.push({

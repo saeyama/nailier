@@ -35,9 +35,14 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div class="text-sm my-6">
-          &plus;&minus;ボタンで登録したい画像を選択できます。<br />
-          ドラッグ&amp;ドロップで並び替え可能です。
+        <div
+          v-if="design.images.length > 0 || design.imageToDelete.length > 0"
+          class="text-sm mt-6 inline-block">
+          &plus;&minus;ボタンで登録したい画像を選択できます。
+        </div>
+        <br />
+        <div v-if="design.images.length > 0" class="text-sm mb-6 inline-block">
+          複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。
         </div>
         <draggable
           v-model="design.images"
@@ -105,7 +110,7 @@
           accept="video/*"
           @change="uploadFiles"
           class="text-sm md:text-lg" />
-        <div class="text-sm my-6">
+        <div v-if="design.videos.length > 0" class="text-sm my-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
         <div class="grid grid-cols-3 md:grid-cols-4">
