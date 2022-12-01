@@ -230,7 +230,7 @@
             class="relative">
             <youtube
               :video-id="youtubeVideo.accessCode"
-              class="w-[100%] h-24 md:h-36">
+              class="w-[100%] h-24 md:h-36 opacity-60">
             </youtube>
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
@@ -319,7 +319,7 @@
         <div v-show="showColorPalette">
           <div v-if="colorLameStyle" class="relative h-80">
             <ul
-              class="grid gap-2 place-items-center grid-cols-5 border border-gray-300 m-2 p-4">
+              class="grid grid-cols-5 gap-2 place-items-center border border-gray-300 mx-8 p-4">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
