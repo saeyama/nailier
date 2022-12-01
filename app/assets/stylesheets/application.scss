@@ -23,11 +23,12 @@ body {
 
 main {
   flex: 1;
+  width: 100%;  
 }
 
 header {
-  width: 100%;
   position: relative;  
+  width: 100%;  
 }
 
 #nav-toggle {

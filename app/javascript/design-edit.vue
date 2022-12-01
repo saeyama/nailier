@@ -35,34 +35,64 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div>
-          画像削除をする場合はチェックを入れてください。<br />
-          削除・追加・並び替え後の内容は更新後の画像に表示されます。
+        <div class="text-sm my-6">
+          &plus;&minus;ボタンで登録したい画像を選択できます。<br />
+          ドラッグ&amp;ドロップで並び替え可能です。
         </div>
         <draggable
           v-model="design.images"
           draggable=".item"
-          class="grid grid-cols-4 mb-2">
+          class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="item w-full mt-4 relative h-36"
+            class="item mb-4 relative md:mb-8"
             v-for="image in design.images"
             :key="image">
-            <img :src="image.url" class="absolute z-0 h-32" />
-            <input
-              type="checkbox"
-              true-value="1"
-              false-value="0"
-              v-model="image._destroy"
-              class="cursor-pointer absolute z-10 top-1 left-24" />
+            <img :src="image.url" class="mt-2 z-0 h-20 block mx-auto md:h-36" />
+            <div
+              @click="deleteImage(image)"
+              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 12H6" />
+              </svg>
+            </div>
           </div>
         </draggable>
-        <div>更新後の画像</div>
-        <div class="grid grid-cols-4 mb-2">
-          <div
-            class="item w-full mt-4 relative h-36"
-            v-for="image in saveImages"
-            :key="image">
-            <img :src="image.url" class="absolute z-0 h-32" />
+        <div v-if="design.imageToDelete.length > 0">
+          <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
+          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
+            <div
+              class="mb-4 relative md:mb-8"
+              v-for="image in design.imageToDelete"
+              :key="image">
+              <img
+                :src="image.url"
+                class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60" />
+              <div
+                @click="saveImage(image)"
+                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v12m6-6H6" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -528,6 +558,7 @@ export default {
         nailPart: '',
         description: '',
         images: [],
+        imageToDelete: [],
         videos: [],
         youtubeVideos: [],
         colors: [],
@@ -622,11 +653,6 @@ export default {
     colorLameStyle() {
       return this.color.lame === true
     },
-    saveImages() {
-      return this.design.images.filter(function (image) {
-        return image._destroy === '0'
-      })
-    },
     saveVideos() {
       return this.design.videos.filter(function (video) {
         return video._destroy === '0'
@@ -707,6 +733,11 @@ export default {
               url: fileReader.result,
               _destroy: '0'
             })
+            this.design.selectedImages.push({
+              id: '',
+              url: fileReader.result,
+              _destroy: '0'
+            })
           } else {
             this.design.videos.push({
               id: '',
@@ -716,6 +747,18 @@ export default {
           }
         }
       }
+    },
+    deleteImage(image) {
+      this.$set(image, '_destroy', '1')
+      this.design.imageToDelete.push(image)
+      const index = this.design.images.indexOf(image)
+      this.design.images.splice(index, 1)
+    },
+    saveImage(image) {
+      this.$set(image, '_destroy', '0')
+      this.design.images.push(image)
+      const index = this.design.imageToDelete.indexOf(image)
+      this.design.imageToDelete.splice(index, 1)
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
@@ -816,20 +859,22 @@ export default {
         formData.append(key, value)
       })
 
-      const imageParams = this.design.images
-      imageParams.forEach((image) => {
-        if (image.id === '' && image._destroy === '0') {
-          formData.append('design[images][]', image.url)
-        } else if (image.id !== '' && image._destroy === '1') {
-          formData.append(
-            'design[images_attachments_attributes][][id]',
-            image.id
-          )
-          formData.append(
-            'design[images_attachments_attributes][][_destroy]',
-            image._destroy
-          )
-        }
+      const newImageParams = this.design.images.filter(
+        (image) => image.id === ''
+      )
+      newImageParams.forEach((image) => {
+        formData.append('design[images][]', image.url)
+      })
+
+      const deletedImageParams = this.design.imageToDelete.filter(
+        (image) => image.id !== ''
+      )
+      deletedImageParams.forEach((image) => {
+        formData.append('design[images_attachments_attributes][][id]', image.id)
+        formData.append(
+          'design[images_attachments_attributes][][_destroy]',
+          image._destroy
+        )
       })
 
       const videoParams = this.design.videos
@@ -848,9 +893,7 @@ export default {
         }
       })
 
-      const sortImageIdParams = this.design.images.filter(
-        (image) => image._destroy === '0'
-      )
+      const sortImageIdParams = this.design.images
       sortImageIdParams.forEach((image) => {
         formData.append('design[sort_image_ids][]', image.id)
       })
