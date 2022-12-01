@@ -398,7 +398,7 @@
             <div v-if="color.lame === true" class="relative">
               <img
                 src="~lame.png"
-                class="w-8 h-8 rounded-full opacity-100 absolute z-10" />
+                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
             </div>
             <div v-else-if="color.lame === false"></div>
             <div

@@ -319,7 +319,7 @@
         <div v-show="showColorPalette">
           <div v-if="colorLameStyle" class="relative h-80">
             <ul
-              class="grid grid-cols-5 gap-2 place-items-center border border-gray-300 mx-8 p-4">
+              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -337,7 +337,8 @@
             </ul>
           </div>
           <div v-else class="h-80 mb-3">
-            <ul class="grid gap-2 place-items-center grid-cols-5 m-2 p-4">
+            <ul
+              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -358,31 +359,71 @@
           決定
         </button>
       </div>
-      <div class="flex space-x-12 mb-2">
+      <div
+        v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
+        class="text-sm my-4 mx-2">
+        &plus;&minus;ボタンで登録したいカラーを選択できます。
+      </div>
+      <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
         <div
-          v-for="(color, index) in design.colors"
-          :key="index"
+          v-for="color in design.colors"
+          :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-2">
           <div v-if="color.lame == true" class="relative">
             <img
               src="~lame.png"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
           <div v-else-if="color.lame == false"></div>
-          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
+          <div
+            @click="deleteColor(color)"
+            class="ml-6 cursor-pointer absolute z-20">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
+                d="M18 12H6" />
             </svg>
+          </div>
+        </div>
+      </div>
+      <div v-if="design.colorToDelete.length > 0">
+        <div class="text-sm mx-2 my-4 md:my-8 md:text-base">削除するカラー</div>
+        <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
+          <div
+            v-for="color in design.colorToDelete"
+            :key="color"
+            :style="colorShowHexNumber(color.hexNumber)"
+            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-2">
+            <div v-if="color.lame === true" class="relative">
+              <img
+                src="~lame.png"
+                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+            </div>
+            <div v-else-if="color.lame === false"></div>
+            <div
+              class="ml-6 cursor-pointer absolute z-20"
+              @click="saveColor(color)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6v12m6-6H6" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -592,6 +633,7 @@ export default {
         youtubeVideos: [],
         youtubeVideoToDelete: [],
         colors: [],
+        colorToDelete: [],
         parts: [],
         tags: []
       },
@@ -756,7 +798,6 @@ export default {
       if (this.color.paletteHexNumber !== '') {
         this.color.hexNumberHex8 = this.color.paletteHexNumber
       }
-
       if (
         this.color.lame !== '' &&
         (this.color.pickerHexNumber !== '' ||
@@ -770,8 +811,15 @@ export default {
         this.color.hexNumber = '#E0E0E0'
       }
     },
-    deleteColor(index) {
+    deleteColor(color) {
+      this.design.colorToDelete.push(color)
+      const index = this.design.colors.indexOf(color)
       this.design.colors.splice(index, 1)
+    },
+    saveColor(color) {
+      this.design.colors.push(color)
+      const index = this.design.colorToDelete.indexOf(color)
+      this.design.colorToDelete.splice(index, 1)
     },
     partData() {
       if (this.part.name !== '' && this.part.quantity !== '') {
