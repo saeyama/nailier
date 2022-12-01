@@ -110,7 +110,9 @@
           accept="video/*"
           @change="uploadFiles"
           class="text-sm md:text-lg" />
-        <div v-if="design.videos.length > 0" class="text-sm my-6">
+        <div
+          v-if="design.videos.length > 0 || design.videoToDelete.length > 0"
+          class="text-sm my-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
         <div class="grid grid-cols-3 md:grid-cols-4">
@@ -182,30 +184,68 @@
           登録
         </button>
       </div>
-      <div class="grid grid-cols-2 gap-8 mb-2">
+      <div
+        v-if="
+          design.youtubeVideos.length > 0 ||
+          design.youtubeVideoToDelete.length > 0
+        "
+        class="text-sm mt-2 mb-6 ml-2">
+        &plus;&minus;ボタンで登録したい画像を選択できます。
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
         <div
-          v-for="(youtubeVideo, index) in design.youtubeVideos"
-          :key="index"
-          class="h-32 md:h-48">
-          <div class="relative">
+          v-for="youtubeVideo in design.youtubeVideos"
+          :key="youtubeVideo"
+          class="relative">
+          <youtube
+            :video-id="youtubeVideo.accessCode"
+            class="w-[100%] h-24 md:h-36">
+          </youtube>
+          <div
+            @click="deleteYoutubeVideo(youtubeVideo)"
+            class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 12H6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div v-if="design.youtubeVideoToDelete.length > 0">
+        <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
+          削除するyoutube動画
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
+          <div
+            v-for="youtubeVideo in design.youtubeVideoToDelete"
+            :key="youtubeVideo"
+            class="relative">
             <youtube
               :video-id="youtubeVideo.accessCode"
-              class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
+              class="w-[100%] h-24 md:h-36">
             </youtube>
             <div
-              @click="deleteYoutubeVideo(index)"
-              class="cursor-pointer absolute z-10 top-1 -right-4 md:right-4">
+              @click="saveYoutubeVideo(youtubeVideo)"
+              class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
+                  d="M12 6v12m6-6H6" />
               </svg>
             </div>
           </div>
@@ -550,6 +590,7 @@ export default {
         videos: [],
         videoToDelete: [],
         youtubeVideos: [],
+        youtubeVideoToDelete: [],
         colors: [],
         parts: [],
         tags: []
@@ -679,9 +720,6 @@ export default {
       const index = this.design.videoToDelete.indexOf(video)
       this.design.videoToDelete.splice(index, 1)
     },
-    // deleteVideo(url) {
-    //   this.design.videos.splice(url, 1)
-    // },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
         this.design.youtubeVideos.push({
@@ -690,8 +728,15 @@ export default {
         this.youtubeVideo.url = ''
       }
     },
-    deleteYoutubeVideo(index) {
+    deleteYoutubeVideo(youtubeVideo) {
+      this.design.youtubeVideoToDelete.push(youtubeVideo)
+      const index = this.design.youtubeVideos.indexOf(youtubeVideo)
       this.design.youtubeVideos.splice(index, 1)
+    },
+    saveYoutubeVideo(youtubeVideo) {
+      this.design.youtubeVideos.push(youtubeVideo)
+      const index = this.design.youtubeVideoToDelete.indexOf(youtubeVideo)
+      this.design.youtubeVideoToDelete.splice(index, 1)
     },
     showColorContent() {
       this.colorContent = !this.colorContent
