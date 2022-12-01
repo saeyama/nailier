@@ -109,7 +109,7 @@
           multiple="multiple"
           accept="video/*"
           @change="uploadFiles"
-          class="text-sm md:text-lg" />
+          class="text-sm w-64 md:text-lg md:w-full" />
         <div v-if="design.videos.length > 0" class="text-sm my-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
@@ -516,7 +516,7 @@
         <div class="flex justify-between items-center">
           <div class="flex items-center">
             <div class="mr-4">
-              <span class="font-semibold md:w-40 md:inline-block">{{
+              <span class="font-semibold md:w-48 md:inline-block">{{
                 part.name
               }}</span
               ><br class="md:hidden" />
@@ -560,7 +560,7 @@
         <lable>調べた内容・メモ</lable>
         <textarea
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          placeholder="説明説明説明説明説明説明説明"
+          placeholder="入力してください"
           name="description"
           v-model="design.description">
         </textarea>
