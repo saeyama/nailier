@@ -35,9 +35,14 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div class="text-sm my-6">
-          &plus;&minus;ボタンで登録したい画像を選択できます。<br />
-          ドラッグ&amp;ドロップで並び替え可能です。
+        <div
+          v-if="design.images.length > 0 || design.imageToDelete.length > 0"
+          class="text-sm mt-6 inline-block">
+          &plus;&minus;ボタンで登録したい画像を選択できます。
+        </div>
+        <br />
+        <div v-if="design.images.length > 0" class="text-sm mb-6 inline-block">
+          複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。
         </div>
         <draggable
           v-model="design.images"
@@ -96,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full text-lg">
+      <div class="p-2 text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -105,29 +110,63 @@
           accept="video/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div class="w-4/6 grid grid-cols-2 mb-2">
+        <div
+          v-if="design.videos.length > 0 || design.videoToDelete.length > 0"
+          class="text-sm my-6">
+          &plus;&minus;ボタンで登録したい画像を選択できます。
+        </div>
+        <div class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="w-full mt-4 relative h-36"
-            v-for="url in design.videos"
-            :key="url">
-            <video class="h-32 absolute z-0">
-              <source :src="url" type="video/mp4" />
+            class="mb-4 relative md:mb-8"
+            v-for="video in design.videos"
+            :key="video">
+            <video class="mt-2 z-0 h-20 block mx-auto md:h-36">
+              <source :src="video" type="video/mp4" />
             </video>
             <div
-              @click="deleteVideo(url)"
-              class="cursor-pointer absolute z-10 top-1 right-2">
+              @click="deleteVideo(video)"
+              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
+                  d="M18 12H6" />
               </svg>
+            </div>
+          </div>
+        </div>
+        <div v-if="design.videoToDelete.length > 0">
+          <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
+          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
+            <div
+              class="mb-4 relative md:mb-8"
+              v-for="video in design.videoToDelete"
+              :key="video">
+              <video class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60">
+                <source :src="video" type="video/mp4" />
+              </video>
+              <div
+                @click="saveVideo(video)"
+                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v12m6-6H6" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -137,38 +176,76 @@
           type="text"
           name="youtube_video"
           placeholder="youtubeのURL"
-          class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
           v-model="youtubeVideo.url" />
         <button
           @click="youtubeVideoData"
-          class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30">
+          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30">
           登録
         </button>
       </div>
-      <div class="grid grid-cols-2 gap-8 mb-2">
+      <div
+        v-if="
+          design.youtubeVideos.length > 0 ||
+          design.youtubeVideoToDelete.length > 0
+        "
+        class="text-sm mt-2 mb-6 ml-2">
+        &plus;&minus;ボタンで登録したい画像を選択できます。
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
         <div
-          v-for="(youtubeVideo, index) in design.youtubeVideos"
-          :key="index"
-          class="h-32 md:h-48">
-          <div class="relative">
+          v-for="youtubeVideo in design.youtubeVideos"
+          :key="youtubeVideo"
+          class="relative">
+          <youtube
+            :video-id="youtubeVideo.accessCode"
+            class="w-[100%] h-24 md:h-36">
+          </youtube>
+          <div
+            @click="deleteYoutubeVideo(youtubeVideo)"
+            class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 12H6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div v-if="design.youtubeVideoToDelete.length > 0">
+        <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
+          削除するyoutube動画
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
+          <div
+            v-for="youtubeVideo in design.youtubeVideoToDelete"
+            :key="youtubeVideo"
+            class="relative">
             <youtube
               :video-id="youtubeVideo.accessCode"
-              class="w-32 h-28 md:w-64 md:h-48 absolute z-0 left-2">
+              class="w-[100%] h-24 md:h-36 opacity-60">
             </youtube>
             <div
-              @click="deleteYoutubeVideo(index)"
-              class="cursor-pointer absolute z-10 top-1 -right-4 md:right-4">
+              @click="saveYoutubeVideo(youtubeVideo)"
+              class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6 stroke-white rounded-md bg-gray-800 shadow-lg">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
+                  d="M12 6v12m6-6H6" />
               </svg>
             </div>
           </div>
@@ -242,7 +319,7 @@
         <div v-show="showColorPalette">
           <div v-if="colorLameStyle" class="relative h-80">
             <ul
-              class="grid gap-2 place-items-center grid-cols-5 border border-gray-300 m-2 p-4">
+              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -260,7 +337,8 @@
             </ul>
           </div>
           <div v-else class="h-80 mb-3">
-            <ul class="grid gap-2 place-items-center grid-cols-5 m-2 p-4">
+            <ul
+              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -281,31 +359,71 @@
           決定
         </button>
       </div>
-      <div class="flex space-x-12 mb-2">
+      <div
+        v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
+        class="text-sm my-4 mx-2">
+        &plus;&minus;ボタンで登録したいカラーを選択できます。
+      </div>
+      <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
         <div
-          v-for="(color, index) in design.colors"
-          :key="index"
+          v-for="color in design.colors"
+          :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
           <div v-if="color.lame == true" class="relative">
             <img
               src="~lame.png"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
           <div v-else-if="color.lame == false"></div>
-          <div @click="deleteColor(index)" class="ml-10 cursor-pointer mt-1">
+          <div
+            @click="deleteColor(color)"
+            class="ml-6 -mt-2 cursor-pointer absolute z-20">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
+                d="M18 12H6" />
             </svg>
+          </div>
+        </div>
+      </div>
+      <div v-if="design.colorToDelete.length > 0">
+        <div class="text-sm mx-2 my-4 md:my-8 md:text-base">削除するカラー</div>
+        <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
+          <div
+            v-for="color in design.colorToDelete"
+            :key="color"
+            :style="colorShowHexNumber(color.hexNumber)"
+            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
+            <div v-if="color.lame === true" class="relative">
+              <img
+                src="~lame.png"
+                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+            </div>
+            <div v-else-if="color.lame === false"></div>
+            <div
+              class="ml-6 -mt-2 cursor-pointer absolute z-20"
+              @click="saveColor(color)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6v12m6-6H6" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -378,9 +496,10 @@
           </svg>
         </div>
         <div
-          class="rounded-b-lg border border-gray-300 py-2"
+          class="rounded-b-lg border border-gray-300 py-6"
           v-show="partColorContent">
-          <ul class="grid gap-2 place-items-center grid-cols-5 m-1">
+          <ul
+            class="grid gap-2 grid-cols-5 place-items-center mx-[18%] md:mx-[36%]">
             <li
               v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
@@ -400,34 +519,46 @@
           決定
         </button>
       </div>
-      <div class="mb-4">
-        <div
-          v-for="(part, index) in design.parts"
-          :key="index"
-          class="flex items-center mb-2 mr-4 space-x-8">
-          <div class="flex items-center w-full">
-            <div class="w-3/4">
-              {{ part.name }}&nbsp; {{ part.size }}&nbsp;
-              {{ part.quantity }}個&nbsp;
+      <div v-for="part in design.parts" :key="part" class="mb-4 mx-2">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <div class="mr-4">
+              <span class="font-semibold md:w-48 md:inline-block">{{
+                part.name
+              }}</span
+              ><br class="md:hidden" />
+              <input
+                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 px-4 leading-8 transition-colors duration-200 ease-in-out w-16 md:w-20"
+                type="text"
+                name="size"
+                v-model="part.size" />
+              <input
+                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 pl-2 leading-8 transition-colors duration-200 ease-in-out w-12 md:w-16"
+                type="number"
+                min="0"
+                onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+                name="quantity"
+                placeholder="0"
+                v-model="part.quantity" />&nbsp;個
             </div>
-            <div v-if="!part.hexNumber" class="w-8 h-8"></div>
+            <div v-if="!part.hexNumber" class="w-8 h-8 mt-6 md:mt-0"></div>
             <div
               v-else
               :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8"></div>
+              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-6 md:mt-0"></div>
           </div>
-          <div @click="deletePart(index)" class="cursor-pointer">
+          <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6 my-1">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
+                d="M18 12H6" />
             </svg>
           </div>
         </div>
@@ -436,7 +567,7 @@
         <lable>調べた内容・メモ</lable>
         <textarea
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          placeholder="説明説明説明説明説明説明説明"
+          placeholder="入力してください"
           name="description"
           v-model="design.description">
         </textarea>
@@ -444,36 +575,36 @@
       <div class="p-2 w-full text-lg mb-8">
         <lable>タグ</lable><br />
         <input
-          class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
           type="text"
           name="title"
           placeholder="入力してください"
           v-model="tag" />
         <button
-          class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30"
+          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30"
           @click="tagData">
           決定
         </button>
-        <div class="flex justify-start">
+        <div class="flex flex-wrap mt-2">
           <div
-            v-for="(tag, index) in design.tags"
-            :key="index"
-            class="border border-gray-300 mr-4 px-2 py-1 rounded flex justify-center items-center">
-            <div class="mr-1">
+            v-for="tag in design.tags"
+            :key="tag"
+            class="mr-4 py-1 rounded flex justify-start items-center">
+            <div class="mr-2 font-semibold">
               {{ tag.name }}
             </div>
-            <div @click="deleteTag(index)" class="cursor-pointer">
+            <div @click="deleteTag(tag)" class="cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6 my-1">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
+                  d="M18 12H6" />
               </svg>
             </div>
           </div>
@@ -511,8 +642,11 @@ export default {
         images: [],
         imageToDelete: [],
         videos: [],
+        videoToDelete: [],
         youtubeVideos: [],
+        youtubeVideoToDelete: [],
         colors: [],
+        colorToDelete: [],
         parts: [],
         tags: []
       },
@@ -631,8 +765,15 @@ export default {
       const index = this.design.imageToDelete.indexOf(image)
       this.design.imageToDelete.splice(index, 1)
     },
-    deleteVideo(url) {
-      this.design.videos.splice(url, 1)
+    deleteVideo(video) {
+      this.design.videoToDelete.push(video)
+      const index = this.design.videos.indexOf(video)
+      this.design.videos.splice(index, 1)
+    },
+    saveVideo(video) {
+      this.design.videos.push(video)
+      const index = this.design.videoToDelete.indexOf(video)
+      this.design.videoToDelete.splice(index, 1)
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
@@ -642,8 +783,15 @@ export default {
         this.youtubeVideo.url = ''
       }
     },
-    deleteYoutubeVideo(index) {
+    deleteYoutubeVideo(youtubeVideo) {
+      this.design.youtubeVideoToDelete.push(youtubeVideo)
+      const index = this.design.youtubeVideos.indexOf(youtubeVideo)
       this.design.youtubeVideos.splice(index, 1)
+    },
+    saveYoutubeVideo(youtubeVideo) {
+      this.design.youtubeVideos.push(youtubeVideo)
+      const index = this.design.youtubeVideoToDelete.indexOf(youtubeVideo)
+      this.design.youtubeVideoToDelete.splice(index, 1)
     },
     showColorContent() {
       this.colorContent = !this.colorContent
@@ -663,7 +811,6 @@ export default {
       if (this.color.paletteHexNumber !== '') {
         this.color.hexNumberHex8 = this.color.paletteHexNumber
       }
-
       if (
         this.color.lame !== '' &&
         (this.color.pickerHexNumber !== '' ||
@@ -677,8 +824,15 @@ export default {
         this.color.hexNumber = '#E0E0E0'
       }
     },
-    deleteColor(index) {
+    deleteColor(color) {
+      this.design.colorToDelete.push(color)
+      const index = this.design.colors.indexOf(color)
       this.design.colors.splice(index, 1)
+    },
+    saveColor(color) {
+      this.design.colors.push(color)
+      const index = this.design.colorToDelete.indexOf(color)
+      this.design.colorToDelete.splice(index, 1)
     },
     partData() {
       if (this.part.name !== '' && this.part.quantity !== '') {
@@ -707,7 +861,8 @@ export default {
     showPartColorContent() {
       this.partColorContent = !this.partColorContent
     },
-    deletePart(index) {
+    deletePart(part) {
+      const index = this.design.parts.indexOf(part)
       this.design.parts.splice(index, 1)
     },
     tagData() {
@@ -716,7 +871,8 @@ export default {
       })
       this.tag = ''
     },
-    deleteTag(index) {
+    deleteTag(tag) {
+      const index = this.design.tags.indexOf(tag)
       this.design.tags.splice(index, 1)
     },
     createDesign() {
