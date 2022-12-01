@@ -314,7 +314,7 @@
         <div v-show="showColorPalette">
           <div v-if="colorLameStyle" class="relative h-80">
             <ul
-              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
+              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[38%]">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -333,7 +333,7 @@
           </div>
           <div v-else class="h-80 mb-3">
             <ul
-              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
+              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[38%]">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -420,7 +420,7 @@
           </div>
         </div>
       </div>
-      <h3 class="p-2 text-lg">
+      <h3 class="p-2 text-lg mb-2">
         パーツ内容を登録する
         <input type="checkbox" @click="showPartContent" />
       </h3>
@@ -489,9 +489,10 @@
           </svg>
         </div>
         <div
-          class="rounded-b-lg border border-gray-300 py-2"
+          class="rounded-b-lg border border-gray-300 py-6"
           v-show="partColorContent">
-          <ul class="grid gap-2 place-items-center grid-cols-5 m-1">
+          <ul
+            class="grid gap-2 grid-cols-5 place-items-center mx-[18%] md:mx-[36%]">
             <li
               v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
@@ -511,21 +512,21 @@
           決定
         </button>
       </div>
-      <div class="mb-4">
-        <div
-          v-for="part in saveParts"
-          :key="part"
-          class="flex items-center mb-2 mr-4 space-x-8">
-          <div class="flex items-center w-full">
-            <div class="w-3/4">
-              {{ part.name }}&nbsp;
+      <div v-for="part in saveParts" :key="part" class="mb-4 mx-2">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <div class="mr-4">
+              <span class="font-semibold md:w-40 md:inline-block">{{
+                part.name
+              }}</span
+              ><br class="md:hidden" />
               <input
-                class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
+                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 px-4 leading-8 transition-colors duration-200 ease-in-out w-16 md:w-20"
                 type="text"
                 name="size"
-                v-model="part.size" />&nbsp;
+                v-model="part.size" />
               <input
-                class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 pl-2 leading-8 transition-colors duration-200 ease-in-out w-16"
+                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 pl-2 leading-8 transition-colors duration-200 ease-in-out w-12 md:w-16"
                 type="number"
                 min="0"
                 onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
@@ -533,24 +534,24 @@
                 placeholder="0"
                 v-model="part.quantity" />&nbsp;個
             </div>
-            <div v-if="!part.hexNumber" class="w-8 h-8"></div>
+            <div v-if="!part.hexNumber" class="w-8 h-8 mt-6 md:mt-0"></div>
             <div
               v-else
               :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8"></div>
+              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-6 md:mt-0"></div>
           </div>
-          <div @click="deletePart(part)" class="cursor-pointer">
+          <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6 my-1">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12" />
+                d="M18 12H6" />
             </svg>
           </div>
         </div>
