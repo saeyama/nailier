@@ -174,11 +174,11 @@
           type="text"
           name="youtube_video"
           placeholder="youtubeのURL"
-          class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
           v-model="youtubeVideo.url" />
         <button
           @click="youtubeVideoData"
-          class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30">
+          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30">
           登録
         </button>
       </div>
@@ -362,7 +362,7 @@
           v-for="color in saveColors"
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-2">
+          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
           <div v-if="color.lame === true" class="relative">
             <img
               src="~lame.png"
@@ -370,7 +370,7 @@
           </div>
           <div v-else-if="color.lame === false"></div>
           <div
-            class="ml-6 cursor-pointer absolute z-20"
+            class="ml-6 -mt-2 cursor-pointer absolute z-20"
             @click="deleteColor(color)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -394,7 +394,7 @@
             v-for="color in deleteColors"
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
-            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-2">
+            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
             <div v-if="color.lame === true" class="relative">
               <img
                 src="~lame.png"
@@ -402,7 +402,7 @@
             </div>
             <div v-else-if="color.lame === false"></div>
             <div
-              class="ml-6 cursor-pointer absolute z-20"
+              class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -568,22 +568,22 @@
       <div class="p-2 w-full text-lg mb-8">
         <lable>タグ</lable><br />
         <input
-          class="md:w-5/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
           type="text"
           name="title"
           placeholder="入力してください"
           v-model="tag" />
         <button
-          class="font-bold mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-6 rounded-full shadow-lg shadow-gray-500/30"
+          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30"
           @click="tagData">
-          決定</button
-        ><br />
-        <div class="flex justify-start">
+          決定
+        </button>
+        <div class="flex flex-wrap mt-2">
           <div
             v-for="tag in saveTags"
             :key="tag"
-            class="border border-gray-300 mr-4 px-2 py-1 rounded flex justify-center items-center">
-            <div class="mr-1">
+            class="mr-4 py-1 rounded flex justify-start items-center">
+            <div class="mr-2 font-semibold">
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">
@@ -593,11 +593,11 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6 my-1">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12" />
+                  d="M18 12H6" />
               </svg>
             </div>
           </div>
