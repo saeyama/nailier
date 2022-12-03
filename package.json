@@ -20,6 +20,7 @@
     "turbolinks": "^5.2.0",
     "vue": "^2.7.10",
     "vue-color": "^2.8.1",
+    "vue-easy-lightbox": "^0.20.0",
     "vue-loader": "^15.10.0",
     "vue-template-compiler": "^2.7.10",
     "vue-youtube": "^1.4.0",
