@@ -2,43 +2,49 @@
   <div class="container text-gray-600 py-10 mx-auto mb-4">
     <div class="w-11/12 md:w-3/4 mx-auto">
       <h2 class="text-2xl font-bold text-center py-2">{{ design.title }}</h2>
-      <div class="text-sm text-center underline underline-offset-2 pb-10">
-        ネイルデザインを複製
+      <div class="text-sm md:text-base text-center pb-10">
+        {{ design.nailPart }}
       </div>
-      <div class="text-lg font-bold mb-12">{{ design.nailPart }}</div>
-      <h3 class="text-lg font-bold mb-4">画像</h3>
-      <div class="grid grid-cols-4">
+      <h3 class="text-lg mb-2">画像</h3>
+      <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
         <div
-          class="w-5/6 drop-shadow-lg mb-12"
+          class="drop-shadow-lg mb-2 md:mb-8"
           v-for="image in design.images"
           :key="image.id">
-          <img :src="image.url" />
+          <img :src="image" class="mt-2 z-0 h-24 block mx-auto md:h-36" />
         </div>
       </div>
-      <h3 class="text-lg font-bold mb-4">動画</h3>
-      <div class="grid grid-cols-2 mb-2">
+      <h3 class="text-lg mb-2">動画</h3>
+      <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
         <div
-          class="w-2/6 drop-shadow-lg mb-12"
+          class="drop-shadow-lg mb-2 md:mb-8"
           v-for="video in design.videos"
           :key="video.id">
-          <video :src="video.url" controls></video>
+          <video
+            :src="video"
+            controls
+            class="mt-2 z-0 h-24 block mx-auto md:h-36"></video>
         </div>
       </div>
-      <div class="grid grid-cols-2">
+      <h3 class="text-lg mb-2">youtube動画</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-4 mb-6 mx-1">
         <div
-          class="w-11/12 drop-shadow-lg mb-12"
           v-for="youtubeVideo in design.youtubeVideos"
-          :key="youtubeVideo.id">
-          <youtube :video-id="youtubeVideo.accessCode" class="w-full h-full" />
+          :key="youtubeVideo.id"
+          class="drop-shadow-lg mb-2 md:mb-8">
+          <youtube
+            :video-id="youtubeVideo.accessCode"
+            class="w-[100%] h-24 sm:h-36">
+          </youtube>
         </div>
       </div>
-      <h3 class="text-lg font-bold mb-4">カラー</h3>
-      <div class="flex space-x-12 mb-8">
+      <h3 class="text-lg mb-2">カラー</h3>
+      <div class="grid grid-cols-6 mb-6 place-items-center md:grid-cols-10">
         <div
           v-for="color in design.colors"
           :key="color.id"
           :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
+          class="w-8 h-8 rounded-full drop-shadow-lg mb-2 md:mb-8">
           <div v-if="color.lame === true" class="relative">
             <img
               src="~lame.png"
@@ -47,40 +53,43 @@
           <div v-else-if="color.lame === false"></div>
         </div>
       </div>
-      <h3 class="text-lg font-bold mb-4">パーツ</h3>
-      <div class="mb-4">
-        <div
-          v-for="part in design.parts"
-          :key="part"
-          class="flex items-center mb-2 mr-4 space-x-8">
-          <div class="flex items-center w-full">
-            <div class="w-3/4">
-              {{ part.name }}&nbsp; {{ part.size }}&nbsp;
-              {{ part.quantity }}個&nbsp;
+      <h3 class="text-lg mb-2">パーツ</h3>
+      <div class="mb-8 w-4/6 md:2/6">
+        <div v-for="part in design.parts" :key="part" class="mb-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="mr-4">
+                <span class="font-semibold md:w-48 md:inline-block">
+                  {{ part.name }}
+                </span>
+                <br class="md:hidden" />
+                <span class="mr-4">{{ part.size }}</span>
+                <span>{{ part.quantity }}個</span>
+              </div>
             </div>
-            <div v-if="!part.hexNumber" class="w-8 h-8"></div>
+            <div v-if="!part.hexNumber" class="w-8 h-8 mt-2 md:mt-0"></div>
             <div
               v-else
               :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8"></div>
+              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-2 md:mt-0"></div>
           </div>
         </div>
       </div>
-      <h3 class="text-lg font-bold mb-4">調べた内容・メモ</h3>
-      <div class="mb-8">
+      <h3 class="text-lg mb-1">調べた内容・メモ</h3>
+      <div class="mb-4 text-sm border border-gray-300 px-2 py-1 rounded">
         {{ design.description }}
       </div>
-      <div class="mb-12 flex justify-start">
+      <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
         <div
           v-for="tag in design.tags"
           :key="tag.id"
-          class="border border-gray-300 mr-4 px-2 py-1 rounded">
+          class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
           {{ tag.name }}
         </div>
       </div>
       <button
         class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
-        @click="updateDesign">
+        >
         ネイルデザインを編集
       </button>
       <button
@@ -90,7 +99,7 @@
       </button>
       <button
         class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
-        @click="updateDesign">
+        >
         ネイルデザイン一覧
       </button>
     </div>
@@ -105,7 +114,19 @@ Vue.use(VueYoutube)
 export default {
   data() {
     return {
-      design: []
+      design: {
+        id: '',
+        title: '',
+        nailPart: '',
+        description: '',
+        images: [],
+        imageToDelete: [],
+        videos: [],
+        youtubeVideos: [],
+        colors: [],
+        parts: [],
+        tags: []
+      },
     }
   },
   computed: {
@@ -124,9 +145,22 @@ export default {
     getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 1]
-      axios
-        .get(`/api/designs/${id}.json`)
-        .then((response) => (this.design = response.data))
+      axios.get(`/api/designs/${id}.json`).then((response) => {
+        ;(this.design.id = response.data.id),
+          (this.design.title = response.data.title),
+          (this.design.nailPart = response.data.nailPart),
+          (this.design.description = response.data.description),
+          (this.design.images = response.data.images.map(
+            (imageData) => imageData.url
+          )),
+          (this.design.videos = response.data.videos.map(
+            (videoData) => videoData.url
+          )),
+          (this.design.youtubeVideos = response.data.youtubeVideos),
+          (this.design.colors = response.data.colors),
+          (this.design.parts = response.data.parts),
+          (this.design.tags = response.data.tags)
+      })
     },
     deleteDesign() {
       axios
