@@ -6,93 +6,127 @@
         {{ design.nailPart }}
       </div>
       <h3 class="text-lg mb-2">画像</h3>
-      <div class="text-sm mb-2 ml-0.5">画像をクリックすると拡大できます。</div>
-      <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
-        <div
-          class="drop-shadow-lg mb-2 md:mb-8"
-          v-for="(image, index) in design.images"
-          :key="index"
-          @click="showImages(index)">
-          <img :src="image" class="mt-2 z-0 h-24 block mx-auto md:h-36" />
-        </div>
+      <div class="text-sm ml-0.5 mb-6" v-if="design.images.length === 0">
+        登録されている画像はありません。
       </div>
-      <vue-easy-lightbox
-        :visible="visible"
-        :imgs="design.images"
-        :index="index"
-        @hide="hideImagsShowHandle">
-      </vue-easy-lightbox>
+      <div v-else>
+        <div class="text-sm mb-2 ml-0.5">
+          画像をクリックすると拡大できます。
+        </div>
+        <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
+          <div
+            class="drop-shadow-lg mb-2 md:mb-8"
+            v-for="(image, index) in design.images"
+            :key="index"
+            @click="showImages(index)">
+            <img :src="image" class="mt-2 z-0 h-24 block mx-auto md:h-36" />
+          </div>
+        </div>
+        <vue-easy-lightbox
+          :visible="visible"
+          :imgs="design.images"
+          :index="index"
+          @hide="hideImagsShowHandle">
+        </vue-easy-lightbox>
+      </div>
       <h3 class="text-lg mb-2">動画</h3>
-      <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
-        <div
-          class="drop-shadow-lg mb-2 md:mb-8"
-          v-for="video in design.videos"
-          :key="video.id">
-          <video
-            :src="video"
-            controls
-            class="mt-2 z-0 h-24 block mx-auto md:h-36"></video>
+      <div
+        class="text-sm ml-0.5 mb-6"
+        v-if="design.videos.length === 0 || design.videos.length === undefind">
+        登録されている動画はありません。
+      </div>
+      <div v-else>
+        <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
+          <div
+            class="drop-shadow-lg mb-2 md:mb-8"
+            v-for="video in design.videos"
+            :key="video.id">
+            <video
+              :src="video"
+              controls
+              class="mt-2 z-0 h-24 block mx-auto md:h-36"></video>
+          </div>
         </div>
       </div>
       <h3 class="text-lg mb-2">youtube動画</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-4 mb-6 mx-1">
-        <div
-          v-for="youtubeVideo in design.youtubeVideos"
-          :key="youtubeVideo.id"
-          class="drop-shadow-lg mb-2 md:mb-8">
-          <youtube
-            :video-id="youtubeVideo.accessCode"
-            class="w-[100%] h-24 sm:h-36">
-          </youtube>
+      <div class="text-sm ml-0.5 mb-6" v-if="design.youtubeVideos.length === 0">
+        登録されているyoutube動画はありません。
+      </div>
+      <div v-else>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-4 mb-6 mx-1">
+          <div
+            v-for="youtubeVideo in design.youtubeVideos"
+            :key="youtubeVideo.id"
+            class="drop-shadow-lg mb-2 md:mb-8">
+            <youtube
+              :video-id="youtubeVideo.accessCode"
+              class="w-[100%] h-24 sm:h-36">
+            </youtube>
+          </div>
         </div>
       </div>
       <h3 class="text-lg mb-2">カラー</h3>
-      <div class="grid grid-cols-6 mb-6 place-items-center md:grid-cols-10">
-        <div
-          v-for="color in design.colors"
-          :key="color.id"
-          :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full drop-shadow-lg mb-2 md:mb-8">
-          <div v-if="color.lame === true" class="relative">
-            <img
-              src="~lame.png"
-              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+      <div class="text-sm ml-0.5 mb-6" v-if="design.colors.length === 0">
+        登録されているカラーはありません。
+      </div>
+      <div v-else>
+        <div class="grid grid-cols-6 mb-6 place-items-center md:grid-cols-10">
+          <div
+            v-for="color in design.colors"
+            :key="color.id"
+            :style="colorShowHexNumber(color.hexNumber)"
+            class="w-8 h-8 rounded-full drop-shadow-lg mb-2 md:mb-8">
+            <div v-if="color.lame === true" class="relative">
+              <img
+                src="~lame.png"
+                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+            </div>
+            <div v-else-if="color.lame === false"></div>
           </div>
-          <div v-else-if="color.lame === false"></div>
         </div>
       </div>
       <h3 class="text-lg mb-2">パーツ</h3>
-      <div class="mb-8 w-4/6 md:2/6">
-        <div v-for="part in design.parts" :key="part" class="mb-4">
-          <div class="flex justify-between items-center">
-            <div>
-              <div class="mr-4">
-                <span class="font-semibold md:w-48 md:inline-block">
-                  {{ part.name }}
-                </span>
-                <br class="md:hidden" />
-                <span class="mr-4">{{ part.size }}</span>
-                <span>{{ part.quantity }}個</span>
+      <div class="text-sm ml-0.5 mb-6" v-if="design.parts.length === 0">
+        登録されているパーツはありません。
+      </div>
+      <div v-else>
+        <div class="mb-8 w-4/6 md:2/6">
+          <div v-for="part in design.parts" :key="part" class="mb-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <div class="mr-4">
+                  <span class="font-semibold md:w-48 md:inline-block">
+                    {{ part.name }}
+                  </span>
+                  <br class="md:hidden" />
+                  <span class="mr-4">{{ part.size }}</span>
+                  <span>{{ part.quantity }}個</span>
+                </div>
               </div>
+              <div v-if="!part.hexNumber" class="w-8 h-8 mt-2 md:mt-0"></div>
+              <div
+                v-else
+                :style="colorShowHexNumber(part.hexNumber)"
+                class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-2 md:mt-0"></div>
             </div>
-            <div v-if="!part.hexNumber" class="w-8 h-8 mt-2 md:mt-0"></div>
-            <div
-              v-else
-              :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-2 md:mt-0"></div>
           </div>
         </div>
       </div>
       <h3 class="text-lg mb-1">調べた内容・メモ</h3>
-      <div class="mb-4 text-sm border border-gray-300 px-2 py-1 rounded">
-        {{ design.description }}
+      <div class="text-sm ml-0.5 mb-12" v-if="design.description.length === 0">
+        登録されているメモはありません。
       </div>
-      <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
-        <div
-          v-for="tag in design.tags"
-          :key="tag.id"
-          class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
-          {{ tag.name }}
+      <div v-else>
+        <div class="mb-4 text-sm border border-gray-300 px-2 py-1 rounded">
+          {{ design.description }}
+        </div>
+        <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
+          <div
+            v-for="tag in design.tags"
+            :key="tag.id"
+            class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
+            {{ tag.name }}
+          </div>
         </div>
       </div>
       <button
@@ -125,6 +159,7 @@ export default {
   },
   data() {
     return {
+      // design: [],
       design: {
         id: '',
         title: '',
@@ -162,16 +197,16 @@ export default {
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),
           (this.design.description = response.data.description),
-          (this.design.images = response.data.images.map(
-            (imageData) => imageData.url
-          )),
-          (this.design.videos = response.data.videos.map(
-            (videoData) => videoData.url
-          )),
           (this.design.youtubeVideos = response.data.youtubeVideos),
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags)
+          (this.design.tags = response.data.tags),
+          (this.design.videos = response.data.videos.map(
+            (videoData) => videoData.url
+          )),
+          (this.design.images = response.data.images.map(
+            (imageData) => imageData.url
+          ))
       })
     },
     deleteDesign() {

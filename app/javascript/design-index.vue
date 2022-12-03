@@ -30,12 +30,7 @@
         class="m-4 p-2 shadow-xl"
         v-for="design in selectedNailPartDesigns"
         :key="design.id">
-        <div class="flex justify-between items-center m-2">
-          <h2 class="text-lg font-bold">{{ design.title }}</h2>
-          <div class="underline underline-offset-2 text-xs xl:text-sm">
-            ネイルデザインを複製
-          </div>
-        </div>
+        <h2 class="text-lg font-bold">{{ design.title }}</h2>
         <div class="flex justify-center items-center md:block">
           <div v-if="!design.image" class="w-1/2 md:w-full">
             <div
@@ -112,14 +107,14 @@ export default {
   methods: {
     getDesigns() {
       axios.get(`/api/designs`).then((response) => {
-        response.data.designs[0].nailPart === 'hand'
+        response.data.designs[0].nailPart === 'ハンド'
           ? (this.showhandDesigns = true)
           : (this.showfootDesigns = true),
           (this.handDesigns = response.data.designs.filter(
-            (design) => design.nailPart === 'hand'
+            (design) => design.nailPart === 'ハンド'
           )),
           (this.footDesigns = response.data.designs.filter(
-            (design) => design.nailPart === 'foot'
+            (design) => design.nailPart === 'フット'
           ))
       })
     },
