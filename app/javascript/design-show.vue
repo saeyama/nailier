@@ -6,14 +6,22 @@
         {{ design.nailPart }}
       </div>
       <h3 class="text-lg mb-2">画像</h3>
+      <div class="text-sm mb-2 ml-0.5">画像をクリックすると拡大できます。</div>
       <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
         <div
           class="drop-shadow-lg mb-2 md:mb-8"
-          v-for="image in design.images"
-          :key="image.id">
+          v-for="(image, index) in design.images"
+          :key="index"
+          @click="showImages(index)">
           <img :src="image" class="mt-2 z-0 h-24 block mx-auto md:h-36" />
         </div>
       </div>
+      <vue-easy-lightbox
+        :visible="visible"
+        :imgs="design.images"
+        :index="index"
+        @hide="hideImagsShowHandle">
+      </vue-easy-lightbox>
       <h3 class="text-lg mb-2">動画</h3>
       <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
         <div
@@ -88,8 +96,7 @@
         </div>
       </div>
       <button
-        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
-        >
+        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20">
         ネイルデザインを編集
       </button>
       <button
@@ -98,8 +105,7 @@
         ネイルデザインを削除
       </button>
       <button
-        class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
-        >
+        class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20">
         ネイルデザイン一覧
       </button>
     </div>
@@ -109,9 +115,14 @@
 <script>
 import axios from 'axios'
 import Vue from 'vue'
+import VueEasyLightbox from 'vue-easy-lightbox'
+Vue.use(VueEasyLightbox)
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
 export default {
+  components: {
+    VueEasyLightbox
+  },
   data() {
     return {
       design: {
@@ -120,13 +131,14 @@ export default {
         nailPart: '',
         description: '',
         images: [],
-        imageToDelete: [],
         videos: [],
         youtubeVideos: [],
         colors: [],
         parts: [],
         tags: []
       },
+      visible: false,
+      index: 0
     }
   },
   computed: {
@@ -166,6 +178,13 @@ export default {
       axios
         .delete(`/api/designs/${this.design.id}`, {})
         .then(() => (window.location.href = '/designs'))
+    },
+    showImages(index) {
+      this.index = index
+      this.visible = true
+    },
+    hideImagsShowHandle() {
+      this.visible = false
     }
   }
 }
