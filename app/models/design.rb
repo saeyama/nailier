@@ -3,6 +3,9 @@
 class Design < ApplicationRecord
   validates :title, presence: true
   validates :nail_part, presence: true
+
+  belongs_to :user
+
   has_many_attached :images
   accepts_nested_attributes_for :images_attachments, allow_destroy: true
   has_many_attached :videos
