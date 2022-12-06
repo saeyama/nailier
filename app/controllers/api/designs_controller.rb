@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class Api::DesignsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_design, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token
   def index
-    @designs = Design.order(updated_at: :DESC).with_attached_images
+    @designs = current_user.designs.order(updated_at: :DESC).with_attached_images
   end
 
   def show; end
@@ -16,7 +17,7 @@ class Api::DesignsController < ApplicationController
   def edit; end
 
   def create
-    @design = Design.new(design_params)
+    @design = current_user.designs.new(design_params)
     @design.attach_blob(image_data_urls)
     if @design.save
       render json: @design, status: :created
@@ -67,7 +68,7 @@ class Api::DesignsController < ApplicationController
   end
 
   def set_design
-    @design = Design.find(params[:id])
+    @design = current_user.designs.find(params[:id])
   end
 
   def sort_image_ids
