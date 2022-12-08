@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -19,13 +19,11 @@ jobs:
         ruby-version: 3.0.4
         bundler-cache: true
 
-    - name: Cache node modules
-      uses: actions/cache@v2.1.4
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+        node-version: '16.13.0'
+        cache: 'yarn'
 
     - name: yarn install
       run:  yarn install --check-files
