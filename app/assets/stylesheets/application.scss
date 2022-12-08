@@ -98,15 +98,13 @@ header {
   color: #1f2937;
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
-  height: 100vh;
   visibility: hidden;
   display: flex;
 }
-#nav-menu nav {
-  width: 80%;
-}
+// #nav-menu nav {
+//   width: 80%;
+// }
 
 #nav-menu li {
   line-height: 4rem;
@@ -114,7 +112,7 @@ header {
 }
 
 .nav-bak {
-  width: 20%;
+  // width: 20%;
   background: black;
   opacity: 0.5;
 }

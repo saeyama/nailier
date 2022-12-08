@@ -1,22 +1,16 @@
-.container.text-gray-600.py-10.mx-auto
-  h2.text-xl.font-bold.text-center.py-10
+.container.text-gray-600.py-10.mx-auto.px-2
+  h2.text-2xl.font-bold.text-center.py-10
     | お問い合わせ
   .mx-auto
   = form_with model: @inquiry,
                     url: inquiries_path,
                     method: :post, local: true do |f|
-    .p-2.w-full.text-lg.text-base
-      = f.label :title, '件名'
-      = f.text_field :title, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-    .p-2.w-full.text-lg.text-base
-      = f.label :name, 'お名前'
-      = f.text_field :name, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-    .p-2.w-full.text-lg.text-base
-      = f.label :email, 'メールアドレス'
-      = f.email_field :email, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-    .p-2.w-full.text-lg.text-base
-      = f.label :description, 'お問い合わせ内容'
-      = f.text_area :description, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-    .p-2.w-full
-      button.flex.font-bold.mx-auto.text-white.bg-gray-500.border-0.py-2.px-8.rounded
-        = f.submit '送信'
+    = f.label :title, '件名'
+    = f.text_field :title, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-8'
+    = f.label :name, 'お名前'
+    = f.text_field :name, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-8'
+    = f.label :email, 'メールアドレス'
+    = f.email_field :email, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-8'
+    = f.label :description, 'お問い合わせ内容'
+    = f.text_area :description, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-6'
+    = f.submit '送信', class: 'flex mx-auto text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-32 mt-8 mb-6'

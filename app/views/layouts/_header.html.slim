@@ -1,21 +1,29 @@
 .flex
   h1.text-2xl.pt-2.pl-2 ロゴ
-  #nav-toggle.visible.absolute.top-2.right-2.h-8.md:hidden
+  #nav-toggle.md:hidden
     div
       span
       span
       span
-  #nav-menu
-    .nav-bak.pointer-events-none
-    nav.bg-white.md:visible.pointer-events-none.md:bg-transparent.md:ml-8.lg:ml-52
-      ul.md:flex.text-sm.md:text-xs.lg:text-sm
-        li
-          =link_to 'ネイルデザインを登録', '#'
-        li
-          =link_to 'ネイルデザインリスト', '#'
-        li
-          =link_to 'ユーザー情報', '#'
-        li
-          =link_to 'ログアウト', '#'
-        li
-          =link_to 'お問い合わせ', '#'
+  #nav-menu.min-h-screen.left-0.md:left-auto.md:min-h-0
+    .nav-bak.w-1/5.md:w-0
+    nav.w-4/5.md:w-full.bg-white.md:visible.md:bg-transparent
+      ul.md:flex.text-sm
+        - if user_signed_in?
+          li
+            =link_to 'ネイルデザインを登録', new_design_path
+          li
+            = link_to 'ネイルデザインリスト', designs_path
+          li
+            = link_to 'アカウント情報', edit_user_registration_path
+          li
+            = link_to 'ログアウト', destroy_user_session_path, method: :delete
+          li
+            = link_to 'お問い合わせ', new_inquiry_path
+        - else
+          li
+            = link_to 'ログイン', new_user_session_path
+          li
+            = link_to 'アカウントを登録', new_user_registration_path
+          li
+            = link_to 'お問い合わせ', new_inquiry_path
