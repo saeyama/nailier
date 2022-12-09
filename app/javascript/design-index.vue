@@ -46,11 +46,13 @@
           <div
             class="w-1/2 justify-between items-center md:flex md:justify-between md:w-full md:mb-2">
             <button
-              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
+              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10"
+              @click="showDesign(design.id)">
               詳細
             </button>
             <button
-              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10">
+              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10"
+              @click="editDesign(design.id)">
               編集
             </button>
             <button
@@ -117,6 +119,12 @@ export default {
             (design) => design.nailPart === 'フット'
           ))
       })
+    },
+    showDesign(id) {
+      window.location.href = `/designs/${id}`
+    },
+    editDesign(id) {
+      window.location.href = `/designs/${id}/edit`
     },
     deleteDesign(id) {
       axios

@@ -130,7 +130,8 @@
         </div>
       </div>
       <button
-        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20">
+        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
+        @click="editDesign">
         ネイルデザインを編集
       </button>
       <button
@@ -139,7 +140,8 @@
         ネイルデザインを削除
       </button>
       <button
-        class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20">
+        class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
+        @click="indexDesign">
         ネイルデザイン一覧
       </button>
     </div>
@@ -209,10 +211,16 @@ export default {
           ))
       })
     },
+    editDesign() {
+      window.location.href = `/designs/${this.design.id}/edit`
+    },
     deleteDesign() {
       axios
         .delete(`/api/designs/${this.design.id}`, {})
         .then(() => (window.location.href = '/designs'))
+    },
+    indexDesign() {
+      window.location.href = `/designs`
     },
     showImages(index) {
       this.index = index
