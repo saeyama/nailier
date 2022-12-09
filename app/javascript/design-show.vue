@@ -107,7 +107,7 @@
               <div
                 v-else
                 :style="colorShowHexNumber(part.hexNumber)"
-                class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-2 md:mt-0"></div>
+                class="rounded-full shadow-md w-8 h-8 mt-2 md:mt-0"></div>
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@
         </div>
       </div>
       <button
-        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
+        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg md:px-20"
         @click="editDesign">
         ネイルデザインを編集
       </button>
@@ -140,7 +140,7 @@
         ネイルデザインを削除
       </button>
       <button
-        class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
+        class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg md:px-20"
         @click="indexDesign">
         ネイルデザイン一覧
       </button>
@@ -161,7 +161,6 @@ export default {
   },
   data() {
     return {
-      // design: [],
       design: {
         id: '',
         title: '',

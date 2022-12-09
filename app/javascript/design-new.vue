@@ -180,7 +180,7 @@
           v-model="youtubeVideo.url" />
         <button
           @click="youtubeVideoData"
-          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30">
+          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg">
           登録
         </button>
       </div>
@@ -275,32 +275,34 @@
         <input type="checkbox" @click="showColorContent" />
       </h3>
       <div
-        class="mb-4 w-full text-lg border border-gray-300 rounded"
+        class="mb-4 w-full border border-gray-300 rounded"
         v-show="colorContent">
-        <div class="text-sm my-4 pl-2 md:pl-4 md:text-lg">
+        <div class="my-4 md:mb-8 pl-2 md:pl-4">
           <lable>ラメ</lable>&emsp; なし&nbsp;
           <input type="radio" v-model="color.lame" :value="false" />&emsp;
           あり&nbsp;
           <input type="radio" v-model="color.lame" :value="true" />
         </div>
-        <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
+        <div
+          class="flex justify-around gap-2 md:gap-4 mx-[2%] mb-6 md:mb-10 sm:mx-[8%] md:mx-[12%]">
           <button
             :class="!showColorPicker ? 'switch-color-button' : ''"
             @click="switchToColorPicker"
-            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
+            class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
             カラーピッカー
           </button>
           <button
             :class="!showColorPalette ? 'switch-color-button' : ''"
             @click="switchToColorPalette"
-            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
+            class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
             カラーパレット
           </button>
         </div>
         <div v-show="showColorPicker">
-          <div v-if="colorLameStyle" class="relative h-64">
+          <div class="relative h-64">
             <img
               src="~color-picker-lame.png"
+              v-if="colorLameStyle"
               class="color-picker-img absolute z-10 pointer-events-none" />
             <chrome-picker
               class="absolute z-0 color-picker-img"
@@ -308,42 +310,19 @@
               v-model="color.pickerHexNumber">
             </chrome-picker>
           </div>
-          <div v-else class="h-64 mb-3">
-            <chrome-picker
-              class="mx-auto"
-              :value="color.pickerHexNumber"
-              v-model="color.pickerHexNumber">
-            </chrome-picker>
-          </div>
         </div>
         <div v-show="showColorPalette">
-          <div v-if="colorLameStyle" class="relative h-80">
-            <ul
-              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
+          <div class="relative">
+            <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
                 :style="colorShowHexNumber(hexNumber)"
-                class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+                class="w-8 h-8 rounded-full cursor-pointer shadow-md">
                 <img
                   src="~lame.png"
+                  v-if="colorLameStyle"
                   class="w-8 h-8 rounded-full opacity-80 absolute z-10 pointer-events-none" />
-                <input
-                  type="radio"
-                  v-model="color.paletteHexNumber"
-                  :value="hexNumber"
-                  class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
-              </li>
-            </ul>
-          </div>
-          <div v-else class="h-80 mb-3">
-            <ul
-              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
-              <li
-                v-for="(hexNumber, index) in colorPaletteHexNumbers"
-                :key="index"
-                :style="colorShowHexNumber(hexNumber)"
-                class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
                 <input
                   type="radio"
                   v-model="color.paletteHexNumber"
@@ -354,7 +333,7 @@
           </div>
         </div>
         <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg md:px-36"
           @click="colorData">
           決定
         </button>
@@ -369,7 +348,7 @@
           v-for="color in design.colors"
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
+          class="w-8 h-8 rounded-full shadow-md mb-4">
           <div v-if="color.lame == true" class="relative">
             <img
               src="~lame.png"
@@ -401,7 +380,7 @@
             v-for="color in design.colorToDelete"
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
-            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
+            class="w-8 h-8 rounded-full shadow-md mb-4">
             <div v-if="color.lame === true" class="relative">
               <img
                 src="~lame.png"
@@ -504,7 +483,7 @@
               v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
               :style="colorShowHexNumber(hexNumber)"
-              class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+              class="w-8 h-8 rounded-full cursor-pointer shadow-md">
               <input
                 type="radio"
                 v-model="part.hexNumber"
@@ -514,7 +493,7 @@
           </ul>
         </div>
         <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg md:px-36"
           @click="partData">
           決定
         </button>
@@ -545,7 +524,7 @@
             <div
               v-else
               :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-6 md:mt-0"></div>
+              class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
             <svg
@@ -581,7 +560,7 @@
           placeholder="入力してください"
           v-model="tag" />
         <button
-          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30"
+          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg"
           @click="tagData">
           決定
         </button>
@@ -611,7 +590,7 @@
         </div>
       </div>
       <button
-        class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
+        class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg md:px-20"
         @click="createDesign">
         ネイルデザインを登録
       </button>

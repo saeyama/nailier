@@ -3,17 +3,18 @@
     <h1 class="text-2xl font-bold text-center py-8 md:py-10">
       ネイルデザインリスト
     </h1>
-    <div class="flex justify-around mb-4 mx-2 md:mb-10 md:mx-24">
+    <div
+      class="flex justify-around gap-2 md:gap-4 mb-10 mx-[4%] sm:mx-[8%] md:mx-[12%] lg:mx-[20%]">
       <button
         :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
         @click="switchToHandDesigns"
-        class="text-white bg-gray-800 border-0 py-2 px-10 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-24 lg:px-36 lg:py-4 lg:text-xl">
+        class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
         ハンド
       </button>
       <button
         :class="!showfootDesigns ? 'switch-nail-part-button' : ''"
         @click="switchToFootDesigns"
-        class="text-white bg-gray-800 border-0 py-2 px-10 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-24 lg:px-36 lg:py-4 lg:text-xl">
+        class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
         フット
       </button>
     </div>
