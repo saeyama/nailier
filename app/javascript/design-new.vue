@@ -2,10 +2,10 @@
   <div class="container text-gray-600 py-10 mx-auto mb-4">
     <h2 class="text-2xl font-bold text-center py-10">ネイルデザインを登録</h2>
     <div class="w-11/12 md:w-3/4 mx-auto">
-      <div class="p-2 w-full text-lg">
-        <lable>タイトル</lable>
+      <div class="p-2">
+        <lable class="text-lg">タイトル</lable>
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
           type="text"
           name="title"
           placeholder="入力してください"
@@ -171,16 +171,16 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full">
+      <div class="flex mx-2">
         <input
           type="text"
           name="youtube_video"
           placeholder="youtubeのURL"
-          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
+          class="flex-[3] sm:flex-[6] my-1.5 pl-3 mr-1 md:mr-2 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 duration-200 ease-in-out"
           v-model="youtubeVideo.url" />
         <button
           @click="youtubeVideoData"
-          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg">
+          class="flex-[1] font-bold mx-auto my-2 text-white bg-gray-800 py-2 rounded-full shadow-lg">
           登録
         </button>
       </div>
@@ -414,7 +414,7 @@
         class="p-2 md:p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
         v-show="partContent">
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
           type="text"
           name="name"
           placeholder="パーツ名を入力してください。"
@@ -429,7 +429,7 @@
           </button>
         </div>
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
           type="text"
           name="size"
           placeholder="大きさを入力してください。"
@@ -447,7 +447,7 @@
           class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
           <label>個数</label>
           <input
-            class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
+            class="w-20 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-1 px-4 leading-8 duration-200 ease-in-out"
             type="number"
             min="0"
             onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
@@ -477,8 +477,7 @@
         <div
           class="rounded-b-lg border border-gray-300 py-6"
           v-show="partColorContent">
-          <ul
-            class="grid gap-2 grid-cols-5 place-items-center mx-[18%] md:mx-[36%]">
+          <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
             <li
               v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
@@ -507,12 +506,12 @@
               }}</span
               ><br class="md:hidden" />
               <input
-                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 px-4 leading-8 transition-colors duration-200 ease-in-out w-16 md:w-20"
+                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 px-4 leading-8 duration-200 ease-in-out w-16 md:w-20"
                 type="text"
                 name="size"
                 v-model="part.size" />
               <input
-                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 pl-2 leading-8 transition-colors duration-200 ease-in-out w-12 md:w-16"
+                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 pl-2 leading-8 duration-200 ease-in-out w-12 md:w-16"
                 type="number"
                 min="0"
                 onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
@@ -542,28 +541,30 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full text-lg">
-        <lable>調べた内容・メモ</lable>
+      <div class="p-2">
+        <lable class="text-lg">調べた内容・メモ</lable>
         <textarea
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
           placeholder="入力してください"
           name="description"
           v-model="design.description">
         </textarea>
       </div>
-      <div class="p-2 w-full text-lg mb-8">
-        <lable>タグ</lable><br />
-        <input
-          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
-          type="text"
-          name="title"
-          placeholder="入力してください"
-          v-model="tag" />
-        <button
-          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg"
-          @click="tagData">
-          決定
-        </button>
+      <div class="p-2 mb-8">
+        <lable class="text-lg block -mb-2">タグ</lable>
+        <div class="flex">
+          <input
+            class="flex-[3] sm:flex-[6] my-1.5 pl-3 mr-1 md:mr-2 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 duration-200 ease-in-out"
+            type="text"
+            name="title"
+            placeholder="入力してください"
+            v-model="tag" />
+          <button
+            class="flex-[1] font-bold mx-auto my-2 text-white bg-gray-800 py-2 rounded-full shadow-lg"
+            @click="tagData">
+            決定
+          </button>
+        </div>
         <div class="flex flex-wrap mt-2">
           <div
             v-for="tag in design.tags"
