@@ -5,7 +5,7 @@
       <div class="p-2">
         <lable class="text-lg">タイトル</lable>
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
+          class="form-field"
           type="text"
           name="title"
           placeholder="入力してください"
@@ -103,7 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 text-lg">
+      <div class="p-2">
         <lable>動画&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -341,7 +341,7 @@
           </div>
         </div>
         <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg md:px-36"
+          class="form-btn mt-4 mb-6 md:mt-6 md:mb-8 px-24 md:px-36"
           @click="colorData">
           決定
         </button>
@@ -419,10 +419,10 @@
         <input type="checkbox" @click="showPartContent" />
       </h3>
       <div
-        class="p-2 md:p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
+        class="p-2 md:p-4 mb-4 w-full md:px-8 border border-gray-300 rounded"
         v-show="partContent">
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
+          class="form-field"
           type="text"
           name="name"
           placeholder="パーツ名を入力してください。"
@@ -437,7 +437,7 @@
           </button>
         </div>
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
+          class="form-field"
           type="text"
           name="size"
           placeholder="大きさを入力してください。"
@@ -455,7 +455,7 @@
           class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
           <label>個数</label>
           <input
-            class="w-20 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-1 px-4 leading-8 duration-200 ease-in-out"
+            class="form-field w-20"
             type="number"
             min="0"
             onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
@@ -500,7 +500,7 @@
           </ul>
         </div>
         <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg md:px-36"
+          class="form-btn mt-6 mb-4 px-24 md:mt-8 md:mb-4 md:px-36"
           @click="partData">
           決定
         </button>
@@ -598,9 +598,7 @@
           </div>
         </div>
       </div>
-      <button
-        class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg md:px-20"
-        @click="createDesign">
+      <button class="form-btn px-8 md:px-20" @click="createDesign">
         ネイルデザインを登録
       </button>
     </div>

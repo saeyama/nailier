@@ -20,7 +20,7 @@
     </div>
     <select
       v-model="selectedTag"
-      class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 transition-colors duration-200 ease-in-out">
+      class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 duration-200 ease-in-out">
       <option value="" selected>タグで絞り込む</option>
       <option v-for="tag in nailPartTags" :key="tag">
         {{ tag }}

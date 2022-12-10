@@ -141,9 +141,7 @@
         @click="deleteDesign">
         ネイルデザインを削除
       </button>
-      <button
-        class="flex mx-auto text-bg-gray-800 white border border-gray-800 py-2 px-8 rounded-full shadow-lg md:px-20"
-        @click="indexDesign">
+      <button class="link-btn px-8 md:px-20" @click="indexDesign">
         ネイルデザイン一覧
       </button>
     </div>
