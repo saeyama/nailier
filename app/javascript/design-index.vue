@@ -20,44 +20,43 @@
     </div>
     <select
       v-model="selectedTag"
-      class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 mb-4 leading-8 transition-colors duration-200 ease-in-out">
+      class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 transition-colors duration-200 ease-in-out">
       <option value="" selected>タグで絞り込む</option>
       <option v-for="tag in nailPartTags" :key="tag">
         {{ tag }}
       </option>
     </select>
-    <div class="md:grid md:grid-cols-3">
+    <div class="md:grid md:grid-cols-3 max-w-3xl mx-auto">
       <div
-        class="m-4 p-2 shadow-xl"
+        class="m-4 p-2 shadow-xl max-w-xs mx-auto"
         v-for="design in selectedNailPartDesigns"
         :key="design.id">
         <h2 class="text-lg font-bold">{{ design.title }}</h2>
-        <div class="flex justify-center items-center md:block">
-          <div v-if="!design.image" class="w-1/2 md:w-full">
+        <div class="flex gap-2 justify-center items-center md:block mb-1">
+          <div v-if="!design.image" class="flex-1">
             <div
-              class="w-5/6 py-[42%] mb-[2%] text-lg bg-slate-200 drop-shadow-lg text-white text-center mx-auto md:text-2xl md:w-3/4 md:py-[44%] xl:py-[46%]">
+              class="h-40 w-full md:h-48 md:w-56 text-lg leading-[10rem] md:leading-[12rem] bg-slate-200 drop-shadow-lg text-white text-center mx-auto md:text-2xl">
               no image
             </div>
           </div>
-          <div v-else class="w-1/2 md:w-full max-w-md">
+          <div v-else class="flex-1">
             <img
-              class="w-5/6 drop-shadow-lg mx-auto md:w-3/4"
+              class="h-40 w-full md:h-48 md:w-56 drop-shadow-lg object-cover"
               :src="design.image" />
           </div>
-          <div
-            class="w-1/2 justify-between items-center md:flex md:justify-between md:w-full md:mb-2">
+          <div class="md:flex md:justify-between md:my-2 md:gap-1 md:mt-4">
             <button
-              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10"
+              class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
               @click="showDesign(design.id)">
               詳細
             </button>
             <button
-              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10"
+              class="block px-8 my-2 md:my-0 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
               @click="editDesign(design.id)">
               編集
             </button>
             <button
-              class="flex mx-auto mb-2 text-gray-800 border border-gray-300 shadow-md py-2 px-8 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full md:py-1 md:px-4 md:mt-4 xl:py-2 xl:px-10"
+              class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
               @click="deleteDesign(design.id)">
               削除
             </button>
