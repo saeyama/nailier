@@ -10,16 +10,16 @@
         登録されている画像はありません。
       </div>
       <div v-else>
-        <div class="text-sm mb-2 ml-0.5">
-          画像をクリックすると拡大できます。
-        </div>
-        <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
+        <div class="text-sm mb-2">画像をクリックすると拡大できます。</div>
+        <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
             class="drop-shadow-lg mb-2 md:mb-8"
             v-for="(image, index) in design.images"
             :key="index"
             @click="showImages(index)">
-            <img :src="image" class="mt-2 z-0 h-24 block mx-auto md:h-36" />
+            <img
+              :src="image"
+              class="mt-2 z-0 h-20 sm:h-36 w-full object-cover" />
           </div>
         </div>
         <vue-easy-lightbox
@@ -36,7 +36,7 @@
         登録されている動画はありません。
       </div>
       <div v-else>
-        <div class="grid grid-cols-3 md:grid-cols-4 mb-4">
+        <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
             class="drop-shadow-lg mb-2 md:mb-8"
             v-for="video in design.videos"
@@ -44,7 +44,7 @@
             <video
               :src="video"
               controls
-              class="mt-2 z-0 h-24 block mx-auto md:h-36"></video>
+              class="mt-2 z-0 h-20 sm:h-36 w-full object-cover"></video>
           </div>
         </div>
       </div>
@@ -53,15 +53,17 @@
         登録されているyoutube動画はありません。
       </div>
       <div v-else>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-4 mb-6 mx-1">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-1 mb-4">
           <div
             v-for="youtubeVideo in design.youtubeVideos"
             :key="youtubeVideo.id"
             class="drop-shadow-lg mb-2 md:mb-8">
-            <youtube
-              :video-id="youtubeVideo.accessCode"
-              class="w-[100%] h-24 sm:h-36">
-            </youtube>
+            <div class="w-full aspect-video">
+              <youtube
+                :video-id="youtubeVideo.accessCode"
+                class="mt-2 z-0 w-full h-full">
+              </youtube>
+            </div>
           </div>
         </div>
       </div>
@@ -70,7 +72,7 @@
         登録されているカラーはありません。
       </div>
       <div v-else>
-        <div class="grid grid-cols-6 mb-6 place-items-center md:grid-cols-10">
+        <div class="grid grid-cols-6 mb-6 md:grid-cols-12 ml-1">
           <div
             v-for="color in design.colors"
             :key="color.id"
@@ -91,7 +93,7 @@
       </div>
       <div v-else>
         <div class="mb-8 w-4/6 md:2/6">
-          <div v-for="part in design.parts" :key="part" class="mb-4">
+          <div v-for="part in design.parts" :key="part" class="mb-4 ml-0.5">
             <div class="flex justify-between items-center">
               <div>
                 <div class="mr-4">

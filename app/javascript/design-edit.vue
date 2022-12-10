@@ -49,20 +49,22 @@
           draggable=".item"
           class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="item mb-4 relative md:mb-8"
+            class="item relative mb-4 md:mb-8"
             v-for="image in design.images"
             :key="image">
-            <img :src="image.url" class="mt-2 z-0 h-20 block mx-auto md:h-36" />
+            <img
+              :src="image.url"
+              class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover" />
             <div
               @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+              class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -75,22 +77,22 @@
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
           <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
             <div
-              class="mb-4 relative md:mb-8"
+              class="relative mb-4 md:mb-8"
               v-for="image in design.imageToDelete"
               :key="image">
               <img
                 :src="image.url"
-                class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60" />
+                class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover opacity-60" />
               <div
                 @click="saveImage(image)"
-                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg sm:w-6 sm:h-6">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -115,22 +117,23 @@
         </div>
         <div class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="mb-4 relative md:mb-8"
+            class="relative mb-4 md:mb-8"
             v-for="video in saveVideos"
             :key="video">
-            <video class="mt-2 z-0 h-20 block mx-auto md:h-36">
+            <video
+              class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover">
               <source :src="video.url" type="video/mp4" />
             </video>
             <div
               @click="deleteVideo(video)"
-              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+              class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -143,15 +146,16 @@
           <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
           <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
             <div
-              class="mb-4 relative md:mb-8"
+              class="relative mb-4 md:mb-8"
               v-for="video in deleteVideos"
               :key="video">
-              <video class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60">
+              <video
+                class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover opacity-60">
                 <source :src="video.url" type="video/mp4" />
               </video>
               <div
                 @click="saveVideo(video)"
-                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -187,25 +191,27 @@
         class="text-sm mt-2 mb-6 ml-2">
         &plus;&minus;ボタンで登録したい画像を選択できます。
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
           v-for="youtubeVideo in saveYoutubeVideos"
           :key="youtubeVideo"
           class="relative">
-          <youtube
-            :video-id="youtubeVideo.accessCode"
-            class="w-[100%] h-24 md:h-36">
-          </youtube>
+          <div class="w-full aspect-video">
+            <youtube
+              :video-id="youtubeVideo.accessCode"
+              class="mt-2 z-0 w-full h-full">
+            </youtube>
+          </div>
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
-            class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+            class="cursor-pointer absolute z-10 left-[94%] -top-[2%]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -218,25 +224,27 @@
         <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
           削除するyoutube動画
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
           <div
             v-for="youtubeVideo in deleteYoutubeVideos"
             :key="youtubeVideo"
             class="relative">
-            <youtube
-              :video-id="youtubeVideo.accessCode"
-              class="w-[100%] h-24 md:h-36 opacity-60">
-            </youtube>
+            <div class="w-full aspect-video">
+              <youtube
+                :video-id="youtubeVideo.accessCode"
+                class="mt-2 z-0 w-full h-full opacity-60">
+              </youtube>
+            </div>
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
-              class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+              class="cursor-pointer absolute z-10 left-[94%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg sm:w-6 sm:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -336,7 +344,7 @@
       <div v-if="design.colors.length > 0" class="text-sm my-4 mx-2">
         &plus;&minus;ボタンで登録したいカラーを選択できます。
       </div>
-      <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
+      <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
         <div
           v-for="color in saveColors"
           :key="color"
@@ -368,7 +376,7 @@
       </div>
       <div v-if="deleteColors.length > 0">
         <div class="text-sm mx-2 my-4 md:my-8 md:text-base">削除するカラー</div>
-        <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
+        <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
           <div
             v-for="color in deleteColors"
             :key="color"
