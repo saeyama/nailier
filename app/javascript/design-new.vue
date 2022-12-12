@@ -2,10 +2,10 @@
   <div class="container text-gray-600 py-10 mx-auto mb-4">
     <h2 class="text-2xl font-bold text-center py-10">ネイルデザインを登録</h2>
     <div class="w-11/12 md:w-3/4 mx-auto">
-      <div class="p-2 w-full text-lg">
-        <lable>タイトル</lable>
+      <div class="p-2">
+        <lable class="text-lg">タイトル</lable>
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="form-field"
           type="text"
           name="title"
           placeholder="入力してください"
@@ -49,20 +49,22 @@
           draggable=".item"
           class="grid grid-cols-3 mb-2 md:grid-cols-4">
           <div
-            class="item mb-4 relative md:mb-8"
+            class="item relative mb-4 md:mb-8"
             v-for="image in design.images"
             :key="image">
-            <img :src="image" class="mt-2 z-0 h-20 block mx-auto md:h-36" />
+            <img
+              :src="image"
+              class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover" />
             <div
               @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+              class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -75,22 +77,22 @@
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
           <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
             <div
-              class="mb-4 relative md:mb-8"
+              class="relative mb-4 md:mb-8"
               v-for="image in design.imageToDelete"
               :key="image">
               <img
                 :src="image"
-                class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60" />
+                class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover opacity-60" />
               <div
                 @click="saveImage(image)"
-                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg sm:w-6 sm:h-6">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -101,7 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 text-lg">
+      <div class="p-2">
         <lable>動画&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -117,22 +119,23 @@
         </div>
         <div class="grid grid-cols-3 md:grid-cols-4">
           <div
-            class="mb-4 relative md:mb-8"
+            class="relative mb-4 md:mb-8"
             v-for="video in design.videos"
             :key="video">
-            <video class="mt-2 z-0 h-20 block mx-auto md:h-36">
+            <video
+              class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover">
               <source :src="video" type="video/mp4" />
             </video>
             <div
               @click="deleteVideo(video)"
-              class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+              class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -148,19 +151,20 @@
               class="mb-4 relative md:mb-8"
               v-for="video in design.videoToDelete"
               :key="video">
-              <video class="mt-2 z-0 h-20 block mx-auto md:h-36 opacity-60">
+              <video
+                class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover opacity-60">
                 <source :src="video" type="video/mp4" />
               </video>
               <div
                 @click="saveVideo(video)"
-                class="cursor-pointer absolute z-10 left-[80%] -top-[2%]">
+                class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg sm:w-6 sm:h-6">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -171,16 +175,16 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full">
+      <div class="flex mx-2">
         <input
           type="text"
           name="youtube_video"
           placeholder="youtubeのURL"
-          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
+          class="flex-[3] sm:flex-[6] my-1.5 pl-3 mr-1 md:mr-2 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 duration-200 ease-in-out"
           v-model="youtubeVideo.url" />
         <button
           @click="youtubeVideoData"
-          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30">
+          class="flex-[1] font-bold mx-auto my-2 text-white bg-gray-800 py-2 rounded-full shadow-lg">
           登録
         </button>
       </div>
@@ -192,25 +196,27 @@
         class="text-sm mt-2 mb-6 ml-2">
         &plus;&minus;ボタンで登録したい画像を選択できます。
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
           v-for="youtubeVideo in design.youtubeVideos"
           :key="youtubeVideo"
           class="relative">
-          <youtube
-            :video-id="youtubeVideo.accessCode"
-            class="w-[100%] h-24 md:h-36">
-          </youtube>
+          <div class="w-full aspect-video">
+            <youtube
+              :video-id="youtubeVideo.accessCode"
+              class="mt-2 z-0 w-full h-full">
+            </youtube>
+          </div>
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
-            class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+            class="cursor-pointer absolute z-10 left-[94%] -top-[2%]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -223,25 +229,27 @@
         <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
           削除するyoutube動画
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-4 mx-2">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
           <div
             v-for="youtubeVideo in design.youtubeVideoToDelete"
             :key="youtubeVideo"
             class="relative">
-            <youtube
-              :video-id="youtubeVideo.accessCode"
-              class="w-[100%] h-24 md:h-36 opacity-60">
-            </youtube>
+            <div class="w-full aspect-video">
+              <youtube
+                :video-id="youtubeVideo.accessCode"
+                class="mt-2 z-0 w-full h-full opacity-60">
+              </youtube>
+            </div>
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
-              class="cursor-pointer absolute z-10 left-[90%] -top-[4%] md:left-[94%]">
+              class="cursor-pointer absolute z-10 left-[94%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg sm:w-6 sm:h-6">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -275,32 +283,34 @@
         <input type="checkbox" @click="showColorContent" />
       </h3>
       <div
-        class="mb-4 w-full text-lg border border-gray-300 rounded"
+        class="mb-4 w-full border border-gray-300 rounded"
         v-show="colorContent">
-        <div class="text-sm my-4 pl-2 md:pl-4 md:text-lg">
+        <div class="my-4 md:mb-8 pl-2 md:pl-4">
           <lable>ラメ</lable>&emsp; なし&nbsp;
           <input type="radio" v-model="color.lame" :value="false" />&emsp;
           あり&nbsp;
           <input type="radio" v-model="color.lame" :value="true" />
         </div>
-        <div class="flex justify-around mb-4 md:mx-4 lg:mx-20">
+        <div
+          class="flex justify-around gap-2 md:gap-4 mx-[2%] mb-6 md:mb-10 sm:mx-[8%] md:mx-[12%]">
           <button
             :class="!showColorPicker ? 'switch-color-button' : ''"
             @click="switchToColorPicker"
-            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
+            class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
             カラーピッカー
           </button>
           <button
             :class="!showColorPalette ? 'switch-color-button' : ''"
             @click="switchToColorPalette"
-            class="text-white text-sm bg-gray-800 border-0 py-2 px-2 rounded-full shadow-lg shadow-gray-500/30 md:text-lg md:px-16">
+            class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
             カラーパレット
           </button>
         </div>
         <div v-show="showColorPicker">
-          <div v-if="colorLameStyle" class="relative h-64">
+          <div class="relative h-64">
             <img
               src="~color-picker-lame.png"
+              v-if="colorLameStyle"
               class="color-picker-img absolute z-10 pointer-events-none" />
             <chrome-picker
               class="absolute z-0 color-picker-img"
@@ -308,42 +318,19 @@
               v-model="color.pickerHexNumber">
             </chrome-picker>
           </div>
-          <div v-else class="h-64 mb-3">
-            <chrome-picker
-              class="mx-auto"
-              :value="color.pickerHexNumber"
-              v-model="color.pickerHexNumber">
-            </chrome-picker>
-          </div>
         </div>
         <div v-show="showColorPalette">
-          <div v-if="colorLameStyle" class="relative h-80">
-            <ul
-              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
+          <div class="relative">
+            <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
                 :style="colorShowHexNumber(hexNumber)"
-                class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+                class="w-8 h-8 rounded-full cursor-pointer shadow-md">
                 <img
                   src="~lame.png"
+                  v-if="colorLameStyle"
                   class="w-8 h-8 rounded-full opacity-80 absolute z-10 pointer-events-none" />
-                <input
-                  type="radio"
-                  v-model="color.paletteHexNumber"
-                  :value="hexNumber"
-                  class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
-              </li>
-            </ul>
-          </div>
-          <div v-else class="h-80 mb-3">
-            <ul
-              class="grid gap-2 grid-cols-5 place-items-center mx-[20%] md:mx-[40%]">
-              <li
-                v-for="(hexNumber, index) in colorPaletteHexNumbers"
-                :key="index"
-                :style="colorShowHexNumber(hexNumber)"
-                class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30">
                 <input
                   type="radio"
                   v-model="color.paletteHexNumber"
@@ -354,7 +341,7 @@
           </div>
         </div>
         <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+          class="form-btn mt-4 mb-6 md:mt-6 md:mb-8 px-24 md:px-36"
           @click="colorData">
           決定
         </button>
@@ -364,12 +351,12 @@
         class="text-sm my-4 mx-2">
         &plus;&minus;ボタンで登録したいカラーを選択できます。
       </div>
-      <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
+      <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
         <div
           v-for="color in design.colors"
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
+          class="w-8 h-8 rounded-full shadow-md mb-4">
           <div v-if="color.lame == true" class="relative">
             <img
               src="~lame.png"
@@ -396,12 +383,12 @@
       </div>
       <div v-if="design.colorToDelete.length > 0">
         <div class="text-sm mx-2 my-4 md:my-8 md:text-base">削除するカラー</div>
-        <div class="grid grid-cols-4 mb-2 mx-2 md:grid-cols-10">
+        <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
           <div
             v-for="color in design.colorToDelete"
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
-            class="w-8 h-8 rounded-full shadow-md shadow-gray-500/30 mb-4">
+            class="w-8 h-8 rounded-full shadow-md mb-4">
             <div v-if="color.lame === true" class="relative">
               <img
                 src="~lame.png"
@@ -432,10 +419,10 @@
         <input type="checkbox" @click="showPartContent" />
       </h3>
       <div
-        class="p-2 md:p-4 mb-4 w-full md:px-8 text-lg border border-gray-300 rounded"
+        class="p-2 md:p-4 mb-4 w-full md:px-8 border border-gray-300 rounded"
         v-show="partContent">
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="form-field"
           type="text"
           name="name"
           placeholder="パーツ名を入力してください。"
@@ -450,7 +437,7 @@
           </button>
         </div>
         <input
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="form-field"
           type="text"
           name="size"
           placeholder="大きさを入力してください。"
@@ -468,7 +455,7 @@
           class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
           <label>個数</label>
           <input
-            class="rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out w-20"
+            class="form-field w-20"
             type="number"
             min="0"
             onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
@@ -498,13 +485,12 @@
         <div
           class="rounded-b-lg border border-gray-300 py-6"
           v-show="partColorContent">
-          <ul
-            class="grid gap-2 grid-cols-5 place-items-center mx-[18%] md:mx-[36%]">
+          <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
             <li
               v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
               :style="colorShowHexNumber(hexNumber)"
-              class="w-8 h-8 rounded-full cursor-pointer shadow-md shadow-gray-500/30">
+              class="w-8 h-8 rounded-full cursor-pointer shadow-md">
               <input
                 type="radio"
                 v-model="part.hexNumber"
@@ -514,7 +500,7 @@
           </ul>
         </div>
         <button
-          class="flex font-bold mx-auto my-8 text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-36"
+          class="form-btn mt-6 mb-4 px-24 md:mt-8 md:mb-4 md:px-36"
           @click="partData">
           決定
         </button>
@@ -528,12 +514,12 @@
               }}</span
               ><br class="md:hidden" />
               <input
-                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 px-4 leading-8 transition-colors duration-200 ease-in-out w-16 md:w-20"
+                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 px-4 leading-8 duration-200 ease-in-out w-16 md:w-20"
                 type="text"
                 name="size"
                 v-model="part.size" />
               <input
-                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 md:py-2 pl-2 leading-8 transition-colors duration-200 ease-in-out w-12 md:w-16"
+                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 pl-2 leading-8 duration-200 ease-in-out w-12 md:w-16"
                 type="number"
                 min="0"
                 onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
@@ -545,7 +531,7 @@
             <div
               v-else
               :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md shadow-gray-500/30 w-8 h-8 mt-6 md:mt-0"></div>
+              class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
             <svg
@@ -563,28 +549,30 @@
           </div>
         </div>
       </div>
-      <div class="p-2 w-full text-lg">
-        <lable>調べた内容・メモ</lable>
+      <div class="p-2">
+        <lable class="text-lg">調べた内容・メモ</lable>
         <textarea
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
           placeholder="入力してください"
           name="description"
           v-model="design.description">
         </textarea>
       </div>
-      <div class="p-2 w-full text-lg mb-8">
-        <lable>タグ</lable><br />
-        <input
-          class="text-base w-4/6 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 py-1 md:py-2 px-3 leading-8 transition-colors duration-200 ease-in-out mr-2"
-          type="text"
-          name="title"
-          placeholder="入力してください"
-          v-model="tag" />
-        <button
-          class="font-bold text-sm md:text-base mx-auto my-2 text-white bg-gray-800 border-0 py-2 px-4 md:px-6 rounded-full shadow-lg shadow-gray-500/30"
-          @click="tagData">
-          決定
-        </button>
+      <div class="p-2 mb-8">
+        <lable class="text-lg block -mb-2">タグ</lable>
+        <div class="flex">
+          <input
+            class="flex-[3] sm:flex-[6] my-1.5 pl-3 mr-1 md:mr-2 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 duration-200 ease-in-out"
+            type="text"
+            name="title"
+            placeholder="入力してください"
+            v-model="tag" />
+          <button
+            class="flex-[1] font-bold mx-auto my-2 text-white bg-gray-800 py-2 rounded-full shadow-lg"
+            @click="tagData">
+            決定
+          </button>
+        </div>
         <div class="flex flex-wrap mt-2">
           <div
             v-for="tag in design.tags"
@@ -610,9 +598,7 @@
           </div>
         </div>
       </div>
-      <button
-        class="flex mx-auto font-bold text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg shadow-gray-500/30 md:px-20"
-        @click="createDesign">
+      <button class="form-btn px-8 md:px-20" @click="createDesign">
         ネイルデザインを登録
       </button>
     </div>

@@ -6,11 +6,11 @@
                     url: inquiries_path,
                     method: :post, local: true do |f|
     = f.label :title, '件名'
-    = f.text_field :title, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-8'
+    = f.text_field :title, class: 'form-field mb-8'
     = f.label :name, 'お名前'
-    = f.text_field :name, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-8'
+    = f.text_field :name, class: 'form-field mb-8'
     = f.label :email, 'メールアドレス'
-    = f.email_field :email, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-8'
+    = f.email_field :email, class: 'form-field mb-8'
     = f.label :description, 'お問い合わせ内容'
-    = f.text_area :description, class: 'w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-6'
-    = f.submit '送信', class: 'flex mx-auto text-white bg-gray-800 border-0 py-2 px-24 rounded-full shadow-lg shadow-gray-500/30 md:px-32 mt-8 mb-6'
+    = f.text_area :description, class: 'form-field mb-6'
+    = f.submit '送信', class: 'form-btn md:px-32 mt-8 mb-6'
