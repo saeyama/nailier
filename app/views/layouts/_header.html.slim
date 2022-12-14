@@ -1,5 +1,6 @@
-.flex
-  h1.text-2xl.pt-2.pl-2 ロゴ
+.flex.mt-2.ml-2
+  h1
+    = link_to image_tag('logo.svg'), root_path, class: 'block w-14 md:w-12'
   #nav-toggle.md:hidden
     div
       span
@@ -8,7 +9,7 @@
   #nav-menu.min-h-screen.left-0.md:left-auto.md:min-h-0
     .nav-bak.w-1/5.md:w-0
     nav.w-4/5.md:w-full.bg-white.md:visible.md:bg-transparent
-      ul.md:flex.text-sm
+      ul.text-sm.text-gray-600.md:flex
         - if user_signed_in?
           li
             =link_to 'ネイルデザインを登録', new_design_path
