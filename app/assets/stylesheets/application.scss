@@ -34,13 +34,13 @@ header {
 #nav-toggle {
   position: absolute;
   z-index: 1000;
-  top: 10px;
+  top: 20px;
   right: 10px;
   height: 28px;
 }
 
 #nav-toggle div {
-  width: 28px;
+  width: 36px;
 }
 
 #nav-toggle span {
@@ -58,11 +58,11 @@ header {
 }
 
 #nav-toggle span:nth-child(2) {
-  top: 12px;
+  top: 16px;
 }
 
 #nav-toggle span:nth-child(3) {
-  top: 24px;
+  top: 32px;
 }
 
 #nav-toggle:hover span:nth-child(1) {
@@ -70,7 +70,7 @@ header {
 }
 
 #nav-toggle:hover span:nth-child(3) {
-  top: 22px;
+  top: 30px;
 }
 
 .open #nav-toggle span {
