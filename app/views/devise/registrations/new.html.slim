@@ -1,6 +1,14 @@
 .container.text-gray-600.py-10.mx-auto.px-4
   h2.text-center.font-bold.text-2xl.py-8.md:py-10
     = t('.sign_up')
+  p.text-center.mb-6.text-sm.leading-6
+    | 規約にご同意の上で
+    br.sm:hidden
+    | アカウントの登録をお願い致します。
+    br
+    = link_to '利用規約', tos_path, target: '_blank', rel: 'noopener noreferrer', class: 'text-sm underline'
+    |	&nbsp;&middot;&nbsp;
+    = link_to 'プライバシーポリシー', privacy_policy_path, target: '_blank', rel: 'noopener noreferrer', class: 'underline'
   = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
     = render 'devise/shared/error_messages', resource: resource
     = f.label :account_name
