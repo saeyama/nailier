@@ -1,0 +1,29 @@
+.container.text-gray-600.py-10.mx-auto.mb-4.w-5/6.md:w-11/12.max-w-sm
+  h2.text-center.font-bold.text-2xl.py-8.md:py-10
+    | アカウント情報
+  ul
+    li
+      .text-lg
+        | アカウント名
+      .mb-4.ml-1
+        = current_user.account_name
+    li
+      .text-lg
+        | メールアドレス
+      .mb-4.ml-1
+        = current_user.email
+    li
+      .text-lg
+        | ネイルデザイン
+      .mb-4.ml-1
+        |ハンド&nbsp;
+        = @hand.size
+        |&nbsp;件&ensp;
+        |フット&nbsp;
+        = @foot.size
+        |&nbsp;件
+  button.mx-auto.block
+    = link_to 'アカウントを編集', edit_user_registration_path, class: 'form-btn px-12 md:px-20 mt-8 mb-2'
+  = link_to 'アカウントを削除', users_unsubscribe_path, class: 'block text-center underline text-bg-gray-600 hover:text-bg-gray-600'
+  button.mx-auto.block
+    = link_to 'ネイルデザインを登録', new_design_path, class: 'link-btn px-8 md:px-16 mt-8 mb-2'
