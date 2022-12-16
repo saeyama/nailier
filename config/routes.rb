@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
     get 'users/thanks', to: 'users/registrations#thanks'
+    get 'users/unsubscribe', to: 'users/registrations#unsubscribe'
+    get 'users/withdrawal', to: 'users/registrations#withdrawal'    
   end
 
   get 'users', to: 'users#show'

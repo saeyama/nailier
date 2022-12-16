@@ -25,9 +25,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    current_user.destroy
+    redirect_to users_withdrawal_path
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
@@ -39,6 +40,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def thanks; end
+
+  def unsubscribe; end
+
+  def withdrawal; end
 
   # protected
 

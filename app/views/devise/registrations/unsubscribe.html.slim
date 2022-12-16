@@ -1,0 +1,13 @@
+.container.text-gray-600.py-10.mx-auto.text-center
+  h2.text-xl.font-bold
+    | 退会のお手続き
+  p.p-10.text-lg.text-base.text-center
+    | 退会のお手続きをされますとご登録頂いたデータが全て消去されます。
+    br
+    | この操作は元に戻すことは出来ません。
+    br
+    | このまま処理を続けてもよろしいですか?
+  button.block.mx-auto
+    = link_to '退会はしない', users_path, class: 'form-btn px-16 md:px-24 mt-2 mb-2'
+  button.block.mx-auto
+    = link_to '退会する', user_registration_path(resource_name), data: { confirm: t('devise.registrations.edit.are_you_sure') }, method: :delete, class: 'link-btn px-20 md:px-28 mt-2 mb-2'
