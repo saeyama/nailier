@@ -1,5 +1,52 @@
 = javascript_pack_tag 'top'
-#js-top
-= link_to 'アカウントを登録して早速始めてみる', new_user_registration_path
-br
-= link_to 'ログイン', new_user_session_path
+.text-gray-600.py-10.mb-4.text-center.mx-2
+  h2
+    = image_tag 'drawing.svg', class: 'block w-36 mx-auto fade-up'
+    = image_tag 'brush.svg', class: 'block w-20 -mt-32 ml-[50%] mb-4 fade-in'
+    span.block.text-sm.sm:text-base.mt-8.mb-4.fade-up
+      | ネイリストのためのデザインノート
+    = image_tag 'app-name.svg', class: 'block mx-auto w-36 mb-1 fade-up'
+    span.block.text-sm.mb-4.fade-up
+      | ネイリエ
+  button.block.mx-auto
+    = link_to '試しに使ってみる', new_user_registration_path, class: 'form-btn px-12 md:px-20'
+  h3.text-lg.mt-6.sm:mt-16
+    | デザイン毎に
+    br.sm:hidden
+    | 情報をまとめられたら
+    br.sm:hidden
+    | 楽だと思いませんか？
+  = image_tag 'collect_info.svg', class: 'block mx-auto my-8 sm:my-20 sm:w-5/12 drop-shadow-md scroll-fade-in'
+  p.text-sm.leading-6.sm:text-base.sm:leading-8
+    | いつもバラバラに管理している
+    br
+    | 画像・動画・YouTube動画・パーツ
+    br
+    | 調べた内容・アイデアをNailierで一つに
+  = image_tag 'summarize-info.svg', class: 'block mx-auto my-8 sm:my-20 sm:w-5/12 drop-shadow-md scroll-fade-in'
+    | 画像・動画・YouTube動画・使用するパーツ内容・調べた内容の保存が出来ます。
+  h3.text-lg
+    | こんなこともできる
+  .text-sm.sm:flex.sm:justify-center.sm:items-center.sm:gap-8.mt-8.sm:mt-20
+    .scroll-fade-in
+      | 画像を自由に入替
+      = image_tag 'image-shuffle.gif', class: 'block w-48 mx-auto shadow-md mt-4 mb-8 sm:mb-0'
+    .scroll-fade-in
+      | カラーイメージの登録
+      = image_tag 'color-registration.gif', class: 'block w-48 mx-auto shadow-md mt-4 mb-8 sm:mb-0'
+    .scroll-fade-in
+      | 簡単検索でデータ管理しやすい
+      = image_tag 'search.gif', class: 'block w-48 mx-auto drop-shadow-md mt-4 mb-4 sm:mb-0'
+  h3.text-lg.my-8.sm:my-20
+    | 検定用としても使える
+  = image_tag 'exam.svg', class: 'block w-28 sm:w-36 mx-auto drop-shadow-md mb-8 scroll-fade-in'
+  .text-sm.leading-6.sm:text-base.sm:leading-8
+    | 講習で撮った画像や動画・利用する
+    br.sm:hidden
+    | ポリッシュの番号等、
+    br
+    | 細かなデータを登録できるので
+    br.sm:hidden
+    | 検定用としても使いやすい
+  button.block.mx-auto
+    = link_to '試しに使ってみる', new_user_registration_path, class: 'form-btn px-12 md:px-20 mt-8 sm:mt-20 sm:mb-16'
