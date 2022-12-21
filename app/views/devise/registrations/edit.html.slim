@@ -27,7 +27,6 @@
       = t('.we_need_your_current_password_to_confirm_your_changes')
       | )
     = f.password_field :current_password, autocomplete: 'current-password', class: 'form-field mb-6'
-    = f.submit t('.update'), class: 'form-btn px-12 md:px-20 mt-8 mb-2'
-  = link_to t('.cancel_my_account'), users_unsubscribe_path(resource_name), class: 'block text-center underline text-bg-gray-600 hover:text-bg-gray-600'
-  button.block.mx-auto
-    = link_to t('devise.shared.links.back'), :back, class: 'link-btn px-24 md:px-32 mt-8 mb-2'
+    = f.submit t('.update'), class: 'main-action-btn mt-8 mb-2'
+  = link_to t('.cancel_my_account'), users_unsubscribe_path(resource_name), class: 'delete-btn'
+  = link_to t('devise.shared.links.back'), :back, class: 'sub-action-btn mt-8 mb-2'

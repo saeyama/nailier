@@ -8,8 +8,7 @@
     = image_tag 'app-name.svg', class: 'block mx-auto w-36 mb-1 fade-up'
     span.block.text-sm.mb-4.fade-up
       | ネイリエ
-  button.block.mx-auto
-    = link_to '試しに使ってみる', new_user_registration_path, class: 'form-btn px-12 md:px-20'
+  = link_to '試しに使ってみる', new_user_registration_path, class: 'main-action-btn'
   h3.text-lg.mt-6.sm:mt-16
     | デザイン毎に
     br.sm:hidden
@@ -48,5 +47,4 @@
     | 細かなデータを登録できるので
     br.sm:hidden
     | 検定用としても使いやすい
-  button.block.mx-auto
-    = link_to '試しに使ってみる', new_user_registration_path, class: 'form-btn px-12 md:px-20 mt-8 sm:mt-20 sm:mb-16'
+  = link_to '試しに使ってみる', new_user_registration_path, class: 'main-action-btn mt-8 sm:mt-20 sm:mb-16'

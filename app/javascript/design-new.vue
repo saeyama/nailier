@@ -341,7 +341,7 @@
           </div>
         </div>
         <button
-          class="form-btn mt-4 mb-6 md:mt-6 md:mb-8 px-24 md:px-36"
+          class="main-action-btn mt-4 mb-6 md:mt-6 md:mb-8"
           @click="colorData">
           決定
         </button>
@@ -500,7 +500,7 @@
           </ul>
         </div>
         <button
-          class="form-btn mt-6 mb-4 px-24 md:mt-8 md:mb-4 md:px-36"
+          class="main-action-btn mt-6 mb-4 md:mt-8 md:mb-4"
           @click="partData">
           決定
         </button>
@@ -598,7 +598,7 @@
           </div>
         </div>
       </div>
-      <button class="form-btn px-8 md:px-20" @click="createDesign">
+      <button class="main-action-btn" @click="createDesign">
         ネイルデザインを登録
       </button>
     </div>

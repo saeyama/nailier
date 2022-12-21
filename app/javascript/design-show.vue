@@ -131,17 +131,13 @@
           </div>
         </div>
       </div>
-      <button
-        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg md:px-20"
-        @click="editDesign">
+      <button class="main-action-btn mb-2" @click="editDesign">
         ネイルデザインを編集
       </button>
-      <button
-        class="block mx-auto underline mb-8 text-bg-gray-600 hover:text-bg-gray-600"
-        @click="deleteDesign">
+      <button class="delete-btn mb-8" @click="deleteDesign">
         ネイルデザインを削除
       </button>
-      <button class="link-btn px-8 md:px-20" @click="indexDesign">
+      <button class="sub-action-btn" @click="indexDesign">
         ネイルデザイン一覧
       </button>
     </div>

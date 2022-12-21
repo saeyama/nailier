@@ -6,10 +6,13 @@
   .form-field {
     @apply w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
   }
-  .form-btn {
-    @apply flex mx-auto text-white bg-gray-800 border-2 border-gray-800 hover:bg-gray-600 py-2 rounded-full shadow-lg;
+  .main-action-btn {
+    @apply flex justify-center items-center bg-gray-800 hover:bg-gradient-to-r hover:from-gray-500 text-white rounded-full w-56 h-12 md:w-80 mx-auto shadow-lg;
   }
-  .link-btn {
-    @apply flex mx-auto border border-gray-800 py-2 rounded-full hover:bg-gray-800 hover:text-white shadow-lg;
-  } 
+  .sub-action-btn {
+    @apply flex justify-center items-center border border-gray-500 hover:bg-gray-800 hover:text-white text-gray-600 rounded-full w-56 h-12 md:w-80 mx-auto shadow-lg;
+  }
+  .delete-btn {
+    @apply block mx-auto text-center underline text-gray-600 hover:text-gray-400;
+  }
 }
