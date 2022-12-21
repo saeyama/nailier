@@ -1,7 +1,7 @@
 <template>
-  <div class="container text-gray-600 py-10 mx-auto mb-4">
-    <h2 class="text-2xl font-bold text-center py-10">ネイルデザインを編集</h2>
-    <div class="w-11/12 md:w-3/4 mx-auto">
+  <div class="text-gray-600 py-10 mx-auto mb-4">
+    <h2 class="text-2xl text-center py-10">ネイルデザインを編集</h2>
+    <div class="w-11/12 mx-auto">
       <div class="p-2">
         <lable class="text-lg">タイトル</lable>
         <input
@@ -37,11 +37,10 @@
           class="text-sm w-64 md:text-lg md:w-full" />
         <div
           v-if="design.images.length > 0 || design.imageToDelete.length > 0"
-          class="text-sm mt-6 inline-block">
+          class="text-sm mt-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
-        <br />
-        <div v-if="design.images.length > 0" class="text-sm mb-6 inline-block">
+        <div v-if="design.images.length > 0" class="text-sm mb-8">
           複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。
         </div>
         <draggable
@@ -54,10 +53,10 @@
             :key="image">
             <img
               :src="image.url"
-              class="mt-2 z-0 aspect-[4/3] w-full object-cover" />
+              class="z-0 aspect-[4/3] w-full object-cover" />
             <div
               @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
+              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -82,10 +81,10 @@
               :key="image">
               <img
                 :src="image.url"
-                class="mt-2 z-0 aspect-[4/3] w-full object-cover opacity-60" />
+                class="z-0 aspect-[4/3] w-full object-cover opacity-60" />
               <div
                 @click="saveImage(image)"
-                class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
+                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -120,12 +119,12 @@
             class="relative mb-4 md:mb-8"
             v-for="video in saveVideos"
             :key="video">
-            <video class="mt-2 z-0 aspect-[4/3] w-full object-cover">
+            <video class="z-0 aspect-[4/3] w-full object-cover">
               <source :src="video.url" type="video/mp4" />
             </video>
             <div
               @click="deleteVideo(video)"
-              class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
+              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -148,13 +147,12 @@
               class="relative mb-4 md:mb-8"
               v-for="video in deleteVideos"
               :key="video">
-              <video
-                class="mt-2 z-0 aspect-[4/3] w-full object-cover opacity-60">
+              <video class="z-0 aspect-[4/3] w-full object-cover opacity-60">
                 <source :src="video.url" type="video/mp4" />
               </video>
               <div
                 @click="saveVideo(video)"
-                class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
+                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -198,12 +196,12 @@
           <div class="w-full aspect-video">
             <youtube
               :video-id="youtubeVideo.accessCode"
-              class="mt-2 z-0 w-full h-full">
+              class="z-0 w-full h-full">
             </youtube>
           </div>
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
-            class="cursor-pointer absolute z-10 left-[94%] -top-[2%]">
+            class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -231,12 +229,12 @@
             <div class="w-full aspect-video">
               <youtube
                 :video-id="youtubeVideo.accessCode"
-                class="mt-2 z-0 w-full h-full opacity-60">
+                class="z-0 w-full h-full opacity-60">
               </youtube>
             </div>
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
-              class="cursor-pointer absolute z-10 left-[94%] -top-[2%]">
+              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -424,7 +422,7 @@
             v-for="(candidateName, index) in part.candidateNamesList.name"
             :key="index"
             @click="selectPartName(index)"
-            class="cursor-pointer mr-4 my-1 hover:font-bold text-base">
+            class="cursor-pointer mr-4 my-1 hover:font-bold">
             {{ candidateName }}
           </button>
         </div>

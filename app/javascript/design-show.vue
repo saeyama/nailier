@@ -1,7 +1,7 @@
 <template>
-  <div class="container text-gray-600 py-10 mx-auto mb-4">
+  <div class="text-gray-600 py-10 mb-4">
     <div class="w-11/12 md:w-3/4 mx-auto">
-      <h2 class="text-2xl font-bold text-center py-2">{{ design.title }}</h2>
+      <h2 class="text-2xl text-center py-2">{{ design.title }}</h2>
       <div class="text-sm md:text-base text-center pb-10">
         {{ design.nailPart }}
       </div>

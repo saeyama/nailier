@@ -1,8 +1,6 @@
 <template>
-  <div class="container text-gray-600 py-10 mx-auto">
-    <h1 class="text-2xl font-bold text-center py-8 md:py-10">
-      ネイルデザインリスト
-    </h1>
+  <div class="text-gray-600 py-10 mx-auto">
+    <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
     <div
       class="flex justify-around gap-2 md:gap-4 mb-10 mx-[4%] sm:mx-[8%] md:mx-[12%] lg:mx-[20%]">
       <button
