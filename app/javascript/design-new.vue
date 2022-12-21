@@ -174,16 +174,16 @@
           </div>
         </div>
       </div>
-      <div class="flex mx-2">
+      <div class="flex mt-2 p-2 gap-2">
         <input
           type="text"
           name="youtube_video"
           placeholder="youtubeのURL"
-          class="flex-[3] sm:flex-[6] my-1.5 pl-3 mr-1 md:mr-2 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 duration-200 ease-in-out"
+          class="flex-1 pl-3 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700"
           v-model="youtubeVideo.url" />
         <button
           @click="youtubeVideoData"
-          class="flex-[1] font-bold mx-auto my-2 text-white bg-gray-800 py-2 rounded-full shadow-lg">
+          class="text-white bg-gray-800 w-24 h-12 rounded-full shadow-lg">
           登録
         </button>
       </div>
@@ -558,16 +558,16 @@
         </textarea>
       </div>
       <div class="p-2 mb-8">
-        <lable class="text-lg block -mb-2">タグ</lable>
-        <div class="flex">
+        <lable class="text-lg">タグ</lable>
+        <div class="flex gap-2">
           <input
-            class="flex-[3] sm:flex-[6] my-1.5 pl-3 mr-1 md:mr-2 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 duration-200 ease-in-out"
+            class="flex-1 pl-3 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700"
             type="text"
             name="title"
             placeholder="入力してください"
             v-model="tag" />
           <button
-            class="flex-[1] font-bold mx-auto my-2 text-white bg-gray-800 py-2 rounded-full shadow-lg"
+            class="text-white bg-gray-800 w-24 h-12 rounded-full shadow-lg"
             @click="tagData">
             決定
           </button>
