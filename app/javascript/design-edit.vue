@@ -47,24 +47,24 @@
         <draggable
           v-model="design.images"
           draggable=".item"
-          class="grid grid-cols-3 md:grid-cols-4">
+          class="grid grid-cols-3 md:grid-cols-4 gap-3">
           <div
             class="item relative mb-4 md:mb-8"
             v-for="image in design.images"
             :key="image">
             <img
               :src="image.url"
-              class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover" />
+              class="mt-2 z-0 aspect-[4/3] w-full object-cover" />
             <div
               @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
+              class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -75,24 +75,24 @@
         </draggable>
         <div v-if="design.imageToDelete.length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
-          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
+          <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
             <div
               class="relative mb-4 md:mb-8"
               v-for="image in design.imageToDelete"
               :key="image">
               <img
                 :src="image.url"
-                class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover opacity-60" />
+                class="mt-2 z-0 aspect-[4/3] w-full object-cover opacity-60" />
               <div
                 @click="saveImage(image)"
-                class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
+                class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg sm:w-6 sm:h-6">
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -115,25 +115,24 @@
         <div v-if="design.videos.length > 0" class="text-sm my-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
-        <div class="grid grid-cols-3 md:grid-cols-4">
+        <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
           <div
             class="relative mb-4 md:mb-8"
             v-for="video in saveVideos"
             :key="video">
-            <video
-              class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover">
+            <video class="mt-2 z-0 aspect-[4/3] w-full object-cover">
               <source :src="video.url" type="video/mp4" />
             </video>
             <div
               @click="deleteVideo(video)"
-              class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
+              class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -144,25 +143,25 @@
         </div>
         <div v-if="deleteVideos.length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
-          <div class="grid grid-cols-3 mb-2 md:grid-cols-4">
+          <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
             <div
               class="relative mb-4 md:mb-8"
               v-for="video in deleteVideos"
               :key="video">
               <video
-                class="mt-2 z-0 h-20 sm:h-36 w-10/12 sm:w-11/12 object-cover opacity-60">
+                class="mt-2 z-0 aspect-[4/3] w-full object-cover opacity-60">
                 <source :src="video.url" type="video/mp4" />
               </video>
               <div
                 @click="saveVideo(video)"
-                class="cursor-pointer absolute z-10 left-[74%] sm:left-[85%] -top-[2%]">
+                class="cursor-pointer absolute z-10 left-[92%] -top-[2%]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -211,7 +210,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800 sm:w-6 sm:h-6">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -244,7 +243,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg sm:w-6 sm:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -365,7 +364,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -397,7 +396,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -533,7 +532,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -581,7 +580,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 md:w-6 md:h-6">
+                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"

@@ -17,9 +17,7 @@
             v-for="(image, index) in design.images"
             :key="index"
             @click="showImages(index)">
-            <img
-              :src="image"
-              class="mt-2 z-0 h-20 sm:h-36 w-full object-cover" />
+            <img :src="image" class="mt-2 aspect-[4/3] w-full object-cover" />
           </div>
         </div>
         <vue-easy-lightbox
@@ -44,7 +42,7 @@
             <video
               :src="video"
               controls
-              class="mt-2 z-0 h-20 sm:h-36 w-full object-cover"></video>
+              class="mt-2 aspect-[4/3] w-full object-cover"></video>
           </div>
         </div>
       </div>
@@ -61,7 +59,7 @@
             <div class="w-full aspect-video">
               <youtube
                 :video-id="youtubeVideo.accessCode"
-                class="mt-2 z-0 w-full h-full">
+                class="mt-2 w-full h-full">
               </youtube>
             </div>
           </div>
