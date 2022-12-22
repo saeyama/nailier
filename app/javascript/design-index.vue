@@ -2,17 +2,17 @@
   <div class="text-gray-600 py-10 mx-auto">
     <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
     <div
-      class="flex justify-around gap-2 md:gap-4 mb-10 mx-[4%] sm:mx-[8%] md:mx-[12%] lg:mx-[20%]">
+      class="flex justify-around gap-2 md:gap-4 mb-10 max-w-xl mx-2 sm:mx-auto">
       <button
         :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
         @click="switchToHandDesigns"
-        class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
+        class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
         ハンド
       </button>
       <button
         :class="!showfootDesigns ? 'switch-nail-part-button' : ''"
         @click="switchToFootDesigns"
-        class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
+        class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
         フット
       </button>
     </div>

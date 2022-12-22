@@ -287,17 +287,17 @@
           <input type="radio" v-model="color.lame" :value="true" />
         </div>
         <div
-          class="flex justify-around gap-2 md:gap-4 mx-[2%] mb-6 md:mb-10 sm:mx-[8%] md:mx-[12%]">
+          class="flex justify-around gap-2 md:gap-4 mb-6 md:mb-10 max-w-xl mx-2 sm:mx-auto">
           <button
             :class="!showColorPicker ? 'switch-color-button' : ''"
             @click="switchToColorPicker"
-            class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
+            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
             カラーピッカー
           </button>
           <button
             :class="!showColorPalette ? 'switch-color-button' : ''"
             @click="switchToColorPalette"
-            class="flex-1 text-white bg-gray-800 border-0 py-2 rounded-full shadow-lg">
+            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
             カラーパレット
           </button>
         </div>
