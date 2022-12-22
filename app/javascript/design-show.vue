@@ -1,7 +1,7 @@
 <template>
-  <div class="container text-gray-600 py-10 mx-auto mb-4">
+  <div class="text-gray-600 py-10 mb-4">
     <div class="w-11/12 md:w-3/4 mx-auto">
-      <h2 class="text-2xl font-bold text-center py-2">{{ design.title }}</h2>
+      <h2 class="text-2xl text-center py-2">{{ design.title }}</h2>
       <div class="text-sm md:text-base text-center pb-10">
         {{ design.nailPart }}
       </div>
@@ -17,9 +17,7 @@
             v-for="(image, index) in design.images"
             :key="index"
             @click="showImages(index)">
-            <img
-              :src="image"
-              class="mt-2 z-0 h-20 sm:h-36 w-full object-cover" />
+            <img :src="image" class="mt-2 aspect-[4/3] w-full object-cover" />
           </div>
         </div>
         <vue-easy-lightbox
@@ -44,7 +42,7 @@
             <video
               :src="video"
               controls
-              class="mt-2 z-0 h-20 sm:h-36 w-full object-cover"></video>
+              class="mt-2 aspect-[4/3] w-full object-cover"></video>
           </div>
         </div>
       </div>
@@ -61,7 +59,7 @@
             <div class="w-full aspect-video">
               <youtube
                 :video-id="youtubeVideo.accessCode"
-                class="mt-2 z-0 w-full h-full">
+                class="mt-2 w-full h-full">
               </youtube>
             </div>
           </div>
@@ -131,17 +129,13 @@
           </div>
         </div>
       </div>
-      <button
-        class="flex mx-auto mb-2 text-white bg-gray-800 border-0 py-2 px-8 rounded-full shadow-lg md:px-20"
-        @click="editDesign">
+      <button class="main-action-btn mb-2" @click="editDesign">
         ネイルデザインを編集
       </button>
-      <button
-        class="block mx-auto underline mb-8 text-bg-gray-600 hover:text-bg-gray-600"
-        @click="deleteDesign">
+      <button class="delete-btn mb-8" @click="deleteDesign">
         ネイルデザインを削除
       </button>
-      <button class="link-btn px-8 md:px-20" @click="indexDesign">
+      <button class="sub-action-btn" @click="indexDesign">
         ネイルデザイン一覧
       </button>
     </div>

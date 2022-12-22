@@ -1,5 +1,5 @@
-.container.text-gray-600.py-10.mx-auto.px-2
-  h2.text-2xl.font-bold.text-center.py-10
+.text-gray-600.py-10.px-2.w-11/12.mx-auto
+  h2.text-2xl.text-center.py-10
     | お問い合わせ
   .mx-auto
   = form_with model: @inquiry,
@@ -13,4 +13,4 @@
     = f.email_field :email, class: 'form-field mb-8'
     = f.label :description, 'お問い合わせ内容'
     = f.text_area :description, class: 'form-field mb-6'
-    = f.submit '送信', class: 'form-btn px-24 md:px-32 mt-8 mb-6'
+    = f.submit '送信', class: 'main-action-btn mt-8 mb-6'

@@ -1,9 +1,9 @@
-.container.text-gray-600.py-10.mx-auto.px-4
-  h2.text-center.font-bold.text-2xl.py-8.md:py-10
+.text-gray-600.py-10.mx-auto.w-11/12
+  h2.text-center.text-2xl.py-8.md:py-10
     = t('.forgot_your_password')
   = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
     = render 'devise/shared/error_messages', resource: resource
     = f.label :email
     = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-field mb-4'
-    = f.submit t('.send_me_reset_password_instructions'), class: 'form-btn px-24 md:px-32 mt-8 mb-6'
+    = f.submit t('.send_me_reset_password_instructions'), class: 'main-action-btn mt-8 mb-6'
   = render 'devise/shared/links'

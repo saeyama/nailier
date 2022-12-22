@@ -1,5 +1,5 @@
-.container.text-gray-600.py-10.mx-auto.px-4
-  h2.text-center.font-bold.text-2xl.py-8.md:py-10
+.text-gray-600.py-10.w-11/12.mx-auto
+  h2.text-center.text-2xl.py-8.md:py-10
     = t('.sign_up')
   p.text-center.mb-6.text-sm.leading-6
     | 規約にご同意の上で
@@ -22,5 +22,5 @@
     = f.password_field :password, autocomplete: 'new-password', class: 'form-field mb-8 md:mb-12'
     = f.label :password_confirmation
     = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-field mb-4'
-    = f.submit t('.sign_up'), class: 'form-btn px-12 md:px-20 mt-8 mb-6'
+    = f.submit t('.sign_up'), class: 'main-action-btn mt-8 mb-6'
   = render 'devise/shared/links'
