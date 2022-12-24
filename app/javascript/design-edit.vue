@@ -35,14 +35,17 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <!-- <div
-          v-if="design.images.length > 0 || design.imageToDelete.length > 0"
+        <div
+          v-if="
+            (design.images && design.images.length) ||
+            design.imageToDelete.length > 0
+          "
           class="text-sm mt-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
-        <div v-if="design.images.length > 0" class="text-sm mb-8">
+        <div v-if="design.images && design.images.length" class="text-sm mb-8">
           複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。
-        </div> -->
+        </div>
         <draggable
           v-model="design.images"
           draggable=".item"
@@ -111,9 +114,9 @@
           accept="video/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <!-- <div v-if="design.videos.length > 0" class="text-sm my-6">
+        <div v-if="design.videos && design.videos.length" class="text-sm my-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
-        </div> -->
+        </div>
         <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
           <div
             class="relative mb-4 md:mb-8"
@@ -761,6 +764,7 @@ export default {
       const url = location.pathname.split('/')
       const id = url[url.length - 2]
       await axios.get(`/api/designs/${id}.json`).then((response) => {
+        console.log(response.data)
         ;(this.design.id = response.data.id),
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),

@@ -6,10 +6,12 @@
         {{ design.nailPart }}
       </div>
       <h3 class="text-lg mb-2">画像</h3>
-      <!-- <div class="text-sm ml-0.5 mb-6" v-if="design.images.length === 0">
+      <div
+        class="text-sm ml-0.5 mb-6"
+        v-if="!design.images || !design.images.length">
         登録されている画像はありません。
-      </div> -->
-      <div>
+      </div>
+      <div v-else>
         <div class="text-sm mb-2">画像をクリックすると拡大できます。</div>
         <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
@@ -28,12 +30,12 @@
         </vue-easy-lightbox>
       </div>
       <h3 class="text-lg mb-2">動画</h3>
-      <!-- <div
+      <div
         class="text-sm ml-0.5 mb-6"
-        v-if="design.videos.length === 0 || design.videos.length === undefind">
+        v-if="!design.videos || !design.videos.length">
         登録されている動画はありません。
-      </div> -->
-      <div>
+      </div>
+      <div v-else>
         <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
             class="drop-shadow-lg mb-2 md:mb-8"
