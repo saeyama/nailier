@@ -6,10 +6,10 @@
         {{ design.nailPart }}
       </div>
       <h3 class="text-lg mb-2">画像</h3>
-      <div class="text-sm ml-0.5 mb-6" v-if="design.images.length === 0">
+      <!-- <div class="text-sm ml-0.5 mb-6" v-if="design.images.length === 0">
         登録されている画像はありません。
-      </div>
-      <div v-else>
+      </div> -->
+      <!-- <div>
         <div class="text-sm mb-2">画像をクリックすると拡大できます。</div>
         <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
@@ -26,26 +26,26 @@
           :index="index"
           @hide="hideImagsShowHandle">
         </vue-easy-lightbox>
-      </div>
+      </div> -->
       <h3 class="text-lg mb-2">動画</h3>
-      <div
+      <!-- <div
         class="text-sm ml-0.5 mb-6"
         v-if="design.videos.length === 0 || design.videos.length === undefind">
         登録されている動画はありません。
-      </div>
-      <div v-else>
+      </div> -->
+      <!-- <div>
         <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
             class="drop-shadow-lg mb-2 md:mb-8"
             v-for="video in design.videos"
             :key="video.id">
             <video
-              :src="video"
+              :src="video.url"
               controls
               class="mt-2 aspect-[4/3] w-full object-cover"></video>
           </div>
         </div>
-      </div>
+      </div> -->
       <h3 class="text-lg mb-2">youtube動画</h3>
       <div class="text-sm ml-0.5 mb-6" v-if="design.youtubeVideos.length === 0">
         登録されているyoutube動画はありません。
@@ -113,20 +113,20 @@
         </div>
       </div>
       <h3 class="text-lg mb-1">調べた内容・メモ</h3>
-      <div class="text-sm ml-0.5 mb-12" v-if="design.description.length === 0">
+      <div class="text-sm ml-0.5 mb-6" v-if="design.description.length === 0">
         登録されているメモはありません。
       </div>
       <div v-else>
         <div class="mb-4 text-sm border border-gray-300 px-2 py-1 rounded">
           {{ design.description }}
         </div>
-        <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
-          <div
-            v-for="tag in design.tags"
-            :key="tag.id"
-            class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
-            {{ tag.name }}
-          </div>
+      </div>
+      <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
+        <div
+          v-for="tag in design.tags"
+          :key="tag.id"
+          class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
+          {{ tag.name }}
         </div>
       </div>
       <button class="main-action-btn mb-2" @click="editDesign">
@@ -145,13 +145,13 @@
 <script>
 import axios from 'axios'
 import Vue from 'vue'
-import VueEasyLightbox from 'vue-easy-lightbox'
-Vue.use(VueEasyLightbox)
+// import VueEasyLightbox from 'vue-easy-lightbox'
+// Vue.use(VueEasyLightbox)
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
 export default {
   components: {
-    VueEasyLightbox
+    // VueEasyLightbox
   },
   data() {
     return {
@@ -195,13 +195,9 @@ export default {
           (this.design.youtubeVideos = response.data.youtubeVideos),
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags),
-          (this.design.videos = response.data.videos.map(
-            (videoData) => videoData.url
-          )),
-          (this.design.images = response.data.images.map(
-            (imageData) => imageData.url
-          ))
+          (this.design.tags = response.data.tags)
+        // this.design.images = response.data.images !== null ? response.data.images.map(imageData => imageData) : [],
+        // this.design.videos = response.data.videos !== null ? response.data.videos.map(videoData => videoData) : []
       })
     },
     editDesign() {
