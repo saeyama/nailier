@@ -102,7 +102,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="p-2 text-lg">
+      <div class="p-2 text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -111,9 +111,9 @@
           accept="video/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div v-if="design.videos.length > 0" class="text-sm my-6">
+        <!-- <div v-if="design.videos.length > 0" class="text-sm my-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
-        </div>
+        </div> -->
         <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
           <div
             class="relative mb-4 md:mb-8"
@@ -169,7 +169,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
       <div class="flex mt-2 p-2 gap-2">
         <input
           type="text"
@@ -757,23 +757,21 @@ export default {
     this.getDesign()
   },
   methods: {
-    getDesign() {
+    async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 2]
-      axios.get(`/api/designs/${id}.json`).then((response) => {
+      await axios.get(`/api/designs/${id}.json`).then((response) => {
         ;(this.design.id = response.data.id),
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),
           (this.design.description = response.data.description),
           (this.design.youtubeVideos = response.data.youtubeVideos),
           (this.design.colors = response.data.colors),
+          (this.design.videos = response.data.videos),
           (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags)
-        this.design.images =
-          response.data.images !== null
-            ? response.data.images.map((imageData) => imageData)
-            : []
-        // this.design.videos = response.data.videos !== null ? response.data.videos.map(videoData => videoData) : []
+          (this.design.tags = response.data.tags),
+          (this.design.images = response.data.images),
+          (this.design.videos = response.data.videos)
       })
     },
     uploadFiles(e) {

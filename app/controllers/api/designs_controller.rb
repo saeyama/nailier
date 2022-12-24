@@ -19,6 +19,7 @@ class Api::DesignsController < ApplicationController
   def create
     @design = current_user.designs.new(design_params)
     @design.attach_blob(image_data_urls)
+    @design.attach_blob(video_data_urls)
     if @design.save
       render json: @design, status: :created
     else

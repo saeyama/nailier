@@ -33,7 +33,7 @@
         v-if="design.videos.length === 0 || design.videos.length === undefind">
         登録されている動画はありません。
       </div> -->
-      <!-- <div>
+      <div>
         <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
             class="drop-shadow-lg mb-2 md:mb-8"
@@ -45,7 +45,7 @@
               class="mt-2 aspect-[4/3] w-full object-cover"></video>
           </div>
         </div>
-      </div> -->
+      </div>
       <h3 class="text-lg mb-2">youtube動画</h3>
       <div class="text-sm ml-0.5 mb-6" v-if="design.youtubeVideos.length === 0">
         登録されているyoutube動画はありません。
@@ -184,10 +184,10 @@ export default {
     this.getDesign()
   },
   methods: {
-    getDesign() {
+    async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 1]
-      axios.get(`/api/designs/${id}.json`).then((response) => {
+      await axios.get(`/api/designs/${id}.json`).then((response) => {
         ;(this.design.id = response.data.id),
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),
@@ -196,11 +196,10 @@ export default {
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags),
-          (this.design.images =
-            response.data.images !== null
-              ? response.data.images.map((imageData) => imageData.url)
-              : [])
-        // this.design.videos = response.data.videos !== null ? response.data.videos.map(videoData => videoData) : []
+          (this.design.videos = response.data.videos),
+          (this.design.images = response.data.images.map(
+            (imageData) => imageData.url
+          ))
       })
     },
     editDesign() {
