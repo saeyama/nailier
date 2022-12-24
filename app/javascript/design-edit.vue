@@ -26,7 +26,7 @@
           value="フット"
           v-model="design.nailPart" />
       </div>
-      <!-- <div class="p-2 w-full text-lg">
+      <div class="p-2 w-full text-lg">
         <lable>画像&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -35,14 +35,14 @@
           accept="image/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div
+        <!-- <div
           v-if="design.images.length > 0 || design.imageToDelete.length > 0"
           class="text-sm mt-6">
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
         <div v-if="design.images.length > 0" class="text-sm mb-8">
           複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。
-        </div>
+        </div> -->
         <draggable
           v-model="design.images"
           draggable=".item"
@@ -102,7 +102,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 text-lg">
+      <!-- <div class="p-2 text-lg">
         <lable>動画&#40;複数登録可&#41;</lable><br />
         <input
           type="file"
@@ -170,7 +170,7 @@
           </div>
         </div>
       </div> -->
-      <div class="flex px-2 mt-3 gap-2">
+      <div class="flex mt-2 p-2 gap-2">
         <input
           type="text"
           name="youtube_video"
@@ -186,7 +186,7 @@
       <div
         v-if="design.youtubeVideos.length > 0"
         class="text-sm mt-2 mb-6 ml-2">
-        &plus;&minus;ボタンで登録したい画像を選択できます。
+        &plus;&minus;ボタンで登録したい動画を選択できます。
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
@@ -601,13 +601,13 @@ import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
 import { Chrome } from 'vue-color'
-// import draggable from 'vuedraggable'
+import draggable from 'vuedraggable'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
   components: {
-    'chrome-picker': Chrome
-    // draggable
+    'chrome-picker': Chrome,
+    draggable
   },
   data() {
     return {
@@ -769,7 +769,10 @@ export default {
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags)
-        // this.design.images = response.data.images !== null ? response.data.images.map(imageData => imageData) : [],
+        this.design.images =
+          response.data.images !== null
+            ? response.data.images.map((imageData) => imageData)
+            : []
         // this.design.videos = response.data.videos !== null ? response.data.videos.map(videoData => videoData) : []
       })
     },

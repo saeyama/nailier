@@ -9,7 +9,7 @@
       <!-- <div class="text-sm ml-0.5 mb-6" v-if="design.images.length === 0">
         登録されている画像はありません。
       </div> -->
-      <!-- <div>
+      <div>
         <div class="text-sm mb-2">画像をクリックすると拡大できます。</div>
         <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
           <div
@@ -26,7 +26,7 @@
           :index="index"
           @hide="hideImagsShowHandle">
         </vue-easy-lightbox>
-      </div> -->
+      </div>
       <h3 class="text-lg mb-2">動画</h3>
       <!-- <div
         class="text-sm ml-0.5 mb-6"
@@ -145,13 +145,13 @@
 <script>
 import axios from 'axios'
 import Vue from 'vue'
-// import VueEasyLightbox from 'vue-easy-lightbox'
-// Vue.use(VueEasyLightbox)
+import VueEasyLightbox from 'vue-easy-lightbox'
+Vue.use(VueEasyLightbox)
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
 export default {
   components: {
-    // VueEasyLightbox
+    VueEasyLightbox
   },
   data() {
     return {
@@ -195,8 +195,11 @@ export default {
           (this.design.youtubeVideos = response.data.youtubeVideos),
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags)
-        // this.design.images = response.data.images !== null ? response.data.images.map(imageData => imageData) : [],
+          (this.design.tags = response.data.tags),
+          (this.design.images =
+            response.data.images !== null
+              ? response.data.images.map((imageData) => imageData.url)
+              : [])
         // this.design.videos = response.data.videos !== null ? response.data.videos.map(videoData => videoData) : []
       })
     },
