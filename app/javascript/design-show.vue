@@ -198,10 +198,12 @@ export default {
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags),
-          (this.design.videos = response.data.videos),
-          (this.design.images = response.data.images.map(
-            (imageData) => imageData.url
-          ))
+          (this.design.videos =
+            response.data.videos !== null ? response.data.videos : []),
+          (this.design.images =
+            response.data.images !== null
+              ? response.data.images.map((imageData) => imageData.url)
+              : [])
       })
     },
     editDesign() {

@@ -37,7 +37,7 @@
           class="text-sm w-64 md:text-lg md:w-full" />
         <div
           v-if="
-            (design.images && design.images.length) ||
+            (design.images && design.images.length > 0) ||
             design.imageToDelete.length > 0
           "
           class="text-sm mt-6">
@@ -114,13 +114,13 @@
           accept="video/*"
           @change="uploadFiles"
           class="text-sm w-64 md:text-lg md:w-full" />
-        <div v-if="design.videos && design.videos.length" class="text-sm my-6">
-          &plus;&minus;ボタンで登録したい画像を選択できます。
+        <div v-if="saveVideos().length > 0" class="text-sm my-6">
+          &plus;&minus;ボタンで登録したい動画を選択できます。
         </div>
         <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
           <div
             class="relative mb-4 md:mb-8"
-            v-for="video in saveVideos"
+            v-for="video in saveVideos()"
             :key="video">
             <video class="z-0 aspect-[4/3] w-full object-cover">
               <source :src="video.url" type="video/mp4" />
@@ -143,12 +143,12 @@
             </div>
           </div>
         </div>
-        <div v-if="deleteVideos.length > 0">
+        <div v-if="deleteVideos().length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
             <div
               class="relative mb-4 md:mb-8"
-              v-for="video in deleteVideos"
+              v-for="video in deleteVideos()"
               :key="video">
               <video class="z-0 aspect-[4/3] w-full object-cover opacity-60">
                 <source :src="video.url" type="video/mp4" />
@@ -715,16 +715,6 @@ export default {
     colorLameStyle() {
       return this.color.lame === true
     },
-    saveVideos() {
-      return this.design.videos.filter(function (video) {
-        return video._destroy === '0'
-      })
-    },
-    deleteVideos() {
-      return this.design.videos.filter(function (video) {
-        return video._destroy === '1'
-      })
-    },
     saveColors() {
       return this.design.colors.filter(function (color) {
         return color._destroy === '0'
@@ -774,8 +764,10 @@ export default {
           (this.design.videos = response.data.videos),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags),
-          (this.design.images = response.data.images),
-          (this.design.videos = response.data.videos)
+          (this.design.videos =
+            response.data.videos !== null ? response.data.videos : []),
+          (this.design.images =
+            response.data.images !== null ? response.data.images : [])
       })
     },
     uploadFiles(e) {
@@ -825,6 +817,19 @@ export default {
     },
     saveVideo(video) {
       this.$set(video, '_destroy', '0')
+    },
+    saveVideos() {
+      this.design.videos === undefined
+        ? (this.design.videos = [])
+        : this.design.videos
+      return this.design.videos.filter(function (video) {
+        return video._destroy === '0'
+      })
+    },
+    deleteVideos() {
+      return this.design.videos.filter(function (video) {
+        return video._destroy === '1'
+      })
     },
     youtubeVideoData() {
       if (this.youtubeVideo.url !== '') {
