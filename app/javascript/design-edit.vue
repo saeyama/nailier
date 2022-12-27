@@ -325,12 +325,12 @@
                 <img
                   src="~lame.png"
                   v-if="colorLameStyle"
-                  class="w-8 h-8 rounded-full opacity-80 absolute z-10 pointer-events-none" />
+                  class="absolute z-10 w-8 h-8 rounded-full opacity-80 pointer-events-none" />
                 <input
                   type="radio"
                   v-model="color.paletteHexNumber"
                   :value="hexNumber"
-                  class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
+                  class="checkbox-btn" />
               </li>
             </ul>
           </div>
@@ -488,7 +488,7 @@
                 type="radio"
                 v-model="part.hexNumber"
                 :value="hexNumber"
-                class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none rounded-full cursor-pointer w-8 h-8 checked:border-none" />
+                class="checkbox-btn" />
             </li>
           </ul>
         </div>
@@ -1095,8 +1095,18 @@ export default {
 .external-link {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25' /%3E%3C/svg%3E%0A");
 }
-.checkbox:checked {
-  border: none;
+.checkbox-btn {
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #4b5563;
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  margin: -11% 0 0 -12%;
+}
+.checkbox-btn:checked {
+  opacity: 1;
 }
 .delete {
   opacity: 0.5;
