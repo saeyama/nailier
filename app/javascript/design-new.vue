@@ -170,18 +170,12 @@
           </div>
         </div>
       </div>
-      <div class="flex mt-2 p-2 gap-2">
-        <input
-          type="text"
-          name="youtube_video"
+      <div class="p-2">
+        <child-text-input
           placeholder="youtubeのURL"
-          class="flex-1 pl-3 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700"
-          v-model="youtubeVideo.url" />
-        <button
-          @click="youtubeVideoData"
-          class="text-white bg-gray-800 w-24 h-12 rounded-full shadow-lg">
-          登録
-        </button>
+          @update-value="updateYoutubeVideo">
+          <template v-slot:label>youtube動画</template>
+        </child-text-input>
       </div>
       <div
         v-if="
@@ -537,20 +531,11 @@
         </textarea>
       </div>
       <div class="p-2 mb-8">
-        <lable class="text-lg">タグ</lable>
-        <div class="flex gap-2">
-          <input
-            class="flex-1 pl-3 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700"
-            type="text"
-            name="title"
-            placeholder="入力してください"
-            v-model="tag" />
-          <button
-            class="text-white bg-gray-800 w-24 h-12 rounded-full shadow-lg"
-            @click="tagData">
-            決定
-          </button>
-        </div>
+        <child-text-input
+          placeholder="入力してください"
+          @update-value="updateTag">
+          <template v-slot:label>タグ</template>
+        </child-text-input>
         <div class="flex flex-wrap mt-2">
           <div
             v-for="tag in design.tags"
@@ -593,11 +578,13 @@ import draggable from 'vuedraggable'
 import 'color-picker-lame.png'
 import 'lame.png'
 import ExternalLink from './components/external-link.vue'
+import ChildTextInput from './components/child-text-input.vue'
 export default {
   components: {
     'chrome-picker': Chrome,
     draggable,
-    ExternalLink
+    ExternalLink,
+    ChildTextInput
   },
   data() {
     return {
@@ -615,9 +602,6 @@ export default {
         colorToDelete: [],
         parts: [],
         tags: []
-      },
-      youtubeVideo: {
-        url: ''
       },
       color: {
         lame: '',
@@ -683,7 +667,6 @@ export default {
           size: ['ss3', 'ss5', 'ss9', 'ss12', 'ss16', 'ss20', 'ss26']
         }
       },
-      tag: '',
       showColorPicker: true,
       showColorPalette: false,
       colorContent: false,
@@ -741,12 +724,11 @@ export default {
       const index = this.design.videoToDelete.indexOf(video)
       this.design.videoToDelete.splice(index, 1)
     },
-    youtubeVideoData() {
-      if (this.youtubeVideo.url !== '') {
+    updateYoutubeVideo(url) {
+      if (url !== '') {
         this.design.youtubeVideos.push({
-          accessCode: this.youtubeVideo.url.slice(-11)
+          accessCode: url.slice(-11)
         })
-        this.youtubeVideo.url = ''
       }
     },
     deleteYoutubeVideo(youtubeVideo) {
@@ -831,11 +813,10 @@ export default {
       const index = this.design.parts.indexOf(part)
       this.design.parts.splice(index, 1)
     },
-    tagData() {
+    updateTag(name) {
       this.design.tags.push({
-        name: this.tag
+        name: name
       })
-      this.tag = ''
     },
     deleteTag(tag) {
       const index = this.design.tags.indexOf(tag)
