@@ -384,97 +384,7 @@
           </div>
         </div>
       </div>
-      <h3 class="p-2 text-lg mb-2">
-        パーツ内容を登録する
-        <input type="checkbox" @click="showPartContent" />
-      </h3>
-      <div
-        class="p-2 md:p-4 mb-4 w-full md:px-8 border border-gray-300 rounded"
-        v-show="partContent">
-        <input
-          class="form-field"
-          type="text"
-          name="name"
-          placeholder="パーツ名を入力してください。"
-          v-model="part.name" />
-        <div class="my-4 px-2">
-          <button
-            v-for="(candidateName, index) in part.candidateNamesList.name"
-            :key="index"
-            @click="selectPartName(index)"
-            class="cursor-pointer mr-4 my-1 hover:font-bold">
-            {{ candidateName }}
-          </button>
-        </div>
-        <input
-          class="form-field"
-          type="text"
-          name="size"
-          placeholder="大きさを入力してください。"
-          v-model="part.size" />
-        <div class="my-4 px-2">
-          <button
-            v-for="(candidateSize, index) in part.candidateNamesList.size"
-            :key="index"
-            @click="selectPartSize(index)"
-            class="cursor-pointer mr-4 my-1 hover:font-bold">
-            {{ candidateSize }}
-          </button>
-        </div>
-        <div
-          class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
-          <label>個数</label>
-          <input
-            class="form-field w-20"
-            type="number"
-            min="0"
-            onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
-            name="quantity"
-            placeholder="0"
-            v-model="part.quantity" />
-        </div>
-
-        <div
-          class="flex justify-between items-center w-full rounded border border-gray-300 px-4 py-2">
-          <label>カラー</label>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-            :class="{ 'rotate-to-open': partColorContent }"
-            @click="showPartColorContent">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-        </div>
-        <div
-          class="rounded-b-lg border border-gray-300 py-6"
-          v-show="partColorContent">
-          <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
-            <li
-              v-for="(hexNumber, index) in colorPaletteHexNumbers"
-              :key="index"
-              :style="colorShowHexNumber(hexNumber)"
-              class="w-8 h-8 rounded-full cursor-pointer shadow-md">
-              <input
-                type="radio"
-                v-model="part.hexNumber"
-                :value="hexNumber"
-                class="checkbox-btn" />
-            </li>
-          </ul>
-        </div>
-        <button
-          class="main-action-btn mt-6 mb-4 md:mt-8 md:mb-4"
-          @click="partData">
-          決定
-        </button>
-      </div>
+      <part-input @update-part="updatePart"></part-input>
       <div v-for="part in saveParts" :key="part" class="mb-4 mx-2">
         <div class="flex justify-between items-center">
           <div class="flex items-center">
@@ -577,12 +487,14 @@ import 'color-picker-lame.png'
 import 'lame.png'
 import ExternalLink from './components/external-link.vue'
 import ChildTextInput from './components/child-text-input.vue'
+import PartInput from './components/part-input'
 export default {
   components: {
     'chrome-picker': Chrome,
     draggable,
     ExternalLink,
-    ChildTextInput
+    ChildTextInput,
+    PartInput
   },
   data() {
     return {
@@ -647,27 +559,9 @@ export default {
         '#FF80BFFF',
         '#FFD5EAFF'
       ],
-      part: {
-        name: '',
-        size: '',
-        quantity: '0',
-        hexNumber: '',
-        candidateNamesList: {
-          name: [
-            'ラインストーン',
-            'Vカットストーン',
-            'スタッズ',
-            '丸カン',
-            'パール'
-          ],
-          size: ['ss3', 'ss5', 'ss9', 'ss12', 'ss16', 'ss20', 'ss26']
-        }
-      },
       showColorPicker: true,
       showColorPalette: false,
       colorContent: false,
-      partContent: false,
-      partColorContent: false,
       value: 0,
       destroy: false
     }
@@ -853,34 +747,17 @@ export default {
     saveColor(color) {
       this.$set(color, '_destroy', '0')
     },
-    partData() {
-      if (this.part.name !== '' && this.part.quantity !== '') {
+    updatePart(name, size, quantity, hexNumber) {
+      if (name !== '' && quantity !== '') {
         this.design.parts.push({
           id: '',
-          name: this.part.name,
-          size: this.part.size,
-          quantity: this.part.quantity,
-          hexNumber: this.part.hexNumber,
+          name: name,
+          size: size,
+          quantity: quantity,
+          hexNumber: hexNumber,
           _destroy: '0'
         })
-        this.part.name = ''
-        this.part.size = ''
-        this.part.quantity = '0'
-        this.part.hexNumber = ''
-        this.partColorContent = false
       }
-    },
-    selectPartName(index) {
-      this.part.name = this.part.candidateNamesList.name[index]
-    },
-    selectPartSize(index) {
-      this.part.size = this.part.candidateNamesList.size[index]
-    },
-    showPartContent() {
-      this.partContent = !this.partContent
-    },
-    showPartColorContent() {
-      this.partColorContent = !this.partColorContent
     },
     deletePart(part) {
       this.$set(part, '_destroy', '1')
@@ -1054,10 +931,6 @@ export default {
   background: #ffffff;
   color: #4b5563;
   border: 1px solid #d1d5db;
-}
-.rotate-to-open {
-  transform: rotate(90deg);
-  transition: all 0.5s ease-in-out;
 }
 .checkbox-btn {
   appearance: none;
