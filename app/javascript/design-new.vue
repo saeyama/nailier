@@ -55,18 +55,7 @@
             <div
               @click="deleteImage(image)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M18 12H6" />
-              </svg>
+              <img src="~minus.svg" class="w-5 h-5"/>
             </div>
           </div>
         </draggable>
@@ -83,18 +72,7 @@
               <div
                 @click="saveImage(image)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 6v12m6-6H6" />
-                </svg>
+                <img src="~plus.svg" class="w-5 h-5"/>
               </div>
             </div>
           </div>
@@ -125,18 +103,7 @@
             <div
               @click="deleteVideo(video)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M18 12H6" />
-              </svg>
+              <img src="~minus.svg" class="w-5 h-5"/>
             </div>
           </div>
         </div>
@@ -153,18 +120,7 @@
               <div
                 @click="saveVideo(video)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 6v12m6-6H6" />
-                </svg>
+                <img src="~plus.svg" class="w-5 h-5"/>
               </div>
             </div>
           </div>
@@ -199,18 +155,7 @@
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
             class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 12H6" />
-            </svg>
+            <img src="~minus.svg" class="w-5 h-5"/>
           </div>
         </div>
       </div>
@@ -232,18 +177,7 @@
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 6v12m6-6H6" />
-              </svg>
+              <img src="~plus.svg" class="w-5 h-5"/>
             </div>
           </div>
         </div>
@@ -271,18 +205,7 @@
           <div
             @click="deleteColor(color)"
             class="ml-6 -mt-2 cursor-pointer absolute z-20">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 12H6" />
-            </svg>
+            <img src="~minus.svg" class="w-5 h-5"/>
           </div>
         </div>
       </div>
@@ -303,18 +226,7 @@
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 6v12m6-6H6" />
-              </svg>
+              <img src="~plus.svg" class="w-5 h-5"/>
             </div>
           </div>
         </div>
@@ -349,18 +261,7 @@
               class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 12H6" />
-            </svg>
+            <img src="~minus.svg" class="w-5 h-5"/>
           </div>
         </div>
       </div>
@@ -388,18 +289,7 @@
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M18 12H6" />
-              </svg>
+              <img src="~minus.svg" class="w-5 h-5"/>
             </div>
           </div>
         </div>
@@ -408,7 +298,6 @@
         ネイルデザインを登録
       </button>
     </div>
-    <color-input @update-color="updateColor"></color-input>
   </div>
 </template>
 
