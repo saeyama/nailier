@@ -55,18 +55,7 @@
             <div
               @click="deleteImage(image)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M18 12H6" />
-              </svg>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </draggable>
@@ -83,18 +72,7 @@
               <div
                 @click="saveImage(image)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 6v12m6-6H6" />
-                </svg>
+                <img src="~plus.svg" class="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -125,18 +103,7 @@
             <div
               @click="deleteVideo(video)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M18 12H6" />
-              </svg>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -153,35 +120,18 @@
               <div
                 @click="saveVideo(video)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 6v12m6-6H6" />
-                </svg>
+                <img src="~plus.svg" class="w-5 h-5" />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="flex mt-2 p-2 gap-2">
-        <input
-          type="text"
-          name="youtube_video"
+      <div class="p-2">
+        <child-text-input
           placeholder="youtubeのURL"
-          class="flex-1 pl-3 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700"
-          v-model="youtubeVideo.url" />
-        <button
-          @click="youtubeVideoData"
-          class="text-white bg-gray-800 w-24 h-12 rounded-full shadow-lg">
-          登録
-        </button>
+          @update-value="updateYoutubeVideo">
+          <template v-slot:label>youtube動画</template>
+        </child-text-input>
       </div>
       <div
         v-if="
@@ -205,18 +155,7 @@
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
             class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 12H6" />
-            </svg>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -238,109 +177,14 @@
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 6v12m6-6H6" />
-              </svg>
+              <img src="~plus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
       </div>
       <h3 class="p-2 text-lg">カラー・パーツ</h3>
-      <ul class="mb-4">
-        <li>
-          <a
-            href="https://www.nailtat.com/"
-            class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
-            target="_blank">
-            TATから探す
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://www.nail-partner.com/"
-            class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
-            target="_blank">
-            ネイルパートナーから探す
-          </a>
-        </li>
-      </ul>
-      <h3 class="p-2 text-lg">
-        カラーイメージを登録する
-        <input type="checkbox" @click="showColorContent" />
-      </h3>
-      <div
-        class="mb-4 w-full border border-gray-300 rounded"
-        v-show="colorContent">
-        <div class="my-4 md:mb-8 pl-2 md:pl-4">
-          <lable>ラメ</lable>&emsp; なし&nbsp;
-          <input type="radio" v-model="color.lame" :value="false" />&emsp;
-          あり&nbsp;
-          <input type="radio" v-model="color.lame" :value="true" />
-        </div>
-        <div
-          class="flex justify-around gap-2 md:gap-4 mb-6 md:mb-10 max-w-xl mx-2 sm:mx-auto">
-          <button
-            :class="!showColorPicker ? 'switch-color-button' : ''"
-            @click="switchToColorPicker"
-            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
-            カラーピッカー
-          </button>
-          <button
-            :class="!showColorPalette ? 'switch-color-button' : ''"
-            @click="switchToColorPalette"
-            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
-            カラーパレット
-          </button>
-        </div>
-        <div v-show="showColorPicker">
-          <div class="relative h-64">
-            <img
-              src="~color-picker-lame.png"
-              v-if="colorLameStyle"
-              class="color-picker-img absolute z-10 pointer-events-none" />
-            <chrome-picker
-              class="absolute z-0 color-picker-img"
-              :value="color.pickerHexNumber"
-              v-model="color.pickerHexNumber">
-            </chrome-picker>
-          </div>
-        </div>
-        <div v-show="showColorPalette">
-          <div class="relative">
-            <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
-              <li
-                v-for="(hexNumber, index) in colorPaletteHexNumbers"
-                :key="index"
-                :style="colorShowHexNumber(hexNumber)"
-                class="w-8 h-8 rounded-full cursor-pointer shadow-md">
-                <img
-                  src="~lame.png"
-                  v-if="colorLameStyle"
-                  class="w-8 h-8 rounded-full opacity-80 absolute z-10 pointer-events-none" />
-                <input
-                  type="radio"
-                  v-model="color.paletteHexNumber"
-                  :value="hexNumber"
-                  class="checkbox-btn" />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <button
-          class="main-action-btn mt-4 mb-6 md:mt-6 md:mb-8"
-          @click="colorData">
-          決定
-        </button>
-      </div>
+      <external-link></external-link>
+      <color-input @update-color="updateColor"></color-input>
       <div
         v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
         class="text-sm my-4 mx-2">
@@ -361,18 +205,7 @@
           <div
             @click="deleteColor(color)"
             class="ml-6 -mt-2 cursor-pointer absolute z-20">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 12H6" />
-            </svg>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -393,113 +226,12 @@
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800 shadow-lg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 6v12m6-6H6" />
-              </svg>
+              <img src="~plus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
       </div>
-      <h3 class="p-2 text-lg">
-        パーツ内容を登録する
-        <input type="checkbox" @click="showPartContent" />
-      </h3>
-      <div
-        class="p-2 md:p-4 mb-4 w-full md:px-8 border border-gray-300 rounded"
-        v-show="partContent">
-        <input
-          class="form-field"
-          type="text"
-          name="name"
-          placeholder="パーツ名を入力してください。"
-          v-model="part.name" />
-        <div class="my-4 px-2">
-          <button
-            v-for="(candidateName, index) in part.candidateNamesList.name"
-            :key="index"
-            @click="selectPartName(index)"
-            class="cursor-pointer mr-4 my-1 hover:font-bold">
-            {{ candidateName }}
-          </button>
-        </div>
-        <input
-          class="form-field"
-          type="text"
-          name="size"
-          placeholder="大きさを入力してください。"
-          v-model="part.size" />
-        <div class="my-4 px-2">
-          <button
-            v-for="(candidateSize, index) in part.candidateNamesList.size"
-            :key="index"
-            @click="selectPartSize(index)"
-            class="cursor-pointer mr-4 my-1 hover:font-bold">
-            {{ candidateSize }}
-          </button>
-        </div>
-        <div
-          class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
-          <label>個数</label>
-          <input
-            class="form-field w-20"
-            type="number"
-            min="0"
-            onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"
-            name="quantity"
-            placeholder="0"
-            v-model="part.quantity" />
-        </div>
-
-        <div
-          class="flex justify-between items-center w-full rounded border border-gray-300 px-4 py-2">
-          <label>カラー</label>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-            :class="{ 'rotate-to-open': partColorContent }"
-            @click="showPartColorContent">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-        </div>
-        <div
-          class="rounded-b-lg border border-gray-300 py-6"
-          v-show="partColorContent">
-          <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
-            <li
-              v-for="(hexNumber, index) in colorPaletteHexNumbers"
-              :key="index"
-              :style="colorShowHexNumber(hexNumber)"
-              class="w-8 h-8 rounded-full cursor-pointer shadow-md">
-              <input
-                type="radio"
-                v-model="part.hexNumber"
-                :value="hexNumber"
-                class="checkbox-btn" />
-            </li>
-          </ul>
-        </div>
-        <button
-          class="main-action-btn mt-6 mb-4 md:mt-8 md:mb-4"
-          @click="partData">
-          決定
-        </button>
-      </div>
+      <part-input @update-part="updatePart"></part-input>
       <div v-for="part in design.parts" :key="part" class="mb-4 mx-2">
         <div class="flex justify-between items-center">
           <div class="flex items-center">
@@ -529,18 +261,7 @@
               class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 12H6" />
-            </svg>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -554,20 +275,11 @@
         </textarea>
       </div>
       <div class="p-2 mb-8">
-        <lable class="text-lg">タグ</lable>
-        <div class="flex gap-2">
-          <input
-            class="flex-1 pl-3 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700"
-            type="text"
-            name="title"
-            placeholder="入力してください"
-            v-model="tag" />
-          <button
-            class="text-white bg-gray-800 w-24 h-12 rounded-full shadow-lg"
-            @click="tagData">
-            決定
-          </button>
-        </div>
+        <child-text-input
+          placeholder="入力してください"
+          @update-value="updateTag">
+          <template v-slot:label>タグ</template>
+        </child-text-input>
         <div class="flex flex-wrap mt-2">
           <div
             v-for="tag in design.tags"
@@ -577,18 +289,7 @@
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 stroke-white rounded-md bg-gray-800">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M18 12H6" />
-              </svg>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -605,14 +306,20 @@ import axios from 'axios'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
-import { Chrome } from 'vue-color'
 import draggable from 'vuedraggable'
 import 'color-picker-lame.png'
 import 'lame.png'
+import ExternalLink from './components/external-link.vue'
+import ChildTextInput from './components/child-text-input.vue'
+import PartInput from './components/part-input.vue'
+import ColorInput from './components/color-input.vue'
 export default {
   components: {
-    'chrome-picker': Chrome,
-    draggable
+    draggable,
+    ExternalLink,
+    ChildTextInput,
+    PartInput,
+    ColorInput
   },
   data() {
     return {
@@ -631,79 +338,12 @@ export default {
         parts: [],
         tags: []
       },
-      youtubeVideo: {
-        url: ''
-      },
       color: {
         lame: '',
         pickerHexNumber: '#FF7003',
         paletteHexNumber: '',
         hexNumberHex8: ''
-      },
-      colorPaletteHexNumbers: [
-        '#000000FF',
-        '#7F7F7FFF',
-        '#AAAAAAFF',
-        '#DFDFDFFF',
-        '#FFFFFFFF',
-        '#B12323FF',
-        '#D52B2BFF',
-        '#E27272FF',
-        '#F1B8B8FF',
-        '#F8DCDCFF',
-        '#AA5500FF',
-        '#FF8000FF',
-        '#FFAA55FF',
-        '#FFD5AAFF',
-        '#FFEAD5FF',
-        '#808000FF',
-        '#D5D500FF',
-        '#FFFF80FF',
-        '#FFFFAAFF',
-        '#FFFFD5FF',
-        '#1D8D8DFF',
-        '#23B1B1FF',
-        '#95EAEAFF',
-        '#B8F1F1FF',
-        '#DCF8F8FF',
-        '#15156AFF',
-        '#2B2BD5FF',
-        '#7272E2FF',
-        '#B8B8F1FF',
-        '#DCDCF8FF',
-        '#8D1D8DFF',
-        '#B123B1FF',
-        '#E272E2FF',
-        '#F1B8F1FF',
-        '#F8DCF8FF',
-        '#800040FF',
-        '#AA0055FF',
-        '#FF0080FF',
-        '#FF80BFFF',
-        '#FFD5EAFF'
-      ],
-      part: {
-        name: '',
-        size: '',
-        quantity: 0,
-        hexNumber: '',
-        candidateNamesList: {
-          name: [
-            'ラインストーン',
-            'Vカットストーン',
-            'スタッズ',
-            '丸カン',
-            'パール'
-          ],
-          size: ['ss3', 'ss5', 'ss9', 'ss12', 'ss16', 'ss20', 'ss26']
-        }
-      },
-      tag: '',
-      showColorPicker: true,
-      showColorPalette: false,
-      colorContent: false,
-      partContent: false,
-      partColorContent: false
+      }
     }
   },
   computed: {
@@ -756,12 +396,11 @@ export default {
       const index = this.design.videoToDelete.indexOf(video)
       this.design.videoToDelete.splice(index, 1)
     },
-    youtubeVideoData() {
-      if (this.youtubeVideo.url !== '') {
+    updateYoutubeVideo(url) {
+      if (url !== '') {
         this.design.youtubeVideos.push({
-          accessCode: this.youtubeVideo.url.slice(-11)
+          accessCode: url.slice(-11)
         })
-        this.youtubeVideo.url = ''
       }
     },
     deleteYoutubeVideo(youtubeVideo) {
@@ -774,35 +413,18 @@ export default {
       const index = this.design.youtubeVideoToDelete.indexOf(youtubeVideo)
       this.design.youtubeVideoToDelete.splice(index, 1)
     },
-    showColorContent() {
-      this.colorContent = !this.colorContent
-    },
-    switchToColorPicker() {
-      this.showColorPicker = true
-      this.showColorPalette = false
-    },
-    switchToColorPalette() {
-      this.showColorPalette = true
-      this.showColorPicker = false
-    },
-    colorData() {
-      if (this.color.pickerHexNumber !== '') {
-        this.color.hexNumberHex8 = this.color.pickerHexNumber.hex8
+    updateColor(lame, pickerHexNumber, paletteHexNumber, hexNumberHex8) {
+      if (pickerHexNumber !== '') {
+        hexNumberHex8 = pickerHexNumber.hex8
       }
-      if (this.color.paletteHexNumber !== '') {
-        this.color.hexNumberHex8 = this.color.paletteHexNumber
+      if (paletteHexNumber !== '') {
+        hexNumberHex8 = paletteHexNumber
       }
-      if (
-        this.color.lame !== '' &&
-        (this.color.pickerHexNumber !== '' ||
-          this.color.paletteHexNumber !== '')
-      ) {
+      if (lame !== '' && (pickerHexNumber !== '' || paletteHexNumber !== '')) {
         this.design.colors.push({
-          lame: this.color.lame,
-          hexNumber: this.color.hexNumberHex8
+          lame: lame,
+          hexNumber: hexNumberHex8
         })
-        this.color.lame = ''
-        this.color.hexNumber = '#E0E0E0'
       }
     },
     deleteColor(color) {
@@ -815,42 +437,24 @@ export default {
       const index = this.design.colorToDelete.indexOf(color)
       this.design.colorToDelete.splice(index, 1)
     },
-    partData() {
-      if (this.part.name !== '' && this.part.quantity !== '') {
+    updatePart(name, size, quantity, hexNumber) {
+      if (name !== '' && quantity !== '') {
         this.design.parts.push({
-          name: this.part.name,
-          size: this.part.size,
-          quantity: this.part.quantity,
-          hexNumber: this.part.hexNumber
+          name: name,
+          size: size,
+          quantity: quantity,
+          hexNumber: hexNumber
         })
-        this.part.name = ''
-        this.part.size = ''
-        this.part.quantity = '0'
-        this.part.hexNumber = ''
-        this.partColorContent = false
       }
-    },
-    selectPartName(index) {
-      this.part.name = this.part.candidateNamesList.name[index]
-    },
-    selectPartSize(index) {
-      this.part.size = this.part.candidateNamesList.size[index]
-    },
-    showPartContent() {
-      this.partContent = !this.partContent
-    },
-    showPartColorContent() {
-      this.partColorContent = !this.partColorContent
     },
     deletePart(part) {
       const index = this.design.parts.indexOf(part)
       this.design.parts.splice(index, 1)
     },
-    tagData() {
+    updateTag(name) {
       this.design.tags.push({
-        name: this.tag
+        name: name
       })
-      this.tag = ''
     },
     deleteTag(tag) {
       const index = this.design.tags.indexOf(tag)
@@ -921,36 +525,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.color-picker-img {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.switch-color-button {
-  background: #ffffff;
-  color: #4b5563;
-  border: 1px solid #d1d5db;
-}
-.rotate-to-open {
-  transform: rotate(90deg);
-  transition: all 0.5s ease-in-out;
-}
-.external-link {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25' /%3E%3C/svg%3E%0A");
-}
-.checkbox-btn {
-  appearance: none;
-  width: 40px;
-  height: 40px;
-  border: 2px solid #4b5563;
-  border-radius: 50%;
-  background: transparent;
-  opacity: 0;
-  margin: -11% 0 0 -12%;
-}
-.checkbox-btn:checked {
-  opacity: 1;
-}
-</style>
