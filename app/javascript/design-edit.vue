@@ -250,74 +250,7 @@
       </div>
       <h3 class="p-2 text-lg">カラー・パーツ</h3>
       <external-link></external-link>
-      <h3 class="p-2 text-lg">
-        カラーイメージを登録する
-        <input type="checkbox" @click="showColorContent" />
-      </h3>
-      <div
-        class="mb-4 w-full border border-gray-300 rounded"
-        v-show="colorContent">
-        <div class="my-4 md:mb-8 pl-2 md:pl-4">
-          <lable>ラメ</lable>&emsp; なし&nbsp;
-          <input type="radio" v-model="color.lame" :value="false" />&emsp;
-          あり&nbsp;
-          <input type="radio" v-model="color.lame" :value="true" />
-        </div>
-        <div
-          class="flex justify-around gap-2 md:gap-4 mb-6 md:mb-10 max-w-xl mx-2 sm:mx-auto">
-          <button
-            :class="!showColorPicker ? 'switch-color-button' : ''"
-            @click="switchToColorPicker"
-            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
-            カラーピッカー
-          </button>
-          <button
-            :class="!showColorPalette ? 'switch-color-button' : ''"
-            @click="switchToColorPalette"
-            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
-            カラーパレット
-          </button>
-        </div>
-        <div v-show="showColorPicker">
-          <div class="relative h-64">
-            <img
-              src="~color-picker-lame.png"
-              v-if="colorLameStyle"
-              class="color-picker-img absolute z-10 pointer-events-none" />
-            <chrome-picker
-              class="absolute z-0 color-picker-img"
-              :value="color.pickerHexNumber"
-              v-model="color.pickerHexNumber">
-            </chrome-picker>
-          </div>
-        </div>
-        <div v-show="showColorPalette">
-          <div class="relative">
-            <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
-              <li
-                v-for="(hexNumber, index) in colorPaletteHexNumbers"
-                :key="index"
-                :style="colorShowHexNumber(hexNumber)"
-                class="w-8 h-8 rounded-full cursor-pointer shadow-md">
-                <img
-                  src="~lame.png"
-                  v-if="colorLameStyle"
-                  class="absolute z-10 w-8 h-8 rounded-full opacity-80 pointer-events-none" />
-                <input
-                  type="radio"
-                  v-model="color.paletteHexNumber"
-                  :value="hexNumber"
-                  class="checkbox-btn" />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <button
-          class="main-action-btn mt-4 mb-6 md:mt-6 md:mb-8"
-          @click="colorData">
-          決定
-        </button>
-      </div>
+      <color-input @update-color="updateColor"></color-input>      
       <div v-if="design.colors.length > 0" class="text-sm my-4 mx-2">
         &plus;&minus;ボタンで登録したいカラーを選択できます。
       </div>
@@ -481,20 +414,18 @@ import axios from 'axios'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
-import { Chrome } from 'vue-color'
 import draggable from 'vuedraggable'
-import 'color-picker-lame.png'
-import 'lame.png'
 import ExternalLink from './components/external-link.vue'
 import ChildTextInput from './components/child-text-input.vue'
-import PartInput from './components/part-input'
+import PartInput from './components/part-input.vue'
+import ColorInput from './components/color-input.vue'
 export default {
   components: {
-    'chrome-picker': Chrome,
     draggable,
     ExternalLink,
     ChildTextInput,
-    PartInput
+    PartInput,
+    ColorInput
   },
   data() {
     return {
@@ -511,57 +442,6 @@ export default {
         parts: [],
         tags: []
       },
-      color: {
-        lame: '',
-        pickerHexNumber: '#FF7003',
-        paletteHexNumber: '',
-        hexNumberHex8: ''
-      },
-      colorPaletteHexNumbers: [
-        '#000000FF',
-        '#7F7F7FFF',
-        '#AAAAAAFF',
-        '#DFDFDFFF',
-        '#FFFFFFFF',
-        '#B12323FF',
-        '#D52B2BFF',
-        '#E27272FF',
-        '#F1B8B8FF',
-        '#F8DCDCFF',
-        '#AA5500FF',
-        '#FF8000FF',
-        '#FFAA55FF',
-        '#FFD5AAFF',
-        '#FFEAD5FF',
-        '#808000FF',
-        '#D5D500FF',
-        '#FFFF80FF',
-        '#FFFFAAFF',
-        '#FFFFD5FF',
-        '#1D8D8DFF',
-        '#23B1B1FF',
-        '#95EAEAFF',
-        '#B8F1F1FF',
-        '#DCF8F8FF',
-        '#15156AFF',
-        '#2B2BD5FF',
-        '#7272E2FF',
-        '#B8B8F1FF',
-        '#DCDCF8FF',
-        '#8D1D8DFF',
-        '#B123B1FF',
-        '#E272E2FF',
-        '#F1B8F1FF',
-        '#F8DCF8FF',
-        '#800040FF',
-        '#AA0055FF',
-        '#FF0080FF',
-        '#FF80BFFF',
-        '#FFD5EAFF'
-      ],
-      showColorPicker: true,
-      showColorPalette: false,
-      colorContent: false,
       value: 0,
       destroy: false
     }
@@ -708,39 +588,22 @@ export default {
     saveYoutubeVideo(youtubeVideo) {
       this.$set(youtubeVideo, '_destroy', '0')
     },
-    showColorContent() {
-      this.colorContent = !this.colorContent
-    },
-    switchToColorPicker() {
-      this.showColorPicker = true
-      this.showColorPalette = false
-    },
-    switchToColorPalette() {
-      this.showColorPalette = true
-      this.showColorPicker = false
-    },
-    colorData() {
-      if (this.color.pickerHexNumber !== '') {
-        this.color.hexNumberHex8 = this.color.pickerHexNumber.hex8
+    updateColor(lame, pickerHexNumber, paletteHexNumber, hexNumberHex8) {
+      if (pickerHexNumber !== '') {
+        hexNumberHex8 = pickerHexNumber.hex8
       }
-      if (this.color.paletteHexNumber !== '') {
-        this.color.hexNumberHex8 = this.color.paletteHexNumber
+      if (paletteHexNumber !== '') {
+        hexNumberHex8 = paletteHexNumber
       }
-      if (
-        this.color.lame !== '' &&
-        (this.color.pickerHexNumber !== '' ||
-          this.color.paletteHexNumber !== '')
-      ) {
+      if ( lame !== '' && (pickerHexNumber !== '' || paletteHexNumber !== '') ) {
         this.design.colors.push({
           id: '',
-          lame: this.color.lame,
-          hexNumber: this.color.hexNumberHex8,
+          lame: lame,
+          hexNumber: hexNumberHex8,
           _destroy: '0'
         })
-        this.color.lame = ''
-        this.color.hexNumber = '#E0E0E0'
       }
-    },
+    },    
     deleteColor(color) {
       this.$set(color, '_destroy', '1')
     },
@@ -769,7 +632,6 @@ export default {
         design_tag_id: '',
         _destroy: '0'
       })
-      this.tag = ''
     },
     deleteTag(tag) {
       this.$set(tag, '_destroy', '1')
@@ -920,32 +782,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.color-picker-img {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.switch-color-button {
-  background: #ffffff;
-  color: #4b5563;
-  border: 1px solid #d1d5db;
-}
-.checkbox-btn {
-  appearance: none;
-  width: 40px;
-  height: 40px;
-  border: 2px solid #4b5563;
-  border-radius: 50%;
-  background: transparent;
-  opacity: 0;
-  margin: -11% 0 0 -12%;
-}
-.checkbox-btn:checked {
-  opacity: 1;
-}
-.delete {
-  opacity: 0.5;
-}
-</style>
