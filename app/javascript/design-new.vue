@@ -55,7 +55,7 @@
             <div
               @click="deleteImage(image)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5"/>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </draggable>
@@ -72,7 +72,7 @@
               <div
                 @click="saveImage(image)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5"/>
+                <img src="~plus.svg" class="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
             <div
               @click="deleteVideo(video)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5"/>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@
               <div
                 @click="saveVideo(video)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5"/>
+                <img src="~plus.svg" class="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
             class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <img src="~minus.svg" class="w-5 h-5"/>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~plus.svg" class="w-5 h-5"/>
+              <img src="~plus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -205,7 +205,7 @@
           <div
             @click="deleteColor(color)"
             class="ml-6 -mt-2 cursor-pointer absolute z-20">
-            <img src="~minus.svg" class="w-5 h-5"/>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -226,7 +226,7 @@
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
-              <img src="~plus.svg" class="w-5 h-5"/>
+              <img src="~plus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -261,7 +261,7 @@
               class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <img src="~minus.svg" class="w-5 h-5"/>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -289,7 +289,7 @@
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">
-              <img src="~minus.svg" class="w-5 h-5"/>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>

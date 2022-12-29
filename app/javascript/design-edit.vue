@@ -60,7 +60,7 @@
             <div
               @click="deleteImage(image)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5"/>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </draggable>
@@ -77,7 +77,7 @@
               <div
                 @click="saveImage(image)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5"/>
+                <img src="~plus.svg" class="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@
             <div
               @click="deleteVideo(video)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5"/>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@
               <div
                 @click="saveVideo(video)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5"/>
+                <img src="~plus.svg" class="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
             class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <img src="~minus.svg" class="w-5 h-5"/>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -177,14 +177,14 @@
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~plus.svg" class="w-5 h-5"/>
+              <img src="~plus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
       </div>
       <h3 class="p-2 text-lg">カラー・パーツ</h3>
       <external-link></external-link>
-      <color-input @update-color="updateColor"></color-input>      
+      <color-input @update-color="updateColor"></color-input>
       <div v-if="design.colors.length > 0" class="text-sm my-4 mx-2">
         &plus;&minus;ボタンで登録したいカラーを選択できます。
       </div>
@@ -203,7 +203,7 @@
           <div
             class="ml-6 -mt-2 cursor-pointer absolute z-20"
             @click="deleteColor(color)">
-            <img src="~minus.svg" class="w-5 h-5"/>
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -224,7 +224,7 @@
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
-              <img src="~plus.svg" class="w-5 h-5"/>
+              <img src="~plus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -259,7 +259,7 @@
               class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <img src="~minus.svg" class="w-5 h-5"/>            
+            <img src="~minus.svg" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -287,7 +287,7 @@
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">
-              <img src="~minus.svg" class="w-5 h-5"/>
+              <img src="~minus.svg" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -482,7 +482,7 @@ export default {
       if (paletteHexNumber !== '') {
         hexNumberHex8 = paletteHexNumber
       }
-      if ( lame !== '' && (pickerHexNumber !== '' || paletteHexNumber !== '') ) {
+      if (lame !== '' && (pickerHexNumber !== '' || paletteHexNumber !== '')) {
         this.design.colors.push({
           id: '',
           lame: lame,
@@ -490,7 +490,7 @@ export default {
           _destroy: '0'
         })
       }
-    },    
+    },
     deleteColor(color) {
       this.$set(color, '_destroy', '1')
     },
