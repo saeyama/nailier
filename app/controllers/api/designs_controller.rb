@@ -19,6 +19,7 @@ class Api::DesignsController < ApplicationController
   def create
     @design = current_user.designs.new(design_params)
     @design.attach_blob(image_data_urls)
+    @design.attach_blob(video_data_urls)
     if @design.save
       render json: @design, status: :created
     else
@@ -29,9 +30,8 @@ class Api::DesignsController < ApplicationController
   def update
     @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
     @design.attach_blob(video_data_urls) if @design.videos.map(&:blank?)
-
+    @design.images_set(sort_image_ids) if @design.images.attached?
     if @design.update(design_params)
-      @design.images_set(sort_image_ids) if @design.images.attached?
       render json: { status: 'SUCCESS', data: @design }
     else
       render json: { status: 'ERROR', data: @design.errors }

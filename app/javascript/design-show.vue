@@ -6,7 +6,9 @@
         {{ design.nailPart }}
       </div>
       <h3 class="text-lg mb-2">画像</h3>
-      <div class="text-sm ml-0.5 mb-6" v-if="design.images.length === 0">
+      <div
+        class="text-sm ml-0.5 mb-6"
+        v-if="!design.images || !design.images.length">
         登録されている画像はありません。
       </div>
       <div v-else>
@@ -30,7 +32,7 @@
       <h3 class="text-lg mb-2">動画</h3>
       <div
         class="text-sm ml-0.5 mb-6"
-        v-if="design.videos.length === 0 || design.videos.length === undefind">
+        v-if="!design.videos || !design.videos.length">
         登録されている動画はありません。
       </div>
       <div v-else>
@@ -40,7 +42,7 @@
             v-for="video in design.videos"
             :key="video.id">
             <video
-              :src="video"
+              :src="video.url"
               controls
               class="mt-2 aspect-[4/3] w-full object-cover"></video>
           </div>
@@ -113,20 +115,20 @@
         </div>
       </div>
       <h3 class="text-lg mb-1">調べた内容・メモ</h3>
-      <div class="text-sm ml-0.5 mb-12" v-if="design.description.length === 0">
+      <div class="text-sm ml-0.5 mb-6" v-if="design.description.length === 0">
         登録されているメモはありません。
       </div>
       <div v-else>
         <div class="mb-4 text-sm border border-gray-300 px-2 py-1 rounded">
           {{ design.description }}
         </div>
-        <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
-          <div
-            v-for="tag in design.tags"
-            :key="tag.id"
-            class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
-            {{ tag.name }}
-          </div>
+      </div>
+      <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
+        <div
+          v-for="tag in design.tags"
+          :key="tag.id"
+          class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
+          {{ tag.name }}
         </div>
       </div>
       <button class="main-action-btn mb-2" @click="editDesign">
@@ -184,10 +186,10 @@ export default {
     this.getDesign()
   },
   methods: {
-    getDesign() {
+    async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 1]
-      axios.get(`/api/designs/${id}.json`).then((response) => {
+      await axios.get(`/api/designs/${id}.json`).then((response) => {
         ;(this.design.id = response.data.id),
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),
@@ -196,12 +198,12 @@ export default {
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags),
-          (this.design.videos = response.data.videos.map(
-            (videoData) => videoData.url
-          )),
-          (this.design.images = response.data.images.map(
-            (imageData) => imageData.url
-          ))
+          (this.design.videos =
+            response.data.videos !== null ? response.data.videos : []),
+          (this.design.images =
+            response.data.images !== null
+              ? response.data.images.map((imageData) => imageData.url)
+              : [])
       })
     },
     editDesign() {
