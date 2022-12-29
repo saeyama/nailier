@@ -419,11 +419,6 @@ export default {
               url: fileReader.result,
               _destroy: '0'
             })
-            this.design.selectedImages.push({
-              id: '',
-              url: fileReader.result,
-              _destroy: '0'
-            })
           } else {
             this.design.videos.push({
               id: '',
