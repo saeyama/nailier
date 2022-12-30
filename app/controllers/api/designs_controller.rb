@@ -38,7 +38,6 @@ class Api::DesignsController < ApplicationController
 
   def destroy
     @design.images.map(&:purge_later)
-    @design.videos.map(&:purge_later)
     @design.destroy
   end
 

@@ -282,7 +282,6 @@ export default {
         description: '',
         images: [],
         imageToDelete: [],
-        // videos: [],
         youtubeVideos: [],
         colors: [],
         parts: [],
@@ -349,8 +348,6 @@ export default {
           (this.design.videos = response.data.videos),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags),
-          // (this.design.videos =
-          //   response.data.videos !== null ? response.data.videos : []),
           (this.design.images =
             response.data.images !== null ? response.data.images : [])
       })

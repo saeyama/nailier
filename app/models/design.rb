@@ -23,7 +23,7 @@ class Design < ApplicationRecord
     return if image_data_urls.blank?
 
     image_data_urls.map.with_index do |image_data_url, index|
-      image_blob = FileBlob.new(image_data_url)
+      image_blob = ImageBlob.new(image_data_url)
       images.attach(
         io: image_blob.to_io,
         filename: index,
