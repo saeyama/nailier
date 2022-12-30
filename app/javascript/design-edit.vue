@@ -83,52 +83,6 @@
           </div>
         </div>
       </div>
-      <div class="p-2 text-lg">
-        <lable>動画&#40;複数登録可&#41;</lable><br />
-        <input
-          type="file"
-          name="video"
-          multiple="multiple"
-          accept="video/*"
-          @change="uploadFiles"
-          class="text-sm w-64 md:text-lg md:w-full" />
-        <div v-if="saveVideos().length > 0" class="text-sm my-6">
-          &plus;&minus;ボタンで登録したい動画を選択できます。
-        </div>
-        <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
-          <div
-            class="relative mb-4 md:mb-8"
-            v-for="video in saveVideos()"
-            :key="video">
-            <video class="z-0 aspect-[4/3] w-full object-cover">
-              <source :src="video.url" type="video/mp4" />
-            </video>
-            <div
-              @click="deleteVideo(video)"
-              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5" />
-            </div>
-          </div>
-        </div>
-        <div v-if="deleteVideos().length > 0">
-          <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
-          <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
-            <div
-              class="relative mb-4 md:mb-8"
-              v-for="video in deleteVideos()"
-              :key="video">
-              <video class="z-0 aspect-[4/3] w-full object-cover opacity-60">
-                <source :src="video.url" type="video/mp4" />
-              </video>
-              <div
-                @click="saveVideo(video)"
-                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="p-2">
         <child-text-input
           placeholder="youtubeのURL"
@@ -328,7 +282,7 @@ export default {
         description: '',
         images: [],
         imageToDelete: [],
-        videos: [],
+        // videos: [],
         youtubeVideos: [],
         colors: [],
         parts: [],
@@ -345,9 +299,6 @@ export default {
           'background-color': hexNumber
         }
       }
-    },
-    colorLameStyle() {
-      return this.color.lame === true
     },
     saveColors() {
       return this.design.colors.filter(function (color) {
@@ -398,8 +349,8 @@ export default {
           (this.design.videos = response.data.videos),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags),
-          (this.design.videos =
-            response.data.videos !== null ? response.data.videos : []),
+          // (this.design.videos =
+          //   response.data.videos !== null ? response.data.videos : []),
           (this.design.images =
             response.data.images !== null ? response.data.images : [])
       })
@@ -413,19 +364,24 @@ export default {
         const fileReader = new FileReader()
         fileReader.readAsDataURL(file)
         fileReader.onload = () => {
-          if (fileReader.result.startsWith('data:image')) {
-            this.design.images.push({
-              id: '',
-              url: fileReader.result,
-              _destroy: '0'
-            })
-          } else {
-            this.design.videos.push({
-              id: '',
-              url: fileReader.result,
-              _destroy: '0'
-            })
-          }
+          this.design.images.push({
+            id: '',
+            url: fileReader.result,
+            _destroy: '0'
+          })
+          // if (fileReader.result.startsWith('data:image')) {
+          //   this.design.images.push({
+          //     id: '',
+          //     url: fileReader.result,
+          //     _destroy: '0'
+          //   })
+          // } else {
+          //   this.design.videos.push({
+          //     id: '',
+          //     url: fileReader.result,
+          //     _destroy: '0'
+          //   })
+          // }
         }
       }
     },
@@ -440,25 +396,6 @@ export default {
       this.design.images.push(image)
       const index = this.design.imageToDelete.indexOf(image)
       this.design.imageToDelete.splice(index, 1)
-    },
-    deleteVideo(video) {
-      this.$set(video, '_destroy', '1')
-    },
-    saveVideo(video) {
-      this.$set(video, '_destroy', '0')
-    },
-    saveVideos() {
-      this.design.videos === undefined
-        ? (this.design.videos = [])
-        : this.design.videos
-      return this.design.videos.filter(function (video) {
-        return video._destroy === '0'
-      })
-    },
-    deleteVideos() {
-      return this.design.videos.filter(function (video) {
-        return video._destroy === '1'
-      })
     },
     updateYoutubeVideo(url) {
       if (url !== '') {
@@ -551,22 +488,6 @@ export default {
           'design[images_attachments_attributes][][_destroy]',
           image._destroy
         )
-      })
-
-      const videoParams = this.design.videos
-      videoParams.forEach((video) => {
-        if (video.id === '' && video._destroy === '0') {
-          formData.append('design[videos][]', video.url)
-        } else if (video.id !== '' && video._destroy === '1') {
-          formData.append(
-            'design[videos_attachments_attributes][][id]',
-            video.id
-          )
-          formData.append(
-            'design[videos_attachments_attributes][][_destroy]',
-            video._destroy
-          )
-        }
       })
 
       const sortImageIdParams = this.design.images

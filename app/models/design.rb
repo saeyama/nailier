@@ -8,8 +8,6 @@ class Design < ApplicationRecord
 
   has_many_attached :images
   accepts_nested_attributes_for :images_attachments, allow_destroy: true
-  has_many_attached :videos
-  accepts_nested_attributes_for :videos_attachments, allow_destroy: true
   has_many :colors, dependent: :destroy
   accepts_nested_attributes_for :colors, allow_destroy: true
   has_many :parts, dependent: :destroy
@@ -21,24 +19,16 @@ class Design < ApplicationRecord
   accepts_nested_attributes_for :design_tags, allow_destroy: true
   accepts_nested_attributes_for :tags
 
-  def file_attach(file_type, file_blob, index)
-    file_type.attach(
-      io: file_blob.to_io,
-      filename: index,
-      content_type: file_blob.mime_type
-    )
-  end
+  def attach_blob(image_data_urls)
+    return if image_data_urls.blank?
 
-  def attach_blob(file_data_urls)
-    return if file_data_urls.blank?
-
-    file_data_urls.map.with_index do |file_data_url, index|
-      file_blob = FileBlob.new(file_data_url)
-      if file_data_url.start_with?('data:image')
-        file_attach(images, file_blob, index)
-      elsif file_data_url.start_with?('data:video')
-        file_attach(videos, file_blob, index)
-      end
+    image_data_urls.map.with_index do |image_data_url, index|
+      image_blob = FileBlob.new(image_data_url)
+      images.attach(
+        io: image_blob.to_io,
+        filename: index,
+        content_type: image_blob.mime_type
+      )
     end
   end
 

@@ -19,7 +19,6 @@ class Api::DesignsController < ApplicationController
   def create
     @design = current_user.designs.new(design_params)
     @design.attach_blob(image_data_urls)
-    @design.attach_blob(video_data_urls)
     if @design.save
       render json: @design, status: :created
     else
@@ -29,7 +28,6 @@ class Api::DesignsController < ApplicationController
 
   def update
     @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
-    @design.attach_blob(video_data_urls) if @design.videos.map(&:blank?)
     @design.images_set(sort_image_ids) if @design.images.attached?
     if @design.update(design_params)
       render json: { status: 'SUCCESS', data: @design }
@@ -54,17 +52,12 @@ class Api::DesignsController < ApplicationController
       tags_attributes: %i[name id],
       design_tags_attributes: %i[id _destroy],
       youtube_videos_attributes: %i[access_code id _destroy],
-      images_attachments_attributes: %i[id _destroy],
-      videos_attachments_attributes: %i[id _destroy]
+      images_attachments_attributes: %i[id _destroy]
     )
   end
 
   def image_data_urls
     params.require(:design).permit(images: [])[:images]
-  end
-
-  def video_data_urls
-    params.require(:design).permit(videos: [])[:videos]
   end
 
   def set_design

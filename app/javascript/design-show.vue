@@ -29,25 +29,6 @@
           @hide="hideImagsShowHandle">
         </vue-easy-lightbox>
       </div>
-      <h3 class="text-lg mb-2">動画</h3>
-      <div
-        class="text-sm ml-0.5 mb-6"
-        v-if="!design.videos || !design.videos.length">
-        登録されている動画はありません。
-      </div>
-      <div v-else>
-        <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
-          <div
-            class="drop-shadow-lg mb-2 md:mb-8"
-            v-for="video in design.videos"
-            :key="video.id">
-            <video
-              :src="video.url"
-              controls
-              class="mt-2 aspect-[4/3] w-full object-cover"></video>
-          </div>
-        </div>
-      </div>
       <h3 class="text-lg mb-2">youtube動画</h3>
       <div class="text-sm ml-0.5 mb-6" v-if="design.youtubeVideos.length === 0">
         登録されているyoutube動画はありません。
@@ -163,7 +144,6 @@ export default {
         nailPart: '',
         description: '',
         images: [],
-        videos: [],
         youtubeVideos: [],
         colors: [],
         parts: [],
@@ -198,8 +178,6 @@ export default {
           (this.design.colors = response.data.colors),
           (this.design.parts = response.data.parts),
           (this.design.tags = response.data.tags),
-          (this.design.videos =
-            response.data.videos !== null ? response.data.videos : []),
           (this.design.images =
             response.data.images !== null
               ? response.data.images.map((imageData) => imageData.url)
@@ -227,5 +205,3 @@ export default {
   }
 }
 </script>
-
-<style></style>
