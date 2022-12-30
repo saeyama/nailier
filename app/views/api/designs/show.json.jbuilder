@@ -15,6 +15,3 @@ json.youtubeVideos youtubeVideos
 image_urls = @design.images.map { |image| { 'id': image.id, 'url': rails_blob_url(image), '_destroy': '0', 'index': rails_blob_url(image).split('/')[8].to_i } }
 sort_images = image_urls.sort {|x, y| x[:index] <=> y[:index] } if @design.images.attached?
 json.images sort_images
-
-video_urls = @design.videos.map { |video| { 'id': video.id, 'url': rails_blob_url(video), '_destroy': '0' } }
-json.videos video_urls if @design.videos.attached?

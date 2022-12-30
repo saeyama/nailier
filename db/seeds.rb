@@ -22,16 +22,13 @@ User.all.each do |user|
       )
     hand_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail-sample1.jpg')), filename: '0')
     hand_design.images.attach(io: File.open(Rails.root.join('app/assets/images/nail-sample2.jpg')), filename: '1')
-    hand_design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: '0')
   end
-  foot_design =
-    Design.create!(
-      user_id: user.id, title: 'title6', nail_part: 'フット', description: 'description6',
-      colors_attributes: [
-        { lame: true, hex_number: '#000000' }, { lame: false, hex_number: '#FFFFFF' }
-      ],
-      tags_attributes: [{ name: 'tag1' }, { name: 'tag3' }],
-      youtube_videos_attributes: [{ access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }]
-    )
-  foot_design.videos.attach(io: File.open(Rails.root.join('app/assets/videos/nail.mp4')), filename: '0')
+  Design.create!(
+    user_id: user.id, title: 'title6', nail_part: 'フット', description: 'description6',
+    colors_attributes: [
+      { lame: true, hex_number: '#000000' }, { lame: false, hex_number: '#FFFFFF' }
+    ],
+    tags_attributes: [{ name: 'tag1' }, { name: 'tag3' }],
+    youtube_videos_attributes: [{ access_code: 'MQJU9quj3l4' }, { access_code: 'N2iDvU2HjQk' }]
+  )
 end

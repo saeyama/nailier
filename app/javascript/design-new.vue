@@ -79,54 +79,6 @@
         </div>
       </div>
       <div class="p-2">
-        <lable>動画&#40;複数登録可&#41;</lable><br />
-        <input
-          type="file"
-          name="video"
-          multiple="multiple"
-          accept="video/*"
-          @change="uploadFiles"
-          class="text-sm w-64 md:text-lg md:w-full" />
-        <div
-          v-if="design.videos.length > 0 || design.videoToDelete.length > 0"
-          class="text-sm my-6">
-          &plus;&minus;ボタンで登録したい画像を選択できます。
-        </div>
-        <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
-          <div
-            class="relative mb-4 md:mb-8"
-            v-for="video in design.videos"
-            :key="video">
-            <video class="z-0 aspect-[4/3] w-full object-cover">
-              <source :src="video" type="video/mp4" />
-            </video>
-            <div
-              @click="deleteVideo(video)"
-              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5" />
-            </div>
-          </div>
-        </div>
-        <div v-if="design.videoToDelete.length > 0">
-          <div class="text-sm my-4 md:my-8 md:text-base">削除する動画</div>
-          <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
-            <div
-              class="mb-4 relative md:mb-8"
-              v-for="video in design.videoToDelete"
-              :key="video">
-              <video class="z-0 aspect-[4/3] w-full object-cover opacity-60">
-                <source :src="video" type="video/mp4" />
-              </video>
-              <div
-                @click="saveVideo(video)"
-                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-2">
         <child-text-input
           placeholder="youtubeのURL"
           @update-value="updateYoutubeVideo">
@@ -329,8 +281,6 @@ export default {
         nailPart: '',
         images: [],
         imageToDelete: [],
-        videos: [],
-        videoToDelete: [],
         youtubeVideos: [],
         youtubeVideoToDelete: [],
         colors: [],
@@ -368,11 +318,7 @@ export default {
         const fileReader = new FileReader()
         fileReader.readAsDataURL(file)
         fileReader.onload = () => {
-          if (fileReader.result.startsWith('data:image')) {
-            this.design.images.push(fileReader.result)
-          } else {
-            this.design.videos.push(fileReader.result)
-          }
+          this.design.images.push(fileReader.result)
         }
       }
     },
@@ -385,16 +331,6 @@ export default {
       this.design.images.push(image)
       const index = this.design.imageToDelete.indexOf(image)
       this.design.imageToDelete.splice(index, 1)
-    },
-    deleteVideo(video) {
-      this.design.videoToDelete.push(video)
-      const index = this.design.videos.indexOf(video)
-      this.design.videos.splice(index, 1)
-    },
-    saveVideo(video) {
-      this.design.videos.push(video)
-      const index = this.design.videoToDelete.indexOf(video)
-      this.design.videoToDelete.splice(index, 1)
     },
     updateYoutubeVideo(url) {
       if (url !== '') {
@@ -467,8 +403,7 @@ export default {
         'design[title]': this.design.title,
         'design[description]': this.design.description,
         'design[nail_part]': this.design.nailPart,
-        'design[images]': this.design.images,
-        'design[videos]': this.design.videos
+        'design[images]': this.design.images
       }
       Object.entries(params).forEach(([key, value]) => {
         if (Array.isArray(value)) {
