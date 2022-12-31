@@ -457,6 +457,10 @@ export default {
       this.$set(tag, '_destroy', '1')
     },
     updateDesign() {
+      if (!this.design.title) {
+        alert('タイトルは登録必須です。')
+        return
+      }
       const formData = new FormData()
 
       const designParams = {

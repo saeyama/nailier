@@ -11,7 +11,7 @@
         class="form-field"
         type="text"
         name="name"
-        placeholder="パーツ名を入力してください。"
+        placeholder="パーツ名は登録必須です。"
         v-model="part.name" />
       <div class="my-4 px-2">
         <button
@@ -184,6 +184,10 @@ export default {
       this.partColorContent = !this.partColorContent
     },
     updatePart() {
+      if (!this.part.name) {
+        alert('パーツ名は登録必須です。')
+        return
+      }
       this.$emit(
         'update-part',
         this.part.name,

@@ -3,7 +3,7 @@
     <h2 class="text-2xl text-center py-10">ネイルデザインを登録</h2>
     <div class="w-11/12 mx-auto">
       <div class="p-2">
-        <lable class="text-lg">タイトル</lable>
+        <lable class="text-lg">タイトル&nbsp;&#40;入力必須&#41;</lable>
         <input
           class="form-field"
           type="text"
@@ -404,6 +404,10 @@ export default {
       this.design.tags.splice(index, 1)
     },
     createDesign() {
+      if (!this.design.title) {
+        alert('タイトルは登録必須です。')
+        return
+      }
       const formData = new FormData()
 
       const params = {
