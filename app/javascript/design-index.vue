@@ -58,17 +58,17 @@
             </div>
             <div class="md:flex md:justify-between md:my-2 md:gap-1 md:mt-4">
               <button
-                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
+                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
                 @click="showDesign(design.id)">
                 詳細
               </button>
               <button
-                class="block px-8 my-2 md:my-0 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
+                class="block px-8 my-2 md:my-0 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
                 @click="editDesign(design.id)">
                 編集
               </button>
               <button
-                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
+                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
                 @click="deleteDesign(design.id)">
                 削除
               </button>
