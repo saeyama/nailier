@@ -43,13 +43,27 @@
             (design.images && design.images.length > 0) ||
             design.imageToDelete.length > 0
           "
-          class="text-sm mt-6">
-          &plus;&minus;ボタンで登録したい画像を選択できます。
+          class="text-sm mt-6 flex gap-0.5 items-center">
+          <img src="~plus.svg" class="w-4 h-4" />
+          <img src="~minus.svg" class="w-4 h-4" />
+          で登録したい画像を選択できます。
         </div>
-        <div v-if="design.images && design.images.length" class="text-sm mb-8">
-          複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。<br />
-          8枚を超えて登録された場合は末尾から順に削除されます。<br />
-          5MG以上の画像を登録された場合は自動的に弾かれます。
+        <div
+          v-if="design.images && design.images.length"
+          class="text-sm mb-8 mt-1 leading-6">
+          ドラッグ&amp;ドロップで並び替え可能です。<br />
+          <span class="underline decoration-dotted underline-offset-2"
+            >5MG以上の画像は自動的に弾かれます。</span
+          ><br />
+          <span class="inline-block mt-2"
+            >アップロード数は現在&nbsp;<span class="text-xl">{{
+              design.images.length
+            }}</span
+            >&nbsp;枚です。</span
+          ><br />
+          <span class="underline underline-offset-2"
+            >8枚を超えた画像は登録されません。</span
+          ><br />
         </div>
         <draggable
           v-model="design.images"
@@ -97,8 +111,10 @@
       </div>
       <div
         v-if="design.youtubeVideos.length > 0"
-        class="text-sm mt-2 mb-6 ml-2">
-        &plus;&minus;ボタンで登録したい動画を選択できます。
+        class="text-sm mt-2 mb-6 ml-2 flex gap-0.5 items-center">
+        <img src="~plus.svg" class="w-4 h-4" />
+        <img src="~minus.svg" class="w-4 h-4" />
+        で登録したい画像を選択できます。
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
@@ -144,8 +160,12 @@
       <h3 class="p-2 text-lg">カラー・パーツ</h3>
       <external-link></external-link>
       <color-input @update-color="updateColor"></color-input>
-      <div v-if="design.colors.length > 0" class="text-sm my-4 mx-2">
-        &plus;&minus;ボタンで登録したいカラーを選択できます。
+      <div
+        v-if="design.colors.length > 0"
+        class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">
+        <img src="~plus.svg" class="w-4 h-4" />
+        <img src="~minus.svg" class="w-4 h-4" />
+        で登録したい画像を選択できます。
       </div>
       <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
         <div
