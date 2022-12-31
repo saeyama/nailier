@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Design < ApplicationRecord
-  validates :title, presence: true
-  validates :nail_part, presence: true
-
   belongs_to :user
 
   has_many_attached :images
@@ -18,6 +15,11 @@ class Design < ApplicationRecord
   has_many :tags, through: :design_tags
   accepts_nested_attributes_for :design_tags, allow_destroy: true
   accepts_nested_attributes_for :tags
+
+  validates :title, presence: true
+  validates :nail_part, presence: true
+  validates :images, content_type: ['image/jpeg', 'image/jpg', 'image/png'], size: { between: 1.kilobyte..5.megabytes }, if: -> { images.attached? }
+  validates :images, limit: { min: 0, max: 8 }
 
   def attach_blob(image_data_urls)
     return if image_data_urls.blank?

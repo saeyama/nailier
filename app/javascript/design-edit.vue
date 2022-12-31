@@ -27,7 +27,10 @@
           v-model="design.nailPart" />
       </div>
       <div class="p-2 w-full text-lg">
-        <lable>画像&#40;複数登録可&#41;</lable><br />
+        <lable class="block mb-2">
+          画像&nbsp;&#40;8枚まで&#41;
+          <span class="text-sm">jpeg&#47;jpg&#47;png&middot;5MG以下</span>
+        </lable>
         <input
           type="file"
           name="image"
@@ -44,7 +47,9 @@
           &plus;&minus;ボタンで登録したい画像を選択できます。
         </div>
         <div v-if="design.images && design.images.length" class="text-sm mb-8">
-          複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。
+          複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。<br />
+          8枚を超えて登録された場合は末尾から順に削除されます。<br />
+          5MG以上の画像を登録された場合は自動的に弾かれます。
         </div>
         <draggable
           v-model="design.images"
@@ -361,24 +366,19 @@ export default {
         const fileReader = new FileReader()
         fileReader.readAsDataURL(file)
         fileReader.onload = () => {
-          this.design.images.push({
-            id: '',
-            url: fileReader.result,
-            _destroy: '0'
-          })
-          // if (fileReader.result.startsWith('data:image')) {
-          //   this.design.images.push({
-          //     id: '',
-          //     url: fileReader.result,
-          //     _destroy: '0'
-          //   })
-          // } else {
-          //   this.design.videos.push({
-          //     id: '',
-          //     url: fileReader.result,
-          //     _destroy: '0'
-          //   })
-          // }
+          if (
+            fileReader.result.startsWith('data:image/jpeg') ||
+            fileReader.result.startsWith('data:image/jpg') ||
+            fileReader.result.startsWith('data:image/png')
+          ) {
+            this.design.images.push({
+              id: '',
+              url: fileReader.result,
+              _destroy: '0'
+            })
+          } else {
+            alert('jpeg・jpg・png 以外は登録できません。')
+          }
         }
       }
     },
