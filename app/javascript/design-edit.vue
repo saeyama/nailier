@@ -3,7 +3,7 @@
     <h2 class="text-2xl text-center py-10">ネイルデザインを編集</h2>
     <div class="w-11/12 mx-auto">
       <div class="p-2">
-        <lable class="text-lg">タイトル</lable>
+        <lable class="text-lg">タイトル&nbsp;&#40;入力必須&#41;</lable>
         <input
           class="form-field"
           type="text"
@@ -283,7 +283,7 @@ export default {
       design: {
         id: '',
         title: '',
-        nailPart: '',
+        nailPart: 'ハンド',
         description: '',
         images: [],
         imageToDelete: [],
@@ -343,7 +343,6 @@ export default {
       const url = location.pathname.split('/')
       const id = url[url.length - 2]
       await axios.get(`/api/designs/${id}.json`).then((response) => {
-        console.log(response.data)
         ;(this.design.id = response.data.id),
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),

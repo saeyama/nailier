@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       color: {
-        lame: '',
+        lame: 'false',
         pickerHexNumber: '#FF7003',
         paletteHexNumber: '',
         hexNumberHex8: ''

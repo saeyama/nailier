@@ -102,7 +102,7 @@ export default {
       part: {
         name: '',
         size: '',
-        quantity: '0',
+        quantity: '1',
         hexNumber: '',
         candidateNamesList: {
           name: [

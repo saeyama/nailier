@@ -283,7 +283,7 @@ export default {
       design: {
         title: '',
         description: '',
-        nailPart: '',
+        nailPart: 'ハンド',
         images: [],
         imageToDelete: [],
         youtubeVideos: [],
@@ -292,12 +292,6 @@ export default {
         colorToDelete: [],
         parts: [],
         tags: []
-      },
-      color: {
-        lame: '',
-        pickerHexNumber: '#FF7003',
-        paletteHexNumber: '',
-        hexNumberHex8: ''
       }
     }
   },
