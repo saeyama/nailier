@@ -101,7 +101,7 @@
         <child-text-input
           placeholder="youtubeのURL"
           @update-value="updateYoutubeVideo">
-          <template v-slot:label>youtube動画</template>
+          <template v-slot:label>YouTube動画</template>
         </child-text-input>
       </div>
       <div

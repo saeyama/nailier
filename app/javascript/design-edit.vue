@@ -106,7 +106,7 @@
         <child-text-input
           placeholder="youtubeのURL"
           @update-value="updateYoutubeVideo">
-          <template v-slot:label>youtube動画</template>
+          <template v-slot:label>YouTube動画</template>
         </child-text-input>
       </div>
       <div
@@ -136,7 +136,7 @@
       </div>
       <div v-if="deleteYoutubeVideos.length > 0">
         <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
-          削除するyoutube動画
+          削除するYouTube動画
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
           <div

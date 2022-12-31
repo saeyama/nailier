@@ -29,11 +29,14 @@
           @hide="hideImagsShowHandle">
         </vue-easy-lightbox>
       </div>
-      <h3 class="text-lg mb-2">youtube動画</h3>
+      <h3 class="text-lg mb-2">YouTube動画</h3>
       <div class="text-sm ml-0.5 mb-6" v-if="design.youtubeVideos.length === 0">
-        登録されているyoutube動画はありません。
+        登録されているYouTube動画はありません。
       </div>
       <div v-else>
+        <span class="text-sm ml-0.5">
+          再生したい動画をクリックしてからYouTubeの文字をクリックすると、アプリもしくはWEBブラウザに移動します。
+        </span>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-1 mb-4">
           <div
             v-for="youtubeVideo in design.youtubeVideos"
