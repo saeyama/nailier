@@ -188,9 +188,16 @@ export default {
       window.location.href = `/designs/${this.design.id}/edit`
     },
     deleteDesign() {
-      axios
-        .delete(`/api/designs/${this.design.id}`, {})
-        .then(() => (window.location.href = '/designs'))
+      const resultOfDesignDelete = confirm(
+        'この操作は取り消すことはできません。\r\n本当に削除しますか？'
+      )
+      if (resultOfDesignDelete) {
+        axios
+          .delete(`/api/designs/${this.design.id}`, {})
+          .then(() => (window.location.href = '/designs'))
+      } else {
+        return
+      }
     },
     indexDesign() {
       window.location.href = `/designs`

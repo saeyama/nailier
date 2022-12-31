@@ -157,9 +157,16 @@ export default {
       window.location.href = `/designs/${id}/edit`
     },
     deleteDesign(id) {
-      axios
-        .delete(`/api/designs/${id}`, {})
-        .then(() => (window.location.href = '/designs'))
+      const resultOfDesignDelete = confirm(
+        'この操作は取り消すことはできません。\r\n本当に削除しますか？'
+      )
+      if (resultOfDesignDelete) {
+        axios
+          .delete(`/api/designs/${id}`, {})
+          .then(() => (window.location.href = '/designs'))
+      } else {
+        return
+      }
     },
     switchToHandDesigns() {
       this.showhandDesigns = true
