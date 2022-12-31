@@ -1,71 +1,86 @@
 <template>
   <div class="text-gray-600 py-10 mx-auto">
     <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
-    <div
-      class="flex justify-around gap-2 md:gap-4 mb-10 max-w-xl mx-2 sm:mx-auto">
-      <button
-        :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
-        @click="switchToHandDesigns"
-        class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
-        ハンド
+    <div v-if="design === undefined" class="text-center">
+      登録されておりません。
+      <button class="main-action-btn mt-10 mb-6" @click="newDesign">
+        ネイルデザインを登録
       </button>
-      <button
-        :class="!showfootDesigns ? 'switch-nail-part-button' : ''"
-        @click="switchToFootDesigns"
-        class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
-        フット
-      </button>
+      <button class="sub-action-btn" @click="inquiry">お問い合わせ</button>
     </div>
-    <select
-      v-model="selectedTag"
-      class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 duration-200 ease-in-out">
-      <option value="" selected>タグで絞り込む</option>
-      <option v-for="tag in nailPartTags" :key="tag">
-        {{ tag }}
-      </option>
-    </select>
-    <div class="md:grid md:grid-cols-3 max-w-3xl mx-auto">
+    <div v-else>
       <div
-        class="m-4 p-2 shadow-xl max-w-xs mx-auto"
-        v-for="design in selectedNailPartDesigns"
-        :key="design.id">
-        <h2 class="text-lg font-bold">{{ design.title }}</h2>
-        <div class="flex gap-2 justify-center items-center md:block mb-1">
-          <div v-if="!design.image" class="flex-1">
-            <div
-              class="h-40 w-full md:h-48 md:w-56 text-lg leading-[10rem] md:leading-[12rem] bg-slate-200 drop-shadow-lg text-white text-center mx-auto md:text-2xl">
-              no image
+        class="flex justify-around gap-2 md:gap-4 mb-10 max-w-xl mx-2 sm:mx-auto">
+        <button
+          :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
+          @click="switchToHandDesigns"
+          class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+          ハンド
+        </button>
+        <button
+          :class="!showfootDesigns ? 'switch-nail-part-button' : ''"
+          @click="switchToFootDesigns"
+          class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+          フット
+        </button>
+      </div>
+      <select
+        v-model="selectedTag"
+        class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 duration-200 ease-in-out">
+        <option value="" selected>タグで絞り込む</option>
+        <option v-for="tag in nailPartTags" :key="tag">
+          {{ tag }}
+        </option>
+      </select>
+      <div v-if="nailPartDesigns.length === 0" class="text-center mt-10">
+        登録されておりません。
+        <button class="main-action-btn mt-10" @click="newDesign">
+          ネイルデザインを登録
+        </button>
+      </div>
+      <div class="md:grid md:grid-cols-3 max-w-3xl mx-auto">
+        <div
+          class="m-4 p-2 shadow-xl max-w-xs mx-auto"
+          v-for="design in selectedNailPartDesigns"
+          :key="design.id">
+          <h2 class="text-lg font-bold">{{ design.title }}</h2>
+          <div class="flex gap-2 justify-center items-center md:block mb-1">
+            <div v-if="!design.image" class="flex-1">
+              <div
+                class="h-40 w-full md:h-48 md:w-56 text-lg leading-[10rem] md:leading-[12rem] bg-slate-200 drop-shadow-lg text-white text-center mx-auto md:text-2xl">
+                no image
+              </div>
+            </div>
+            <div v-else class="flex-1">
+              <img
+                class="h-40 w-full md:h-48 md:w-56 drop-shadow-lg object-cover"
+                :src="design.image" />
+            </div>
+            <div class="md:flex md:justify-between md:my-2 md:gap-1 md:mt-4">
+              <button
+                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
+                @click="showDesign(design.id)">
+                詳細
+              </button>
+              <button
+                class="block px-8 my-2 md:my-0 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
+                @click="editDesign(design.id)">
+                編集
+              </button>
+              <button
+                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
+                @click="deleteDesign(design.id)">
+                削除
+              </button>
             </div>
           </div>
-          <div v-else class="flex-1">
-            <img
-              class="h-40 w-full md:h-48 md:w-56 drop-shadow-lg object-cover"
-              :src="design.image" />
+          <div>
+            {{ design.createdAt }}&ensp;登録<br />
+            {{ design.updatedAt }}&ensp;更新
           </div>
-          <div class="md:flex md:justify-between md:my-2 md:gap-1 md:mt-4">
-            <button
-              class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
-              @click="showDesign(design.id)">
-              詳細
-            </button>
-            <button
-              class="block px-8 my-2 md:my-0 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
-              @click="editDesign(design.id)">
-              編集
-            </button>
-            <button
-              class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 shadow-md py-2 hover:bg-gray-800 hover:text-white rounded-full md:py-1"
-              @click="deleteDesign(design.id)">
-              削除
-            </button>
+          <div v-for="tag in design.tags" :key="tag">
+            <div class="hidden">{{ tag }}</div>
           </div>
-        </div>
-        <div>
-          {{ design.createdAt }}&ensp;登録<br />
-          {{ design.updatedAt }}&ensp;更新
-        </div>
-        <div v-for="tag in design.tags" :key="tag">
-          <div class="hidden">{{ tag }}</div>
         </div>
       </div>
     </div>
@@ -77,6 +92,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      design: '',
       handDesigns: [],
       footDesigns: [],
       selectedTag: '',
@@ -86,6 +102,9 @@ export default {
     }
   },
   computed: {
+    nailPartDesigns() {
+      return this.showhandDesigns === true ? this.handDesigns : this.footDesigns
+    },
     nailPartTags() {
       return this.showhandDesigns === true
         ? this.uniqueTags(this.handDesigns)
@@ -101,15 +120,22 @@ export default {
           })
     }
   },
+  watch: {
+    design: function () {
+      if (this.design !== undefined) {
+        this.design.nailPart === 'ハンド'
+          ? (this.showhandDesigns = true)
+          : (this.showfootDesigns = true)
+      }
+    }
+  },
   mounted() {
     this.getDesigns()
   },
   methods: {
     getDesigns() {
       axios.get(`/api/designs`).then((response) => {
-        response.data.designs[0].nailPart === 'ハンド'
-          ? (this.showhandDesigns = true)
-          : (this.showfootDesigns = true),
+        ;(this.design = response.data.designs[0]),
           (this.handDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'ハンド'
           )),
@@ -117,6 +143,12 @@ export default {
             (design) => design.nailPart === 'フット'
           ))
       })
+    },
+    newDesign() {
+      window.location.href = `/designs/new`
+    },
+    inquiry() {
+      window.location.href = `/inquiries/new`
     },
     showDesign(id) {
       window.location.href = `/designs/${id}`
