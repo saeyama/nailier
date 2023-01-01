@@ -1,13 +1,15 @@
 .text-gray-600.py-10.w-11/12.mx-auto.text-center
   h2.text-2xl.py-8.md:py-10
     | 退会手続完了
-  p
-    | ご利用ありがとうございました。
+  p.leading-6.text-sm
+    | ご利用いただきありがとうございました。
     br
-    | 説明説明説明説明説明説明
+    | 再度、ご利用いただく場合はアカウント登録が必要となります。
     br
-    | 説明説明説明説明説明説明
-    br
-    | 説明説明説明説明説明説明
+    | また機会がございましたら、よろしくお願い申し上げます。
   = link_to 'ＴＯＰへ戻る', root_path, class: 'main-action-btn mt-8 mb-2'
-  = link_to 'お問い合わせ', new_inquiry_path, class: 'delete-btn'
+  p.leading-6.text-sm.my-4
+    | ご意見・ご要望はお問い合わせから
+    br
+    | ご連絡をお願いいたします。
+  = link_to 'お問い合わせ', new_inquiry_path, class: 'sub-action-btn'
