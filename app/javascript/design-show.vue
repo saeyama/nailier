@@ -103,9 +103,9 @@
         登録されているメモはありません。
       </div>
       <div v-else>
-        <div class="mb-4 text-sm border border-gray-300 px-2 py-1 rounded">
-          {{ design.description }}
-        </div>
+        <div
+          v-text="design.description"
+          class="whitespace-pre-wrap mb-4 text-sm border border-gray-300 px-2 py-1 rounded"></div>
       </div>
       <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
         <div
