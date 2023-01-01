@@ -378,9 +378,7 @@ export default {
     },
     uploadFiles(e) {
       const files = e.target.files
-      if (files === 0) {
-        return
-      }
+      if (files === 0) return
       for (const file of files) {
         const fileReader = new FileReader()
         fileReader.readAsDataURL(file)
@@ -390,11 +388,15 @@ export default {
             fileReader.result.startsWith('data:image/jpg') ||
             fileReader.result.startsWith('data:image/png')
           ) {
-            this.design.images.push({
-              id: '',
-              url: fileReader.result,
-              _destroy: '0'
-            })
+            if (file.size > 5000000)
+              alert('5MGを超えた画像はアップロードできません。')
+            if (file.size <= 5000000) {
+              this.design.images.push({
+                id: '',
+                url: fileReader.result,
+                _destroy: '0'
+              })
+            }
           } else {
             alert('jpeg・jpg・png 以外は登録できません。')
           }
