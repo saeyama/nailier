@@ -1,12 +1,12 @@
 = javascript_pack_tag 'top'
 .text-gray-600.py-10.text-center.mx-2
   .relative.aspect-square.w-1/2.sm:w-1/4.mx-auto
-    = image_tag 'drawing.svg', class: 'w-full h-full absolute left-0 right-0 m-auto drop-shadow-md fade-up'
-    = image_tag 'brush.svg', class: 'w-full h-full absolute top-11 left-0 -right-16 m-auto drop-shadow-md fade-in'
+    = image_tag 'drawing.svg', class: 'w-full h-full absolute left-0 right-0 m-auto drop-shadow-md fade-up', alt: 'ネイルアートの絵画'
+    = image_tag 'brush.svg', class: 'w-full h-full absolute top-11 left-0 -right-16 m-auto drop-shadow-md fade-in', alt: '筆'
   h2
     span.block.text-sm.sm:text-base.mt-8.mb-4.fade-up
       | ネイリストのためのデザインノート
-    = image_tag 'app-name.svg', class: 'block mx-auto w-32 sm:w-36 mb-1 fade-up'
+    = image_tag 'app-name.svg', class: 'block mx-auto w-32 sm:w-36 mb-1 fade-up', alt: 'Nailier'
     span.block.text-sm.mb-4.fade-up
       | ネイリエ
   = link_to '試しに使ってみる', new_user_registration_path, class: 'main-action-btn'
@@ -16,7 +16,7 @@
     | 情報をまとめられたら
     br.sm:hidden
     | 楽だと思いませんか？
-  = image_tag 'collect_info.svg', class: 'block mx-auto my-8 sm:my-20 sm:w-5/12 drop-shadow-md scroll-fade-in'
+  = image_tag 'collect_info.svg', class: 'block mx-auto my-8 sm:my-20 sm:w-5/12 drop-shadow-md scroll-fade-in', alt: 'ネイルデザインの複数の情報'
   p.text-sm.leading-6.sm:text-base.sm:leading-8
     | いつもバラバラに管理している
     br
@@ -25,23 +25,23 @@
     | 調べた内容・アイデアを
     span.block.text-xl.underline.decoration-dotted.mt-8.sm:mt-20.scroll-fade-in
       | Nailierで一つに
-  = image_tag 'summarize-info.svg', class: 'block mx-auto mt-6 mb-8 sm:mt-8 sm:mb-20 w-full sm:w-5/12 drop-shadow-md scroll-fade-in'
+  = image_tag 'summarize-info.svg', class: 'block mx-auto mt-6 mb-8 sm:mt-8 sm:mb-20 w-full sm:w-5/12 drop-shadow-md scroll-fade-in', alt: 'ネイルデザインの情報をまとめる'
     | 画像・YouTube動画・使用するパーツ内容・調べた内容の保存が出来ます。
   h3.text-lg
     | こんなこともできる
   .text-sm.sm:flex.sm:justify-center.sm:items-center.sm:gap-8.mt-8.sm:mt-20
     .scroll-fade-in
       | 画像を自由に入替
-      = image_tag 'image-shuffle.gif', class: 'block w-48 mx-auto shadow-md mt-4 mb-8 sm:mb-0'
+      = image_tag 'image-shuffle.gif', class: 'block w-48 mx-auto shadow-md mt-4 mb-8 sm:mb-0', alt: '画像の並び替え機能'
     .scroll-fade-in
       | カラーイメージの登録
-      = image_tag 'color-registration.gif', class: 'block w-48 mx-auto shadow-md mt-4 mb-8 sm:mb-0'
+      = image_tag 'color-registration.gif', class: 'block w-48 mx-auto shadow-md mt-4 mb-8 sm:mb-0', alt: 'カラーイメージ登録機能'
     .scroll-fade-in
       | 簡単検索でデータ管理しやすい
-      = image_tag 'search.gif', class: 'block w-48 mx-auto drop-shadow-md mt-4 mb-4 sm:mb-0'
+      = image_tag 'search.gif', class: 'block w-48 mx-auto drop-shadow-md mt-4 mb-4 sm:mb-0', alt: 'タグ検索機能'
   h3.text-lg.my-8.sm:my-20
     | 検定用としても使える
-  = image_tag 'exam.svg', class: 'block w-28 sm:w-36 mx-auto drop-shadow-md mb-8 scroll-fade-in'
+  = image_tag 'exam.svg', class: 'block w-28 sm:w-36 mx-auto drop-shadow-md mb-8 scroll-fade-in', alt: '検定対策'
   .text-sm.leading-6.sm:text-base.sm:leading-8
     | 講習で撮った画像や動画・利用する
     br.sm:hidden

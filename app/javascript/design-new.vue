@@ -41,9 +41,9 @@
         <div
           v-if="design.images.length > 0 || design.imageToDelete.length > 0"
           class="text-sm mt-6 flex gap-0.5 items-center">
-          <img src="~plus.svg" class="w-4 h-4" />
-          <img src="~minus.svg" class="w-4 h-4" />
-          で登録したい画像を選択できます。
+          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+          で登録する画像を選択できます。
         </div>
         <div
           v-if="design.images.length > 0"
@@ -70,11 +70,14 @@
             class="item relative mb-4 md:mb-8"
             v-for="image in design.images"
             :key="image">
-            <img :src="image" class="z-0 aspect-[4/3] w-full object-cover" />
+            <img
+              :src="image"
+              alt="登録画像"
+              class="z-0 aspect-[4/3] w-full object-cover" />
             <div
               @click="deleteImage(image)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5" />
+              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </draggable>
@@ -87,11 +90,12 @@
               :key="image">
               <img
                 :src="image"
+                alt="削除画像"
                 class="z-0 aspect-[4/3] w-full object-cover opacity-60" />
               <div
                 @click="saveImage(image)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5" />
+                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -110,9 +114,9 @@
           design.youtubeVideoToDelete.length > 0
         "
         class="text-sm mt-2 mb-6 ml-2 flex gap-0.5 items-center">
-        <img src="~plus.svg" class="w-4 h-4" />
-        <img src="~minus.svg" class="w-4 h-4" />
-        で登録したい画像を選択できます。
+        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+        で登録する動画を選択できます。
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
@@ -128,7 +132,7 @@
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
             class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <img src="~minus.svg" class="w-5 h-5" />
+            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -150,7 +154,7 @@
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~plus.svg" class="w-5 h-5" />
+              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -161,9 +165,9 @@
       <div
         v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
         class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">
-        <img src="~plus.svg" class="w-4 h-4" />
-        <img src="~minus.svg" class="w-4 h-4" />
-        で登録したい画像を選択できます。
+        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+        で登録するカラーを選択できます。
       </div>
       <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
         <div
@@ -174,13 +178,14 @@
           <div v-if="color.lame == true" class="relative">
             <img
               src="~lame.png"
+              alt="ラメ"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
           <div v-else-if="color.lame == false"></div>
           <div
             @click="deleteColor(color)"
             class="ml-6 -mt-2 cursor-pointer absolute z-20">
-            <img src="~minus.svg" class="w-5 h-5" />
+            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -195,13 +200,14 @@
             <div v-if="color.lame === true" class="relative">
               <img
                 src="~lame.png"
+                alt="ラメ"
                 class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
             </div>
             <div v-else-if="color.lame === false"></div>
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
-              <img src="~plus.svg" class="w-5 h-5" />
+              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -236,7 +242,7 @@
               class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <img src="~minus.svg" class="w-5 h-5" />
+            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -264,7 +270,7 @@
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">
-              <img src="~minus.svg" class="w-5 h-5" />
+              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </div>
