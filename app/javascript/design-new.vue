@@ -3,7 +3,7 @@
     <h2 class="text-2xl text-center py-10">ネイルデザインを登録</h2>
     <div class="w-11/12 mx-auto">
       <div class="p-2">
-        <lable class="text-lg">タイトル</lable>
+        <lable class="text-lg">タイトル&nbsp;&#40;入力必須&#41;</lable>
         <input
           class="form-field"
           type="text"
@@ -40,13 +40,27 @@
           class="text-sm w-64 md:text-lg md:w-full" />
         <div
           v-if="design.images.length > 0 || design.imageToDelete.length > 0"
-          class="text-sm mt-6">
-          &plus;&minus;ボタンで登録したい画像を選択できます。
+          class="text-sm mt-6 flex gap-0.5 items-center">
+          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+          で登録する画像を選択できます。
         </div>
-        <div v-if="design.images.length > 0" class="text-sm mb-8">
-          複数枚登録する場合はドラッグ&amp;ドロップで並び替え可能です。<br />
-          8枚を超えて登録された場合は末尾から順に削除されます。<br />
-          5MG以上の画像を登録された場合は自動的に弾かれます。
+        <div
+          v-if="design.images.length > 0"
+          class="text-sm mb-8 mt-1 leading-6">
+          ドラッグ&amp;ドロップで並び替え可能です。<br />
+          <span class="underline decoration-dotted underline-offset-2"
+            >5MG以上の画像は自動的に弾かれます。</span
+          ><br />
+          <span class="inline-block mt-2"
+            >アップロード数は現在&nbsp;<span class="text-xl">{{
+              design.images.length
+            }}</span
+            >&nbsp;枚です。</span
+          ><br />
+          <span class="underline underline-offset-2"
+            >8枚を超えた画像は登録されません。</span
+          ><br />
         </div>
         <draggable
           v-model="design.images"
@@ -56,11 +70,14 @@
             class="item relative mb-4 md:mb-8"
             v-for="image in design.images"
             :key="image">
-            <img :src="image" class="z-0 aspect-[4/3] w-full object-cover" />
+            <img
+              :src="image"
+              alt="登録画像"
+              class="z-0 aspect-[4/3] w-full object-cover" />
             <div
               @click="deleteImage(image)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" class="w-5 h-5" />
+              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </draggable>
@@ -73,11 +90,12 @@
               :key="image">
               <img
                 :src="image"
+                alt="削除画像"
                 class="z-0 aspect-[4/3] w-full object-cover opacity-60" />
               <div
                 @click="saveImage(image)"
                 class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" class="w-5 h-5" />
+                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -87,7 +105,7 @@
         <child-text-input
           placeholder="youtubeのURL"
           @update-value="updateYoutubeVideo">
-          <template v-slot:label>youtube動画</template>
+          <template v-slot:label>YouTube動画</template>
         </child-text-input>
       </div>
       <div
@@ -95,8 +113,10 @@
           design.youtubeVideos.length > 0 ||
           design.youtubeVideoToDelete.length > 0
         "
-        class="text-sm mt-2 mb-6 ml-2">
-        &plus;&minus;ボタンで登録したい画像を選択できます。
+        class="text-sm mt-2 mb-6 ml-2 flex gap-0.5 items-center">
+        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+        で登録する動画を選択できます。
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
@@ -112,7 +132,7 @@
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
             class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <img src="~minus.svg" class="w-5 h-5" />
+            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -134,7 +154,7 @@
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~plus.svg" class="w-5 h-5" />
+              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -144,8 +164,10 @@
       <color-input @update-color="updateColor"></color-input>
       <div
         v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
-        class="text-sm my-4 mx-2">
-        &plus;&minus;ボタンで登録したいカラーを選択できます。
+        class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">
+        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+        で登録するカラーを選択できます。
       </div>
       <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
         <div
@@ -156,13 +178,14 @@
           <div v-if="color.lame == true" class="relative">
             <img
               src="~lame.png"
+              alt="ラメ"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
           <div v-else-if="color.lame == false"></div>
           <div
             @click="deleteColor(color)"
             class="ml-6 -mt-2 cursor-pointer absolute z-20">
-            <img src="~minus.svg" class="w-5 h-5" />
+            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -177,13 +200,14 @@
             <div v-if="color.lame === true" class="relative">
               <img
                 src="~lame.png"
+                alt="ラメ"
                 class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
             </div>
             <div v-else-if="color.lame === false"></div>
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
-              <img src="~plus.svg" class="w-5 h-5" />
+              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -218,7 +242,7 @@
               class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
           </div>
           <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <img src="~minus.svg" class="w-5 h-5" />
+            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -246,7 +270,7 @@
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">
-              <img src="~minus.svg" class="w-5 h-5" />
+              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -283,7 +307,7 @@ export default {
       design: {
         title: '',
         description: '',
-        nailPart: '',
+        nailPart: 'ハンド',
         images: [],
         imageToDelete: [],
         youtubeVideos: [],
@@ -292,12 +316,6 @@ export default {
         colorToDelete: [],
         parts: [],
         tags: []
-      },
-      color: {
-        lame: '',
-        pickerHexNumber: '#FF7003',
-        paletteHexNumber: '',
-        hexNumberHex8: ''
       }
     }
   },
@@ -316,9 +334,7 @@ export default {
   methods: {
     uploadFiles(e) {
       const files = e.target.files
-      if (files === 0) {
-        return
-      }
+      if (files === 0) return
       for (const file of files) {
         const fileReader = new FileReader()
         fileReader.readAsDataURL(file)
@@ -328,7 +344,9 @@ export default {
             fileReader.result.startsWith('data:image/jpg') ||
             fileReader.result.startsWith('data:image/png')
           ) {
-            this.design.images.push(fileReader.result)
+            if (file.size > 5000000)
+              alert('5MGを超えた画像はアップロードできません。')
+            if (file.size <= 5000000) this.design.images.push(fileReader.result)
           } else {
             alert('jpeg・jpg・png 以外は登録できません。')
           }
@@ -410,6 +428,10 @@ export default {
       this.design.tags.splice(index, 1)
     },
     createDesign() {
+      if (!this.design.title) {
+        alert('タイトルは登録必須です。')
+        return
+      }
       const formData = new FormData()
 
       const params = {

@@ -53,8 +53,9 @@
             </div>
             <div v-else class="flex-1">
               <img
-                class="h-40 w-full md:h-48 md:w-56 drop-shadow-lg object-cover"
-                :src="design.image" />
+                :src="design.image"
+                alt="サムネイル画像"
+                class="h-40 w-full md:h-48 md:w-56 drop-shadow-lg object-cover" />
             </div>
             <div class="md:flex md:justify-between md:my-2 md:gap-1 md:mt-4">
               <button
@@ -157,9 +158,16 @@ export default {
       window.location.href = `/designs/${id}/edit`
     },
     deleteDesign(id) {
-      axios
-        .delete(`/api/designs/${id}`, {})
-        .then(() => (window.location.href = '/designs'))
+      const resultOfDesignDelete = confirm(
+        'この操作は取り消すことはできません。\r\n本当に削除しますか？'
+      )
+      if (resultOfDesignDelete) {
+        axios
+          .delete(`/api/designs/${id}`, {})
+          .then(() => (window.location.href = '/designs'))
+      } else {
+        return
+      }
     },
     switchToHandDesigns() {
       this.showhandDesigns = true

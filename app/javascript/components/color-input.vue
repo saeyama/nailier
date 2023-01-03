@@ -32,6 +32,7 @@
         <div class="relative h-64">
           <img
             src="~color-picker-lame.png"
+            alt="ラメ"
             v-if="colorLameStyle"
             class="absolute z-10 top-0 left-1/2 -translate-x-1/2 pointer-events-none" />
           <chrome-picker
@@ -51,6 +52,7 @@
               class="w-8 h-8 rounded-full cursor-pointer shadow-md">
               <img
                 src="~lame.png"
+                alt="ラメ"
                 v-if="colorLameStyle"
                 class="absolute z-10 w-8 h-8 rounded-full opacity-80 pointer-events-none" />
               <input
@@ -83,7 +85,7 @@ export default {
   data() {
     return {
       color: {
-        lame: '',
+        lame: 'false',
         pickerHexNumber: '#FF7003',
         paletteHexNumber: '',
         hexNumberHex8: ''

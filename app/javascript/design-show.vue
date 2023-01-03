@@ -19,7 +19,10 @@
             v-for="(image, index) in design.images"
             :key="index"
             @click="showImages(index)">
-            <img :src="image" class="mt-2 aspect-[4/3] w-full object-cover" />
+            <img
+              :src="image"
+              alt="登録画像"
+              class="mt-2 aspect-[4/3] w-full object-cover" />
           </div>
         </div>
         <vue-easy-lightbox
@@ -29,11 +32,14 @@
           @hide="hideImagsShowHandle">
         </vue-easy-lightbox>
       </div>
-      <h3 class="text-lg mb-2">youtube動画</h3>
+      <h3 class="text-lg mb-2">YouTube動画</h3>
       <div class="text-sm ml-0.5 mb-6" v-if="design.youtubeVideos.length === 0">
-        登録されているyoutube動画はありません。
+        登録されているYouTube動画はありません。
       </div>
       <div v-else>
+        <span class="text-sm ml-0.5">
+          再生したい動画をクリックしてからYouTubeの文字をクリックすると、アプリもしくはWEBブラウザに移動します。
+        </span>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-1 mb-4">
           <div
             v-for="youtubeVideo in design.youtubeVideos"
@@ -62,6 +68,7 @@
             <div v-if="color.lame === true" class="relative">
               <img
                 src="~lame.png"
+                alt="ラメ"
                 class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
             </div>
             <div v-else-if="color.lame === false"></div>
@@ -100,9 +107,9 @@
         登録されているメモはありません。
       </div>
       <div v-else>
-        <div class="mb-4 text-sm border border-gray-300 px-2 py-1 rounded">
-          {{ design.description }}
-        </div>
+        <div
+          v-text="design.description"
+          class="whitespace-pre-wrap mb-4 text-sm border border-gray-300 px-2 py-1 rounded"></div>
       </div>
       <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
         <div
@@ -188,9 +195,16 @@ export default {
       window.location.href = `/designs/${this.design.id}/edit`
     },
     deleteDesign() {
-      axios
-        .delete(`/api/designs/${this.design.id}`, {})
-        .then(() => (window.location.href = '/designs'))
+      const resultOfDesignDelete = confirm(
+        'この操作は取り消すことはできません。\r\n本当に削除しますか？'
+      )
+      if (resultOfDesignDelete) {
+        axios
+          .delete(`/api/designs/${this.design.id}`, {})
+          .then(() => (window.location.href = '/designs'))
+      } else {
+        return
+      }
     },
     indexDesign() {
       window.location.href = `/designs`
