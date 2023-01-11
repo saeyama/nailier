@@ -159,7 +159,7 @@ export default {
     },
     deleteDesign(id) {
       const resultOfDesignDelete = confirm(
-        'この操作は取り消すことはできません。\r\n本当に削除しますか？'
+        'この操作は取り消すことはできません。本当に削除しますか？'
       )
       if (resultOfDesignDelete) {
         axios

@@ -18,12 +18,14 @@
           type="radio"
           name="nail_part"
           value="ハンド"
+          id="hand"
           v-model="design.nailPart" />&emsp; <label>フット</label>&nbsp;
         <input
           class="w-4 h-4"
           type="radio"
           name="nail_part"
           value="フット"
+          id="foot"
           v-model="design.nailPart" />
       </div>
       <div class="p-2 w-full text-lg">
