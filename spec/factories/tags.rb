@@ -2,5 +2,10 @@
 
 FactoryBot.define do
   factory :tag do
+    name { 'ワンカラーのタグ' }
+
+    trait :add_tag do
+      name { 'グラデーションのタグ' }
+    end
   end
 end

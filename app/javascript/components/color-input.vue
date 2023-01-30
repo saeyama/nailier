@@ -1,17 +1,36 @@
 <template>
-  <div>
+  <div class="colors-input">
     <h3 class="p-2 text-lg">
       カラーイメージを登録する
-      <input type="checkbox" @click="showColorContent" />
+      <input
+        type="checkbox"
+        id="show-color-content"
+        @click="showColorContent" />
     </h3>
     <div
       class="mb-4 w-full border border-gray-300 rounded"
       v-show="colorContent">
       <div class="my-4 md:mb-8 pl-2 md:pl-4">
-        <lable>ラメ</lable>&emsp; なし&nbsp;
-        <input type="radio" v-model="color.lame" :value="false" />&emsp;
-        あり&nbsp;
-        <input type="radio" v-model="color.lame" :value="true" />
+        ラメ&emsp;
+        <lable
+          >なし&nbsp;
+          <input
+            type="radio"
+            v-model="color.lame"
+            name="design[colors_attributes][][lame]"
+            :value="false"
+            id="false" />
+        </lable>
+        &emsp;
+        <lable
+          >あり&nbsp;
+          <input
+            type="radio"
+            v-model="color.lame"
+            name="design[colors_attributes][][lame]"
+            :value="true"
+            id="true" />
+        </lable>
       </div>
       <div
         class="flex justify-around gap-2 md:gap-4 mb-6 md:mb-10 max-w-xl mx-2 sm:mx-auto">
@@ -38,17 +57,20 @@
           <chrome-picker
             class="absolute z-0 top-0 left-1/2 -translate-x-1/2"
             :value="color.pickerHexNumber"
+            name="design[colors_attributes][][hex_number]"
             v-model="color.pickerHexNumber">
           </chrome-picker>
         </div>
       </div>
       <div v-show="showColorPalette">
         <div class="relative">
-          <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
+          <ul
+            class="color-hexnumber grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
             <li
               v-for="(hexNumber, index) in colorPaletteHexNumbers"
               :key="index"
               :style="colorShowHexNumber(hexNumber)"
+              name="design[colors_attributes][][hex_number]"
               class="w-8 h-8 rounded-full cursor-pointer shadow-md">
               <img
                 src="~lame.png"

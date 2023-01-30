@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="parts-input">
     <h3 class="p-2 text-lg mb-2">
       パーツ内容を登録する
-      <input type="checkbox" @click="showPartContent" />
+      <input type="checkbox" id="show-part-content" @click="showPartContent" />
     </h3>
     <div
       class="p-2 md:p-4 mb-4 w-full md:px-8 border border-gray-300 rounded"
@@ -10,7 +10,8 @@
       <input
         class="form-field"
         type="text"
-        name="name"
+        name="design[parts_attributes][][name]"
+        id="design-part-name"
         placeholder="パーツ名は登録必須です。"
         v-model="part.name" />
       <div class="my-4 px-2">
@@ -25,7 +26,8 @@
       <input
         class="form-field"
         type="text"
-        name="size"
+        name="design[parts_attributes][][size]"
+        id="design-part-size"
         placeholder="大きさを入力してください。"
         v-model="part.size" />
       <div class="my-4 px-2">
@@ -43,10 +45,10 @@
         <input
           class="form-field w-20"
           type="number"
-          min="0"
+          name="design[parts_attributes][][quantity]"
+          id="design-part-quantity"
+          min="1"
           onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
-          name="quantity"
-          placeholder="0"
           v-model="part.quantity" />
       </div>
 
@@ -59,7 +61,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          class="show-part-color-content w-6 h-6"
           :class="{ 'rotate-to-open': partColorContent }"
           @click="showPartColorContent">
           <path
@@ -71,7 +73,8 @@
       <div
         class="rounded-b-lg border border-gray-300 py-6"
         v-show="partColorContent">
-        <ul class="grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
+        <ul
+          class="part-hexnumber grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
           <li
             v-for="(hexNumber, index) in colorPaletteHexNumbers"
             :key="index"
@@ -81,6 +84,7 @@
               type="radio"
               v-model="part.hexNumber"
               :value="hexNumber"
+              name="design[parts_attributes][][hex_number]"
               class="checkbox-btn" />
           </li>
         </ul>

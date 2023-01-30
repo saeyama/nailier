@@ -55,7 +55,7 @@ RSpec.describe 'Users', type: :system do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       click_button 'ログイン'
-      expect(page).to have_content('ネイルデザインリスト')
+      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
       expect(current_path).to eq designs_path
     end
 
@@ -78,13 +78,23 @@ RSpec.describe 'Users', type: :system do
       click_button 'ログイン'
     end
 
-    it 'ログインをしていれば編集できる' do
+    it 'ログインをしていればアカウント情報を編集できる' do
       visit edit_user_registration_path
       fill_in 'メールアドレス', with: 'bob@example.com'
       fill_in '現在のパスワード', with: user.password
       click_button 'アカウントを更新'
       expect(page).to have_content('アカウント情報')
       expect(current_path).to eq users_path
+    end
+
+    it 'ログインをしていればアカウント情報を削除できる' do
+      visit users_path
+      click_link 'アカウントを削除'
+      expect(page).to have_content('退会のお手続き')
+      click_link '退会する'
+      expect(page.accept_confirm).to eq '本当によろしいですか？'
+      expect(page).to have_content('退会手続完了')
+      expect(current_path).to eq users_withdrawal_path
     end
   end
 end

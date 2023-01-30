@@ -6,6 +6,8 @@
         class="form-field my-auto"
         type="text"
         :placeholder="placeholder"
+        :name="name"
+        :id="id"
         v-model="value"
         @input="inputValue" />
       <button
@@ -21,7 +23,9 @@
 export default {
   name: 'ChildTextInput',
   props: {
-    placeholder: { type: String, required: false }
+    placeholder: { type: String, required: false },
+    name: { type: String, required: false },
+    id: { type: String, required: false }
   },
   data() {
     return {
