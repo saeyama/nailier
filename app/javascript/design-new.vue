@@ -7,24 +7,32 @@
         <input
           class="form-field"
           type="text"
-          name="title"
+          name="design[title]"
+          id="design-title"
           placeholder="入力してください"
           v-model="design.title" />
       </div>
       <div class="p-2 w-full text-lg">
-        <label>ハンド</label>&nbsp;
-        <input
-          class="w-4 h-4"
-          type="radio"
-          name="nail_part"
-          value="ハンド"
-          v-model="design.nailPart" />&emsp; <label>フット</label>&nbsp;
-        <input
-          class="w-4 h-4"
-          type="radio"
-          name="nail_part"
-          value="フット"
-          v-model="design.nailPart" />
+        <label
+          >ハンド&nbsp;
+          <input
+            class="w-4 h-4"
+            type="radio"
+            name="design[nail_part]"
+            value="ハンド"
+            id="hand"
+            v-model="design.nailPart" /> </label
+        >&emsp;
+        <label
+          >フット&nbsp;
+          <input
+            class="w-4 h-4"
+            type="radio"
+            name="design[nail_part]"
+            value="フット"
+            id="foot"
+            v-model="design.nailPart" />
+        </label>
       </div>
       <div class="p-2 w-full text-lg">
         <lable class="block mb-2">
@@ -33,7 +41,8 @@
         </lable>
         <input
           type="file"
-          name="image"
+          name="design[images]"
+          id="design-image"
           multiple="multiple"
           accept="image/*"
           @change="uploadFiles"
@@ -65,7 +74,7 @@
         <draggable
           v-model="design.images"
           draggable=".item"
-          class="grid grid-cols-3 md:grid-cols-4 gap-3">
+          class="files grid grid-cols-3 md:grid-cols-4 gap-3">
           <div
             class="item relative mb-4 md:mb-8"
             v-for="image in design.images"
@@ -101,9 +110,11 @@
           </div>
         </div>
       </div>
-      <div class="p-2">
+      <div class="p-2 youtube-input">
         <child-text-input
           placeholder="youtubeのURL"
+          name="design[youtube_videos_attributes][][access_code]"
+          id="design-youtube"
           @update-value="updateYoutubeVideo">
           <template v-slot:label>YouTube動画</template>
         </child-text-input>
@@ -251,13 +262,16 @@
         <textarea
           class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
           placeholder="入力してください"
-          name="description"
+          name="design[description]"
+          id="design-description"
           v-model="design.description">
         </textarea>
       </div>
-      <div class="p-2 mb-8">
+      <div class="p-2 mb-8 tags-input">
         <child-text-input
           placeholder="入力してください"
+          name="design[tags_attributes][][name]"
+          id="design-tag"
           @update-value="updateTag">
           <template v-slot:label>タグ</template>
         </child-text-input>

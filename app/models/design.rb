@@ -18,7 +18,8 @@ class Design < ApplicationRecord
 
   validates :title, presence: true
   validates :nail_part, presence: true
-  validates :images, content_type: ['image/jpeg', 'image/jpg', 'image/png'], size: { between: 1.kilobyte..5.megabytes }, if: -> { images.attached? }
+  validates :images, attached: true, content_type: ['image/jpeg', 'image/jpg', 'image/png'], if: -> { images.attached? }
+  validates :images, attached: true, size: { between: 1.kilobyte..5.megabytes }, if: -> { images.attached? }
   validates :images, limit: { min: 0, max: 8 }
 
   def attach_blob(image_data_urls)

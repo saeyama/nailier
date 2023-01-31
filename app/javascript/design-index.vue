@@ -1,6 +1,6 @@
 <template>
   <div class="text-gray-600 py-10 mx-auto">
-    <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
+    <h2 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h2>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
       <button class="main-action-btn mt-10 mb-6" @click="newDesign">
@@ -26,7 +26,8 @@
       </div>
       <select
         v-model="selectedTag"
-        class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 duration-200 ease-in-out">
+        class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 duration-200 ease-in-out"
+        id="design-tags">
         <option value="" selected>タグで絞り込む</option>
         <option v-for="tag in nailPartTags" :key="tag">
           {{ tag }}
@@ -38,9 +39,9 @@
           ネイルデザインを登録
         </button>
       </div>
-      <div class="md:grid md:grid-cols-3 max-w-3xl mx-auto">
+      <div class="design md:grid md:grid-cols-3 max-w-3xl mx-auto">
         <div
-          class="m-4 p-2 shadow-xl max-w-xs mx-auto"
+          class="nailpart-design m-4 p-2 shadow-xl max-w-xs mx-auto"
           v-for="design in selectedNailPartDesigns"
           :key="design.id">
           <h2 class="text-lg font-bold">{{ design.title }}</h2>
@@ -159,7 +160,7 @@ export default {
     },
     deleteDesign(id) {
       const resultOfDesignDelete = confirm(
-        'この操作は取り消すことはできません。\r\n本当に削除しますか？'
+        'この操作は取り消すことはできません。本当に削除しますか？'
       )
       if (resultOfDesignDelete) {
         axios

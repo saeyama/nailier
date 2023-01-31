@@ -2,5 +2,7 @@
 
 FactoryBot.define do
   factory :design_tag do
+    association :design
+    association :tag
   end
 end
