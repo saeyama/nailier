@@ -77,7 +77,7 @@
         <draggable
           v-model="design.images"
           draggable=".item"
-          class="grid grid-cols-3 md:grid-cols-4 gap-3">
+          class="files grid grid-cols-3 md:grid-cols-4 gap-3">
           <div
             class="item relative mb-4 md:mb-8"
             v-for="image in design.images"

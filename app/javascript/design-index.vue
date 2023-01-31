@@ -39,7 +39,7 @@
           ネイルデザインを登録
         </button>
       </div>
-      <div class="md:grid md:grid-cols-3 max-w-3xl mx-auto">
+      <div class="design md:grid md:grid-cols-3 max-w-3xl mx-auto">
         <div
           class="nailpart-design m-4 p-2 shadow-xl max-w-xs mx-auto"
           v-for="design in selectedNailPartDesigns"

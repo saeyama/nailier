@@ -4,6 +4,11 @@ class Api::DesignsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_design, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token
+
+  rescue_from ActiveRecord::RecordNotFound do |_exception|
+    render json: { error: '404 not found' }, status: :not_found
+  end
+
   def index
     @designs = current_user.designs.order(updated_at: :DESC).with_attached_images
   end
