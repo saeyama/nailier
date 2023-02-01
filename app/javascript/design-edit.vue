@@ -264,7 +264,7 @@
       <div class="p-2">
         <lable class="text-lg">調べた内容・メモ</lable>
         <textarea
-          class="w-full rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 duration-200 ease-in-out"
+          class="form-field"
           placeholder="入力してください"
           name="design[description]"
           id="design-description"
