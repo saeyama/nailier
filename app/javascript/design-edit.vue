@@ -3,7 +3,7 @@
     <h2 class="text-2xl text-center py-10">ネイルデザインを編集</h2>
     <div class="w-11/12 mx-auto">
       <div class="p-2">
-        <lable class="text-lg">タイトル&nbsp;&#40;入力必須&#41;</lable>
+        <lable class="text-lg">タイトル&#65288;入力必須&#65289;</lable>
         <input
           class="form-field"
           type="text"
@@ -36,7 +36,7 @@
       </div>
       <div class="p-2 w-full text-lg">
         <lable class="block mb-2">
-          画像&nbsp;&#40;8枚まで&#41;
+          画像&#65288;8枚まで&#65289;<br class="sm:hidden" />
           <span class="text-sm">jpeg&#47;jpg&#47;png&middot;5MG以下</span>
         </lable>
         <input
@@ -60,9 +60,8 @@
         <div
           v-if="design.images && design.images.length"
           class="text-sm mb-8 mt-1 leading-6">
-          ドラッグ&amp;ドロップで並び替え可能です。<br />
           <span class="underline decoration-dotted underline-offset-2"
-            >5MG以上の画像は自動的に弾かれます。</span
+            >ドラッグ&amp;ドロップで並び替え可能です。</span
           ><br />
           <span class="inline-block mt-2"
             >アップロード数は現在&nbsp;<span class="text-xl">{{
@@ -119,7 +118,12 @@
           name="design[youtube_videos_attributes][][access_code]"
           id="design-youtube"
           @update-value="updateYoutubeVideo">
-          <template v-slot:label>YouTube動画</template>
+          <template v-slot:label>
+            YouTube動画<br />
+            <span class="text-sm"
+              >URLは動画内の共有&rarr;コピーで取得出来ます。</span
+            >
+          </template>
         </child-text-input>
       </div>
       <div
@@ -273,7 +277,10 @@
           name="design[tags_attributes][][name]"
           id="design-tag"
           @update-value="updateTag">
-          <template v-slot:label>タグ</template>
+          <template v-slot:label>
+            タグ<br />
+            <span class="text-sm">重複登録した分のタグは保存されません。</span>
+          </template>
         </child-text-input>
         <div class="flex flex-wrap mt-2">
           <div
