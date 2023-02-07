@@ -44,7 +44,7 @@
           class="nailpart-design m-4 p-2 shadow-xl max-w-xs mx-auto"
           v-for="design in selectedNailPartDesigns"
           :key="design.id">
-          <h2 class="text-lg font-bold">{{ design.title }}</h2>
+          <h2 class="text-lg">{{ design.title }}</h2>
           <div class="flex gap-2 justify-center items-center md:block mb-1">
             <div v-if="!design.image" class="flex-1">
               <div
