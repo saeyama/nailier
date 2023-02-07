@@ -4,7 +4,8 @@
       <a
         href="https://www.nailtat.com/"
         class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
-        target="_blank">
+        target="_blank"
+        rel="noopener">
         TATから探す
       </a>
     </li>
@@ -12,7 +13,8 @@
       <a
         href="https://www.nail-partner.com/"
         class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
-        target="_blank">
+        target="_blank"
+        rel="noopener">
         ネイルパートナーから探す
       </a>
     </li>
