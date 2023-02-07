@@ -1,9 +1,9 @@
 <template>
   <div class="parts-input">
-    <h3 class="p-2 text-lg mb-2">
+    <div class="p-2 text-lg mb-2">
       パーツ内容を登録する
       <input type="checkbox" id="show-part-content" @click="showPartContent" />
-    </h3>
+    </div>
     <div
       class="p-2 md:p-4 mb-4 w-full md:px-8 border border-gray-300 rounded"
       v-show="partContent">

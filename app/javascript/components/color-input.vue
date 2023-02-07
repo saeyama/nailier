@@ -1,12 +1,12 @@
 <template>
   <div class="colors-input">
-    <h3 class="p-2 text-lg">
+    <div class="p-2 text-lg">
       カラーイメージを登録する
       <input
         type="checkbox"
         id="show-color-content"
         @click="showColorContent" />
-    </h3>
+    </div>
     <div
       class="mb-4 w-full border border-gray-300 rounded"
       v-show="colorContent">

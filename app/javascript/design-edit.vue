@@ -174,7 +174,7 @@
           </div>
         </div>
       </div>
-      <h3 class="p-2 text-lg">カラー・パーツ</h3>
+      <div class="p-2 text-lg">カラー・パーツ</div>
       <external-link></external-link>
       <color-input @update-color="updateColor"></color-input>
       <div
