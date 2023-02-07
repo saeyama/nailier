@@ -10,6 +10,10 @@ RSpec.describe InquiryMailer, type: :mailer do
     expect(mail.subject).to eq('[nailier] お問い合わせ')
   end
 
+  it '送信先が設定される' do
+    expect(mail.to).to eq(['info@nailier.net'])
+  end
+
   it '差出人が設定される' do
     expect(mail.from).to eq(['noreply@nailier.net'])
   end
