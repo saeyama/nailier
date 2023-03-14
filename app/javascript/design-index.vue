@@ -12,13 +12,13 @@
       <div
         class="flex justify-around gap-2 md:gap-4 mb-10 max-w-xl mx-2 sm:mx-auto">
         <button
-          :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
+          :class="!showHandDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToHandDesigns"
           class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
           ハンド
         </button>
         <button
-          :class="!showfootDesigns ? 'switch-nail-part-button' : ''"
+          :class="!showFootDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToFootDesigns"
           class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
           フット
@@ -98,23 +98,23 @@ export default {
       handDesigns: [],
       footDesigns: [],
       selectedTag: '',
-      showhandDesigns: '',
-      showfootDesigns: '',
+      showHandDesigns: false,
+      showFootDesigns: false,
       id: ''
     }
   },
   computed: {
     nailPartDesigns() {
-      return this.showhandDesigns === true ? this.handDesigns : this.footDesigns
+      return this.showHandDesigns === true ? this.handDesigns : this.footDesigns
     },
     nailPartTags() {
-      return this.showhandDesigns === true
+      return this.showHandDesigns === true
         ? this.uniqueTags(this.handDesigns)
         : this.uniqueTags(this.footDesigns)
     },
     selectedNailPartDesigns() {
       const nailPartDesigns =
-        this.showhandDesigns === true ? this.handDesigns : this.footDesigns
+        this.showHandDesigns === true ? this.handDesigns : this.footDesigns
       return this.selectedTag === ''
         ? nailPartDesigns
         : nailPartDesigns.filter((design) => {
@@ -126,8 +126,8 @@ export default {
     design: function () {
       if (this.design !== undefined) {
         this.design.nailPart === 'ハンド'
-          ? (this.showhandDesigns = true)
-          : (this.showfootDesigns = true)
+          ? (this.showHandDesigns = true)
+          : (this.showFootDesigns = true)
       }
     }
   },
@@ -171,13 +171,13 @@ export default {
       }
     },
     switchToHandDesigns() {
-      this.showhandDesigns = true
-      this.showfootDesigns = false
+      this.showHandDesigns = true
+      this.showFootDesigns = false
       this.selectedTag = ''
     },
     switchToFootDesigns() {
-      this.showhandDesigns = false
-      this.showfootDesigns = true
+      this.showHandDesigns = false
+      this.showFootDesigns = true
       this.selectedTag = ''
     },
     uniqueTags(nailPart) {
