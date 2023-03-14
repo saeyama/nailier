@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::DesignsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_design, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token
 
