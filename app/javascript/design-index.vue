@@ -105,16 +105,17 @@ export default {
   },
   computed: {
     nailPartDesigns() {
-      return this.showHandDesigns === true ? this.handDesigns : this.footDesigns
+      return this.showHandDesigns ? this.handDesigns : this.footDesigns
     },
     nailPartTags() {
-      return this.showHandDesigns === true
+      return this.showHandDesigns
         ? this.uniqueTags(this.handDesigns)
         : this.uniqueTags(this.footDesigns)
     },
     selectedNailPartDesigns() {
-      const nailPartDesigns =
-        this.showHandDesigns === true ? this.handDesigns : this.footDesigns
+      const nailPartDesigns = this.showHandDesigns
+        ? this.handDesigns
+        : this.footDesigns
       return this.selectedTag === ''
         ? nailPartDesigns
         : nailPartDesigns.filter((design) => {

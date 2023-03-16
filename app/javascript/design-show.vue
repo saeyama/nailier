@@ -75,13 +75,13 @@
               class="w-8 h-8 rounded-full drop-shadow-lg mb-2 md:mb-8">
               <div class="hidden">{{ color.lame }}</div>
               <div class="hidden">{{ color.hexNumber }}</div>
-              <div v-if="color.lame === true" class="relative">
+              <div v-if="color.lame" class="relative">
                 <img
                   src="~lame.png"
                   alt="ラメ"
                   class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
               </div>
-              <div v-else-if="color.lame === false"></div>
+              <div v-else-if="!color.lame"></div>
             </div>
           </div>
         </div>
