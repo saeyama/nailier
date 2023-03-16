@@ -136,8 +136,8 @@ export default {
     this.getDesigns()
   },
   methods: {
-    getDesigns() {
-      axios.get(`/api/designs`).then((response) => {
+    async getDesigns() {
+      await axios.get(`/api/designs`).then((response) => {
         ;(this.design = response.data.designs[0]),
           (this.handDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'ハンド'
