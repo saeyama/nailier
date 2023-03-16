@@ -6,7 +6,7 @@ json.set! :designs do
     json.created_at created_at
     json.updated_at updated_at
 
-    tags = design.tags.map { |tag| tag.name }
+    tags = design.tags.map(&:name)
     json.tags tags
 
     image_urls = design.images.map { |image| { 'url': rails_blob_url(image), 'index': rails_blob_url(image).split('/')[8].to_i } }
