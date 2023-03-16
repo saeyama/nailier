@@ -347,9 +347,6 @@ export default {
           'background-color': hexNumber
         }
       }
-    },
-    colorLameStyle() {
-      return this.color.lame === true
     }
   },
   methods: {

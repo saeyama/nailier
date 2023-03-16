@@ -191,7 +191,7 @@ export default {
         this.color.paletteHexNumber,
         this.color.hexNumberHex8
       )
-      this.color.lame = ''
+      this.color.lame = 'false'
       this.color.pickerHexNumber = '#FF7003'
       this.color.paletteHexNumber = ''
       this.color.hexNumberHex8 = ''
