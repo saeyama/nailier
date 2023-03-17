@@ -21,6 +21,17 @@ RSpec.describe 'Users', type: :system do
       expect(current_path).to eq users_thanks_path
     end
 
+    it 'アカウント名が重複している場合はアカウント登録ができない' do
+      user = create(:user)
+      fill_in 'アカウント名', with: user.account_name
+      fill_in 'メールアドレス', with: 'bob@example.com'
+      fill_in 'パスワード', with: user.password
+      fill_in 'パスワード（確認用）', with: user.password
+      click_button 'アカウントを登録'
+      expect(page).not_to have_content('アカウント登録完了')
+      expect(current_path).to eq users_path
+    end
+
     it 'メールアドレスが重複している場合はアカウント登録ができない' do
       user = create(:user)
       fill_in 'アカウント名', with: 'bob'
@@ -32,12 +43,12 @@ RSpec.describe 'Users', type: :system do
       expect(current_path).to eq users_path
     end
 
-    it 'アカウント名が重複している場合はアカウント登録ができない' do
-      user = create(:user)
+    it 'パスワードが8文字以下の場合はアカウント登録ができない' do
+      user = build(:user)
       fill_in 'アカウント名', with: user.account_name
-      fill_in 'メールアドレス', with: 'bob@example.com'
-      fill_in 'パスワード', with: user.password
-      fill_in 'パスワード（確認用）', with: user.password
+      fill_in 'メールアドレス', with: user.email
+      fill_in 'パスワード', with: '1234567'
+      fill_in 'パスワード（確認用）', with: '1234567'
       click_button 'アカウントを登録'
       expect(page).not_to have_content('アカウント登録完了')
       expect(current_path).to eq users_path
