@@ -54,6 +54,7 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'html2slim'
+  gem 'letter_opener_web'
   gem 'rubocop-fjord', require: false
   gem 'rubocop-rails', require: false
   gem 'slim_lint', require: false
