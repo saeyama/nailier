@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe InquiryMailer, type: :mailer do
   let(:inquiry) { build(:inquiry) }
-  let(:mail) { InquiryMailer.incoming(inquiry) }
+  let(:mail) { described_class.incoming(inquiry) }
 
   it '用件が設定される' do
     expect(mail.subject).to eq('[nailier] お問い合わせ')

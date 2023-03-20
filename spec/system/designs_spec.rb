@@ -31,7 +31,7 @@ RSpec.describe 'Designs', type: :system do
       end
 
       context '画像登録がある場合' do
-        let!(:design) { create(:design, :with_5mg_jpg_image, user: user) }
+        before { create(:design, :with_5mg_jpg_image, user: user) }
 
         it '登録した画像が表示される' do
           visit designs_path
@@ -43,7 +43,7 @@ RSpec.describe 'Designs', type: :system do
       end
 
       context '画像登録がない場合' do
-        let!(:design) { create(:design, user: user) }
+        before { create(:design, user: user) }
 
         it 'デフォルト画像が表示される' do
           visit designs_path
@@ -78,19 +78,19 @@ RSpec.describe 'Designs', type: :system do
         expect(page).to have_selector('.design-title', text: 'ワンカラー')
         expect(page).to have_selector('.design-nailpart', text: 'ハンド')
         expect(page).to have_selector "img[alt = '登録画像']"
-        expect(page).to have_selector('.design-youtubevideos', visible: false, text: 'MQJU9quj3l4')
-        expect(page).to have_selector('.design-colors', visible: false, text: 'true')
-        expect(page).to have_selector('.design-colors', visible: false, text: '#000000')
+        expect(page).to have_selector('.design-youtubevideos', visible: :all, text: 'MQJU9quj3l4')
+        expect(page).to have_selector('.design-colors', visible: :all, text: 'true')
+        expect(page).to have_selector('.design-colors', visible: :all, text: '#000000')
         expect(page).to have_selector('.design-parts', text: 'ラインストーン')
         expect(page).to have_selector('.design-parts', text: 'pp21')
         expect(page).to have_selector('.design-parts', text: '1個')
-        expect(page).to have_selector('.design-parts', visible: false, text: '#000000')
+        expect(page).to have_selector('.design-parts', visible: :all, text: '#000000')
         expect(page).to have_selector('.design-description', text: 'ベースを塗りカラーを2回塗りトップを塗る')
         expect(page).to have_selector('.design-tags', text: 'ワンカラーのタグ')
 
-        expect(page).not_to have_selector('.design-images', visible: false, text: '登録されている画像はありません。')
-        expect(page).not_to have_selector('.design-youtubevideos', visible: false, text: '登録されているYouTube動画はありません。')
-        expect(page).not_to have_selector('.design-colors', visible: false, text: '登録されているカラーはありません。')
+        expect(page).not_to have_selector('.design-images', visible: :all, text: '登録されている画像はありません。')
+        expect(page).not_to have_selector('.design-youtubevideos', visible: :all, text: '登録されているYouTube動画はありません。')
+        expect(page).not_to have_selector('.design-colors', visible: :all, text: '登録されているカラーはありません。')
         expect(page).not_to have_selector('.design-parts', text: '登録されているパーツはありません。')
         expect(page).not_to have_selector('.design-description', text: '登録されているメモはありません。')
       end
@@ -115,19 +115,19 @@ RSpec.describe 'Designs', type: :system do
         expect(page).to have_selector('.design-title', text: 'ワンカラー')
         expect(page).to have_selector('.design-nailpart', text: 'ハンド')
         expect(page).not_to have_selector "img[alt = '登録画像']"
-        expect(page).not_to have_selector('.design-youtubevideos', visible: false, text: 'MQJU9quj3l4')
-        expect(page).not_to have_selector('.design-colors', visible: false, text: 'true')
-        expect(page).not_to have_selector('.design-colors', visible: false, text: '#000000')
+        expect(page).not_to have_selector('.design-youtubevideos', visible: :all, text: 'MQJU9quj3l4')
+        expect(page).not_to have_selector('.design-colors', visible: :all, text: 'true')
+        expect(page).not_to have_selector('.design-colors', visible: :all, text: '#000000')
         expect(page).not_to have_selector('.design-parts', text: 'ラインストーン')
         expect(page).not_to have_selector('.design-parts', text: 'pp21')
         expect(page).not_to have_selector('.design-parts', text: '1個')
-        expect(page).not_to have_selector('.design-parts', visible: false, text: '#000000')
+        expect(page).not_to have_selector('.design-parts', visible: :all, text: '#000000')
         expect(page).not_to have_selector('.design-description', text: 'ベースを塗りカラーを2回塗りトップを塗る')
         expect(page).not_to have_selector('.design-tags', text: 'ワンカラーのタグ')
 
-        expect(page).to have_selector('.design-images', visible: false, text: '登録されている画像はありません。')
-        expect(page).to have_selector('.design-youtubevideos', visible: false, text: '登録されているYouTube動画はありません。')
-        expect(page).to have_selector('.design-colors', visible: false, text: '登録されているカラーはありません。')
+        expect(page).to have_selector('.design-images', visible: :all, text: '登録されている画像はありません。')
+        expect(page).to have_selector('.design-youtubevideos', visible: :all, text: '登録されているYouTube動画はありません。')
+        expect(page).to have_selector('.design-colors', visible: :all, text: '登録されているカラーはありません。')
         expect(page).to have_selector('.design-parts', text: '登録されているパーツはありません。')
         expect(page).to have_selector('.design-description', text: '登録されているメモはありません。')
       end
@@ -152,12 +152,13 @@ RSpec.describe 'Designs', type: :system do
       expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
       expect(page).to have_content('グラデーション')
       expect(page).to have_selector "img[alt = 'サムネイル画像']"
-      expect(current_path).to eq designs_path
+      expect(page).to have_current_path designs_path
     end
   end
 
   describe '#create' do
     let(:design) { build(:design, user: user) }
+
     before do
       visit new_user_session_path
       fill_in 'メールアドレス', with: user.email
@@ -173,7 +174,7 @@ RSpec.describe 'Designs', type: :system do
       choose 'フット'
       click_button 'ネイルデザインを登録'
       expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
-      expect(current_path).to eq designs_path
+      expect(page).to have_current_path designs_path
     end
 
     context '画像をデザインに登録する場合' do
@@ -186,7 +187,7 @@ RSpec.describe 'Designs', type: :system do
         find('.files').all('div.item')[0].drag_to find('.files').all('div.item')[1]
         click_button 'ネイルデザインを登録'
         expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
-        expect(current_path).to eq designs_path
+        expect(page).to have_current_path designs_path
       end
 
       it '5MG超の画像はデザインに登録できない' do
@@ -212,7 +213,7 @@ RSpec.describe 'Designs', type: :system do
         end
         click_button 'ネイルデザインを登録'
         expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
-        expect(current_path).to eq designs_path
+        expect(page).to have_current_path designs_path
       end
     end
 
@@ -227,7 +228,7 @@ RSpec.describe 'Designs', type: :system do
         end
         click_button 'ネイルデザインを登録'
         expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
-        expect(current_path).to eq designs_path
+        expect(page).to have_current_path designs_path
       end
     end
 
@@ -248,7 +249,7 @@ RSpec.describe 'Designs', type: :system do
         end
         click_button 'ネイルデザインを登録'
         expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
-        expect(current_path).to eq designs_path
+        expect(page).to have_current_path designs_path
       end
 
       it 'パーツ名が無いとデザインに登録できない' do
@@ -281,7 +282,7 @@ RSpec.describe 'Designs', type: :system do
         end
         click_button 'ネイルデザインを登録'
         expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
-        expect(current_path).to eq designs_path
+        expect(page).to have_current_path designs_path
       end
 
       it 'カラーパレットでカラーをデザインに登録できる' do
@@ -296,7 +297,7 @@ RSpec.describe 'Designs', type: :system do
         end
         click_button 'ネイルデザインを登録'
         expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
-        expect(current_path).to eq designs_path
+        expect(page).to have_current_path designs_path
       end
     end
   end
@@ -317,7 +318,7 @@ RSpec.describe 'Designs', type: :system do
       expect(page.accept_confirm).to eq 'この操作は取り消すことはできません。本当に削除しますか？'
       expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
       expect(page).to have_content('登録されておりません。')
-      expect(current_path).to eq designs_path
+      expect(page).to have_current_path designs_path
     end
   end
 
@@ -325,7 +326,7 @@ RSpec.describe 'Designs', type: :system do
     it 'ログインページに遷移すること' do
       visit designs_path
       expect(page).to have_content('ログイン')
-      expect(current_path).to eq new_user_session_path
+      expect(page).to have_current_path new_user_session_path
     end
   end
 end

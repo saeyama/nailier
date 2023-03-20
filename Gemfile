@@ -57,6 +57,7 @@ group :development do
   gem 'letter_opener_web'
   gem 'rubocop-fjord', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
   gem 'slim_lint', require: false
   gem 'spring'
 end

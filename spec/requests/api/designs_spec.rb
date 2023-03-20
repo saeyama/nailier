@@ -11,7 +11,7 @@ RSpec.describe 'Designs API', type: :request do
       create(:design, :with_child_model, :with_5mg_jpg_image, user: user)
       create(:design, title: 'タイダイ', user: user)
       get api_designs_path(format: :json)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json['designs'].length).to eq(2)
     end
@@ -22,7 +22,7 @@ RSpec.describe 'Designs API', type: :request do
       sign_in user
       design = create(:design, :with_child_model, :with_5mg_jpg_image, user: user)
       get api_design_path(design.id, format: :json)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json['title']).to eq(design.title)
     end
@@ -33,7 +33,7 @@ RSpec.describe 'Designs API', type: :request do
       sign_in user
       params = { title: 'ワンカラー', nail_part: 'ハンド' }
       expect { post api_designs_path, params: { design: params } }.to change(Design, :count).by(+1)
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe 'Designs API', type: :request do
       sign_in user
       design = create(:design, user: user)
       patch api_design_path(design.id), params: { design: { title: 'タイダイ' } }
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json['data']['title']).to eq('タイダイ')
     end
@@ -53,7 +53,7 @@ RSpec.describe 'Designs API', type: :request do
       sign_in user
       design = create(:design, user: user)
       expect { delete api_design_path(design.id) }.to change(Design, :count).by(-1)
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(:no_content)
     end
   end
 end
