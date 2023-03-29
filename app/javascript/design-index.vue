@@ -77,8 +77,8 @@
             </div>
           </div>
           <div>
-            {{ design.createdAt }}&ensp;登録<br />
-            {{ design.updatedAt }}&ensp;更新
+            {{ design.humanCreatedAt }}&ensp;登録<br />
+            {{ design.humanUpdatedAt }}&ensp;更新
           </div>
           <div v-for="tag in design.tags" :key="tag">
             <div class="hidden">{{ tag }}</div>
