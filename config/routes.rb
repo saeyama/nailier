@@ -14,8 +14,9 @@ Rails.application.routes.draw do
 
   get 'users', to: 'users#show'
 
-  resources :inquiries, only: [:new, :create]
-  get 'inquiries/thanks', to: 'inquiries#thanks'
+  resources :inquiries, only: [:new, :create] do
+    get 'thanks', on: :collection
+  end
 
   resources :designs
 

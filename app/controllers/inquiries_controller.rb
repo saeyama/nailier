@@ -12,7 +12,7 @@ class InquiriesController < ApplicationController
 
     if @inquiry.save
       InquiryMailer.incoming(@inquiry).deliver_later
-      redirect_to inquiries_thanks_path
+      redirect_to thanks_inquiries_path
     else
       render :new
     end
