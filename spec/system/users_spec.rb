@@ -94,11 +94,11 @@ RSpec.describe 'Users', type: :system do
       fill_in '現在のパスワード', with: user.password
       click_button 'アカウントを更新'
       expect(page).to have_content('アカウント情報')
-      expect(page).to have_current_path users_path
+      expect(page).to have_current_path my_account_users_path
     end
 
     it 'ログインをしていればアカウント情報を削除できる' do
-      visit users_path
+      visit my_account_users_path
       click_link 'アカウントを削除'
       expect(page).to have_content('退会のお手続き')
       click_link '退会する'
