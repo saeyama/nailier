@@ -21,9 +21,12 @@ class Api::DesignsController < ApplicationController
   def edit; end
 
   def create
-    @design = current_user.designs.new(design_params)
-    @design.attach_blob(image_data_urls)
-    if @design.save
+    Design.transaction do
+      @design = current_user.designs.new(design_params)
+      @design.attach_blob(image_data_urls)
+      @design.save!
+    end
+    if @design.persisted?
       render json: @design, status: :created
     else
       render json: @design.errors, status: :unprocessable_entity
@@ -31,9 +34,12 @@ class Api::DesignsController < ApplicationController
   end
 
   def update
-    @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
-    @design.images_set(sort_image_ids) if @design.images.attached?
-    if @design.update(design_params)
+    Design.transaction do
+      @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
+      @design.images_set(sort_image_ids) if @design.images.attached?
+      @design.update!(design_params)
+    end
+    if @design.persisted?
       render json: { status: 'SUCCESS', data: @design }
     else
       render json: { status: 'ERROR', data: @design.errors }
