@@ -38,6 +38,7 @@ class Api::DesignsController < ApplicationController
       @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
       @design.images_set(sort_image_ids) if @design.images.attached?
       @design.update!(design_params)
+      @design.update!(updated_at: Time.zone.now) unless @design.changed?
     end
     if @design.persisted?
       render json: { status: 'SUCCESS', data: @design }
