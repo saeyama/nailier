@@ -2,7 +2,6 @@
 
 class Api::DesignsController < ApplicationController
   before_action :set_design, only: %i[show edit update destroy]
-  skip_before_action :verify_authenticity_token
 
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     render json: { error: '404 not found' }, status: :not_found

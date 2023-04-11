@@ -151,6 +151,7 @@
 </template>
 
 <script>
+import Rails from '@rails/ujs'
 import axios from 'axios'
 import Vue from 'vue'
 import VueEasyLightbox from 'vue-easy-lightbox'
@@ -189,6 +190,9 @@ export default {
   },
   mounted() {
     this.getDesign()
+  },
+  created() {
+    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
   },
   methods: {
     async getDesign() {

@@ -304,6 +304,7 @@
 </template>
 
 <script>
+import Rails from '@rails/ujs'
 import axios from 'axios'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
@@ -379,6 +380,10 @@ export default {
         return part._destroy === '0'
       })
     }
+  },
+  created() {
+    console.log(axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken())
+    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
   },
   mounted() {
     this.getDesign()

@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import Rails from '@rails/ujs'
 import axios from 'axios'
 export default {
   data() {
@@ -131,6 +132,9 @@ export default {
           : (this.showFootDesigns = true)
       }
     }
+  },
+  created() {
+    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
   },
   mounted() {
     this.getDesigns()

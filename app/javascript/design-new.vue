@@ -304,6 +304,7 @@
 </template>
 
 <script>
+import Rails from '@rails/ujs'
 import axios from 'axios'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
@@ -348,6 +349,9 @@ export default {
         }
       }
     }
+  },
+  created() {
+    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
   },
   methods: {
     uploadFiles(e) {
