@@ -304,8 +304,7 @@
 </template>
 
 <script>
-import Rails from '@rails/ujs'
-import axios from 'axios'
+import apiClient from './packs/api-client.js'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
@@ -349,9 +348,6 @@ export default {
         }
       }
     }
-  },
-  created() {
-    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
   },
   methods: {
     uploadFiles(e) {
@@ -505,12 +501,8 @@ export default {
         formData.append('design[tags_attributes][][name]', tag.name)
       })
 
-      axios
-        .post('/api/designs', formData, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+      apiClient
+        .post('/api/designs', formData, {})
         .then(() => (window.location.href = '/designs'))
         .catch((e) => console.log(e))
     }

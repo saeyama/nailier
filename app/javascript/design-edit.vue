@@ -304,8 +304,7 @@
 </template>
 
 <script>
-import Rails from '@rails/ujs'
-import axios from 'axios'
+import apiClient from './packs/api-client.js'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
@@ -381,10 +380,6 @@ export default {
       })
     }
   },
-  created() {
-    console.log(axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken())
-    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
-  },
   mounted() {
     this.getDesign()
   },
@@ -392,7 +387,7 @@ export default {
     async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 2]
-      await axios.get(`/api/designs/${id}.json`).then((response) => {
+      await apiClient.get(`/api/designs/${id}.json`).then((response) => {
         ;(this.design.id = response.data.id),
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),
@@ -630,12 +625,8 @@ export default {
         }
       })
 
-      axios
-        .patch(`/api/designs/${this.design.id}`, formData, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+      apiClient
+        .patch(`/api/designs/${this.design.id}`, formData, {})
         .then(() => (window.location.href = '/designs'))
         .catch((e) => console.log(e))
     }

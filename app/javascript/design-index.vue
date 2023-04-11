@@ -90,8 +90,7 @@
 </template>
 
 <script>
-import Rails from '@rails/ujs'
-import axios from 'axios'
+import apiClient from './packs/api-client.js'
 export default {
   data() {
     return {
@@ -133,15 +132,12 @@ export default {
       }
     }
   },
-  created() {
-    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
-  },
   mounted() {
     this.getDesigns()
   },
   methods: {
     async getDesigns() {
-      await axios.get(`/api/designs`).then((response) => {
+      await apiClient.get(`/api/designs`).then((response) => {
         ;(this.design = response.data.designs[0]),
           (this.handDesigns = response.data.designs.filter(
             (design) => design.nailPart === 'ハンド'
@@ -168,7 +164,7 @@ export default {
         'この操作は取り消すことはできません。本当に削除しますか？'
       )
       if (resultOfDesignDelete) {
-        axios
+        apiClient
           .delete(`/api/designs/${id}`, {})
           .then(() => (window.location.href = '/designs'))
       } else {

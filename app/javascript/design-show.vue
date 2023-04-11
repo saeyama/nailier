@@ -151,8 +151,7 @@
 </template>
 
 <script>
-import Rails from '@rails/ujs'
-import axios from 'axios'
+import apiClient from './packs/api-client.js'
 import Vue from 'vue'
 import VueEasyLightbox from 'vue-easy-lightbox'
 Vue.use(VueEasyLightbox)
@@ -191,14 +190,11 @@ export default {
   mounted() {
     this.getDesign()
   },
-  created() {
-    axios.defaults.headers.common['X-CSRF-Token'] = Rails.csrfToken()
-  },
   methods: {
     async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 1]
-      await axios.get(`/api/designs/${id}.json`).then((response) => {
+      await apiClient.get(`/api/designs/${id}.json`).then((response) => {
         ;(this.design.id = response.data.id),
           (this.design.title = response.data.title),
           (this.design.nailPart = response.data.nailPart),
@@ -221,7 +217,7 @@ export default {
         'この操作は取り消すことはできません。本当に削除しますか？'
       )
       if (resultOfDesignDelete) {
-        axios
+        apiClient
           .delete(`/api/designs/${this.design.id}`, {})
           .then(() => (window.location.href = '/designs'))
       } else {
