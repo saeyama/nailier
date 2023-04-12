@@ -328,7 +328,7 @@ export default {
       design: {
         id: '',
         title: '',
-        nailPart: 'ハンド',
+        nailPart: '',
         description: '',
         images: [],
         imageToDelete: [],
@@ -387,19 +387,11 @@ export default {
     async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 2]
-      await apiClient.get(`/api/designs/${id}.json`).then((response) => {
-        ;(this.design.id = response.data.id),
-          (this.design.title = response.data.title),
-          (this.design.nailPart = response.data.nailPart),
-          (this.design.description = response.data.description),
-          (this.design.youtubeVideos = response.data.youtubeVideos),
-          (this.design.colors = response.data.colors),
-          (this.design.videos = response.data.videos),
-          (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags),
-          (this.design.images =
-            response.data.images !== null ? response.data.images : [])
-      })
+      const response = await apiClient.get(`/api/designs/${id}.json`)
+      this.design = response.data
+      this.design.imageToDelete = []
+      this.design.images =
+        response.data.images !== null ? response.data.images : []
     },
     uploadFiles(e) {
       const files = e.target.files
