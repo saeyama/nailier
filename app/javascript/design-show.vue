@@ -194,20 +194,12 @@ export default {
     async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 1]
-      await apiClient.get(`/api/designs/${id}.json`).then((response) => {
-        ;(this.design.id = response.data.id),
-          (this.design.title = response.data.title),
-          (this.design.nailPart = response.data.nailPart),
-          (this.design.description = response.data.description),
-          (this.design.youtubeVideos = response.data.youtubeVideos),
-          (this.design.colors = response.data.colors),
-          (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags),
-          (this.design.images =
-            response.data.images !== null
-              ? response.data.images.map((imageData) => imageData.url)
-              : [])
-      })
+      const response = await apiClient.get(`/api/designs/${id}.json`)
+      this.design = response.data
+      this.design.images =
+        response.data.images !== null
+          ? response.data.images.map((imageData) => imageData.url)
+          : []
     },
     editDesign() {
       window.location.href = `/designs/${this.design.id}/edit`
