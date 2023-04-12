@@ -137,15 +137,14 @@ export default {
   },
   methods: {
     async getDesigns() {
-      await apiClient.get(`/api/designs`).then((response) => {
-        ;(this.design = response.data.designs[0]),
-          (this.handDesigns = response.data.designs.filter(
-            (design) => design.nailPart === 'ハンド'
-          )),
-          (this.footDesigns = response.data.designs.filter(
-            (design) => design.nailPart === 'フット'
-          ))
-      })
+      const response = await apiClient.get(`/api/designs`)
+      this.design = response.data.designs[0]
+      this.handDesigns = response.data.designs.filter(
+        (design) => design.nailPart === 'ハンド'
+      )
+      this.footDesigns = response.data.designs.filter(
+        (design) => design.nailPart === 'フット'
+      )
     },
     newDesign() {
       window.location.href = `/designs/new`
