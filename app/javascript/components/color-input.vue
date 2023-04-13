@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       color: {
-        lame: 'false',
+        lame: false,
         pickerHexNumber: '#FF7003',
         paletteHexNumber: '',
         hexNumberHex8: ''
@@ -168,7 +168,7 @@ export default {
       }
     },
     colorLameStyle() {
-      return this.color.lame === true
+      return this.color.lame
     }
   },
   methods: {
@@ -191,7 +191,7 @@ export default {
         this.color.paletteHexNumber,
         this.color.hexNumberHex8
       )
-      this.color.lame = 'false'
+      this.color.lame = false
       this.color.pickerHexNumber = '#FF7003'
       this.color.paletteHexNumber = ''
       this.color.hexNumberHex8 = ''

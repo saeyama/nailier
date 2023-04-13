@@ -190,13 +190,13 @@
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md mb-4">
-          <div v-if="color.lame === true" class="relative">
+          <div v-if="color.lame" class="relative">
             <img
               src="~lame.png"
               alt="ラメ"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
-          <div v-else-if="color.lame === false"></div>
+          <div v-else-if="!color.lame"></div>
           <div
             class="ml-6 -mt-2 cursor-pointer absolute z-20"
             @click="deleteColor(color)">
@@ -212,13 +212,13 @@
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
             class="w-8 h-8 rounded-full shadow-md mb-4">
-            <div v-if="color.lame === true" class="relative">
+            <div v-if="color.lame" class="relative">
               <img
                 src="~lame.png"
                 alt="ラメ"
                 class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
             </div>
-            <div v-else-if="color.lame === false"></div>
+            <div v-else-if="!color.lame"></div>
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
