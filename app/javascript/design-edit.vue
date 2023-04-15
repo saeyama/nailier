@@ -342,13 +342,9 @@ export default {
     }
   },
   computed: {
-    colorShowHexNumber() {
-      return function (hexNumber) {
-        return {
-          'background-color': hexNumber
-        }
-      }
-    },
+    colorShowHexNumber: () => (hexNumber) => ({
+      'background-color': hexNumber
+    }),
     saveColors() {
       return this.design.colors.filter(function (color) {
         return color._destroy === '0'

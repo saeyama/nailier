@@ -160,13 +160,9 @@ export default {
     }
   },
   computed: {
-    colorShowHexNumber() {
-      return function (hexNumber) {
-        return {
-          'background-color': hexNumber
-        }
-      }
-    },
+    colorShowHexNumber: () => (hexNumber) => ({
+      'background-color': hexNumber
+    }),
     colorLameStyle() {
       return this.color.lame
     }
