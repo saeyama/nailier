@@ -5,6 +5,13 @@ inherit_gem:
     - 'config/rubocop.yml'
     - 'config/rails.yml'
 
+AllCops:
+  SuggestExtensions: false
+
+Style/HashSyntax:
+  Exclude:
+    - app/views/devise/**/*
+
 RSpec/ExampleLength:
   Exclude:
     - spec/**/*

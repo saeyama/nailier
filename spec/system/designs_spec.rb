@@ -15,8 +15,8 @@ RSpec.describe 'Designs', type: :system do
 
     context 'ネイルデザインが登録されている場合' do
       it 'タグ検索ができる' do
-        create(:design, user: user)
-        create(:design, :with_new_design, user: user)
+        create(:design, user:)
+        create(:design, :with_new_design, user:)
 
         visit designs_path
         expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
@@ -31,7 +31,7 @@ RSpec.describe 'Designs', type: :system do
       end
 
       context '画像登録がある場合' do
-        before { create(:design, :with_5mg_jpg_image, user: user) }
+        before { create(:design, :with_5mg_jpg_image, user:) }
 
         it '登録した画像が表示される' do
           visit designs_path
@@ -43,7 +43,7 @@ RSpec.describe 'Designs', type: :system do
       end
 
       context '画像登録がない場合' do
-        before { create(:design, user: user) }
+        before { create(:design, user:) }
 
         it 'デフォルト画像が表示される' do
           visit designs_path
@@ -71,7 +71,7 @@ RSpec.describe 'Designs', type: :system do
     end
 
     context 'ネイルデザインに子モデルが登録されている場合' do
-      let!(:design) { create(:design, :with_child_model, :with_5mg_jpg_image, user: user) }
+      let!(:design) { create(:design, :with_child_model, :with_5mg_jpg_image, user:) }
 
       it '子モデルを含めたネイルデザインの登録内容が表示される' do
         visit design_path(design.id)
@@ -108,7 +108,7 @@ RSpec.describe 'Designs', type: :system do
     end
 
     context 'ネイルデザインに子モデルが登録されていない場合' do
-      let!(:design) { create(:design, description: '', user: user) }
+      let!(:design) { create(:design, description: '', user:) }
 
       it 'タイトル・ネイルパートのみ表示され、メモと子モデルは表示されない' do
         visit design_path(design.id)
@@ -135,7 +135,7 @@ RSpec.describe 'Designs', type: :system do
   end
 
   describe '#update' do
-    let!(:design) { create(:design, user: user) }
+    let!(:design) { create(:design, user:) }
 
     before do
       visit new_user_session_path
@@ -157,7 +157,7 @@ RSpec.describe 'Designs', type: :system do
   end
 
   describe '#create' do
-    let(:design) { build(:design, user: user) }
+    let(:design) { build(:design, user:) }
 
     before do
       visit new_user_session_path
@@ -303,7 +303,7 @@ RSpec.describe 'Designs', type: :system do
   end
 
   describe '#destroy' do
-    let(:design) { create(:design, :with_child_model, :with_5mg_jpg_image, user: user) }
+    let(:design) { create(:design, :with_child_model, :with_5mg_jpg_image, user:) }
 
     before do
       visit new_user_session_path

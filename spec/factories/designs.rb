@@ -10,10 +10,10 @@ FactoryBot.define do
 
     trait :with_child_model do
       after(:create) do |design|
-        create(:youtube_video, design: design)
-        create(:part, design: design)
-        create(:color, design: design)
-        create(:design_tag, design: design, tag: create(:tag))
+        create(:youtube_video, design:)
+        create(:part, design:)
+        create(:color, design:)
+        create(:design_tag, design:, tag: create(:tag))
       end
     end
 
@@ -22,7 +22,7 @@ FactoryBot.define do
       description { 'ベースを塗りカラーを爪半分に塗りクリアで伸ばすのを2回繰り返しトップを塗る' }
       created_at { '2023-01-22T22:22:22.222+09:00' }
       after(:create) do |design|
-        create(:design_tag, design: design, tag: create(:tag, :add_tag))
+        create(:design_tag, design:, tag: create(:tag, :add_tag))
       end
     end
 
