@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { Chrome } from 'vue-color'
+import { Chrome } from '@ckpack/vue-color'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {

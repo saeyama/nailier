@@ -139,10 +139,10 @@
           :key="youtubeVideo"
           class="relative">
           <div class="w-full aspect-video">
-            <youtube
+            <YoutubeVue3
               :video-id="youtubeVideo.accessCode"
               class="z-0 w-full h-full">
-            </youtube>
+            </YoutubeVue3>
           </div>
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
@@ -161,10 +161,10 @@
             :key="youtubeVideo"
             class="relative">
             <div class="w-full aspect-video">
-              <youtube
+              <YoutubeVue3
                 :video-id="youtubeVideo.accessCode"
                 class="z-0 w-full h-full opacity-60">
-              </youtube>
+              </YoutubeVue3>
             </div>
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
@@ -305,10 +305,8 @@
 
 <script>
 import apiClient from './packs/api-client.js'
-import Vue from 'vue'
-import VueYoutube from 'vue-youtube'
-Vue.use(VueYoutube)
 import draggable from 'vuedraggable'
+import { YoutubeVue3 } from 'youtube-vue3'
 import 'color-picker-lame.png'
 import 'lame.png'
 import ExternalLink from './components/external-link.vue'
@@ -318,6 +316,7 @@ import ColorInput from './components/color-input.vue'
 export default {
   components: {
     draggable,
+    YoutubeVue3,
     ExternalLink,
     ChildTextInput,
     PartInput,

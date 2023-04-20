@@ -52,10 +52,10 @@
               class="drop-shadow-lg mb-2 md:mb-8">
               <div class="hidden">{{ youtubeVideo.accessCode }}</div>
               <div class="w-full aspect-video">
-                <youtube
+                <YoutubeVue3
                   :video-id="youtubeVideo.accessCode"
                   class="mt-2 w-full h-full youtubevideo-accesscode">
-                </youtube>
+                </YoutubeVue3>
               </div>
             </div>
           </div>
@@ -152,14 +152,12 @@
 
 <script>
 import apiClient from './packs/api-client.js'
-import Vue from 'vue'
 import VueEasyLightbox from 'vue-easy-lightbox'
-Vue.use(VueEasyLightbox)
-import VueYoutube from 'vue-youtube'
-Vue.use(VueYoutube)
+import { YoutubeVue3 } from 'youtube-vue3'
 export default {
   components: {
-    VueEasyLightbox
+    VueEasyLightbox,
+    YoutubeVue3
   },
   data() {
     return {
