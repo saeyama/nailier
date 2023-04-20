@@ -98,11 +98,11 @@ RSpec.describe 'Designs', type: :system do
       context '画像を登録している場合' do
         it '画像を拡大表示することが出来る' do
           visit design_path(design.id)
-          expect(page).not_to have_selector('.vel-img-modal')
+          expect(page).not_to have_selector('.vel-modal')
           find('div.design-images').all('img')[0].click
-          expect(page).to have_selector('.vel-img-modal')
+          expect(page).to have_selector('.vel-modal')
           find('.btn__close').click
-          expect(page).not_to have_selector('.vel-img-modal')
+          expect(page).not_to have_selector('.vel-modal')
         end
       end
     end
