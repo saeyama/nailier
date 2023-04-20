@@ -12,9 +12,7 @@ Rails.application.routes.draw do
     get 'users/withdrawal', to: 'users/registrations#withdrawal'    
   end
 
-  resource :users, except: :show do
-    get 'my_account', to: 'users#show'
-  end
+  resource :my_account, only: :show, controller: 'users'
 
   resources :inquiries, only: [:new, :create] do
     get 'thanks', on: :collection
