@@ -417,13 +417,13 @@ export default {
       }
     },
     deleteImage(image) {
-      this.$set(image, '_destroy', '1')
+      image._destroy = '1'
       this.design.imageToDelete.push(image)
       const index = this.design.images.indexOf(image)
       this.design.images.splice(index, 1)
     },
     saveImage(image) {
-      this.$set(image, '_destroy', '0')
+      image._destroy = '0'
       this.design.images.push(image)
       const index = this.design.imageToDelete.indexOf(image)
       this.design.imageToDelete.splice(index, 1)
@@ -438,10 +438,10 @@ export default {
       }
     },
     deleteYoutubeVideo(youtubeVideo) {
-      this.$set(youtubeVideo, '_destroy', '1')
+      youtubeVideo._destroy = '1'
     },
     saveYoutubeVideo(youtubeVideo) {
-      this.$set(youtubeVideo, '_destroy', '0')
+      youtubeVideo._destroy = '0'
     },
     updateColor(lame, pickerHexNumber, paletteHexNumber, hexNumberHex8) {
       if (pickerHexNumber !== '') {
@@ -460,10 +460,10 @@ export default {
       }
     },
     deleteColor(color) {
-      this.$set(color, '_destroy', '1')
+      color._destroy = '1'
     },
     saveColor(color) {
-      this.$set(color, '_destroy', '0')
+      color._destroy = '0'
     },
     updatePart(name, size, quantity, hexNumber) {
       if (name !== '' && quantity !== '') {
@@ -478,7 +478,7 @@ export default {
       }
     },
     deletePart(part) {
-      this.$set(part, '_destroy', '1')
+      part._destroy = '1'
     },
     updateTag(name) {
       this.design.tags.push({
@@ -489,7 +489,7 @@ export default {
       })
     },
     deleteTag(tag) {
-      this.$set(tag, '_destroy', '1')
+      tag._destroy = '1'
     },
     updateDesign() {
       if (!this.design.title) {
