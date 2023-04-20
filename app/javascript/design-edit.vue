@@ -73,7 +73,7 @@
             >8枚を超えた画像は登録されません。</span
           ><br />
         </div>
-        <draggable
+        <!-- <draggable
           v-model="design.images"
           draggable=".item"
           class="files grid grid-cols-3 md:grid-cols-4 gap-3">
@@ -91,7 +91,7 @@
               <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
             </div>
           </div>
-        </draggable>
+        </draggable> -->
         <div v-if="design.imageToDelete.length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
@@ -140,7 +140,8 @@
           class="relative">
           <div class="w-full aspect-video">
             <YoutubeVue3
-              :video-id="youtubeVideo.accessCode"
+              :videoid="youtubeVideo.accessCode"
+              :autoplay="0"
               class="z-0 w-full h-full">
             </YoutubeVue3>
           </div>
@@ -162,7 +163,8 @@
             class="relative">
             <div class="w-full aspect-video">
               <YoutubeVue3
-                :video-id="youtubeVideo.accessCode"
+                :videoid="youtubeVideo.accessCode"
+                :autoplay="0"
                 class="z-0 w-full h-full opacity-60">
               </YoutubeVue3>
             </div>

@@ -53,7 +53,8 @@
               <div class="hidden">{{ youtubeVideo.accessCode }}</div>
               <div class="w-full aspect-video">
                 <YoutubeVue3
-                  :video-id="youtubeVideo.accessCode"
+                  :videoid="youtubeVideo.accessCode"
+                  :autoplay="0"
                   class="mt-2 w-full h-full youtubevideo-accesscode">
                 </YoutubeVue3>
               </div>
