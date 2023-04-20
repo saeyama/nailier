@@ -70,25 +70,24 @@
             >8枚を超えた画像は登録されません。</span
           ><br />
         </div>
-        <!-- <draggable
+        <draggable
           v-model="design.images"
           draggable=".item"
           class="files grid grid-cols-3 md:grid-cols-4 gap-3">
-          <div
-            class="item relative mb-4 md:mb-8"
-            v-for="image in design.images"
-            :key="image">
-            <img
-              :src="image"
-              alt="登録画像"
-              class="z-0 aspect-[4/3] w-full object-cover" />
-            <div
-              @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+          <template #item="{ element }">
+            <div class="item relative mb-4 md:mb-8" :key="element">
+              <img
+                :src="element"
+                alt="登録画像"
+                class="z-0 aspect-[4/3] w-full object-cover" />
+              <div
+                @click="deleteImage(element)"
+                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
+                <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+              </div>
             </div>
-          </div>
-        </draggable> -->
+          </template>
+        </draggable>
         <div v-if="design.imageToDelete.length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
