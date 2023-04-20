@@ -23,12 +23,12 @@ class Api::DesignsController < ApplicationController
     Design.transaction do
       @design = current_user.designs.new(design_params)
       @design.attach_blob(image_data_urls)
-      @design.save!
-    end
-    if @design.persisted?
-      render json: @design, status: :created
-    else
-      render json: @design.errors, status: :unprocessable_entity
+      if @design.save
+        render json: @design, status: :created
+      else
+        render json: @design.errors, status: :unprocessable_entity
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
@@ -36,13 +36,13 @@ class Api::DesignsController < ApplicationController
     Design.transaction do
       @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
       @design.images_set(sort_image_ids) if @design.images.attached?
-      @design.update!(design_params)
-      @design.update!(updated_at: Time.zone.now) unless @design.changed?
-    end
-    if @design.persisted?
-      render json: { status: 'SUCCESS', data: @design }
-    else
-      render json: { status: 'ERROR', data: @design.errors }
+      if @design.update(design_params)
+        @design.update(updated_at: Time.zone.now) unless @design.changed?
+        render json: { status: 'SUCCESS', data: @design }
+      else
+        render json: { status: 'ERROR', data: @design.errors }
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
