@@ -37,6 +37,7 @@ class Api::DesignsController < ApplicationController
       @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
       @design.images_set(sort_image_ids) if @design.images.attached?
       if @design.update(design_params)
+        # 子モデルのみを削除した時に一覧の並び順が更新されていない為、下記設置。
         @design.update(updated_at: Time.zone.now) unless @design.changed?
         render json: @design, status: :created
       else
