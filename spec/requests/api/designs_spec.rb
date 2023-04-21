@@ -42,9 +42,9 @@ RSpec.describe 'Designs API', type: :request do
       sign_in user
       design = create(:design, user:)
       patch api_design_path(design.id), params: { design: { title: 'タイダイ' } }
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:created)
       json = JSON.parse(response.body)
-      expect(json['data']['title']).to eq('タイダイ')
+      expect(json['title']).to eq('タイダイ')
     end
   end
 

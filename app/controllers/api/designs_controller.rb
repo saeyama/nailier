@@ -38,9 +38,9 @@ class Api::DesignsController < ApplicationController
       @design.images_set(sort_image_ids) if @design.images.attached?
       if @design.update(design_params)
         @design.update(updated_at: Time.zone.now) unless @design.changed?
-        render json: { status: 'SUCCESS', data: @design }
+        render json: @design, status: :created
       else
-        render json: { status: 'ERROR', data: @design.errors }
+        render json: @design.errors, status: :unprocessable_entity
         raise ActiveRecord::Rollback
       end
     end
