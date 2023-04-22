@@ -39,7 +39,7 @@ class Api::DesignsController < ApplicationController
       if @design.update(design_params)
         # 子モデルのみを削除した時に一覧の並び順が更新されていない為、下記設置。
         @design.update(updated_at: Time.zone.now) unless @design.changed?
-        render json: @design, status: :created
+        render json: @design, status: :ok
       else
         render json: @design.errors, status: :unprocessable_entity
         raise ActiveRecord::Rollback
