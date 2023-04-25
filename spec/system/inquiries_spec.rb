@@ -17,7 +17,7 @@ RSpec.describe 'Inquiries', type: :system do
       fill_in 'お問い合わせ内容', with: inquiry.description
       click_button '送信'
       expect(page).to have_content('お問い合わせを承りました。')
-      expect(current_path).to eq inquiries_thanks_path
+      expect(page).to have_current_path thanks_inquiries_path
     end
 
     it '空白が一つでもある場合は送信できない' do
@@ -27,7 +27,7 @@ RSpec.describe 'Inquiries', type: :system do
       fill_in 'お問い合わせ内容', with: inquiry.description
       click_button '送信'
       expect(page).not_to have_content('お問い合わせを承りました。')
-      expect(current_path).to eq new_inquiry_path
+      expect(page).to have_current_path new_inquiry_path
     end
   end
 end

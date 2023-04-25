@@ -1,12 +1,10 @@
-import Vue from 'vue'
-import DesignEdit from '../design-edit'
+import { createApp } from 'vue'
+import DesignEdit from '../design-edit.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   const selector = '#js-design-edit'
   const designEdit = document.querySelector(selector)
   if (designEdit) {
-    new Vue({
-      render: (h) => h(DesignEdit)
-    }).$mount(selector)
+    createApp(DesignEdit).mount(selector)
   }
 })

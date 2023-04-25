@@ -8,6 +8,5 @@ class User < ApplicationRecord
 
   has_many :designs, dependent: :destroy
 
-  validates :account_name, presence: true
-  validates :account_name, uniqueness: true
+  validates :account_name, presence: true, uniqueness: true
 end

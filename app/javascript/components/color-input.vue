@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { Chrome } from 'vue-color'
+import { Chrome } from '@ckpack/vue-color'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       color: {
-        lame: 'false',
+        lame: false,
         pickerHexNumber: '#FF7003',
         paletteHexNumber: '',
         hexNumberHex8: ''
@@ -160,15 +160,11 @@ export default {
     }
   },
   computed: {
-    colorShowHexNumber() {
-      return function (hexNumber) {
-        return {
-          'background-color': hexNumber
-        }
-      }
-    },
+    colorShowHexNumber: () => (hexNumber) => ({
+      'background-color': hexNumber
+    }),
     colorLameStyle() {
-      return this.color.lame === true
+      return this.color.lame
     }
   },
   methods: {
@@ -191,7 +187,7 @@ export default {
         this.color.paletteHexNumber,
         this.color.hexNumberHex8
       )
-      this.color.lame = ''
+      this.color.lame = false
       this.color.pickerHexNumber = '#FF7003'
       this.color.paletteHexNumber = ''
       this.color.hexNumberHex8 = ''

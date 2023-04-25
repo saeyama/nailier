@@ -12,8 +12,8 @@
     = f.password_field :password, autocomplete: 'current-password', class: 'form-field mb-2'
     - if devise_mapping.rememberable?
       .field
-        = f.check_box :remember_me
+        = f.check_box :remember_me, class: 'align-middle'
         | &nbsp;
-        = f.label :remember_me, class: 'text-sm'
+        = f.label :remember_me, class: 'text-sm align-middle'
     = f.submit t('.sign_in'), class: 'main-action-btn mt-8 mb-6'
     = render 'devise/shared/links'

@@ -12,14 +12,17 @@ Rails.application.routes.draw do
     get 'users/withdrawal', to: 'users/registrations#withdrawal'    
   end
 
-  get 'users', to: 'users#show'
+  resource :my_account, only: :show
 
-  resources :inquiries, only: [:new, :create]
-  get 'inquiries/thanks', to: 'inquiries#thanks'
+  resources :inquiries, only: [:new, :create] do
+    get 'thanks', on: :collection
+  end
 
   resources :designs
 
   namespace :api, format: 'json' do
     resources :designs
   end
+
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?  
 end

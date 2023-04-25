@@ -12,13 +12,13 @@
       <div
         class="flex justify-around gap-2 md:gap-4 mb-10 max-w-xl mx-2 sm:mx-auto">
         <button
-          :class="!showhandDesigns ? 'switch-nail-part-button' : ''"
+          :class="!showHandDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToHandDesigns"
           class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
           ハンド
         </button>
         <button
-          :class="!showfootDesigns ? 'switch-nail-part-button' : ''"
+          :class="!showFootDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToFootDesigns"
           class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
           フット
@@ -77,8 +77,8 @@
             </div>
           </div>
           <div>
-            {{ design.createdAt }}&ensp;登録<br />
-            {{ design.updatedAt }}&ensp;更新
+            {{ design.humanCreatedAt }}&ensp;登録<br />
+            {{ design.humanUpdatedAt }}&ensp;更新
           </div>
           <div v-for="tag in design.tags" :key="tag">
             <div class="hidden">{{ tag }}</div>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import apiClient from './packs/api-client.js'
 export default {
   data() {
     return {
@@ -98,23 +98,24 @@ export default {
       handDesigns: [],
       footDesigns: [],
       selectedTag: '',
-      showhandDesigns: '',
-      showfootDesigns: '',
+      showHandDesigns: false,
+      showFootDesigns: false,
       id: ''
     }
   },
   computed: {
     nailPartDesigns() {
-      return this.showhandDesigns === true ? this.handDesigns : this.footDesigns
+      return this.showHandDesigns ? this.handDesigns : this.footDesigns
     },
     nailPartTags() {
-      return this.showhandDesigns === true
+      return this.showHandDesigns
         ? this.uniqueTags(this.handDesigns)
         : this.uniqueTags(this.footDesigns)
     },
     selectedNailPartDesigns() {
-      const nailPartDesigns =
-        this.showhandDesigns === true ? this.handDesigns : this.footDesigns
+      const nailPartDesigns = this.showHandDesigns
+        ? this.handDesigns
+        : this.footDesigns
       return this.selectedTag === ''
         ? nailPartDesigns
         : nailPartDesigns.filter((design) => {
@@ -126,8 +127,8 @@ export default {
     design: function () {
       if (this.design !== undefined) {
         this.design.nailPart === 'ハンド'
-          ? (this.showhandDesigns = true)
-          : (this.showfootDesigns = true)
+          ? (this.showHandDesigns = true)
+          : (this.showFootDesigns = true)
       }
     }
   },
@@ -135,16 +136,15 @@ export default {
     this.getDesigns()
   },
   methods: {
-    getDesigns() {
-      axios.get(`/api/designs`).then((response) => {
-        ;(this.design = response.data.designs[0]),
-          (this.handDesigns = response.data.designs.filter(
-            (design) => design.nailPart === 'ハンド'
-          )),
-          (this.footDesigns = response.data.designs.filter(
-            (design) => design.nailPart === 'フット'
-          ))
-      })
+    async getDesigns() {
+      const response = await apiClient.get(`/api/designs`)
+      this.design = response.data.designs[0]
+      this.handDesigns = response.data.designs.filter(
+        (design) => design.nailPart === 'ハンド'
+      )
+      this.footDesigns = response.data.designs.filter(
+        (design) => design.nailPart === 'フット'
+      )
     },
     newDesign() {
       window.location.href = `/designs/new`
@@ -163,7 +163,7 @@ export default {
         'この操作は取り消すことはできません。本当に削除しますか？'
       )
       if (resultOfDesignDelete) {
-        axios
+        apiClient
           .delete(`/api/designs/${id}`, {})
           .then(() => (window.location.href = '/designs'))
       } else {
@@ -171,13 +171,13 @@ export default {
       }
     },
     switchToHandDesigns() {
-      this.showhandDesigns = true
-      this.showfootDesigns = false
+      this.showHandDesigns = true
+      this.showFootDesigns = false
       this.selectedTag = ''
     },
     switchToFootDesigns() {
-      this.showhandDesigns = false
-      this.showfootDesigns = true
+      this.showHandDesigns = false
+      this.showFootDesigns = true
       this.selectedTag = ''
     },
     uniqueTags(nailPart) {

@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Api::DesignsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_design, only: %i[show edit update destroy]
-  skip_before_action :verify_authenticity_token
 
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     render json: { error: '404 not found' }, status: :not_found
@@ -22,22 +20,30 @@ class Api::DesignsController < ApplicationController
   def edit; end
 
   def create
-    @design = current_user.designs.new(design_params)
-    @design.attach_blob(image_data_urls)
-    if @design.save
-      render json: @design, status: :created
-    else
-      render json: @design.errors, status: :unprocessable_entity
+    Design.transaction do
+      @design = current_user.designs.new(design_params)
+      @design.attach_blob(image_data_urls)
+      if @design.save
+        render json: @design, status: :created
+      else
+        render json: @design.errors, status: :unprocessable_entity
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
   def update
-    @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
-    @design.images_set(sort_image_ids) if @design.images.attached?
-    if @design.update(design_params)
-      render json: { status: 'SUCCESS', data: @design }
-    else
-      render json: { status: 'ERROR', data: @design.errors }
+    Design.transaction do
+      @design.attach_blob(image_data_urls) if @design.images.map(&:blank?)
+      @design.images_set(sort_image_ids) if @design.images.attached?
+      if @design.update(design_params)
+        # 子モデルのみを登録・更新・削除した時に一覧の並び順が更新されていない為、下記設置。
+        @design.touch unless @design.changed? # rubocop:disable Rails/SkipsModelValidations
+        render json: @design, status: :ok
+      else
+        render json: @design.errors, status: :unprocessable_entity
+        raise ActiveRecord::Rollback
+      end
     end
   end
 

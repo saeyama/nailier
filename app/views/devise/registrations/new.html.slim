@@ -22,6 +22,6 @@
       = t('devise.shared.minimum_password_length', count: @minimum_password_length)
     = f.password_field :password, autocomplete: 'new-password', class: 'form-field mb-8 md:mb-12'
     = f.label :password_confirmation
-    = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-field mb-4'
-    = f.submit t('.sign_up'), class: 'main-action-btn mt-8 mb-6'
+    = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-field mb-14'
+    = f.submit t('.sign_up'), class: 'main-action-btn mb-6'
   = render 'devise/shared/links'

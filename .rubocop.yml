@@ -1,4 +1,28 @@
+require: rubocop-rspec
+
 inherit_gem:
   rubocop-fjord:
     - 'config/rubocop.yml'
     - 'config/rails.yml'
+
+AllCops:
+  SuggestExtensions: false
+
+Style/HashSyntax:
+  Exclude:
+    - app/views/devise/**/*
+
+RSpec/ExampleLength:
+  Exclude:
+    - spec/**/*
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/**/*
+
+RSpec/ContextWording:
+  AllowedPatterns:
+    - 場合$
+
+RSpec/NestedGroups:
+  Max: 4

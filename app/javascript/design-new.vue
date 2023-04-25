@@ -74,20 +74,19 @@
           v-model="design.images"
           draggable=".item"
           class="files grid grid-cols-3 md:grid-cols-4 gap-3">
-          <div
-            class="item relative mb-4 md:mb-8"
-            v-for="image in design.images"
-            :key="image">
-            <img
-              :src="image"
-              alt="登録画像"
-              class="z-0 aspect-[4/3] w-full object-cover" />
-            <div
-              @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+          <template #item="{ element }">
+            <div class="item relative mb-4 md:mb-8" :key="element">
+              <img
+                :src="element"
+                alt="登録画像"
+                class="z-0 aspect-[4/3] w-full object-cover" />
+              <div
+                @click="deleteImage(element)"
+                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
+                <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+              </div>
             </div>
-          </div>
+          </template>
         </draggable>
         <div v-if="design.imageToDelete.length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
@@ -139,10 +138,11 @@
           :key="youtubeVideo"
           class="relative">
           <div class="w-full aspect-video">
-            <youtube
-              :video-id="youtubeVideo.accessCode"
+            <YoutubeVue3
+              :videoid="youtubeVideo.accessCode"
+              :autoplay="0"
               class="z-0 w-full h-full">
-            </youtube>
+            </YoutubeVue3>
           </div>
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
@@ -161,10 +161,11 @@
             :key="youtubeVideo"
             class="relative">
             <div class="w-full aspect-video">
-              <youtube
-                :video-id="youtubeVideo.accessCode"
+              <YoutubeVue3
+                :videoid="youtubeVideo.accessCode"
+                :autoplay="0"
                 class="z-0 w-full h-full opacity-60">
-              </youtube>
+              </YoutubeVue3>
             </div>
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
@@ -190,13 +191,13 @@
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md mb-4">
-          <div v-if="color.lame == true" class="relative">
+          <div v-if="color.lame" class="relative">
             <img
               src="~lame.png"
               alt="ラメ"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
-          <div v-else-if="color.lame == false"></div>
+          <div v-else-if="!color.lame"></div>
           <div
             @click="deleteColor(color)"
             class="ml-6 -mt-2 cursor-pointer absolute z-20">
@@ -212,13 +213,13 @@
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
             class="w-8 h-8 rounded-full shadow-md mb-4">
-            <div v-if="color.lame === true" class="relative">
+            <div v-if="color.lame" class="relative">
               <img
                 src="~lame.png"
                 alt="ラメ"
                 class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
             </div>
-            <div v-else-if="color.lame === false"></div>
+            <div v-else-if="!color.lame"></div>
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
@@ -304,11 +305,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Vue from 'vue'
-import VueYoutube from 'vue-youtube'
-Vue.use(VueYoutube)
+import apiClient from './packs/api-client.js'
 import draggable from 'vuedraggable'
+import { YoutubeVue3 } from 'youtube-vue3'
 import 'color-picker-lame.png'
 import 'lame.png'
 import ExternalLink from './components/external-link.vue'
@@ -318,6 +317,7 @@ import ColorInput from './components/color-input.vue'
 export default {
   components: {
     draggable,
+    YoutubeVue3,
     ExternalLink,
     ChildTextInput,
     PartInput,
@@ -341,16 +341,9 @@ export default {
     }
   },
   computed: {
-    colorShowHexNumber() {
-      return function (hexNumber) {
-        return {
-          'background-color': hexNumber
-        }
-      }
-    },
-    colorLameStyle() {
-      return this.color.lame === true
-    }
+    colorShowHexNumber: () => (hexNumber) => ({
+      'background-color': hexNumber
+    })
   },
   methods: {
     uploadFiles(e) {
@@ -504,12 +497,8 @@ export default {
         formData.append('design[tags_attributes][][name]', tag.name)
       })
 
-      axios
-        .post('/api/designs', formData, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+      apiClient
+        .post('/api/designs', formData, {})
         .then(() => (window.location.href = '/designs'))
         .catch((e) => console.log(e))
     }

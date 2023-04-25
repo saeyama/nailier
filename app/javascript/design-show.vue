@@ -52,10 +52,11 @@
               class="drop-shadow-lg mb-2 md:mb-8">
               <div class="hidden">{{ youtubeVideo.accessCode }}</div>
               <div class="w-full aspect-video">
-                <youtube
-                  :video-id="youtubeVideo.accessCode"
+                <YoutubeVue3
+                  :videoid="youtubeVideo.accessCode"
+                  :autoplay="0"
                   class="mt-2 w-full h-full youtubevideo-accesscode">
-                </youtube>
+                </YoutubeVue3>
               </div>
             </div>
           </div>
@@ -75,13 +76,13 @@
               class="w-8 h-8 rounded-full drop-shadow-lg mb-2 md:mb-8">
               <div class="hidden">{{ color.lame }}</div>
               <div class="hidden">{{ color.hexNumber }}</div>
-              <div v-if="color.lame === true" class="relative">
+              <div v-if="color.lame" class="relative">
                 <img
                   src="~lame.png"
                   alt="ラメ"
                   class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
               </div>
-              <div v-else-if="color.lame === false"></div>
+              <div v-else-if="!color.lame"></div>
             </div>
           </div>
         </div>
@@ -151,15 +152,13 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Vue from 'vue'
+import apiClient from './packs/api-client.js'
 import VueEasyLightbox from 'vue-easy-lightbox'
-Vue.use(VueEasyLightbox)
-import VueYoutube from 'vue-youtube'
-Vue.use(VueYoutube)
+import { YoutubeVue3 } from 'youtube-vue3'
 export default {
   components: {
-    VueEasyLightbox
+    VueEasyLightbox,
+    YoutubeVue3
   },
   data() {
     return {
@@ -179,13 +178,9 @@ export default {
     }
   },
   computed: {
-    colorShowHexNumber() {
-      return function (hexNumber) {
-        return {
-          'background-color': hexNumber
-        }
-      }
-    }
+    colorShowHexNumber: () => (hexNumber) => ({
+      'background-color': hexNumber
+    })
   },
   mounted() {
     this.getDesign()
@@ -194,20 +189,12 @@ export default {
     async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 1]
-      await axios.get(`/api/designs/${id}.json`).then((response) => {
-        ;(this.design.id = response.data.id),
-          (this.design.title = response.data.title),
-          (this.design.nailPart = response.data.nailPart),
-          (this.design.description = response.data.description),
-          (this.design.youtubeVideos = response.data.youtubeVideos),
-          (this.design.colors = response.data.colors),
-          (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags),
-          (this.design.images =
-            response.data.images !== null
-              ? response.data.images.map((imageData) => imageData.url)
-              : [])
-      })
+      const response = await apiClient.get(`/api/designs/${id}.json`)
+      this.design = response.data
+      this.design.images =
+        response.data.images !== null
+          ? response.data.images.map((imageData) => imageData.url)
+          : []
     },
     editDesign() {
       window.location.href = `/designs/${this.design.id}/edit`
@@ -217,7 +204,7 @@ export default {
         'この操作は取り消すことはできません。本当に削除しますか？'
       )
       if (resultOfDesignDelete) {
-        axios
+        apiClient
           .delete(`/api/designs/${this.design.id}`, {})
           .then(() => (window.location.href = '/designs'))
       } else {

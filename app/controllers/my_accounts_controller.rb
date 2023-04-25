@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < ApplicationController
-  before_action :authenticate_user!, only: %i[show]
-
+class MyAccountsController < ApplicationController
   def show
     @hand = current_user.designs.where(nail_part: 'ハンド')
     @foot = current_user.designs.where(nail_part: 'フット')

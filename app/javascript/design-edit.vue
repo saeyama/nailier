@@ -77,20 +77,19 @@
           v-model="design.images"
           draggable=".item"
           class="files grid grid-cols-3 md:grid-cols-4 gap-3">
-          <div
-            class="item relative mb-4 md:mb-8"
-            v-for="image in design.images"
-            :key="image">
-            <img
-              :src="image.url"
-              alt="登録画像"
-              class="z-0 aspect-[4/3] w-full object-cover" />
-            <div
-              @click="deleteImage(image)"
-              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+          <template #item="{ element }">
+            <div class="item relative mb-4 md:mb-8" :key="element">
+              <img
+                :src="element.url"
+                alt="登録画像"
+                class="z-0 aspect-[4/3] w-full object-cover" />
+              <div
+                @click="deleteImage(element)"
+                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
+                <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+              </div>
             </div>
-          </div>
+          </template>
         </draggable>
         <div v-if="design.imageToDelete.length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
@@ -139,10 +138,11 @@
           :key="youtubeVideo"
           class="relative">
           <div class="w-full aspect-video">
-            <youtube
-              :video-id="youtubeVideo.accessCode"
+            <YoutubeVue3
+              :videoid="youtubeVideo.accessCode"
+              :autoplay="0"
               class="z-0 w-full h-full">
-            </youtube>
+            </YoutubeVue3>
           </div>
           <div
             @click="deleteYoutubeVideo(youtubeVideo)"
@@ -161,10 +161,11 @@
             :key="youtubeVideo"
             class="relative">
             <div class="w-full aspect-video">
-              <youtube
-                :video-id="youtubeVideo.accessCode"
+              <YoutubeVue3
+                :videoid="youtubeVideo.accessCode"
+                :autoplay="0"
                 class="z-0 w-full h-full opacity-60">
-              </youtube>
+              </YoutubeVue3>
             </div>
             <div
               @click="saveYoutubeVideo(youtubeVideo)"
@@ -190,13 +191,13 @@
           :key="color"
           :style="colorShowHexNumber(color.hexNumber)"
           class="w-8 h-8 rounded-full shadow-md mb-4">
-          <div v-if="color.lame === true" class="relative">
+          <div v-if="color.lame" class="relative">
             <img
               src="~lame.png"
               alt="ラメ"
               class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
           </div>
-          <div v-else-if="color.lame === false"></div>
+          <div v-else-if="!color.lame"></div>
           <div
             class="ml-6 -mt-2 cursor-pointer absolute z-20"
             @click="deleteColor(color)">
@@ -212,13 +213,13 @@
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
             class="w-8 h-8 rounded-full shadow-md mb-4">
-            <div v-if="color.lame === true" class="relative">
+            <div v-if="color.lame" class="relative">
               <img
                 src="~lame.png"
                 alt="ラメ"
                 class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
             </div>
-            <div v-else-if="color.lame === false"></div>
+            <div v-else-if="!color.lame"></div>
             <div
               class="ml-6 -mt-2 cursor-pointer absolute z-20"
               @click="saveColor(color)">
@@ -304,11 +305,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Vue from 'vue'
-import VueYoutube from 'vue-youtube'
-Vue.use(VueYoutube)
+import apiClient from './packs/api-client.js'
 import draggable from 'vuedraggable'
+import { YoutubeVue3 } from 'youtube-vue3'
 import ExternalLink from './components/external-link.vue'
 import ChildTextInput from './components/child-text-input.vue'
 import PartInput from './components/part-input.vue'
@@ -318,6 +317,7 @@ import 'minus.svg'
 export default {
   components: {
     draggable,
+    YoutubeVue3,
     ExternalLink,
     ChildTextInput,
     PartInput,
@@ -328,7 +328,7 @@ export default {
       design: {
         id: '',
         title: '',
-        nailPart: 'ハンド',
+        nailPart: '',
         description: '',
         images: [],
         imageToDelete: [],
@@ -342,13 +342,9 @@ export default {
     }
   },
   computed: {
-    colorShowHexNumber() {
-      return function (hexNumber) {
-        return {
-          'background-color': hexNumber
-        }
-      }
-    },
+    colorShowHexNumber: () => (hexNumber) => ({
+      'background-color': hexNumber
+    }),
     saveColors() {
       return this.design.colors.filter(function (color) {
         return color._destroy === '0'
@@ -387,19 +383,11 @@ export default {
     async getDesign() {
       const url = location.pathname.split('/')
       const id = url[url.length - 2]
-      await axios.get(`/api/designs/${id}.json`).then((response) => {
-        ;(this.design.id = response.data.id),
-          (this.design.title = response.data.title),
-          (this.design.nailPart = response.data.nailPart),
-          (this.design.description = response.data.description),
-          (this.design.youtubeVideos = response.data.youtubeVideos),
-          (this.design.colors = response.data.colors),
-          (this.design.videos = response.data.videos),
-          (this.design.parts = response.data.parts),
-          (this.design.tags = response.data.tags),
-          (this.design.images =
-            response.data.images !== null ? response.data.images : [])
-      })
+      const response = await apiClient.get(`/api/designs/${id}.json`)
+      this.design = response.data
+      this.design.imageToDelete = []
+      this.design.images =
+        response.data.images !== null ? response.data.images : []
     },
     uploadFiles(e) {
       const files = e.target.files
@@ -429,13 +417,13 @@ export default {
       }
     },
     deleteImage(image) {
-      this.$set(image, '_destroy', '1')
+      image._destroy = '1'
       this.design.imageToDelete.push(image)
       const index = this.design.images.indexOf(image)
       this.design.images.splice(index, 1)
     },
     saveImage(image) {
-      this.$set(image, '_destroy', '0')
+      image._destroy = '0'
       this.design.images.push(image)
       const index = this.design.imageToDelete.indexOf(image)
       this.design.imageToDelete.splice(index, 1)
@@ -450,10 +438,10 @@ export default {
       }
     },
     deleteYoutubeVideo(youtubeVideo) {
-      this.$set(youtubeVideo, '_destroy', '1')
+      youtubeVideo._destroy = '1'
     },
     saveYoutubeVideo(youtubeVideo) {
-      this.$set(youtubeVideo, '_destroy', '0')
+      youtubeVideo._destroy = '0'
     },
     updateColor(lame, pickerHexNumber, paletteHexNumber, hexNumberHex8) {
       if (pickerHexNumber !== '') {
@@ -472,10 +460,10 @@ export default {
       }
     },
     deleteColor(color) {
-      this.$set(color, '_destroy', '1')
+      color._destroy = '1'
     },
     saveColor(color) {
-      this.$set(color, '_destroy', '0')
+      color._destroy = '0'
     },
     updatePart(name, size, quantity, hexNumber) {
       if (name !== '' && quantity !== '') {
@@ -490,7 +478,7 @@ export default {
       }
     },
     deletePart(part) {
-      this.$set(part, '_destroy', '1')
+      part._destroy = '1'
     },
     updateTag(name) {
       this.design.tags.push({
@@ -501,7 +489,7 @@ export default {
       })
     },
     deleteTag(tag) {
-      this.$set(tag, '_destroy', '1')
+      tag._destroy = '1'
     },
     updateDesign() {
       if (!this.design.title) {
@@ -625,12 +613,8 @@ export default {
         }
       })
 
-      axios
-        .patch(`/api/designs/${this.design.id}`, formData, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+      apiClient
+        .patch(`/api/designs/${this.design.id}`, formData, {})
         .then(() => (window.location.href = '/designs'))
         .catch((e) => console.log(e))
     }

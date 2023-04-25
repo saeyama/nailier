@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class InquiriesController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def new
     @inquiry = Inquiry.new
   end
@@ -10,7 +12,7 @@ class InquiriesController < ApplicationController
 
     if @inquiry.save
       InquiryMailer.incoming(@inquiry).deliver_later
-      redirect_to inquiries_thanks_path
+      redirect_to thanks_inquiries_path
     else
       render :new
     end
