@@ -1,6 +1,5 @@
 .flex.mt-2.ml-2
-  h1
-    = link_to image_tag('logo.svg'), user_signed_in? ? designs_path : root_path, class: 'block w-14 md:w-12', alt: 'ネイリエ'
+  = link_to image_tag('logo.svg'), user_signed_in? ? designs_path : root_path, class: 'block w-14 md:w-12', alt: 'ネイリエ'
   #nav-toggle.md:hidden
     div
       span

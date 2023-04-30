@@ -1,12 +1,12 @@
 <template>
   <div class="text-gray-600 py-10 mb-4">
     <div class="w-11/12 md:w-3/4 mx-auto">
-      <h2 class="design-title text-2xl text-center py-2">{{ design.title }}</h2>
+      <h1 class="design-title text-2xl text-center py-2">{{ design.title }}</h1>
       <div class="design-nailpart text-sm md:text-base text-center pb-10">
         {{ design.nailPart }}
       </div>
       <div class="design-images">
-        <h3 class="text-lg mb-2">画像</h3>
+        <h2 class="text-lg mb-2">画像</h2>
         <div
           class="text-sm ml-0.5 mb-6"
           v-if="!design.images || !design.images.length">
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="design-youtubevideos">
-        <h3 class="text-lg mb-2">YouTube動画</h3>
+        <h2 class="text-lg mb-2">YouTube動画</h2>
         <div
           class="text-sm ml-0.5 mb-6"
           v-if="design.youtubeVideos.length === 0">
@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="design-colors">
-        <h3 class="text-lg mb-2">カラー</h3>
+        <h2 class="text-lg mb-2">カラー</h2>
         <div class="text-sm ml-0.5 mb-6" v-if="design.colors.length === 0">
           登録されているカラーはありません。
         </div>
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="design-parts">
-        <h3 class="text-lg mb-2">パーツ</h3>
+        <h2 class="text-lg mb-2">パーツ</h2>
         <div class="text-sm ml-0.5 mb-6" v-if="design.parts.length === 0">
           登録されているパーツはありません。
         </div>
@@ -119,23 +119,30 @@
         </div>
       </div>
       <div class="design-description">
-        <h3 class="text-lg mb-1">調べた内容・メモ</h3>
+        <h2 class="text-lg mb-1">調べた内容・メモ</h2>
         <div class="text-sm ml-0.5 mb-6" v-if="design.description.length === 0">
           登録されているメモはありません。
         </div>
         <div v-else>
           <div
             v-text="design.description"
-            class="whitespace-pre-wrap mb-4 text-sm border border-gray-300 px-2 py-1 rounded"></div>
+            class="whitespace-pre-wrap mb-8 text-sm border border-gray-300 px-2 py-1 rounded"></div>
         </div>
       </div>
-      <div
-        class="design-tags mb-12 mr-4 py-1 rounded flex justify-start items-center">
-        <div
-          v-for="tag in design.tags"
-          :key="tag.id"
-          class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
-          {{ tag.name }}
+      <div class="design-tags">
+        <h2 class="text-lg mb-2">タグ</h2>
+        <div class="text-sm ml-0.5 mb-6" v-if="design.tags.length === 0">
+          登録されているタグはありません。
+        </div>
+        <div v-else>
+          <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
+            <div
+              v-for="tag in design.tags"
+              :key="tag.id"
+              class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
+              {{ tag.name }}
+            </div>
+          </div>
         </div>
       </div>
       <button class="main-action-btn mb-2" @click="editDesign">

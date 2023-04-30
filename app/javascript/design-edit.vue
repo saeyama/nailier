@@ -1,6 +1,6 @@
 <template>
   <div class="text-gray-600 py-10 mx-auto mb-4">
-    <h2 class="text-2xl text-center py-10">ネイルデザインを編集</h2>
+    <h1 class="text-2xl text-center py-10">ネイルデザインを編集</h1>
     <div class="w-11/12 mx-auto">
       <div class="p-2">
         <lable class="text-lg">タイトル&#65288;入力必須&#65289;</lable>

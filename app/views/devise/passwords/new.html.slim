@@ -1,5 +1,7 @@
+- set_meta_tags title: 'パスワード再設定', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)のパスワード再設定ページ'
+
 .text-gray-600.py-10.mx-auto.w-11/12
-  h2.text-center.text-2xl.py-8.md:py-10
+  h1.text-center.text-2xl.py-8.md:py-10
     = t('.forgot_your_password')
   = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
     = render 'devise/shared/error_messages', resource: resource

@@ -149,7 +149,7 @@ RSpec.describe 'Designs', type: :system do
       fill_in 'design-title', with: 'グラデーション'
       attach_file 'design-image', Rails.root.join('spec/factories/files/test-1mg.jpg')
       click_button 'ネイルデザインを更新'
-      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+      expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_content('グラデーション')
       expect(page).to have_selector "img[alt = 'サムネイル画像']"
       expect(page).to have_current_path designs_path
@@ -173,7 +173,7 @@ RSpec.describe 'Designs', type: :system do
       expect(page).to have_checked_field with: 'ハンド'
       choose 'フット'
       click_button 'ネイルデザインを登録'
-      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+      expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_current_path designs_path
     end
 
@@ -186,7 +186,7 @@ RSpec.describe 'Designs', type: :system do
         attach_file 'design-image', [file_path1, file_path2]
         find('.files').all('div.item')[0].drag_to find('.files').all('div.item')[1]
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
 
@@ -212,7 +212,7 @@ RSpec.describe 'Designs', type: :system do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
     end
@@ -227,7 +227,7 @@ RSpec.describe 'Designs', type: :system do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
     end
@@ -248,7 +248,7 @@ RSpec.describe 'Designs', type: :system do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
 
@@ -281,7 +281,7 @@ RSpec.describe 'Designs', type: :system do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
 
@@ -296,7 +296,7 @@ RSpec.describe 'Designs', type: :system do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
     end
@@ -316,7 +316,7 @@ RSpec.describe 'Designs', type: :system do
       visit design_path(design.id)
       click_button 'ネイルデザインを削除'
       expect(page.accept_confirm).to eq 'この操作は取り消すことはできません。本当に削除しますか？'
-      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+      expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_content('登録されておりません。')
       expect(page).to have_current_path designs_path
     end

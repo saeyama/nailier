@@ -65,7 +65,7 @@ RSpec.describe 'Users', type: :system do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       click_button 'ログイン'
-      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+      expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_current_path designs_path
     end
 

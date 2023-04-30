@@ -1,6 +1,6 @@
 <template>
   <div class="text-gray-600 py-10 mx-auto">
-    <h2 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h2>
+    <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
       <button class="main-action-btn mt-10 mb-6" @click="newDesign">
