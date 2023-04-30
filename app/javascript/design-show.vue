@@ -148,7 +148,7 @@
       <button class="main-action-btn mb-2" @click="editDesign">
         ネイルデザインを編集
       </button>
-      <button class="delete-btn mb-8" @click="deleteDesign">
+      <button class="text-btn mb-8" @click="deleteDesign">
         ネイルデザインを削除
       </button>
       <button class="sub-action-btn" @click="indexDesign">

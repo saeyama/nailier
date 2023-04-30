@@ -24,5 +24,5 @@
     | &#65289;
     = f.password_field :current_password, autocomplete: 'current-password', class: 'form-field mb-6'
     = f.submit t('.update'), class: 'main-action-btn mt-8 mb-2'
-  = link_to t('.cancel_my_account'), users_unsubscribe_path(resource_name), class: 'delete-btn'
+  = link_to t('.cancel_my_account'), users_unsubscribe_path(resource_name), class: 'text-btn'
   = link_to t('devise.shared.links.back'), :back, class: 'sub-action-btn mt-8 mb-2'
