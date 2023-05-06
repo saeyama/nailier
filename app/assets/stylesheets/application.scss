@@ -15,10 +15,20 @@
 //  */
 
 body {
+  animation: body-fade-in 0.1s ease 0s 1 normal;
   margin: 0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+@keyframes body-fade-in {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
 }
 
 main {
@@ -123,9 +133,7 @@ header {
 }
 
 .fade-up {
-  animation-name: fade-up;
-  animation-duration:1.5s;
-  animation-fill-mode:forwards;
+  animation: fade-up 1.5s forwards;
   opacity:0;
 }
 
@@ -142,9 +150,7 @@ header {
 }
 
 .fade-in {
-  animation-name: fade-in;
-  animation-duration:2s;
-  animation-fill-mode:forwards;
+  animation: fade-in 2s forwards;
   opacity:0;
 }
 
