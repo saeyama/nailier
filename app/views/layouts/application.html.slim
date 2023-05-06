@@ -14,7 +14,7 @@ html
   body
     header.max-w-screen-lg.mx-auto
       = render 'layouts/header'
-    main.max-w-screen-lg.mx-auto
+    main.mx-auto class="#{content_for?(:main) ? yield(:main) : 'max-w-screen-sm'}"
       = yield
     footer
       = render 'layouts/footer'
