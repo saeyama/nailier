@@ -8,11 +8,11 @@
                     url: inquiries_path,
                     method: :post, local: true do |f|
     = f.label :title, '件名'
-    = f.text_field :title, class: 'form-field mb-8', required: true
+    = f.text_field :title, placeholder: '•••について', class: 'form-field mb-8', required: true
     = f.label :name, 'お名前'
-    = f.text_field :name, class: 'form-field mb-8', required: true
+    = f.text_field :name, placeholder: 'ねいりえ', class: 'form-field mb-8', required: true
     = f.label :email, 'メールアドレス'
-    = f.email_field :email, class: 'form-field mb-8', required: true
+    = f.email_field :email, placeholder: 'mail-account@nailier.net', class: 'form-field mb-8', required: true
     = f.label :description, 'お問い合わせ内容'
-    = f.text_area :description, class: 'form-field mb-6', required: true
+    = f.text_area :description, placeholder: 'お問い合わせ詳細・ご意見/ご要望', class: 'form-field mb-6', required: true
     = f.submit '送信', class: 'main-action-btn mt-8 mb-6'

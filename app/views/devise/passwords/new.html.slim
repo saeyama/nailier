@@ -6,6 +6,6 @@
   = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
     = render 'devise/shared/error_messages', resource: resource
     = f.label :email
-    = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-field mb-4'
+    = f.email_field :email, placeholder: 'mail-account@nailier.net', autofocus: true, autocomplete: 'email', class: 'form-field mb-4'
     = f.submit t('.send_me_reset_password_instructions'), class: 'main-action-btn mt-8 mb-6'
   = render 'devise/shared/links'

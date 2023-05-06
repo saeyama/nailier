@@ -9,7 +9,7 @@
           type="text"
           name="design[title]"
           id="design-title"
-          placeholder="入力してください"
+          placeholder="デザイン名・&#x25CB;&#x25CB;検定など"
           v-model="design.title" />
       </div>
       <div class="p-2 w-full text-lg">
@@ -113,15 +113,13 @@
       </div>
       <div class="p-2">
         <child-text-input
-          placeholder="youtubeのURL"
+          placeholder="https://youtu.be/•••"
           name="design[youtube_videos_attributes][][access_code]"
           id="design-youtube"
           @update-value="updateYoutubeVideo">
           <template v-slot:label>
             YouTube動画<br />
-            <span class="text-sm"
-              >URLは動画内の共有&rarr;コピーで取得出来ます。</span
-            >
+            <span class="text-sm">URLは動画内の共有&rarr;コピーより取得</span>
           </template>
         </child-text-input>
       </div>
@@ -266,7 +264,7 @@
         <lable class="text-lg">調べた内容・メモ</lable>
         <textarea
           class="form-field"
-          placeholder="入力してください"
+          placeholder="手順・カラー番号・注意点など"
           name="design[description]"
           id="design-description"
           v-model="design.description">
@@ -274,13 +272,15 @@
       </div>
       <div class="p-2 mb-8 tags-input">
         <child-text-input
-          placeholder="入力してください"
+          placeholder="カラー名・&#x25CB;&#x25CB;系など"
           name="design[tags_attributes][][name]"
           id="design-tag"
           @update-value="updateTag">
           <template v-slot:label>
             タグ<br />
-            <span class="text-sm">重複登録した分のタグは保存されません。</span>
+            <span class="text-sm"
+              >重複登録した分のタグは保存されません。<br />リストからタグ検索ができます。</span
+            >
           </template>
         </child-text-input>
         <div class="flex flex-wrap mt-2">

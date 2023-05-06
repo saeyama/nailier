@@ -12,7 +12,7 @@
         type="text"
         name="design[parts_attributes][][name]"
         id="design-part-name"
-        placeholder="パーツ名は登録必須です。"
+        placeholder="パーツ名を入力or下記より選択"
         v-model="part.name" />
       <div class="my-4 px-2">
         <button
@@ -28,7 +28,7 @@
         type="text"
         name="design[parts_attributes][][size]"
         id="design-part-size"
-        placeholder="大きさを入力してください。"
+        placeholder="大きさを入力or下記より選択"
         v-model="part.size" />
       <div class="my-4 px-2">
         <button
