@@ -1,5 +1,5 @@
 <template>
-  <div class="text-gray-600 py-10 mx-auto">
+  <div class="text-gray-600 pt-10 pb-6 sm:py-10 mx-auto">
     <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
@@ -39,49 +39,43 @@
           ネイルデザインを登録
         </button>
       </div>
-      <div class="design md:grid md:grid-cols-3 max-w-3xl mx-auto">
+      <div
+        class="design mx-8 sm:mx-auto sm:grid sm:gap-x-1 gap-y-2 sm:grid-cols-2 sm:max-w-lg md:grid-cols-3 md:max-w-3xl">
         <div
-          class="nailpart-design m-4 p-2 shadow-xl max-w-xs mx-auto"
+          class="nailpart-design p-2 mb-4 sm:mb-0 shadow-lg max-w-sm mx-auto hover:shadow-xl"
           v-for="design in selectedNailPartDesigns"
           :key="design.id">
-          <h2 class="text-lg">{{ design.title }}</h2>
-          <div class="flex gap-2 justify-center items-center md:block mb-1">
-            <div v-if="!design.image" class="flex-1">
+          <div
+            @click="showDesign(design.id)"
+            class="hover:opacity-80 cursor-pointer sm:w-56">
+            <h2 class="text-lg">{{ design.title }}</h2>
+            <div class="relative w-full pt-[85.714%] mb-2">
               <div
-                class="h-40 w-full md:h-48 md:w-56 text-lg leading-[10rem] md:leading-[12rem] bg-slate-200 drop-shadow-lg text-white text-center mx-auto md:text-2xl">
+                v-if="!design.image"
+                class="absolute top-0 w-full h-full font-light bg-slate-200 text-white flex justify-center items-center">
                 no image
               </div>
-            </div>
-            <div v-else class="flex-1">
               <img
+                v-else
                 :src="design.image"
                 alt="サムネイル画像"
-                class="h-40 w-full md:h-48 md:w-56 drop-shadow-lg object-cover" />
-            </div>
-            <div class="md:flex md:justify-between md:my-2 md:gap-1 md:mt-4">
-              <button
-                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
-                @click="showDesign(design.id)">
-                詳細
-              </button>
-              <button
-                class="block px-8 my-2 md:my-0 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
-                @click="editDesign(design.id)">
-                編集
-              </button>
-              <button
-                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
-                @click="deleteDesign(design.id)">
-                削除
-              </button>
+                class="absolute top-0 w-full h-full object-cover" />
             </div>
           </div>
-          <div>
-            {{ design.humanCreatedAt }}&ensp;登録<br />
-            {{ design.humanUpdatedAt }}&ensp;更新
-          </div>
-          <div v-for="tag in design.tags" :key="tag">
-            <div class="hidden">{{ tag }}</div>
+          <div class="flex justify-between items-center">
+            <div class="text-xs">
+              {{ design.humanCreatedAt }}&ensp;登録<br />
+              {{ design.humanUpdatedAt }}&ensp;更新
+            </div>
+            <div
+              class="flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer">
+              <PencilIcon
+                @click="editDesign(design.id)"
+                class="w-6 h-6 stroke-1 hover:fill-gray-800" />
+              <TrashIcon
+                @click="deleteDesign(design.id)"
+                class="w-6 h-6 stroke-1 hover:fill-gray-800" />
+            </div>
           </div>
         </div>
       </div>
@@ -91,7 +85,13 @@
 
 <script>
 import apiClient from './packs/api-client.js'
+import { PencilIcon } from '@heroicons/vue/24/outline'
+import { TrashIcon } from '@heroicons/vue/24/outline'
 export default {
+  components: {
+    PencilIcon,
+    TrashIcon
+  },
   data() {
     return {
       design: '',
