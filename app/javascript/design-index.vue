@@ -48,7 +48,10 @@
           <div
             @click="showDesign(design.id)"
             class="hover:opacity-80 cursor-pointer sm:w-56">
-            <h2 class="text-lg">{{ design.title }}</h2>
+            <h2
+              class="text-lg text-ellipsis overflow-hidden break-all whitespace-nowrap mt-1 mb-2">
+              {{ design.title }}
+            </h2>
             <div class="relative w-full pt-[85.714%] mb-2">
               <div
                 v-if="!design.image"
