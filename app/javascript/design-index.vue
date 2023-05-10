@@ -3,14 +3,14 @@
     <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
-      <button class="main-action-btn mt-10 mb-4" @click="newDesign">
+      <button class="main-action-btn mt-10 mb-2" @click="newDesign">
         ネイルデザインを登録
       </button>
       <button class="text-btn" @click="inquiry">お問い合わせ</button>
     </div>
     <div v-else>
       <div
-        class="flex justify-around gap-2 md:gap-4 mb-10 max-w-xl mx-2 sm:mx-auto">
+        class="flex justify-around gap-2 sm:gap-4 w-11/12 sm:w-3/5 mb-10 max-w-lg mx-auto">
         <button
           :class="!showHandDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToHandDesigns"
@@ -24,15 +24,19 @@
           フット
         </button>
       </div>
-      <select
-        v-model="selectedTag"
-        class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 duration-200 ease-in-out"
-        id="design-tags">
-        <option value="" selected>タグで絞り込む</option>
-        <option v-for="tag in nailPartTags" :key="tag">
-          {{ tag }}
-        </option>
-      </select>
+      <div class="relative w-11/12 sm:w-3/5 max-w-lg mx-auto">
+        <select
+          v-model="selectedTag"
+          class="block w-full appearance-none rounded border border-gray-300 text-gray-700 focus:border-gray-300 outline-none p-3 mb-8"
+          id="design-tags">
+          <option value="" selected>タグで絞り込む</option>
+          <option v-for="tag in nailPartTags" :key="tag">
+            {{ tag }}
+          </option>
+        </select>
+        <ChevronDownIcon
+          class="absolute top-2/4 right-3 -translate-y-2/4 w-5 h-5 stroke-1 pointer-events-none" />
+      </div>
       <div v-if="nailPartDesigns.length === 0" class="text-center mt-10">
         登録されておりません。
         <button class="main-action-btn mt-10" @click="newDesign">
@@ -40,7 +44,7 @@
         </button>
       </div>
       <div
-        class="design mx-8 sm:mx-auto sm:grid sm:gap-x-1 gap-y-2 sm:grid-cols-2 sm:max-w-lg md:grid-cols-3 md:max-w-3xl">
+        class="design mx-[10%] sm:mx-auto sm:grid sm:gap-x-1 gap-y-2 sm:grid-cols-2 sm:max-w-lg md:grid-cols-3 md:max-w-3xl">
         <div
           class="nailpart-design p-2 mb-4 sm:mb-0 shadow-lg max-w-sm mx-auto hover:shadow-xl"
           v-for="design in selectedNailPartDesigns"
@@ -74,10 +78,10 @@
               class="flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer">
               <PencilIcon
                 @click="editDesign(design.id)"
-                class="w-6 h-6 stroke-1 hover:fill-gray-800" />
+                class="w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
               <TrashIcon
                 @click="deleteDesign(design.id)"
-                class="w-6 h-6 stroke-1 hover:fill-gray-800" />
+                class="w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
             </div>
           </div>
         </div>
@@ -88,10 +92,12 @@
 
 <script>
 import apiClient from './packs/api-client.js'
+import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 import { PencilIcon } from '@heroicons/vue/24/outline'
 import { TrashIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
+    ChevronDownIcon,
     PencilIcon,
     TrashIcon
   },
