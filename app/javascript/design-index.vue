@@ -3,10 +3,10 @@
     <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
-      <button class="main-action-btn mt-10 mb-6" @click="newDesign">
+      <button class="main-action-btn mt-10 mb-4" @click="newDesign">
         ネイルデザインを登録
       </button>
-      <button class="sub-action-btn" @click="inquiry">お問い合わせ</button>
+      <button class="text-btn" @click="inquiry">お問い合わせ</button>
     </div>
     <div v-else>
       <div
