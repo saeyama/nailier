@@ -176,8 +176,9 @@
           </div>
         </div>
       </div>
-      <div class="p-2 text-lg">カラー・パーツ</div>
-      <external-link></external-link>
+      <div class="p-2">
+        <external-link></external-link>
+      </div>
       <color-input @update-color="updateColor"></color-input>
       <div
         v-if="design.colors.length > 0 || design.colorToDelete.length > 0"

@@ -1,34 +1,47 @@
 <template>
-  <ul class="mb-4">
-    <li>
-      <a
-        href="https://www.nailtat.com/"
-        class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
-        target="_blank"
-        rel="noopener">
-        TATから探す
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://www.nail-partner.com/"
-        class="external-link bg-no-repeat bg-right pl-2 pr-6 underline hover:text-gray-400"
-        target="_blank"
-        rel="noopener">
-        ネイルパートナーから探す
-      </a>
-    </li>
-  </ul>
+  <div>
+    <div class="text-lg">卸サイト</div>
+    <ul class="grid gap-1 ml-2 mt-2">
+      <li>
+        <a
+          href="https://www.nailtat.com/"
+          class="external-link"
+          target="_blank"
+          rel="noopener">
+          <span class="pr-1">TAT</span>
+          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://www.nail-partner.com/"
+          class="external-link"
+          target="_blank"
+          rel="noopener">
+          <span class="pr-1">ネイルパートナー</span>
+          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://www.naillabo.jp/"
+          class="external-link"
+          target="_blank"
+          rel="noopener">
+          <span class="pr-1">Nail Labo</span>
+          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1" />
+        </a>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline'
 export default {
+  components: {
+    ArrowTopRightOnSquareIcon
+  },
   name: 'ExternalLink'
 }
 </script>
-
-<style scoped>
-.external-link {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25' /%3E%3C/svg%3E%0A");
-}
-</style>
