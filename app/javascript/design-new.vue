@@ -35,10 +35,8 @@
         </label>
       </div>
       <div class="p-2 w-full text-lg">
-        <lable class="block mb-2">
-          画像&#65288;8枚まで&#65289;<br class="sm:hidden" />
-          <span class="text-sm">jpeg&#47;jpg&#47;png&middot;5MG以下</span>
-        </lable>
+        <label> 画像&#65288;8枚まで&#65289; </label>
+        <p class="mb-2 text-sm">jpeg&#47;jpg&#47;png&middot;5MG以下</p>
         <input
           type="file"
           name="design[images]"
@@ -117,9 +115,9 @@
           name="design[youtube_videos_attributes][][access_code]"
           id="design-youtube"
           @update-value="updateYoutubeVideo">
-          <template v-slot:label>
-            YouTube動画<br />
-            <span class="text-sm">URLは動画内の共有&rarr;コピーより取得</span>
+          <template v-slot:label> YouTube動画 </template>
+          <template v-slot:description>
+            URLは動画内の共有&rarr;コピーより取得
           </template>
         </child-text-input>
       </div>
@@ -283,11 +281,9 @@
           name="design[tags_attributes][][name]"
           id="design-tag"
           @update-value="updateTag">
-          <template v-slot:label>
-            タグ<br />
-            <span class="text-sm"
-              >重複登録した分のタグは保存されません。<br />リストからタグ検索ができます。</span
-            >
+          <template v-slot:label> タグ </template>
+          <template v-slot:description>
+            重複登録した分のタグは保存されません。<br />リストからタグ検索ができます。
           </template>
         </child-text-input>
         <div class="flex flex-wrap mt-2">
