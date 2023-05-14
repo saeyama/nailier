@@ -2,16 +2,6 @@
   <div class="text-gray-600 py-10 mx-auto mb-4">
     <h1 class="text-2xl text-center py-10">ネイルデザインを編集</h1>
     <div class="w-11/12 mx-auto">
-      <div class="p-2">
-        <lable class="text-lg">タイトル&#65288;入力必須&#65289;</lable>
-        <input
-          class="form-field"
-          type="text"
-          name="design[title]"
-          id="design-title"
-          placeholder="デザイン名・&#x25CB;&#x25CB;検定など"
-          v-model="design.title" />
-      </div>
       <div class="p-2 w-full text-lg">
         <label
           >ハンド&nbsp;
@@ -33,6 +23,16 @@
             id="foot"
             v-model="design.nailPart" />
         </label>
+      </div>
+      <div class="p-2">
+        <lable class="text-lg">タイトル&#65288;入力必須&#65289;</lable>
+        <input
+          class="form-field"
+          type="text"
+          name="design[title]"
+          id="design-title"
+          placeholder="デザイン名・&#x25CB;&#x25CB;検定など"
+          v-model="design.title" />
       </div>
       <div class="p-2 w-full text-lg">
         <label> 画像&#65288;8枚まで&#65289; </label>
