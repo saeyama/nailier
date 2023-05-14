@@ -57,40 +57,43 @@
           <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
           で登録する画像を選択できます。
         </div>
-        <div
-          v-if="design.images && design.images.length"
-          class="text-sm mb-8 mt-1 leading-6">
-          <span class="underline decoration-dotted underline-offset-2"
-            >ドラッグ&amp;ドロップで並び替え可能です。</span
-          ><br />
-          <span class="inline-block mt-2"
-            >アップロード数は現在&nbsp;<span class="text-xl">{{
-              design.images.length
-            }}</span
-            >&nbsp;枚です。</span
-          ><br />
-          <span class="underline underline-offset-2"
-            >8枚を超えた画像は登録されません。</span
-          ><br />
-        </div>
-        <draggable
-          v-model="design.images"
-          draggable=".item"
-          class="files grid grid-cols-3 md:grid-cols-4 gap-3">
-          <template #item="{ element }">
-            <div class="item relative mb-4 md:mb-8" :key="element">
-              <img
-                :src="element.url"
-                alt="登録画像"
-                class="z-0 aspect-[4/3] w-full object-cover" />
-              <div
-                @click="deleteImage(element)"
-                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+        <div v-if="design.images && design.images.length">
+          <div class="text-sm mb-8 mt-1 leading-6">
+            <span class="underline decoration-dotted underline-offset-2"
+              >ドラッグ&amp;ドロップで並び替え可能です。</span
+            ><br />
+            <span class="inline-block mt-2"
+              >アップロード数は現在&nbsp;<span class="text-xl">{{
+                design.images.length
+              }}</span
+              >&nbsp;枚です。</span
+            ><br />
+            <span class="underline underline-offset-2"
+              >8枚を超えた画像は登録されません。</span
+            >
+          </div>
+          <draggable
+            v-model="design.images"
+            draggable=".item"
+            class="files grid grid-cols-3 md:grid-cols-4 gap-3">
+            <template #item="{ element }">
+              <div class="item relative mb-4 md:mb-8" :key="element">
+                <img
+                  :src="element.url"
+                  alt="登録画像"
+                  class="z-0 aspect-[4/3] w-full object-cover" />
+                <div
+                  @click="deleteImage(element)"
+                  class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
+                  <img
+                    src="~minus.svg"
+                    alt="マイナスアイコン"
+                    class="w-5 h-5" />
+                </div>
               </div>
-            </div>
-          </template>
-        </draggable>
+            </template>
+          </draggable>
+        </div>
         <div v-if="design.imageToDelete.length > 0">
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
@@ -130,7 +133,9 @@
         <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
         で登録する動画を選択できます。
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
+      <div
+        v-if="saveYoutubeVideos.length > 0"
+        class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
           v-for="youtubeVideo in saveYoutubeVideos"
           :key="youtubeVideo"
@@ -183,7 +188,9 @@
         <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
         で登録するカラーを選択できます。
       </div>
-      <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
+      <div
+        v-if="saveColors.length > 0"
+        class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
         <div
           v-for="color in saveColors"
           :key="color"
