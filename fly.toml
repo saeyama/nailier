@@ -3,6 +3,7 @@
 app = "nailier"
 kill_signal = "SIGINT"
 kill_timeout = 5
+primary_region = "nrt"
 processes = []
 
 [build]
@@ -51,5 +52,5 @@ processes = []
   url_prefix = "/"
 
 [mounts]
-  source="nailier_active_storage_data"
+  source="nailier_data"
   destination="/data"
