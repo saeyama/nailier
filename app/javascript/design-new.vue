@@ -179,7 +179,9 @@
       <div class="p-2">
         <external-link></external-link>
       </div>
-      <color-input @update-color="updateColor"></color-input>
+      <div class="p-2">
+        <color-input @update-color="updateColor"></color-input>
+      </div>
       <div
         v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
         class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">

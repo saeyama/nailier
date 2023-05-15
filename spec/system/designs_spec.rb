@@ -273,7 +273,7 @@ RSpec.describe 'Designs', type: :system do
       it 'カラーピッカーでカラーをデザインに登録できる' do
         fill_in 'design-title', with: design.title
         choose 'foot'
-        check 'show-color-content'
+        find('.show-color-content').click
         expect(find('.colors-input')).to have_checked_field with: 'false'
         choose 'true'
         find('.vc-input__input').set('#000000')
@@ -288,7 +288,7 @@ RSpec.describe 'Designs', type: :system do
       it 'カラーパレットでカラーをデザインに登録できる' do
         fill_in 'design-title', with: design.title
         choose 'foot'
-        check 'show-color-content'
+        find('.show-color-content').click
         expect(find('.colors-input')).to have_checked_field with: 'false'
         click_on 'カラーパレット'
         find('ul.color-hexnumber').all('li')[0].click
