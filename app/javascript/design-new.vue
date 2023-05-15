@@ -1,8 +1,8 @@
 <template>
   <div class="text-gray-600 py-10 mx-auto mb-4">
     <h1 class="text-2xl text-center py-10">ネイルデザインを登録</h1>
-    <div class="w-11/12 mx-auto">
-      <div class="p-2 w-full text-lg">
+    <div class="w-11/12 mx-auto grid gap-y-12">
+      <div>
         <label
           >ハンド&nbsp;
           <input
@@ -24,7 +24,7 @@
             v-model="design.nailPart" />
         </label>
       </div>
-      <div class="p-2">
+      <div>
         <lable class="text-lg">タイトル&#65288;入力必須&#65289;</lable>
         <input
           class="form-field"
@@ -34,8 +34,8 @@
           placeholder="デザイン名・&#x25CB;&#x25CB;検定など"
           v-model="design.title" />
       </div>
-      <div class="p-2 w-full text-lg">
-        <label> 画像&#65288;8枚まで&#65289; </label>
+      <div>
+        <label class="text-lg"> 画像&#65288;8枚まで&#65289; </label>
         <p class="mb-2 text-sm">jpeg&#47;jpg&#47;png&middot;5MG以下</p>
         <input
           type="file"
@@ -43,8 +43,7 @@
           id="design-image"
           multiple="multiple"
           accept="image/*"
-          @change="uploadFiles"
-          class="text-sm w-64 md:text-lg md:w-full" />
+          @change="uploadFiles" />
         <div
           v-if="design.images.length > 0 || design.imageToDelete.length > 0"
           class="text-sm mt-6 flex gap-0.5 items-center">
@@ -109,8 +108,9 @@
           </div>
         </div>
       </div>
-      <div class="p-2 youtube-input">
+      <div>
         <child-text-input
+          class="youtube-input"
           placeholder="https://youtu.be/•••"
           name="design[youtube_videos_attributes][][access_code]"
           id="design-youtube"
@@ -120,102 +120,79 @@
             URLは動画内の共有&rarr;コピーより取得
           </template>
         </child-text-input>
-      </div>
-      <div
-        v-if="
-          design.youtubeVideos.length > 0 ||
-          design.youtubeVideoToDelete.length > 0
-        "
-        class="text-sm mt-2 mb-6 ml-2 flex gap-0.5 items-center">
-        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
-        で登録する動画を選択できます。
-      </div>
-      <div
-        v-if="design.youtubeVideos.length > 0"
-        class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
         <div
-          v-for="youtubeVideo in design.youtubeVideos"
-          :key="youtubeVideo"
-          class="relative">
-          <div class="w-full aspect-video">
-            <YoutubeVue3
-              :videoid="youtubeVideo.accessCode"
-              :autoplay="0"
-              class="z-0 w-full h-full">
-            </YoutubeVue3>
-          </div>
-          <div
-            @click="deleteYoutubeVideo(youtubeVideo)"
-            class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
-          </div>
+          v-if="
+            design.youtubeVideos.length > 0 ||
+            design.youtubeVideoToDelete.length > 0
+          "
+          class="text-sm mt-2 mb-6 ml-2 flex gap-0.5 items-center">
+          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+          で登録する動画を選択できます。
         </div>
-      </div>
-      <div v-if="design.youtubeVideoToDelete.length > 0">
-        <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
-          削除するyoutube動画
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
+        <div
+          v-if="design.youtubeVideos.length > 0"
+          class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
           <div
-            v-for="youtubeVideo in design.youtubeVideoToDelete"
+            v-for="youtubeVideo in design.youtubeVideos"
             :key="youtubeVideo"
             class="relative">
             <div class="w-full aspect-video">
               <YoutubeVue3
                 :videoid="youtubeVideo.accessCode"
                 :autoplay="0"
-                class="z-0 w-full h-full opacity-60">
+                class="z-0 w-full h-full">
               </YoutubeVue3>
             </div>
             <div
-              @click="saveYoutubeVideo(youtubeVideo)"
+              @click="deleteYoutubeVideo(youtubeVideo)"
               class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+            </div>
+          </div>
+        </div>
+        <div v-if="design.youtubeVideoToDelete.length > 0">
+          <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
+            削除するyoutube動画
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
+            <div
+              v-for="youtubeVideo in design.youtubeVideoToDelete"
+              :key="youtubeVideo"
+              class="relative">
+              <div class="w-full aspect-video">
+                <YoutubeVue3
+                  :videoid="youtubeVideo.accessCode"
+                  :autoplay="0"
+                  class="z-0 w-full h-full opacity-60">
+                </YoutubeVue3>
+              </div>
+              <div
+                @click="saveYoutubeVideo(youtubeVideo)"
+                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
+                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="p-2">
+      <div>
         <external-link></external-link>
       </div>
-      <div class="p-2">
+      <div>
         <color-input @update-color="updateColor"></color-input>
-      </div>
-      <div
-        v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
-        class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">
-        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
-        で登録するカラーを選択できます。
-      </div>
-      <div
-        v-if="design.colors.length > 0"
-        class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
         <div
-          v-for="color in design.colors"
-          :key="color"
-          :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md mb-4">
-          <div v-if="color.lame" class="relative">
-            <img
-              src="~lame.png"
-              alt="ラメ"
-              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-          </div>
-          <div v-else-if="!color.lame"></div>
-          <div
-            @click="deleteColor(color)"
-            class="ml-6 -mt-2 cursor-pointer absolute z-20">
-            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
-          </div>
+          v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
+          class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">
+          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
+          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+          で登録するカラーを選択できます。
         </div>
-      </div>
-      <div v-if="design.colorToDelete.length > 0">
-        <div class="text-sm mx-2 my-4 md:my-8 md:text-base">削除するカラー</div>
-        <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
+        <div
+          v-if="design.colors.length > 0"
+          class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
           <div
-            v-for="color in design.colorToDelete"
+            v-for="color in design.colors"
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
             class="w-8 h-8 rounded-full shadow-md mb-4">
@@ -227,50 +204,75 @@
             </div>
             <div v-else-if="!color.lame"></div>
             <div
-              class="ml-6 -mt-2 cursor-pointer absolute z-20"
-              @click="saveColor(color)">
-              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+              @click="deleteColor(color)"
+              class="ml-6 -mt-2 cursor-pointer absolute z-20">
+              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
             </div>
           </div>
         </div>
-      </div>
-      <div class="p-2">
-        <part-input @update-part="updatePart"></part-input>
-      </div>
-      <div v-for="part in design.parts" :key="part" class="my-4 mx-2">
-        <div class="flex justify-between items-center">
-          <div class="flex items-center">
-            <div class="mr-4">
-              <span class="font-semibold md:w-48 md:inline-block">{{
-                part.name
-              }}</span
-              ><br class="md:hidden" />
-              <input
-                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 px-4 leading-8 duration-200 ease-in-out w-16 md:w-20"
-                type="text"
-                name="size"
-                v-model="part.size" />
-              <input
-                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 pl-2 leading-8 duration-200 ease-in-out w-12 md:w-16"
-                type="number"
-                min="0"
-                onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
-                name="quantity"
-                placeholder="0"
-                v-model="part.quantity" />&nbsp;個
-            </div>
-            <div v-if="!part.hexNumber" class="w-8 h-8 mt-6 md:mt-0"></div>
+        <div v-if="design.colorToDelete.length > 0">
+          <div class="text-sm mx-2 my-4 md:my-8 md:text-base">
+            削除するカラー
+          </div>
+          <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
             <div
-              v-else
-              :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
-          </div>
-          <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+              v-for="color in design.colorToDelete"
+              :key="color"
+              :style="colorShowHexNumber(color.hexNumber)"
+              class="w-8 h-8 rounded-full shadow-md mb-4">
+              <div v-if="color.lame" class="relative">
+                <img
+                  src="~lame.png"
+                  alt="ラメ"
+                  class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+              </div>
+              <div v-else-if="!color.lame"></div>
+              <div
+                class="ml-6 -mt-2 cursor-pointer absolute z-20"
+                @click="saveColor(color)">
+                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="p-2">
+      <div>
+        <part-input @update-part="updatePart"></part-input>
+        <div v-for="part in design.parts" :key="part" class="my-4 mx-2">
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="mr-4">
+                <span class="font-semibold md:w-48 md:inline-block">{{
+                  part.name
+                }}</span
+                ><br class="md:hidden" />
+                <input
+                  class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 px-4 leading-8 duration-200 ease-in-out w-16 md:w-20"
+                  type="text"
+                  name="size"
+                  v-model="part.size" />
+                <input
+                  class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 pl-2 leading-8 duration-200 ease-in-out w-12 md:w-16"
+                  type="number"
+                  min="0"
+                  onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+                  name="quantity"
+                  placeholder="0"
+                  v-model="part.quantity" />&nbsp;個
+              </div>
+              <div v-if="!part.hexNumber" class="w-8 h-8 mt-6 md:mt-0"></div>
+              <div
+                v-else
+                :style="colorShowHexNumber(part.hexNumber)"
+                class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
+            </div>
+            <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
+              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
         <lable class="text-lg">調べた内容・メモ</lable>
         <textarea
           class="form-field"
@@ -280,8 +282,9 @@
           v-model="design.description">
         </textarea>
       </div>
-      <div class="p-2 mb-8 tags-input">
+      <div>
         <child-text-input
+          class="tags-input"
           placeholder="カラー名・&#x25CB;&#x25CB;系など"
           name="design[tags_attributes][][name]"
           id="design-tag"
