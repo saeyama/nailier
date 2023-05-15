@@ -1,105 +1,115 @@
 <template>
   <div class="parts-input">
-    <div class="p-2 text-lg mb-2">
-      パーツ内容を登録する
-      <input type="checkbox" id="show-part-content" @click="showPartContent" />
-    </div>
-    <div
-      class="p-2 md:p-4 mb-4 w-full md:px-8 border border-gray-300 rounded"
-      v-show="partContent">
-      <input
-        class="form-field"
-        type="text"
-        name="design[parts_attributes][][name]"
-        id="design-part-name"
-        placeholder="パーツ名を入力or下記より選択"
-        v-model="part.name" />
-      <div class="my-4 px-2">
-        <button
-          v-for="(candidateName, index) in part.candidateNamesList.name"
-          :key="index"
-          @click="selectPartName(index)"
-          class="cursor-pointer mr-4 my-1 hover:font-bold">
-          {{ candidateName }}
-        </button>
-      </div>
-      <input
-        class="form-field"
-        type="text"
-        name="design[parts_attributes][][size]"
-        id="design-part-size"
-        placeholder="大きさを入力or下記より選択"
-        v-model="part.size" />
-      <div class="my-4 px-2">
-        <button
-          v-for="(candidateSize, index) in part.candidateNamesList.size"
-          :key="index"
-          @click="selectPartSize(index)"
-          class="cursor-pointer mr-4 my-1 hover:font-bold">
-          {{ candidateSize }}
-        </button>
-      </div>
+    <div class="text-lg border-solid">パーツ</div>
+    <div class="border border-gray-200 rounded mt-1">
       <div
-        class="flex justify-between items-center mb-6 rounded border border-gray-300 px-4 py-2">
-        <label>個数</label>
+        @click="showPartContent"
+        class="px-1 py-2 sm:p-2 mx-2 flex justify-between items-start cursor-pointer">
+        <span>登録する</span>
+        <PlusIcon
+          :class="
+            partContent
+              ? 'rotate-45 transition duration-500 ease-in-out'
+              : 'transition duration-500 ease-in-out'
+          "
+          class="show-part-content w-6 h-6 stroke-1" />
+      </div>
+      <hr :class="partContent ? '' : 'hidden'" />
+      <div class="p-2 md:p-4 mb-4 w-full md:px-8" v-show="partContent">
         <input
-          class="form-field w-20"
-          type="number"
-          name="design[parts_attributes][][quantity]"
-          id="design-part-quantity"
-          min="1"
-          onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
-          v-model="part.quantity" />
-      </div>
-
-      <div
-        class="flex justify-between items-center w-full rounded border border-gray-300 px-4 py-2">
-        <label>カラー</label>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="show-part-color-content w-6 h-6"
-          :class="{ 'rotate-to-open': partColorContent }"
-          @click="showPartColorContent">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-        </svg>
-      </div>
-      <div
-        class="rounded-b-lg border border-gray-300 py-6"
-        v-show="partColorContent">
-        <ul
-          class="part-hexnumber grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
-          <li
-            v-for="(hexNumber, index) in colorPaletteHexNumbers"
+          class="form-field px-2 sm:px-4"
+          type="text"
+          name="design[parts_attributes][][name]"
+          id="design-part-name"
+          placeholder="パーツ名を入力or下記より選択"
+          v-model="part.name" />
+        <div class="my-4 px-2">
+          <button
+            v-for="(candidateName, index) in part.candidateNamesList.name"
             :key="index"
-            :style="colorShowHexNumber(hexNumber)"
-            class="w-8 h-8 rounded-full cursor-pointer shadow-md">
-            <input
-              type="radio"
-              v-model="part.hexNumber"
-              :value="hexNumber"
-              name="design[parts_attributes][][hex_number]"
-              class="checkbox-btn" />
-          </li>
-        </ul>
+            @click="selectPartName(index)"
+            class="cursor-pointer mr-4 my-1 hover:font-bold">
+            {{ candidateName }}
+          </button>
+        </div>
+        <input
+          class="form-field px-2 sm:px-4"
+          type="text"
+          name="design[parts_attributes][][size]"
+          id="design-part-size"
+          placeholder="大きさを入力or下記より選択"
+          v-model="part.size" />
+        <div class="my-4 px-2">
+          <button
+            v-for="(candidateSize, index) in part.candidateNamesList.size"
+            :key="index"
+            @click="selectPartSize(index)"
+            class="cursor-pointer mr-4 my-1 hover:font-bold">
+            {{ candidateSize }}
+          </button>
+        </div>
+        <div
+          class="flex justify-between items-center mb-6 rounded border border-gray-200 px-2 sm:px-4 py-2">
+          <label>個数</label>
+          <input
+            class="form-field w-20"
+            type="number"
+            name="design[parts_attributes][][quantity]"
+            id="design-part-quantity"
+            min="1"
+            onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+            v-model="part.quantity" />
+        </div>
+        <div class="border border-gray-200 rounded">
+          <div
+            @click="showPartColorContent"
+            class="flex justify-between items-center w-full px-2 sm:px-4 py-2">
+            <label>カラー</label>
+            <ChevronRightIcon
+              :class="
+                partColorContent
+                  ? 'rotate-90 transition duration-500 ease-in-out'
+                  : 'transition duration-500 ease-in-out'
+              "
+              class="show-part-color-content w-6 h-6 stroke-1" />
+          </div>
+          <hr :class="partColorContent ? '' : 'hidden'" />
+          <div class="py-6" v-show="partColorContent">
+            <ul
+              class="part-hexnumber grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
+              <li
+                v-for="(hexNumber, index) in colorPaletteHexNumbers"
+                :key="index"
+                :style="colorShowHexNumber(hexNumber)"
+                class="w-8 h-8 rounded-full cursor-pointer shadow-md">
+                <input
+                  type="radio"
+                  v-model="part.hexNumber"
+                  :value="hexNumber"
+                  name="design[parts_attributes][][hex_number]"
+                  class="checkbox-btn" />
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button
+          class="main-action-btn mt-6 mb-4 md:mt-8 md:mb-4"
+          @click="updatePart">
+          決定
+        </button>
       </div>
-      <button
-        class="main-action-btn mt-6 mb-4 md:mt-8 md:mb-4"
-        @click="updatePart">
-        決定
-      </button>
     </div>
   </div>
 </template>
 
 <script>
+import { PlusIcon } from '@heroicons/vue/24/outline'
+import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 export default {
+  components: {
+    PlusIcon,
+    ChevronRightIcon
+  },
   name: 'PartInput',
   data() {
     return {

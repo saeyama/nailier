@@ -237,7 +237,7 @@ RSpec.describe 'Designs', type: :system do
         visit new_design_path
         fill_in 'design-title', with: design.title
         choose 'foot'
-        check 'show-part-content'
+        find('.show-part-content').click
         fill_in 'design-part-name', with: 'ラインストーン'
         fill_in 'design-part-size', with: 'ss20'
         expect(find('.parts-input')).to have_content(1)
@@ -256,7 +256,7 @@ RSpec.describe 'Designs', type: :system do
         visit new_design_path
         fill_in 'design-title', with: design.title
         choose 'foot'
-        check 'show-part-content'
+        find('.show-part-content').click
         fill_in 'design-part-name', with: ''
         fill_in 'design-part-size', with: 'ss20'
         fill_in 'design-part-quantity', with: 6

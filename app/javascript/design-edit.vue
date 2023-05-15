@@ -234,8 +234,10 @@
           </div>
         </div>
       </div>
-      <part-input @update-part="updatePart"></part-input>
-      <div v-for="part in saveParts" :key="part" class="mb-4 mx-2">
+      <div class="p-2">
+        <part-input @update-part="updatePart"></part-input>
+      </div>
+      <div v-for="part in saveParts" :key="part" class="my-4 mx-2">
         <div class="flex justify-between items-center">
           <div class="flex items-center">
             <div class="mr-4">
