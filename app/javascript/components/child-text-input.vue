@@ -1,7 +1,6 @@
 <template>
   <div>
-    <label class="text-lg" for=""><slot name="label">label</slot></label>
-    <p class="text-sm"><slot name="description">description</slot></p>
+    <label class="text-lg"><slot name="label">label</slot></label>
     <div class="flex gap-2">
       <input
         class="form-field my-auto"
@@ -17,6 +16,9 @@
         決定
       </button>
     </div>
+    <p class="mt-0.5 text-xs">
+      <slot name="description">description</slot>
+    </p>
   </div>
 </template>
 

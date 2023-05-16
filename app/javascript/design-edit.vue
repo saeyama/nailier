@@ -136,14 +136,14 @@
         </child-text-input>
         <div
           v-if="design.youtubeVideos.length > 0"
-          class="text-sm mt-2 mb-6 ml-2 flex gap-0.5 items-center">
+          class="text-sm my-6 flex gap-0.5 items-center">
           <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
           <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
           で登録する動画を選択できます。
         </div>
         <div
           v-if="saveYoutubeVideos.length > 0"
-          class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
+          class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
           <div
             v-for="youtubeVideo in saveYoutubeVideos"
             :key="youtubeVideo"
@@ -163,10 +163,10 @@
           </div>
         </div>
         <div v-if="deleteYoutubeVideos.length > 0">
-          <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
+          <div class="text-sm my-4 md:my-8 md:text-base">
             削除するYouTube動画
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
             <div
               v-for="youtubeVideo in deleteYoutubeVideos"
               :key="youtubeVideo"
