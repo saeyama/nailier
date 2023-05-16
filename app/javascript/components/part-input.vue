@@ -15,7 +15,7 @@
           class="show-part-content w-6 h-6 stroke-1" />
       </div>
       <hr :class="partContent ? '' : 'hidden'" />
-      <div class="p-2 md:p-4 mb-4 w-full md:px-8" v-show="partContent">
+      <div class="mx-2 sm:mx-4 mt-6" v-show="partContent">
         <input
           class="form-field px-2 sm:px-4"
           type="text"
@@ -49,10 +49,10 @@
           </button>
         </div>
         <div
-          class="flex justify-between items-center mb-6 rounded border border-gray-200 px-2 sm:px-4 py-2">
-          <label>個数</label>
+          class="flex justify-between items-center mb-6 rounded border border-gray-200 py-1 px-4">
+          <label for="design-part-quantity">個数</label>
           <input
-            class="form-field w-20"
+            class="form-field w-20 h-8 rounded"
             type="number"
             name="design[parts_attributes][][quantity]"
             id="design-part-quantity"
@@ -92,9 +92,7 @@
             </ul>
           </div>
         </div>
-        <button
-          class="main-action-btn mt-6 mb-4 md:mt-8 md:mb-4"
-          @click="updatePart">
+        <button class="main-action-btn w-60 my-8 sm:my-10" @click="updatePart">
           決定
         </button>
       </div>
