@@ -17,36 +17,9 @@
           class="show-color-content w-6 h-6 stroke-1" />
       </div>
       <hr :class="colorContent ? '' : 'hidden'" />
-      <div class="mb-4" v-show="colorContent">
-        <div class="color-lame flex items-center">
-          <label for="lame" class="mr-2">ラメ</label>
-          <!-- テスト用 -->
-          <input
-            type="radio"
-            v-model="color.lame"
-            :value="false"
-            class="hidden" />
-          <input
-            type="radio"
-            v-model="color.lame"
-            :value="true"
-            class="hidden" />
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                v-model="color.lame"
-                id="lame"
-                name="design[colors_attributes][][lame]"
-                class="peer sr-only" />
-              <span
-                class="lame-toggle block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-700 peer-checked:after:translate-x-full">
-              </span>
-            </label>
-          </div>
-        </div>
+      <div v-show="colorContent">
         <div
-          class="flex justify-around gap-2 md:gap-4 mb-6 md:mb-10 max-w-xl mx-2 sm:mx-auto">
+          class="flex justify-around gap-2 md:gap-4 w-11/12 sm:w-8/12 my-8 sm:my-10 mx-auto">
           <button
             :class="!showColorPicker ? 'switch-color-button' : ''"
             @click="switchToColorPicker"
@@ -60,8 +33,40 @@
             カラーパレット
           </button>
         </div>
+        <div
+          class="color-lame flex justify-start items-center w-10/12 sm:w-5/12 mx-auto mb-3">
+          <label for="lame">
+            <SparklesIcon
+              alt="ラメ"
+              class="show-color-content w-5 h-5 stroke-1 text-gray-400" />
+          </label>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                v-model="color.lame"
+                id="lame"
+                name="design[colors_attributes][][lame]"
+                class="peer sr-only" />
+              <span
+                class="lame-toggle block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-600 peer-checked:after:translate-x-full">
+              </span>
+            </label>
+            <!-- テスト用 -->
+            <input
+              type="radio"
+              v-model="color.lame"
+              :value="false"
+              class="hidden" />
+            <input
+              type="radio"
+              v-model="color.lame"
+              :value="true"
+              class="hidden" />
+          </div>
+        </div>
         <div v-show="showColorPicker">
-          <div class="relative h-64">
+          <div class="relative h-[244.75px]">
             <img
               src="~color-picker-lame.png"
               alt="ラメ"
@@ -99,9 +104,7 @@
             </ul>
           </div>
         </div>
-        <button
-          class="main-action-btn mt-4 mb-6 md:mt-6 md:mb-8"
-          @click="updateColor">
+        <button class="main-action-btn w-60 my-8 sm:my-10" @click="updateColor">
           決定
         </button>
       </div>
@@ -110,12 +113,14 @@
 </template>
 
 <script>
+import { SparklesIcon } from '@heroicons/vue/24/outline'
 import { PlusIcon } from '@heroicons/vue/24/outline'
 import { Chrome } from '@ckpack/vue-color'
 import 'color-picker-lame.png'
 import 'lame.png'
 export default {
   components: {
+    SparklesIcon,
     PlusIcon,
     'chrome-picker': Chrome
   },
