@@ -18,27 +18,32 @@
       </div>
       <hr :class="colorContent ? '' : 'hidden'" />
       <div class="mb-4" v-show="colorContent">
-        <div class="my-4 md:mb-8 pl-2 md:pl-8">
-          ラメ&emsp;
-          <lable
-            >なし&nbsp;
-            <input
-              type="radio"
-              v-model="color.lame"
-              name="design[colors_attributes][][lame]"
-              :value="false"
-              id="false" />
-          </lable>
-          &emsp;
-          <lable
-            >あり&nbsp;
-            <input
-              type="radio"
-              v-model="color.lame"
-              name="design[colors_attributes][][lame]"
-              :value="true"
-              id="true" />
-          </lable>
+        <div class="color-lame flex items-center">
+          <label for="lame" class="mr-2">ラメ</label>
+          <!-- テスト用 -->
+          <input
+            type="radio"
+            v-model="color.lame"
+            :value="false"
+            class="hidden" />
+          <input
+            type="radio"
+            v-model="color.lame"
+            :value="true"
+            class="hidden" />
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                v-model="color.lame"
+                id="lame"
+                name="design[colors_attributes][][lame]"
+                class="peer sr-only" />
+              <span
+                class="lame-toggle block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-700 peer-checked:after:translate-x-full">
+              </span>
+            </label>
+          </div>
         </div>
         <div
           class="flex justify-around gap-2 md:gap-4 mb-6 md:mb-10 max-w-xl mx-2 sm:mx-auto">

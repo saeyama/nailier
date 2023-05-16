@@ -274,8 +274,9 @@ RSpec.describe 'Designs', type: :system do
         fill_in 'design-title', with: design.title
         choose 'foot'
         find('.show-color-content').click
-        expect(find('.colors-input')).to have_checked_field with: 'false'
-        choose 'true'
+        expect(find('.color-lame')).to have_checked_field with: 'false', visible: :all
+        find('.lame-toggle').click
+        expect(find('.color-lame')).to have_checked_field with: 'true', visible: :all
         find('.vc-input__input').set('#000000')
         within '.colors-input' do
           click_button '決定'
@@ -289,7 +290,7 @@ RSpec.describe 'Designs', type: :system do
         fill_in 'design-title', with: design.title
         choose 'foot'
         find('.show-color-content').click
-        expect(find('.colors-input')).to have_checked_field with: 'false'
+        expect(find('.color-lame')).to have_checked_field with: 'false', visible: :all
         click_on 'カラーパレット'
         find('ul.color-hexnumber').all('li')[0].click
         within '.colors-input' do
