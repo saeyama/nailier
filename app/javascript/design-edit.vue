@@ -168,7 +168,7 @@
           <div class="text-sm my-4 md:my-8 md:text-base">
             削除するYouTube動画
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div
               v-for="youtubeVideo in deleteYoutubeVideos"
               :key="youtubeVideo"
@@ -196,14 +196,14 @@
         <color-input @update-color="updateColor"></color-input>
         <div
           v-if="design.colors.length > 0"
-          class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">
+          class="text-sm my-6 flex gap-0.5 items-center">
           <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
           <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
           で登録するカラーを選択できます。
         </div>
         <div
           v-if="saveColors.length > 0"
-          class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
+          class="grid grid-cols-5 mb-2 sm:grid-cols-10">
           <div
             v-for="color in saveColors"
             :key="color"
@@ -224,10 +224,8 @@
           </div>
         </div>
         <div v-if="deleteColors.length > 0">
-          <div class="text-sm mx-2 my-4 md:my-8 md:text-base">
-            削除するカラー
-          </div>
-          <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
+          <div class="text-sm my-4 md:my-8 md:text-base">削除するカラー</div>
+          <div class="grid grid-cols-5 sm:grid-cols-10">
             <div
               v-for="color in deleteColors"
               :key="color"
@@ -251,7 +249,7 @@
       </div>
       <div>
         <part-input @update-part="updatePart"></part-input>
-        <div v-for="part in saveParts" :key="part" class="my-4 mx-2">
+        <div v-for="part in saveParts" :key="part" class="my-4">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <div class="mr-4">
