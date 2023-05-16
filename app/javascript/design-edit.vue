@@ -25,7 +25,9 @@
         </label>
       </div>
       <div>
-        <lable class="text-lg">タイトル&#65288;入力必須&#65289;</lable>
+        <label for="design-title" class="text-lg"
+          >タイトル&#65288;入力必須&#65289;</label
+        >
         <input
           class="form-field"
           type="text"
@@ -284,7 +286,7 @@
         </div>
       </div>
       <div>
-        <lable class="text-lg">調べた内容・メモ</lable>
+        <label for="design-description" class="text-lg">調べた内容・メモ</label>
         <textarea
           class="form-field"
           placeholder="手順・カラー番号・注意点など"

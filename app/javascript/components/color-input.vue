@@ -1,6 +1,8 @@
 <template>
   <div class="colors-input">
-    <div class="text-lg border-solid">カラーイメージ</div>
+    <label @click="showColorContent" class="text-lg border-solid"
+      >カラーイメージ</label
+    >
     <div class="border border-gray-200 rounded mt-1">
       <div
         @click="showColorContent"

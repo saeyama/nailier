@@ -1,6 +1,6 @@
 <template>
   <div class="parts-input">
-    <div class="text-lg border-solid">パーツ</div>
+    <label @click="showPartContent" class="text-lg border-solid">パーツ</label>
     <div class="border border-gray-200 rounded mt-1">
       <div
         @click="showPartContent"
