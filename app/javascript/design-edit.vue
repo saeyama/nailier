@@ -35,15 +35,26 @@
           v-model="design.title" />
       </div>
       <div>
-        <label class="text-lg"> 画像&#65288;8枚まで&#65289; </label>
-        <p class="mb-2 text-sm">jpeg&#47;jpg&#47;png&middot;5MG以下</p>
-        <input
-          type="file"
-          name="design[images]"
-          id="design-image"
-          multiple="multiple"
-          accept="image/*"
-          @change="uploadFiles" />
+        <label for="design-image" class="block text-lg"
+          >画像&#65288;8枚まで&#65289;</label
+        >
+        <div class="mt-2">
+          <label
+            class="inline-block p-2 bg-gray-100 border border-gray-300 text-gray-500 hover:opacity-70 rounded cursor-pointer">
+            <input
+              type="file"
+              name="design[images]"
+              id="design-image"
+              multiple="multiple"
+              accept="image/*"
+              @change="uploadFiles"
+              class="hidden" />
+            ファイルを選択
+          </label>
+          <p class="mt-0.5 text-xs text-gray-600 text-justify">
+            jpeg&#47;jpg&#47;png&middot;5MG以下
+          </p>
+        </div>
         <div
           v-if="
             (design.images && design.images.length > 0) ||
