@@ -261,35 +261,31 @@
       </div>
       <div>
         <part-input @update-part="updatePart"></part-input>
-        <div v-for="part in saveParts" :key="part" class="my-4">
-          <div class="flex justify-between items-center">
-            <div class="flex items-center">
-              <div class="mr-4">
-                <span class="font-semibold md:w-48 md:inline-block">{{
-                  part.name
-                }}</span
-                ><br class="md:hidden" />
-                <input
-                  class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 px-4 leading-8 duration-200 ease-in-out w-16 md:w-20"
-                  type="text"
-                  name="size"
-                  v-model="part.size" />
-                <input
-                  class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 pl-2 leading-8 duration-200 ease-in-out w-12 md:w-16"
-                  type="number"
-                  min="0"
-                  onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
-                  name="quantity"
-                  placeholder="0"
-                  v-model="part.quantity" />&nbsp;個
-              </div>
-              <div v-if="!part.hexNumber" class="w-8 h-8 mt-6 md:mt-0"></div>
-              <div
-                v-else
-                :style="colorShowHexNumber(part.hexNumber)"
-                class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
+        <div v-for="part in saveParts" :key="part" class="mt-4">
+          <div class="flex flex-wrap justify-between items-center sm:gap-10">
+            <div class="w-full sm:flex-1">{{ part.name }}</div>
+            <div class="">
+              <input
+                class="form-field mr-2 rounded w-16 md:w-20 h-10"
+                type="text"
+                name="size"
+                v-model="part.size" />
+              <input
+                class="form-field mr-1 rounded w-16 md:w-20 h-10"
+                type="number"
+                min="0"
+                onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
+                name="quantity"
+                placeholder="0"
+                v-model="part.quantity" />
+              個
             </div>
-            <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
+            <div v-if="!part.hexNumber" class="w-8 h-8"></div>
+            <div
+              v-else
+              :style="colorShowHexNumber(part.hexNumber)"
+              class="rounded-full shadow-md w-8 h-8"></div>
+            <div @click="deletePart(part)" class="cursor-pointer">
               <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
             </div>
           </div>
@@ -317,12 +313,12 @@
             重複登録した分のタグは保存されません。<br />リストからタグ検索ができます。
           </template>
         </child-text-input>
-        <div class="flex flex-wrap mt-2">
+        <div class="flex flex-wrap mt-2 gap-x-6 gap-y-2">
           <div
             v-for="tag in saveTags"
             :key="tag"
-            class="mr-4 py-1 rounded flex justify-start items-center">
-            <div class="mr-2 font-semibold">
+            class="rounded flex justify-start items-center">
+            <div class="mr-2">
               {{ tag.name }}
             </div>
             <div @click="deleteTag(tag)" class="cursor-pointer">

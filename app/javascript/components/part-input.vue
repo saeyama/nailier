@@ -205,7 +205,7 @@ export default {
       )
       this.part.name = ''
       this.part.size = ''
-      this.part.quantity = ''
+      this.part.quantity = '1'
       this.part.hexNumber = ''
     }
   }
