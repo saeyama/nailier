@@ -35,11 +35,13 @@
         </p>
       </div>
       <div>
-        <label for="design-title" class="text-lg"
-          >タイトル&#65288;入力必須&#65289;</label
-        >
+        <label
+          for="design-title"
+          class="block rerative text-lg after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1">
+          タイトル
+        </label>
         <input
-          class="form-field"
+          class="form-field mt-1"
           type="text"
           name="design[title]"
           id="design-title"
@@ -48,9 +50,9 @@
       </div>
       <div>
         <label for="design-image" class="block text-lg"
-          >画像&#65288;8枚まで&#65289;</label
+          >画像&nbsp;&#42;8枚まで</label
         >
-        <div class="mt-2">
+        <div class="mt-1">
           <label
             class="inline-block p-2 bg-gray-100 border border-gray-300 text-gray-500 hover:opacity-70 rounded cursor-pointer">
             <input
