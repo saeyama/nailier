@@ -50,7 +50,7 @@
       </div>
       <div>
         <label for="design-image" class="block text-lg"
-          >画像&nbsp;&#42;8枚まで</label
+          >画像&nbsp;&#47;&nbsp;8枚まで</label
         >
         <div class="mt-1">
           <label
@@ -74,50 +74,42 @@
             (design.images && design.images.length > 0) ||
             design.imageToDelete.length > 0
           "
-          class="text-sm mt-6 flex gap-0.5 items-center">
-          <XMarkIcon alt="削除アイコン" class="select-icon w-4 h-4" />
-          <ArrowUturnUpIcon
-            alt="削除取消アイコン"
-            class="select-icon w-4 h-4" />
-          で登録する画像を選択できます。
-        </div>
-        <div v-if="design.images && design.images.length">
-          <div class="text-sm mb-8 mt-1 leading-6">
-            <span class="underline decoration-dotted underline-offset-2"
-              >ドラッグ&amp;ドロップで並び替え可能です。</span
-            ><br />
-            <span class="inline-block mt-2"
-              >アップロード数は現在&nbsp;<span class="text-xl">{{
-                design.images.length
-              }}</span
-              >&nbsp;枚です。</span
-            ><br />
-            <span class="underline underline-offset-2"
-              >8枚を超えた画像は登録されません。</span
-            >
+          class="my-6 text-sm">
+          <div class="flex justify-start items-center gap-1">
+            <ExclamationTriangleIcon alt="注意" class="w-6 h-6" />
+            8枚を超えた画像は登録されません。
           </div>
-          <draggable
-            v-model="design.images"
-            draggable=".item"
-            class="files grid grid-cols-3 md:grid-cols-4 gap-3">
-            <template #item="{ element }">
-              <div
-                @click="deleteImage(element)"
-                class="item relative mb-4 md:mb-8 cursor-pointer"
-                :key="element">
-                <img
-                  :src="element.url"
-                  alt="登録画像"
-                  class="aspect-[4/3] w-full object-cover" />
-                <XMarkIcon
-                  alt="削除アイコン"
-                  class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
-              </div>
-            </template>
-          </draggable>
+          <div class="flex justify-start items-center gap-1">
+            <InformationCircleIcon alt="注意" class="w-6 h-6" />
+            ドラッグ&amp;ドロップで並び替え可能です。
+          </div>
         </div>
+        <draggable
+          v-if="design.images && design.images.length"
+          v-model="design.images"
+          draggable=".item"
+          class="files grid grid-cols-3 md:grid-cols-4 gap-3">
+          <template #item="{ element }">
+            <div
+              @click="deleteImage(element)"
+              class="item relative mb-4 md:mb-8 cursor-pointer"
+              :key="element">
+              <img
+                :src="element.url"
+                alt="登録画像"
+                class="aspect-[4/3] w-full object-cover" />
+              <XMarkIcon
+                alt="削除アイコン"
+                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
+            </div>
+          </template>
+        </draggable>
         <div v-if="design.imageToDelete.length > 0">
-          <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
+          <hr class="mb-2" />
+          <div class="text-sm flex justify-start items-center gap-1 mb-6">
+            <ExclamationTriangleIcon alt="削除" class="w-6 h-6" />
+            以下の画像は保存されません。
+          </div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
             <div
               @click="saveImage(image)"
@@ -355,6 +347,8 @@ import PartInput from './components/part-input.vue'
 import ColorInput from './components/color-input.vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ArrowUturnUpIcon } from '@heroicons/vue/24/outline'
+import { InformationCircleIcon } from '@heroicons/vue/24/outline'
+import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 import 'lame.png'
 export default {
   components: {
@@ -365,7 +359,9 @@ export default {
     PartInput,
     ColorInput,
     XMarkIcon,
-    ArrowUturnUpIcon
+    ArrowUturnUpIcon,
+    InformationCircleIcon,
+    ExclamationTriangleIcon
   },
   data() {
     return {
