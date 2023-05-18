@@ -72,8 +72,10 @@
         <div
           v-if="design.images.length > 0 || design.imageToDelete.length > 0"
           class="text-sm mt-6 flex gap-0.5 items-center">
-          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+          <XMarkIcon alt="削除アイコン" class="w-4 h-4 select-icon" />
+          <ArrowUturnUpIcon
+            alt="削除取消アイコン"
+            class="w-4 h-4 select-icon" />
           で登録する画像を選択できます。
         </div>
         <div v-if="design.images.length > 0">
@@ -96,19 +98,17 @@
             draggable=".item"
             class="files grid grid-cols-3 md:grid-cols-4 gap-3">
             <template #item="{ element }">
-              <div class="item relative mb-4 md:mb-8" :key="element">
+              <div
+                @click="deleteImage(element)"
+                class="item relative mb-4 md:mb-8 cursor-pointer"
+                :key="element">
                 <img
                   :src="element"
                   alt="登録画像"
-                  class="z-0 aspect-[4/3] w-full object-cover" />
-                <div
-                  @click="deleteImage(element)"
-                  class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                  <img
-                    src="~minus.svg"
-                    alt="マイナスアイコン"
-                    class="w-5 h-5" />
-                </div>
+                  class="aspect-[4/3] w-full object-cover" />
+                <XMarkIcon
+                  alt="削除アイコン"
+                  class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
               </div>
             </template>
           </draggable>
@@ -117,18 +117,17 @@
           <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
             <div
-              class="relative mb-4 md:mb-8"
+              @click="saveImage(image)"
+              class="relative mb-4 md:mb-8 cursor-pointer"
               v-for="image in design.imageToDelete"
               :key="image">
               <img
                 :src="image"
                 alt="削除画像"
-                class="z-0 aspect-[4/3] w-full object-cover opacity-60" />
-              <div
-                @click="saveImage(image)"
-                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
-              </div>
+                class="aspect-[4/3] w-full object-cover opacity-60" />
+              <ArrowUturnUpIcon
+                alt="削除取消アイコン"
+                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
             </div>
           </div>
         </div>
@@ -152,8 +151,10 @@
             design.youtubeVideoToDelete.length > 0
           "
           class="text-sm my-6 flex gap-0.5 items-center">
-          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+          <XMarkIcon alt="削除アイコン" class="w-4 h-4 select-icon" />
+          <ArrowUturnUpIcon
+            alt="削除取消アイコン"
+            class="w-4 h-4 select-icon" />
           で登録する動画を選択できます。
         </div>
         <div
@@ -163,17 +164,19 @@
             v-for="youtubeVideo in design.youtubeVideos"
             :key="youtubeVideo"
             class="relative">
-            <div class="w-full aspect-video">
-              <YoutubeVue3
-                :videoid="youtubeVideo.accessCode"
-                :autoplay="0"
-                class="z-0 w-full h-full">
-              </YoutubeVue3>
-            </div>
             <div
               @click="deleteYoutubeVideo(youtubeVideo)"
-              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+              class="cursor-pointer">
+              <div class="w-full aspect-video pointer-events-none">
+                <YoutubeVue3
+                  :videoid="youtubeVideo.accessCode"
+                  :autoplay="0"
+                  class="w-full h-full">
+                </YoutubeVue3>
+              </div>
+              <XMarkIcon
+                alt="削除取消アイコン"
+                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
             </div>
           </div>
         </div>
@@ -186,17 +189,19 @@
               v-for="youtubeVideo in design.youtubeVideoToDelete"
               :key="youtubeVideo"
               class="relative">
-              <div class="w-full aspect-video">
-                <YoutubeVue3
-                  :videoid="youtubeVideo.accessCode"
-                  :autoplay="0"
-                  class="z-0 w-full h-full opacity-60">
-                </YoutubeVue3>
-              </div>
               <div
                 @click="saveYoutubeVideo(youtubeVideo)"
-                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+                class="cursor-pointer">
+                <div class="w-full aspect-video pointer-events-none">
+                  <YoutubeVue3
+                    :videoid="youtubeVideo.accessCode"
+                    :autoplay="0"
+                    class="w-full h-full opacity-60">
+                  </YoutubeVue3>
+                </div>
+                <ArrowUturnUpIcon
+                  alt="削除取消アイコン"
+                  class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
               </div>
             </div>
           </div>
@@ -210,8 +215,10 @@
         <div
           v-if="design.colors.length > 0 || design.colorToDelete.length > 0"
           class="text-sm my-6 flex gap-0.5 items-center">
-          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
+          <XMarkIcon alt="削除アイコン" class="w-4 h-4 select-icon" />
+          <ArrowUturnUpIcon
+            alt="削除取消アイコン"
+            class="w-4 h-4 select-icon" />
           で登録するカラーを選択できます。
         </div>
         <div
@@ -222,17 +229,19 @@
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
             class="w-8 h-8 rounded-full shadow-md mb-4">
-            <div v-if="color.lame" class="relative">
-              <img
-                src="~lame.png"
-                alt="ラメ"
-                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-            </div>
-            <div v-else-if="!color.lame"></div>
-            <div
-              @click="deleteColor(color)"
-              class="ml-6 -mt-2 cursor-pointer absolute z-20">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+            <div @click="deleteColor(color)" class="relative cursor-pointer">
+              <div v-if="color.lame" class="absolute w-8 h-8">
+                <div class="relative">
+                  <img
+                    src="~lame.png"
+                    alt="ラメ"
+                    class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+                </div>
+              </div>
+              <div v-else-if="!color.lame" class="absolute w-8 h-8"></div>
+              <XMarkIcon
+                alt="削除アイコン"
+                class="ml-6 -mt-2 absolute z-20 select-icon" />
             </div>
           </div>
         </div>
@@ -244,17 +253,19 @@
               :key="color"
               :style="colorShowHexNumber(color.hexNumber)"
               class="w-8 h-8 rounded-full shadow-md mb-4">
-              <div v-if="color.lame" class="relative">
-                <img
-                  src="~lame.png"
-                  alt="ラメ"
-                  class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-              </div>
-              <div v-else-if="!color.lame"></div>
-              <div
-                class="ml-6 -mt-2 cursor-pointer absolute z-20"
-                @click="saveColor(color)">
-                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+              <div @click="saveColor(color)" class="relative cursor-pointer">
+                <div v-if="color.lame" class="absolute w-8 h-8">
+                  <div class="relative">
+                    <img
+                      src="~lame.png"
+                      alt="ラメ"
+                      class="w-8 h-8 rounded-full opacity-80 absolute" />
+                  </div>
+                </div>
+                <div v-else-if="!color.lame" class="absolute w-8 h-8"></div>
+                <ArrowUturnUpIcon
+                  alt="削除取消アイコン"
+                  class="ml-6 -mt-2 absolute select-icon cursor-pointer" />
               </div>
             </div>
           </div>
@@ -286,9 +297,10 @@
               v-else
               :style="colorShowHexNumber(part.hexNumber)"
               class="rounded-full shadow-md w-8 h-8"></div>
-            <div @click="deletePart(part)" class="cursor-pointer">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
-            </div>
+            <XMarkIcon
+              @click="deletePart(part)"
+              alt="削除アイコン"
+              class="select-icon cursor-pointer" />
           </div>
         </div>
       </div>
@@ -315,15 +327,16 @@
           </template>
         </child-text-input>
         <div class="flex flex-wrap mt-2 gap-x-6 gap-y-2">
-          <div
-            v-for="tag in design.tags"
-            :key="tag"
-            class="rounded flex justify-start items-center">
-            <div class="mr-2">
-              {{ tag.name }}
-            </div>
-            <div @click="deleteTag(tag)" class="cursor-pointer">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+          <div v-for="tag in design.tags" :key="tag">
+            <div
+              @click="deleteTag(tag)"
+              class="flex justify-start items-center gap-x-1.5 cursor-pointer">
+              <div>
+                {{ tag.name }}
+              </div>
+              <XMarkIcon
+                alt="削除アイコン"
+                class="select-icon cursor-pointer" />
             </div>
           </div>
         </div>
@@ -339,12 +352,13 @@
 import apiClient from './packs/api-client.js'
 import draggable from 'vuedraggable'
 import { YoutubeVue3 } from 'youtube-vue3'
-import 'color-picker-lame.png'
-import 'lame.png'
 import ExternalLink from './components/external-link.vue'
 import ChildTextInput from './components/child-text-input.vue'
 import PartInput from './components/part-input.vue'
 import ColorInput from './components/color-input.vue'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
+import { ArrowUturnUpIcon } from '@heroicons/vue/24/outline'
+import 'lame.png'
 export default {
   components: {
     draggable,
@@ -352,7 +366,9 @@ export default {
     ExternalLink,
     ChildTextInput,
     PartInput,
-    ColorInput
+    ColorInput,
+    XMarkIcon,
+    ArrowUturnUpIcon
   },
   data() {
     return {
