@@ -1,39 +1,39 @@
 <template>
   <div class="text-gray-600 py-10 mx-auto mb-4">
     <h1 class="text-2xl text-center py-10">ネイルデザインを編集</h1>
-    <div class="w-11/12 mx-auto grid gap-y-12">
-      <div>
-        <div
-          class="flex justify-center items-center w-1/2 sm:w-1/4 mx-auto border border-gray-200 rounded">
-          <label class="block flex-1 cursor-pointer">
-            <input
-              type="radio"
-              class="peer sr-only"
-              name="design[nail_part]"
-              value="ハンド"
-              v-model="design.nailPart" />
-            <span
-              class="nailpart-hand block text-center rounded-l p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
-              ハンド
-            </span>
-          </label>
-          <label class="block flex-1 cursor-pointer">
-            <input
-              type="radio"
-              class="peer sr-only"
-              name="design[nail_part]"
-              value="フット"
-              v-model="design.nailPart" />
-            <span
-              class="nailpart-foot block text-center rounded-r p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
-              フット
-            </span>
-          </label>
-        </div>
-        <p class="text-xs text-center my-2">
-          ネイルパート：{{ design.nailPart }}
-        </p>
+    <div class="mb-8">
+      <div
+        class="flex justify-center items-center w-1/2 sm:w-1/4 mx-auto border border-gray-200 rounded">
+        <label class="block flex-1 cursor-pointer">
+          <input
+            type="radio"
+            class="peer sr-only"
+            name="design[nail_part]"
+            value="ハンド"
+            v-model="design.nailPart" />
+          <span
+            class="nailpart-hand block text-center rounded-l p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
+            ハンド
+          </span>
+        </label>
+        <label class="block flex-1 cursor-pointer">
+          <input
+            type="radio"
+            class="peer sr-only"
+            name="design[nail_part]"
+            value="フット"
+            v-model="design.nailPart" />
+          <span
+            class="nailpart-foot block text-center rounded-r p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
+            フット
+          </span>
+        </label>
       </div>
+      <p class="text-xs text-center my-2">
+        ネイルパート：{{ design.nailPart }}
+      </p>
+    </div>
+    <div class="w-11/12 mx-auto grid gap-y-12">
       <div>
         <label
           for="design-title"
@@ -284,7 +284,7 @@
       <div>
         <label for="design-description" class="text-lg">調べた内容・メモ</label>
         <textarea
-          class="form-field"
+          class="form-field mt-1"
           placeholder="手順・カラー番号・注意点など"
           name="design[description]"
           id="design-description"
