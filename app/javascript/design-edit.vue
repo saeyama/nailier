@@ -140,17 +140,8 @@
           </template>
         </child-text-input>
         <div
-          v-if="design.youtubeVideos.length > 0"
-          class="text-sm my-6 flex gap-0.5 items-center">
-          <XMarkIcon alt="削除アイコン" class="w-4 h-4 select-icon" />
-          <ArrowUturnUpIcon
-            alt="削除取消アイコン"
-            class="w-4 h-4 select-icon" />
-          で登録する動画を選択できます。
-        </div>
-        <div
           v-if="saveYoutubeVideos.length > 0"
-          class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+          class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 mb-4">
           <div
             v-for="youtubeVideo in saveYoutubeVideos"
             :key="youtubeVideo"
@@ -172,8 +163,9 @@
           </div>
         </div>
         <div v-if="deleteYoutubeVideos.length > 0">
-          <div class="text-sm my-4 md:my-8 md:text-base">
-            削除するYouTube動画
+          <div class="text-sm flex justify-start items-center gap-1 my-6">
+            <ExclamationTriangleIcon alt="削除" class="w-6 h-6" />
+            以下のYouTube動画は保存されません。
           </div>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div
@@ -204,17 +196,8 @@
       <div>
         <color-input @update-color="updateColor"></color-input>
         <div
-          v-if="design.colors.length > 0"
-          class="text-sm my-6 flex gap-0.5 items-center">
-          <XMarkIcon alt="削除アイコン" class="w-4 h-4 select-icon" />
-          <ArrowUturnUpIcon
-            alt="削除取消アイコン"
-            class="w-4 h-4 select-icon" />
-          で登録するカラーを選択できます。
-        </div>
-        <div
           v-if="saveColors.length > 0"
-          class="grid grid-cols-5 mb-2 sm:grid-cols-10">
+          class="grid grid-cols-5 sm:grid-cols-10 mt-6">
           <div
             v-for="color in saveColors"
             :key="color"
@@ -237,7 +220,10 @@
           </div>
         </div>
         <div v-if="deleteColors.length > 0">
-          <div class="text-sm my-4 md:my-8 md:text-base">削除するカラー</div>
+          <div class="text-sm flex justify-start items-center gap-1 my-6">
+            <ExclamationTriangleIcon alt="削除" class="w-6 h-6" />
+            以下のカラーイメージは保存されません。
+          </div>
           <div class="grid grid-cols-5 sm:grid-cols-10">
             <div
               v-for="color in deleteColors"
