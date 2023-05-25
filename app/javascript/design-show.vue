@@ -103,27 +103,28 @@
         <div class="text-sm ml-0.5 mb-6" v-if="design.parts.length === 0">
           登録されているパーツはありません。
         </div>
-        <div v-else>
-          <div class="mb-8 w-4/6 md:2/6">
-            <div v-for="part in design.parts" :key="part" class="mb-4 ml-0.5">
-              <div class="flex justify-between items-center">
-                <div>
-                  <div class="mr-4">
-                    <span class="font-semibold md:w-48 md:inline-block">
-                      {{ part.name }}
-                    </span>
-                    <br class="md:hidden" />
-                    <span class="mr-4">{{ part.size }}</span>
-                    <span>{{ part.quantity }}個</span>
-                  </div>
+        <div v-else class="">
+          <div v-for="part in design.parts" :key="part" class="mb-6 sm:mr-60">
+            <div
+              class="flex flex-wrap justify-start items-center gap-x-20 sm:gap-x-12">
+              <div class="w-full sm:flex-1">
+                <div class="flex justify-start items-center gap-1.5">
+                  <SparklesIcon
+                    alt="情報"
+                    class="w-4 h-4 stroke-1 text-gray-400" />
+                  {{ part.name }}
                 </div>
-                <div v-if="!part.hexNumber" class="w-8 h-8 mt-2 md:mt-0"></div>
-                <div
-                  v-else
-                  :style="colorShowHexNumber(part.hexNumber)"
-                  class="rounded-full shadow-md w-8 h-8 mt-2 md:mt-0">
-                  <div class="hidden">{{ part.hexNumber }}</div>
-                </div>
+              </div>
+              <div class="flex-1 sm:flex-none ml-6 sm:ml-0">
+                {{ part.size }}
+              </div>
+              <div class="flex-1 sm:flex-none">{{ part.quantity }}個</div>
+              <div v-if="!part.hexNumber" class="w-8 h-8"></div>
+              <div
+                v-else
+                :style="colorShowHexNumber(part.hexNumber)"
+                class="rounded-full shadow-md w-8 h-8">
+                <div class="hidden">{{ part.hexNumber }}</div>
               </div>
             </div>
           </div>
@@ -137,8 +138,7 @@
         <div v-else>
           <div
             v-text="design.description"
-            class="whitespace-pre-wrap px-2 py-1 h-20 resize-y overflow-auto text-sm border border-gray-300 rounded mb-8">
-          </div>
+            class="whitespace-pre-wrap px-2 py-1 h-20 resize-y overflow-auto text-sm border border-gray-300 rounded mb-8"></div>
         </div>
       </div>
       <div class="design-tags">
@@ -147,12 +147,12 @@
           登録されているタグはありません。
         </div>
         <div v-else>
-          <div class="mb-12 mr-4 py-1 rounded flex justify-start items-center">
-            <div
-              v-for="tag in design.tags"
-              :key="tag.id"
-              class="font-bold border border-gray-300 mr-2 px-2 py-1 rounded">
-              {{ tag.name }}
+          <div class="flex flex-wrap mt-2 gap-x-6 gap-y-2 mb-10">
+            <div v-for="tag in design.tags" :key="tag.id">
+              <div class="text-lg flex justify-start items-end gap-1">
+                <TagIcon alt="情報" class="w-6 h-6 text-gray-300" />
+                {{ tag.name }}
+              </div>
             </div>
           </div>
         </div>
@@ -175,11 +175,15 @@ import apiClient from './packs/api-client.js'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import { YoutubeVue3 } from 'youtube-vue3'
 import { InformationCircleIcon } from '@heroicons/vue/24/outline'
+import { SparklesIcon } from '@heroicons/vue/24/outline'
+import { TagIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
     VueEasyLightbox,
     YoutubeVue3,
-    InformationCircleIcon
+    InformationCircleIcon,
+    SparklesIcon,
+    TagIcon
   },
   data() {
     return {
