@@ -48,9 +48,7 @@
                 id="lame"
                 name="design[colors_attributes][][lame]"
                 class="peer sr-only" />
-              <span
-                class="lame-toggle block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-600 peer-checked:after:translate-x-full">
-              </span>
+              <span class="lame-toggle toggle-btn"> </span>
             </label>
             <!-- テスト用 -->
             <input

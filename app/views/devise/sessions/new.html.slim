@@ -4,16 +4,17 @@
   h1.text-center.text-2xl.py-8.md:py-10
     = t('.sign_in')
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    = f.label :email
-    = f.email_field :email, placeholder: 'mail-account@nailier.net', autofocus: true, autocomplete: 'email', class: 'form-field mb-6 md:mb-12'
-    br
-    = f.label :password
-    br
-    = f.password_field :password, placeholder: '••••••••', autocomplete: 'current-password', class: 'form-field mb-2'
-    - if devise_mapping.rememberable?
-      .field
-        = f.check_box :remember_me, class: 'align-middle'
-        | &nbsp;
-        = f.label :remember_me, class: 'text-sm align-middle'
-    = f.submit t('.sign_in'), class: 'main-action-btn mt-8 mb-2'
-    = render 'devise/shared/links'
+    .grid.gap-y-10
+      div
+        = f.label :email
+        = f.email_field :email, placeholder: 'mail-account@nailier.net', autofocus: true, autocomplete: 'email', class: 'form-field'
+      div
+        = f.label :password
+        = f.password_field :password, placeholder: '••••••••', autocomplete: 'current-password', class: 'form-field'
+        - if devise_mapping.rememberable?
+          label.block.flex.justify-start.items-center.gap-2.mt-2
+            = f.check_box :remember_me, class: 'peer sr-only'
+            span.toggle-btn
+            = f.label :remember_me, class: 'text-sm'
+    = f.submit t('.sign_in'), class: 'main-action-btn mt-14 mb-2'
+  = render 'devise/shared/links'
