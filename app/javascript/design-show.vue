@@ -1,14 +1,15 @@
 <template>
   <div class="text-gray-600 py-10 mb-4">
-    <div class="w-11/12 md:w-3/4 mx-auto">
-      <h1 class="design-title text-2xl text-center py-2">{{ design.title }}</h1>
-      <div class="design-nailpart text-sm md:text-base text-center pb-10">
+    <h1 class="design-title text-2xl text-center py-10">{{ design.title }}</h1>
+    <div class="w-11/12 mx-auto grid gap-y-12 sm:gap-y-10">
+      <div
+        class="design-nailpart w-20 mx-auto text-center text-sm md:text-base bg-gray-800 text-white p-2 rounded">
         {{ design.nailPart }}
       </div>
       <div class="design-images">
         <h2 class="text-lg mb-2">画像</h2>
         <div
-          class="text-sm ml-0.5 mb-6"
+          class="text-sm ml-0.5 mb-2 sm:mb-6"
           v-if="!design.images || !design.images.length">
           登録されている画像はありません。
         </div>
@@ -17,7 +18,7 @@
             <InformationCircleIcon alt="情報" class="w-6 h-6" />
             画像をクリックすると拡大できます。
           </div>
-          <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
+          <div class="grid grid-cols-3 gap-1 md:grid-cols-4">
             <div
               class="drop-shadow-lg mb-2 md:mb-8"
               v-for="(image, index) in design.images"
@@ -40,7 +41,7 @@
       <div class="design-youtubevideos">
         <h2 class="text-lg mb-2">YouTube動画</h2>
         <div
-          class="text-sm ml-0.5 mb-6"
+          class="text-sm ml-0.5 mb-2 sm:mb-6"
           v-if="design.youtubeVideos.length === 0">
           登録されているYouTube動画はありません。
         </div>
@@ -56,7 +57,7 @@
               アプリもしくはWEBブラウザに移動します。
             </p>
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-1 mb-4">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-1">
             <div
               v-for="youtubeVideo in design.youtubeVideos"
               :key="youtubeVideo.id"
@@ -75,11 +76,13 @@
       </div>
       <div class="design-colors">
         <h2 class="text-lg mb-2">カラー</h2>
-        <div class="text-sm ml-0.5 mb-6" v-if="design.colors.length === 0">
+        <div
+          class="text-sm ml-0.5 mb-2 sm:mb-6"
+          v-if="design.colors.length === 0">
           登録されているカラーはありません。
         </div>
         <div v-else>
-          <div class="grid grid-cols-6 mb-6 md:grid-cols-12 ml-1">
+          <div class="grid grid-cols-6 md:grid-cols-12">
             <div
               v-for="color in design.colors"
               :key="color.id"
@@ -100,11 +103,16 @@
       </div>
       <div class="design-parts">
         <h2 class="text-lg mb-2">パーツ</h2>
-        <div class="text-sm ml-0.5 mb-6" v-if="design.parts.length === 0">
+        <div
+          class="text-sm ml-0.5 mb-2 sm:mb-6"
+          v-if="design.parts.length === 0">
           登録されているパーツはありません。
         </div>
-        <div v-else class="">
-          <div v-for="part in design.parts" :key="part" class="mb-6 sm:mr-60">
+        <div v-else class="mb-2 sm:mb-8">
+          <div
+            v-for="part in design.parts"
+            :key="part"
+            class="mb-6 last:mb-0 sm:mr-28">
             <div
               class="flex flex-wrap justify-start items-center gap-x-20 sm:gap-x-12">
               <div class="w-full sm:flex-1">
@@ -131,23 +139,27 @@
         </div>
       </div>
       <div class="design-description">
-        <h2 class="text-lg mb-1">調べた内容・メモ</h2>
-        <div class="text-sm ml-0.5 mb-6" v-if="design.description.length === 0">
+        <h2 class="text-lg mb-2">調べた内容・メモ</h2>
+        <div
+          class="text-sm ml-0.5 mb-2 sm:mb-6"
+          v-if="design.description.length === 0">
           登録されているメモはありません。
         </div>
         <div v-else>
           <div
             v-text="design.description"
-            class="whitespace-pre-wrap px-2 py-1 h-20 resize-y overflow-auto text-sm border border-gray-300 rounded mb-8"></div>
+            class="whitespace-pre-wrap px-2 py-1 h-20 resize-y overflow-auto text-sm border border-gray-300 rounded mb-2 sm:mb-8"></div>
         </div>
       </div>
       <div class="design-tags">
         <h2 class="text-lg mb-2">タグ</h2>
-        <div class="text-sm ml-0.5 mb-6" v-if="design.tags.length === 0">
+        <div
+          class="text-sm ml-0.5 mb-16 sm:mb-20"
+          v-if="design.tags.length === 0">
           登録されているタグはありません。
         </div>
-        <div v-else>
-          <div class="flex flex-wrap mt-2 gap-x-6 gap-y-2 mb-10">
+        <div v-else class="mb-12 sm:mb-16">
+          <div class="flex flex-wrap mt-2 gap-x-6 gap-y-2">
             <div v-for="tag in design.tags" :key="tag.id">
               <div class="text-lg flex justify-start items-end gap-1">
                 <TagIcon alt="情報" class="w-6 h-6 text-gray-300" />
@@ -157,16 +169,16 @@
           </div>
         </div>
       </div>
-      <button class="main-action-btn mb-2" @click="editDesign">
-        ネイルデザインを編集
-      </button>
-      <button class="text-btn mb-8" @click="deleteDesign">
-        ネイルデザインを削除
-      </button>
-      <button class="sub-action-btn" @click="indexDesign">
-        ネイルデザイン一覧
-      </button>
     </div>
+    <button class="main-action-btn mb-2" @click="editDesign">
+      ネイルデザインを編集
+    </button>
+    <button class="text-btn mb-8" @click="deleteDesign">
+      ネイルデザインを削除
+    </button>
+    <button class="sub-action-btn" @click="indexDesign">
+      ネイルデザイン一覧
+    </button>
   </div>
 </template>
 

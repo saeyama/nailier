@@ -3,7 +3,7 @@
     <h1 class="text-2xl text-center py-10">ネイルデザインを登録</h1>
     <div class="mb-8">
       <div
-        class="flex justify-center items-center w-1/2 sm:w-1/4 mx-auto border border-gray-200 rounded">
+        class="flex justify-center items-center w-40 mx-auto border border-gray-200 rounded">
         <label class="block flex-1 cursor-pointer">
           <input
             type="radio"

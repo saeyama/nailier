@@ -225,7 +225,7 @@ export default {
   border-radius: 50%;
   background: transparent;
   opacity: 0;
-  margin: -11% 0 0 -12%;
+  margin: -4px 0 0 -4px;
 }
 .checkbox-btn:checked {
   opacity: 1;
