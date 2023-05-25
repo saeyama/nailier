@@ -8,9 +8,9 @@
                     url: inquiries_path,
                     method: :post, local: true do |f|
     = f.label :title, '件名'
-    = f.text_field :title, placeholder: '•••について', class: 'form-field mb-8', required: true
+    = f.text_field :title, placeholder: '•••について', class: 'form-field mb-8', pattern: '.*[^\s]+.*', required: true
     = f.label :name, 'お名前'
-    = f.text_field :name, placeholder: 'ねいりえ', class: 'form-field mb-8', required: true
+    = f.text_field :name, placeholder: 'ねいりえ', class: 'form-field mb-8', pattern: '.*[^\s]+.*', required: true
     = f.label :email, 'メールアドレス'
     = f.email_field :email, placeholder: 'mail-account@nailier.net', class: 'form-field mb-8', required: true
     = f.label :description, 'お問い合わせ内容'
