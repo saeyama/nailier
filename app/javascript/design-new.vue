@@ -77,7 +77,7 @@
             8枚を超えた画像は登録されません。
           </div>
           <div class="flex justify-start items-center gap-1">
-            <InformationCircleIcon alt="注意" class="w-6 h-6" />
+            <InformationCircleIcon alt="情報" class="w-6 h-6" />
             ドラッグ&amp;ドロップで並び替え可能です。
           </div>
         </div>
@@ -531,10 +531,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-/* input[type="radio"]:checked + label {
-background: #31A9EE;
-color: #ffffff;
-} */
-</style>

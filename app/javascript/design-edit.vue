@@ -80,7 +80,7 @@
             8枚を超えた画像は登録されません。
           </div>
           <div class="flex justify-start items-center gap-1">
-            <InformationCircleIcon alt="注意" class="w-6 h-6" />
+            <InformationCircleIcon alt="情報" class="w-6 h-6" />
             ドラッグ&amp;ドロップで並び替え可能です。
           </div>
         </div>
@@ -253,7 +253,7 @@
         <div v-for="part in saveParts" :key="part" class="mt-4">
           <div class="flex flex-wrap justify-between items-center sm:gap-10">
             <div class="w-full sm:flex-1">{{ part.name }}</div>
-            <div class="">
+            <div>
               <input
                 class="form-field mr-2 rounded w-16 md:w-20 h-10"
                 type="text"

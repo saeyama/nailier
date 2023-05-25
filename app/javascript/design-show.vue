@@ -13,7 +13,10 @@
           登録されている画像はありません。
         </div>
         <div v-else>
-          <div class="text-sm mb-2">画像をクリックすると拡大できます。</div>
+          <div class="text-sm mb-2 flex justify-start items-center gap-1">
+            <InformationCircleIcon alt="情報" class="w-6 h-6" />
+            画像をクリックすると拡大できます。
+          </div>
           <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mb-4">
             <div
               class="drop-shadow-lg mb-2 md:mb-8"
@@ -42,9 +45,17 @@
           登録されているYouTube動画はありません。
         </div>
         <div v-else>
-          <span class="text-sm ml-0.5">
-            再生したい動画をクリックしてからYouTubeの文字をクリックすると、アプリもしくはWEBブラウザに移動します。
-          </span>
+          <div class="text-sm mb-2">
+            <h3 class="flex justify-start items-center gap-1">
+              <InformationCircleIcon alt="情報" class="w-6 h-6" />
+              動画の再生方法
+            </h3>
+            <p class="text-xs">
+              再生したい動画をクリックしてから<br class="sm:hidden" />
+              右下のYouTubeの文字をクリックします。<br />
+              アプリもしくはWEBブラウザに移動します。
+            </p>
+          </div>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-1 mb-4">
             <div
               v-for="youtubeVideo in design.youtubeVideos"
@@ -162,10 +173,12 @@
 import apiClient from './packs/api-client.js'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import { YoutubeVue3 } from 'youtube-vue3'
+import { InformationCircleIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
     VueEasyLightbox,
-    YoutubeVue3
+    YoutubeVue3,
+    InformationCircleIcon
   },
   data() {
     return {
