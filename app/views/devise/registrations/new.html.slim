@@ -25,9 +25,9 @@ h1.page-content-title.mb-0
         = f.check_box :agreement_terms, class: 'peer sr-only', required: true
         span.agreement-toggle.toggle-btn
       = f.label :agreement_terms, class: 'block text-sm' do
-        = link_to '利用規約', tos_path, target: '_blank', rel: 'noopener noreferrer', class: 'underline underline-offset-2 decoration-gray-400 decoration-1'
+        = link_to '利用規約', tos_path, target: '_blank', rel: 'noopener noreferrer', class: 'text-btn inline text-left'
         | と
-        = link_to 'プライバシーポリシー', privacy_policy_path, target: '_blank', rel: 'noopener noreferrer', class: 'underline underline-offset-2 decoration-gray-400 decoration-1'
+        = link_to 'プライバシーポリシー', privacy_policy_path, target: '_blank', rel: 'noopener noreferrer', class: 'text-btn inline text-left'
         | に同意
   = f.submit t('.sign_up'), class: 'main-action-btn mt-14 mb-6'
 = render 'devise/shared/links'

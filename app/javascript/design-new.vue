@@ -65,7 +65,7 @@
               class="hidden" />
             ファイルを選択
           </label>
-          <p class="mt-0.5 text-xs text-gray-600 text-justify">
+          <p class="mt-0.5 text-xs text-justify">
             jpeg&#47;jpg&#47;png&middot;5MG以下
           </p>
         </div>
