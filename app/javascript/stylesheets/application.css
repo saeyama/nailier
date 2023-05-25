@@ -10,10 +10,10 @@
     @apply flex justify-center items-center bg-gray-800 hover:bg-gradient-to-r hover:from-gray-500 text-white rounded-full w-56 h-12 md:w-72 mx-auto shadow-lg;
   }
   .sub-action-btn {
-    @apply flex justify-center items-center border border-gray-500 hover:bg-gray-800 hover:text-white text-gray-600 rounded-full w-56 h-12 md:w-72 mx-auto shadow-lg;
+    @apply flex justify-center items-center border border-gray-200 hover:bg-gray-800 hover:bg-gradient-to-r hover:from-gray-500 hover:text-white text-gray-600 rounded-full w-56 h-12 md:w-72 mx-auto shadow-lg;
   }
   .text-btn {
-    @apply block mx-auto text-center underline underline-offset-2 decoration-gray-300 decoration-1 text-gray-600 hover:text-gray-400 hover:decoration-gray-300;
+    @apply block mx-auto text-center underline underline-offset-4 decoration-gray-300 text-gray-600 hover:text-gray-400 hover:decoration-gray-300;
   }
   .select-icon {
     @apply w-5 h-5 stroke-1 bg-gray-800 text-white rounded-md;
