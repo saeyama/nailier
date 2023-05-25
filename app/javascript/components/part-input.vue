@@ -76,7 +76,7 @@
           <hr :class="partColorContent ? '' : 'hidden'" />
           <div class="py-6" v-show="partColorContent">
             <ul
-              class="part-hexnumber grid gap-2 grid-cols-5 place-items-center w-48 mx-auto">
+              class="part-hexnumber grid gap-2 grid-cols-6 place-items-center w-52 mx-auto">
               <li
                 v-for="(hexNumber, index) in colorPaletteHexNumbers"
                 :key="index"
@@ -130,46 +130,62 @@ export default {
       partContent: false,
       partColorContent: false,
       colorPaletteHexNumbers: [
+        //モノトーン
         '#000000FF',
-        '#7F7F7FFF',
-        '#AAAAAAFF',
-        '#DFDFDFFF',
+        '#374151FF',
+        '#6B7280FF',
+        '#D1D5DBFF',
+        '#E5E7EBFF',
         '#FFFFFFFF',
-        '#B12323FF',
+        // レッド
+        '#7F1D1DFF',
         '#D52B2BFF',
         '#E27272FF',
-        '#F1B8B8FF',
-        '#F8DCDCFF',
-        '#AA5500FF',
-        '#FF8000FF',
-        '#FFAA55FF',
-        '#FFD5AAFF',
-        '#FFEAD5FF',
-        '#808000FF',
-        '#D5D500FF',
-        '#FFFF80FF',
-        '#FFFFAAFF',
-        '#FFFFD5FF',
-        '#1D8D8DFF',
-        '#23B1B1FF',
-        '#95EAEAFF',
-        '#B8F1F1FF',
-        '#DCF8F8FF',
-        '#15156AFF',
-        '#2B2BD5FF',
-        '#7272E2FF',
-        '#B8B8F1FF',
-        '#DCDCF8FF',
-        '#8D1D8DFF',
-        '#B123B1FF',
-        '#E272E2FF',
-        '#F1B8F1FF',
-        '#F8DCF8FF',
-        '#800040FF',
-        '#AA0055FF',
-        '#FF0080FF',
-        '#FF80BFFF',
-        '#FFD5EAFF'
+        '#FCA5A5FF',
+        '#FECACAFF',
+        '#FEE2E2FF',
+        // オレンジ
+        '#C2410CFF',
+        '#EA580CFF',
+        '#FB923CFF',
+        '#FDBA74FF',
+        '#FED7AAFF',
+        '#FFEDD5FF',
+        // イエロー
+        '#CA8A04FF',
+        '#EAB308FF',
+        '#FACC15FF',
+        '#FDE047FF',
+        '#FEF08AFF',
+        '#FEF9C3FF',
+        // グリーン
+        '#14532DFF',
+        '#15803DFF',
+        '#22C55EFF',
+        '#86EFACFF',
+        '#BBF7D0FF',
+        '#DCFCE7FF',
+        // ブルー
+        '#1E3A8AFF',
+        '#1D4ED8FF',
+        '#3B82F6FF',
+        '#93C5FDFF',
+        '#BFDBFEFF',
+        '#DBEAFEFF',
+        // パープル
+        '#581C87FF',
+        '#7E22CEFF',
+        '#A855F7FF',
+        '#D8B4FEFF',
+        '#E9D5FFFF',
+        '#F3E8FFFF',
+        // ピンク
+        '#831843FF',
+        '#BE185DFF',
+        '#EC4899FF',
+        '#F9A8D4FF',
+        '#FBCFE8FF',
+        '#FCE7F3FF'
       ]
     }
   },
@@ -213,10 +229,6 @@ export default {
 </script>
 
 <style scoped>
-.rotate-to-open {
-  transform: rotate(90deg);
-  transition: all 0.5s ease-in-out;
-}
 .checkbox-btn {
   appearance: none;
   width: 40px;
