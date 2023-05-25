@@ -37,7 +37,7 @@
       <div>
         <label
           for="design-title"
-          class="block rerative text-lg after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1">
+          class="block relative text-lg after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1">
           タイトル
         </label>
         <input

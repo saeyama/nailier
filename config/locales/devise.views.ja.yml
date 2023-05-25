@@ -100,7 +100,7 @@ ja:
         title: アカウントを編集
         unhappy: 気に入りません
         update: アカウントを更新
-        we_need_your_current_password_to_confirm_your_changes: 変更を反映するには現在のパスワードを入力してください
+        we_need_your_current_password_to_confirm_your_changes: 更新には現在のパスワードが入力必須です
       new:
         sign_up: アカウントを登録
       signed_up: アカウント登録が完了しました。
