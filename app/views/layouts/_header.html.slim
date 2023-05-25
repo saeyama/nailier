@@ -1,29 +1,29 @@
 .flex
   = link_to image_tag('logo.svg'), user_signed_in? ? designs_path : root_path, class: 'block mt-2 ml-2 w-14 md:w-12', alt: 'ネイリエ'
-  #nav-toggle.md:hidden
-    div
-      span
-      span
-      span
-  #nav-menu.min-h-screen.left-0.md:left-auto.md:min-h-0
-    .nav-bak.w-1/5.md:w-0
+  #nav-toggle.absolute.z-40.top-5.right-2.5.h-7.md:hidden
+    .w-9
+      span.absolute.top-0.w-full.h-px.block.bg-gray-600.ease-out.duration-500
+      span.absolute.top-4.w-full.h-px.block.bg-gray-600
+      span.absolute.top-8.w-full.h-px.block.bg-gray-600.ease-out.duration-500
+  #nav-menu.z-30.absolute.top-0.right-0.flex.invisible.min-h-screen.left-0.md:left-auto.md:min-h-0
+    .nav-bak.opacity-50.bg-black.w-1/5.md:w-0
     nav.w-4/5.md:w-full.bg-white.md:visible.md:bg-transparent
-      ul.text-sm.text-gray-600.md:flex
+      ul.ml-4.mt-6.md:ml-0.md:mr-2.grid.gap-10.md:gap-8.md:text-sm.md:flex
         - if user_signed_in?
-          li
+          li.hover:text-gray-500
             =link_to 'ネイルデザインを登録', new_design_path
-          li
+          li.hover:text-gray-500
             = link_to 'ネイルデザインリスト', designs_path
-          li
+          li.hover:text-gray-500
             = link_to 'アカウント情報', my_account_path
-          li
+          li.hover:text-gray-500
             = link_to 'ログアウト', destroy_user_session_path, method: :delete
-          li
+          li.hover:text-gray-500
             = link_to 'お問い合わせ', new_inquiry_path
         - else
-          li
+          li.hover:text-gray-500
             = link_to 'ログイン', new_user_session_path
-          li
+          li.hover:text-gray-500
             = link_to 'アカウントを登録', new_user_registration_path
-          li
+          li.hover:text-gray-500
             = link_to 'お問い合わせ', new_inquiry_path
