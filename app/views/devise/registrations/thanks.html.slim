@@ -5,15 +5,17 @@
     | アカウント登録完了
   p.mb-10
     | ご登録いただきありがとうございます。
-    br
-    | Nailierでは以下の登録ができます。
   = image_tag 'summarize-info.svg', class: 'block mx-auto w-72 drop-shadow-md', alt: 'ネイルデザインの情報をまとめる'
-  ul.text-sm.mt-6
-    li 画像保存&#40;8枚まで&#41;
+  p.mt-10.mb-2.flex.justify-center.items-center.gap-1.mx-auto
+    svg[xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" alt="情報"]
+      path[path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"]
+    |  Nailierでは以下の登録ができます。
+  ul.text-sm.w-60.mx-auto.grid.gap-y-1.border.border-gray-200.bg-slate-50.py-4.mb-10.rounded
+    li 画像保存&nbsp;&#47;&nbsp;8枚まで
     li YouTube動画保存
     li カラーイメージの登録
     li パーツの登録
     li 調べた内容・アイデアの登録
     li タグ登録
-  = link_to 'ネイルデザインを登録', new_design_path, class: 'main-action-btn mt-8 mb-6'
+  = link_to 'ネイルデザインを登録', new_design_path, class: 'main-action-btn mb-6'
   = link_to 'お問い合わせ', new_inquiry_path, class: 'sub-action-btn'
