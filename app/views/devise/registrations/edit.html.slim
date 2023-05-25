@@ -1,30 +1,36 @@
 - set_meta_tags title: 'アカウント編集', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)のアカウント編集ページ'
 
-.text-gray-600.py-10.w-11/12.mx-auto
-  h1.text-center.text-2xl.py-8.md:py-10
-    = t('.title', resource: resource.model_name.human)
-  = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-    = render 'devise/shared/error_messages', resource: resource
-    = f.label :account_name
-    = f.text_field :account_name, placeholder: 'Nailier', autofocus: true, autocomplete: 'account_name', class: 'form-field mb-8 md:mb-12'
-    = f.label :email
-    = f.email_field :email, placeholder: 'mail-account@nailier.net', autofocus: true, autocomplete: 'email', class: 'form-field mb-8 md:mb-12'
-    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-      div
-        = t('.currently_waiting_confirmation_for_email', email: resource.unconfirmed_email)
-    = f.label :password
-    - if @minimum_password_length
-      = t('devise.shared.minimum_password_length', count: @minimum_password_length)
-    = f.password_field :password, placeholder: '••••••••', autocomplete: 'new-password', class: 'form-field mb-8 md:mb-12'
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation, placeholder: '••••••••', autocomplete: 'new-password', class: 'form-field mb-8 md:mb-12'
-    .mb-4.text-sm.flex.justify-start.items-center.gap-1
-      svg[xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"]
-        path[path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"]
-      = t('.we_need_your_current_password_to_confirm_your_changes')
-    = f.label :current_password, class: "mb-2 block relative after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1 after:-mt-0.5" do
-      = t('activerecord.attributes.user.current_password')
-    = f.password_field :current_password, autocomplete: 'current-password', class: 'form-field mb-6'
-    = f.submit t('.update'), class: 'main-action-btn mt-8 mb-2'
-  = link_to t('.cancel_my_account'), users_unsubscribe_path(resource_name), class: 'text-btn'
-  = link_to t('devise.shared.links.back'), :back, class: 'sub-action-btn mt-8 mb-2'
+h1.page-content-title.mb-0
+  = t('.title', resource: resource.model_name.human)
+= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+  .grid.gap-y-10
+    div
+      = render 'devise/shared/error_messages', resource: resource
+    div
+      = f.label :account_name
+      = f.text_field :account_name, placeholder: 'Nailier', autofocus: true, autocomplete: 'account_name', class: 'form-field'
+    div
+      = f.label :email
+      = f.email_field :email, placeholder: 'mail-account@nailier.net', autofocus: true, autocomplete: 'email', class: 'form-field'
+      - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        div
+          = t('.currently_waiting_confirmation_for_email', email: resource.unconfirmed_email)
+    div
+      = f.label :password
+      - if @minimum_password_length
+        = t('devise.shared.minimum_password_length', count: @minimum_password_length)
+      = f.password_field :password, placeholder: '••••••••', autocomplete: 'new-password', class: 'form-field'
+    div
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, placeholder: '••••••••', autocomplete: 'new-password', class: 'form-field'
+    div
+      .mb-4.text-sm.flex.justify-start.items-center.gap-1
+        svg[xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"]
+          path[path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"]
+        = t('.we_need_your_current_password_to_confirm_your_changes')
+      = f.label :current_password, class: "mb-2 block relative after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1 after:-mt-0.5" do
+        = t('activerecord.attributes.user.current_password')
+      = f.password_field :current_password, autocomplete: 'current-password', class: 'form-field'
+  = f.submit t('.update'), class: 'main-action-btn mt-14 mb-2'
+= link_to t('.cancel_my_account'), users_unsubscribe_path(resource_name), class: 'text-btn'
+= link_to t('devise.shared.links.back'), :back, class: 'sub-action-btn mt-8'

@@ -14,7 +14,7 @@ html
   body.font-base.font-thin.not-italic
     header.max-w-screen-lg.mx-auto
       = render 'layouts/header'
-    main.mx-auto class="#{content_for?(:main) ? yield(:main) : 'max-w-screen-sm'}"
+    main.w-11/12.mx-auto.my-16.sm:my-20 class="#{content_for?(:main) ? yield(:main) : 'max-w-screen-sm'}"
       = yield
     footer
       = render 'layouts/footer'

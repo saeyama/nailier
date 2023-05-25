@@ -1,7 +1,7 @@
 <template>
-  <div class="text-gray-600 py-10 mb-4">
-    <h1 class="design-title text-2xl text-center py-10">{{ design.title }}</h1>
-    <div class="w-11/12 mx-auto grid gap-y-12 sm:gap-y-10">
+  <div>
+    <h1 class="design-title page-content-title">{{ design.title }}</h1>
+    <div class="grid gap-y-12 sm:gap-y-10">
       <div
         class="design-nailpart w-20 mx-auto text-center text-sm md:text-base bg-gray-800 text-white p-2 rounded">
         {{ design.nailPart }}

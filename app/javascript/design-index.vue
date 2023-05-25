@@ -1,6 +1,6 @@
 <template>
-  <div class="text-gray-600 pt-10 pb-6 sm:py-10 mx-auto">
-    <h1 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h1>
+  <div>
+    <h1 class="page-content-title">ネイルデザインリスト</h1>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
       <button class="main-action-btn mt-10 mb-2" @click="newDesign">
@@ -46,7 +46,7 @@
       <div
         class="design mx-[10%] sm:mx-auto sm:grid sm:gap-x-1 gap-y-2 sm:grid-cols-2 sm:max-w-lg md:grid-cols-3 md:max-w-3xl">
         <div
-          class="nailpart-design p-2 mb-4 sm:mb-0 shadow-lg max-w-sm mx-auto hover:shadow-xl"
+          class="nailpart-design p-2 mb-4 last:mb-0 sm:mb-0 shadow-lg max-w-sm mx-auto hover:shadow-xl"
           v-for="design in selectedNailPartDesigns"
           :key="design.id">
           <div
@@ -97,16 +97,6 @@
                   class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
               </div>
             </div>
-            <!--             
-            <div
-              class="flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer">
-              <PencilIcon
-                @click="editDesign(design.id)"
-                class="w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
-              <TrashIcon
-                @click="deleteDesign(design.id)"
-                class="w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
-            </div> -->
           </div>
         </div>
       </div>

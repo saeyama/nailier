@@ -1,13 +1,15 @@
 - set_meta_tags title: '退会手続', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)の退会手続ページ'
 
-.text-gray-600.py-10.mx-auto.text-center
-  h1.text-2xl
+.text-center
+  h1.page-content-title
     | 退会のお手続き
-  p.p-10.text-base
-    | 退会のお手続きをされますとご登録頂いたデータが全て消去されます。
+  p.leading-6.text-sm.mb-10
+    | 退会のお手続きをされますと
+    br.sm:hidden
+    | ご登録頂いたデータが全て消去されます。
     br
     | この操作は元に戻すことは出来ません。
     br
     | このまま処理を続けてもよろしいですか?
-  = link_to '退会はしない', my_account_path, class: 'main-action-btn my-2 sm:mb-4'
-  = link_to '退会する', user_registration_path(resource_name), data: { confirm: t('devise.registrations.edit.are_you_sure') }, method: :delete, class: 'sub-action-btn my-2'
+  = link_to '退会はしない', my_account_path, class: 'main-action-btn mb-6'
+  = link_to '退会する', user_registration_path(resource_name), data: { confirm: t('devise.registrations.edit.are_you_sure') }, method: :delete, class: 'sub-action-btn'

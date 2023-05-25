@@ -3,6 +3,9 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .page-content-title {
+    @apply text-2xl mb-10 text-center
+  }  
   .form-field {
     @apply w-full rounded border border-gray-200 text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
   }

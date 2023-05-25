@@ -1,6 +1,6 @@
 <template>
-  <div class="text-gray-600 py-10 mx-auto mb-4">
-    <h1 class="text-2xl text-center py-10">ネイルデザインを登録</h1>
+  <div>
+    <h1 class="page-content-title">ネイルデザインを登録</h1>
     <div class="mb-8">
       <div
         class="flex justify-center items-center w-40 mx-auto border border-gray-200 rounded">
@@ -33,7 +33,7 @@
         ネイルパート：{{ design.nailPart }}
       </p>
     </div>
-    <div class="w-11/12 mx-auto grid gap-y-12">
+    <div class="grid gap-y-12">
       <div>
         <label
           for="design-title"

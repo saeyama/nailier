@@ -1,18 +1,21 @@
 - set_meta_tags title: 'お問い合わせ', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)のお問い合わせページ'
 
-.text-gray-600.py-10.px-2.w-11/12.mx-auto
-  h1.text-2xl.text-center.py-10
-    | お問い合わせ
-  .mx-auto
-  = form_with model: @inquiry,
-                    url: inquiries_path,
-                    method: :post, local: true do |f|
-    = f.label :title, '件名'
-    = f.text_field :title, placeholder: '•••について', class: 'form-field mb-8', pattern: '.*[^\s]+.*', required: true
-    = f.label :name, 'お名前'
-    = f.text_field :name, placeholder: 'ねいりえ', class: 'form-field mb-8', pattern: '.*[^\s]+.*', required: true
-    = f.label :email, 'メールアドレス'
-    = f.email_field :email, placeholder: 'mail-account@nailier.net', class: 'form-field mb-8', required: true
-    = f.label :description, 'お問い合わせ内容'
-    = f.text_area :description, placeholder: 'お問い合わせ詳細・ご意見/ご要望', class: 'form-field mb-6', required: true
-    = f.submit '送信', class: 'main-action-btn mt-8 mb-6'
+h1.page-content-title
+  | お問い合わせ
+= form_with model: @inquiry,
+                  url: inquiries_path,
+                  method: :post, local: true do |f|
+  .grid.gap-y-8
+    div
+      = f.label :title, '件名'
+      = f.text_field :title, placeholder: '•••について', class: 'form-field', pattern: '.*[^\s]+.*', required: true
+    div
+      = f.label :name, 'お名前'
+      = f.text_field :name, placeholder: 'ねいりえ', class: 'form-field', pattern: '.*[^\s]+.*', required: true
+    div
+      = f.label :email, 'メールアドレス'
+      = f.email_field :email, placeholder: 'mail-account@nailier.net', class: 'form-field', required: true
+    div
+      = f.label :description, 'お問い合わせ内容'
+      = f.text_area :description, placeholder: 'お問い合わせ詳細・ご意見/ご要望', class: 'form-field', required: true
+    = f.submit '送信', class: 'main-action-btn mt-6'
