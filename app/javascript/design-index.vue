@@ -75,6 +75,30 @@
               {{ design.humanUpdatedAt }}&ensp;更新
             </div>
             <div
+              class="relative"
+              @click="designChangeActionsContent(design.id)">
+              <EllipsisVerticalIcon
+                class="w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
+              <div
+                :class="
+                  showDesignChangeActionsContent &&
+                  design.id === designChangeActionsContentId
+                    ? 'open-change-actions-content'
+                    : 'close-change-actions-content'
+                "
+                class="absolute -top-12 -left-14 flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer bg-white p-2 rounded shadow-lg">
+                <PencilIcon
+                  @click="editDesign(design.id)"
+                  alt="編集"
+                  class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                <TrashIcon
+                  @click="deleteDesign(design.id)"
+                  alt="削除"
+                  class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+              </div>
+            </div>
+            <!--             
+            <div
               class="flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer">
               <PencilIcon
                 @click="editDesign(design.id)"
@@ -82,7 +106,7 @@
               <TrashIcon
                 @click="deleteDesign(design.id)"
                 class="w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -92,11 +116,13 @@
 
 <script>
 import apiClient from './packs/api-client.js'
+import { EllipsisVerticalIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 import { PencilIcon } from '@heroicons/vue/24/outline'
 import { TrashIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
+    EllipsisVerticalIcon,
     ChevronDownIcon,
     PencilIcon,
     TrashIcon
@@ -109,7 +135,9 @@ export default {
       selectedTag: '',
       showHandDesigns: false,
       showFootDesigns: false,
-      id: ''
+      id: '',
+      designChangeActionsContentId: '',
+      showDesignChangeActionsContent: false
     }
   },
   computed: {
@@ -194,12 +222,27 @@ export default {
       const flatPartTags = [].concat(...nailPartTags)
       const deleteDuplicateTags = Array.from(new Set(flatPartTags))
       return deleteDuplicateTags
+    },
+    designChangeActionsContent(id) {
+      this.designChangeActionsContentId = id
+      this.showDesignChangeActionsContent = !this.showDesignChangeActionsContent
     }
   }
 }
 </script>
 
 <style scoped>
+.open-change-actions-content {
+  opacity: 100;
+  visibility: visible;
+  transition-duration: 0.3s;
+}
+.close-change-actions-content {
+  opacity: 0;
+  visibility: hidden;
+  transition-duration: 0.3s;
+}
+
 .switch-nail-part-button {
   background: #ffffff;
   color: #4b5563;
