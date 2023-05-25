@@ -137,7 +137,8 @@
         <div v-else>
           <div
             v-text="design.description"
-            class="whitespace-pre-wrap mb-8 text-sm border border-gray-300 px-2 py-1 rounded"></div>
+            class="whitespace-pre-wrap px-2 py-1 h-20 resize-y overflow-auto text-sm border border-gray-300 rounded mb-8">
+          </div>
         </div>
       </div>
       <div class="design-tags">
