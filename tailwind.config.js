@@ -9,7 +9,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        base: ['kinto-sans']
+        base: [
+          'kinto-sans',
+          '"ヒラギノ角ゴシック"',
+          '"Yu Gothic"',
+          'sans-serif'
+        ]
       }
     },
   },
