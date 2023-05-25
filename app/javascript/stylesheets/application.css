@@ -15,6 +15,9 @@
   .text-btn {
     @apply block mx-auto text-center underline underline-offset-4 decoration-gray-300 text-gray-600 hover:text-gray-400 hover:decoration-gray-300;
   }
+  .toggle-btn {
+    @apply block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-600 peer-checked:after:translate-x-full
+  }  
   .select-icon {
     @apply w-5 h-5 stroke-1 bg-gray-800 text-white rounded-md;
   }

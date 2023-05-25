@@ -9,12 +9,13 @@ RSpec.describe 'Users', type: :system do
       visit new_user_registration_path
     end
 
-    it 'アカウント名・メールアドレス・パスワード・パスワード（確認用）が正しく入力されていればアカウント登録ができる' do
+    it 'アカウント名・メールアドレス・パスワード・パスワード（確認用）が正しく入力されて条項に同意すればアカウント登録ができる' do
       user = build(:user)
       fill_in 'アカウント名', with: user.account_name
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       fill_in 'パスワード（確認用）', with: user.password
+      find('.agreement-toggle').click
       click_button 'アカウントを登録'
       expect(page).to have_content('アカウント登録完了')
       expect(page).to have_current_path users_thanks_path
@@ -26,6 +27,7 @@ RSpec.describe 'Users', type: :system do
       fill_in 'メールアドレス', with: 'bob@example.com'
       fill_in 'パスワード', with: user.password
       fill_in 'パスワード（確認用）', with: user.password
+      find('.agreement-toggle').click
       click_button 'アカウントを登録'
       expect(page).not_to have_content('アカウント登録完了')
       expect(page).to have_current_path user_registration_path
@@ -37,6 +39,7 @@ RSpec.describe 'Users', type: :system do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       fill_in 'パスワード（確認用）', with: user.password
+      find('.agreement-toggle').click
       click_button 'アカウントを登録'
       expect(page).not_to have_content('アカウント登録完了')
       expect(page).to have_current_path user_registration_path
@@ -48,9 +51,10 @@ RSpec.describe 'Users', type: :system do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: '1234567'
       fill_in 'パスワード（確認用）', with: '1234567'
+      find('.agreement-toggle').click
       click_button 'アカウントを登録'
       expect(page).not_to have_content('アカウント登録完了')
-      expect(page).to have_current_path user_registration_path
+      expect(page).to have_current_path new_user_registration_path
     end
   end
 
