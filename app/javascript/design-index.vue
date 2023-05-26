@@ -49,26 +49,26 @@
           class="nailpart-design p-2 mb-4 last:mb-0 sm:mb-0 shadow-lg max-w-sm mx-auto hover:shadow-xl"
           v-for="design in selectedNailPartDesigns"
           :key="design.id">
-          <div
-            @click="showDesign(design.id)"
-            class="hover:opacity-80 cursor-pointer sm:w-56">
-            <h2
-              class="text-lg text-ellipsis overflow-hidden break-all whitespace-nowrap mt-1 mb-2">
-              {{ design.title }}
-            </h2>
-            <div class="relative w-full pt-[85.714%] mb-2">
-              <div
-                v-if="!design.image"
-                class="absolute top-0 w-full h-full font-light bg-slate-200 text-white flex justify-center items-center">
-                no image
+          <design-link :id="design.id" link="design-show">
+            <div class="hover:opacity-80 cursor-pointer sm:w-56">
+              <h2
+                class="text-lg text-ellipsis overflow-hidden break-all whitespace-nowrap mt-1 mb-2">
+                {{ design.title }}
+              </h2>
+              <div class="relative w-full pt-[85.714%] mb-2">
+                <div
+                  v-if="!design.image"
+                  class="absolute top-0 w-full h-full font-light bg-slate-200 text-white flex justify-center items-center">
+                  no image
+                </div>
+                <img
+                  v-else
+                  :src="design.image"
+                  alt="サムネイル画像"
+                  class="absolute top-0 w-full h-full object-cover" />
               </div>
-              <img
-                v-else
-                :src="design.image"
-                alt="サムネイル画像"
-                class="absolute top-0 w-full h-full object-cover" />
             </div>
-          </div>
+          </design-link>
           <div class="flex justify-between items-center">
             <div class="text-xs">
               {{ design.humanCreatedAt }}&ensp;登録<br />
@@ -87,14 +87,17 @@
                     : 'close-change-actions-content'
                 "
                 class="absolute -top-12 -left-14 flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer bg-white p-2 rounded shadow-lg">
-                <PencilIcon
-                  @click="editDesign(design.id)"
-                  alt="編集"
-                  class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
-                <TrashIcon
-                  @click="deleteDesign(design.id)"
-                  alt="削除"
-                  class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                <design-link :id="design.id" link="design-edit">
+                  <PencilIcon
+                    @click="editDesign(design.id)"
+                    alt="編集"
+                    class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                </design-link>
+                <design-delete :id="design.id">
+                  <TrashIcon
+                    alt="削除"
+                    class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                </design-delete>
               </div>
             </div>
           </div>
@@ -106,12 +109,16 @@
 
 <script>
 import apiClient from './packs/api-client.js'
+import DesignLink from './components/design-link.vue'
+import DesignDelete from './components/design-delete.vue'
 import { EllipsisVerticalIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 import { PencilIcon } from '@heroicons/vue/24/outline'
 import { TrashIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
+    DesignLink,
+    DesignDelete,
     EllipsisVerticalIcon,
     ChevronDownIcon,
     PencilIcon,
@@ -178,24 +185,6 @@ export default {
     },
     inquiry() {
       window.location.href = `/inquiries/new`
-    },
-    showDesign(id) {
-      window.location.href = `/designs/${id}`
-    },
-    editDesign(id) {
-      window.location.href = `/designs/${id}/edit`
-    },
-    deleteDesign(id) {
-      const resultOfDesignDelete = confirm(
-        'この操作は取り消すことはできません。本当に削除しますか？'
-      )
-      if (resultOfDesignDelete) {
-        apiClient
-          .delete(`/api/designs/${id}`, {})
-          .then(() => (window.location.href = '/designs'))
-      } else {
-        return
-      }
     },
     switchToHandDesigns() {
       this.showHandDesigns = true

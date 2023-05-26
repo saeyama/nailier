@@ -170,20 +170,22 @@
         </div>
       </div>
     </div>
-    <button class="main-action-btn mb-2" @click="editDesign">
-      ネイルデザインを編集
-    </button>
-    <button class="text-btn mb-8" @click="deleteDesign">
-      ネイルデザインを削除
-    </button>
-    <button class="sub-action-btn" @click="indexDesign">
-      ネイルデザイン一覧
-    </button>
+    <design-link :id="design.id" link="design-edit" class="main-action-btn my-2"
+      >ネイルデザインを編集</design-link
+    >
+    <design-delete :id="design.id" class="text-btn mb-8"
+      >ネイルデザインを削除</design-delete
+    >
+    <design-link :id="design.id" link="design-index" class="sub-action-btn"
+      >ネイルデザイン一覧</design-link
+    >
   </div>
 </template>
 
 <script>
 import apiClient from './packs/api-client.js'
+import DesignLink from './components/design-link.vue'
+import DesignDelete from './components/design-delete.vue'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import { YoutubeVue3 } from 'youtube-vue3'
 import { InformationCircleIcon } from '@heroicons/vue/24/outline'
@@ -191,6 +193,8 @@ import { SparklesIcon } from '@heroicons/vue/24/outline'
 import { TagIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
+    DesignLink,
+    DesignDelete,
     VueEasyLightbox,
     YoutubeVue3,
     InformationCircleIcon,
@@ -232,24 +236,6 @@ export default {
         response.data.images !== null
           ? response.data.images.map((imageData) => imageData.url)
           : []
-    },
-    editDesign() {
-      window.location.href = `/designs/${this.design.id}/edit`
-    },
-    deleteDesign() {
-      const resultOfDesignDelete = confirm(
-        'この操作は取り消すことはできません。本当に削除しますか？'
-      )
-      if (resultOfDesignDelete) {
-        apiClient
-          .delete(`/api/designs/${this.design.id}`, {})
-          .then(() => (window.location.href = '/designs'))
-      } else {
-        return
-      }
-    },
-    indexDesign() {
-      window.location.href = `/designs`
     },
     showImages(index) {
       this.index = index

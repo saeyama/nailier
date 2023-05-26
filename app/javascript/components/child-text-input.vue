@@ -26,7 +26,6 @@
 export default {
   name: 'ChildTextInput',
   props: {
-    for: { type: String, required: false },
     placeholder: { type: String, required: false },
     name: { type: String, required: false },
     id: { type: String, required: false }
