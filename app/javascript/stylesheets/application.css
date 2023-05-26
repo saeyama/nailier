@@ -19,11 +19,11 @@
     @apply block mx-auto text-center underline underline-offset-4 decoration-gray-300 decoration-1 hover:text-gray-400 hover:decoration-gray-300;
   }
   .arrow-icon {
-    @apply sm:text-lg relative text-center before:content-[''] before:absolute before:top-2/4 before:right-6 before:h-px before:w-8 before:bg-white hover:before:right-3 hover:before:w-12 before:ease-in before:delay-300 after:absolute after:top-5 after:right-6 hover:after:right-3 after:h-2.5 after:w-2.5 after:rotate-45 after:border-t after:border-r after:border-white after:content-[''] after:ease-in after:delay-300
-  }  
+    @apply sm:text-lg relative text-center before:content-[''] before:absolute before:top-2/4 before:right-6 before:h-px before:w-8 before:bg-white hover:before:right-3 hover:before:w-12 before:ease-in before:delay-300 before:transition-all after:absolute after:top-5 after:right-6 hover:after:right-3 after:h-2.5 after:w-2.5 after:rotate-45 after:border-t after:border-r after:border-white after:content-[''] after:ease-in after:delay-300 after:transition-all;
+  }
   .toggle-btn {
-    @apply block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-600 peer-checked:after:translate-x-full
-  }  
+    @apply block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-600 peer-checked:after:translate-x-full;
+  }
   .select-icon {
     @apply w-5 h-5 stroke-1 bg-gray-800 text-white rounded-md;
   }

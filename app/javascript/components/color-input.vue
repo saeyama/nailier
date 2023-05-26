@@ -235,7 +235,7 @@ export default {
 .switch-color-button {
   background: #ffffff;
   color: #4b5563;
-  border: 1px solid #d1d5db;
+  border: 1px solid #e5e7eb;
 }
 .checkbox-btn {
   appearance: none;

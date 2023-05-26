@@ -27,7 +27,7 @@
       <div class="relative w-11/12 sm:w-3/5 max-w-lg mx-auto">
         <select
           v-model="selectedTag"
-          class="block w-full appearance-none rounded border border-gray-300 text-gray-700 focus:border-gray-300 outline-none p-3 mb-8"
+          class="block w-full appearance-none rounded border border-gray-200 text-gray-700 focus:border-gray-300 outline-none p-3 mb-8"
           id="design-tags">
           <option value="" selected>タグで絞り込む</option>
           <option v-for="tag in nailPartTags" :key="tag">
@@ -221,10 +221,9 @@ export default {
   visibility: hidden;
   transition-duration: 0.3s;
 }
-
 .switch-nail-part-button {
   background: #ffffff;
   color: #4b5563;
-  border: 1px solid #d1d5db;
+  border: 1px solid #e5e7eb;
 }
 </style>
