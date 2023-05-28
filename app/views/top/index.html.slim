@@ -2,7 +2,7 @@
 - content_for(:main, 'max-w-screen-lg')
 
 = javascript_pack_tag 'top'
-.text-gray-600.py-10.text-center.mx-2
+.text-center
   .relative.aspect-square.w-2/3.sm:w-1/4.mx-auto
     = image_tag 'drawing.svg', class: 'w-full h-full m-auto drop-shadow-md fade-up', alt: 'ネイルアートの絵画'
     = image_tag 'brush.svg', class: 'w-full h-full absolute top-11 left-0 -right-16 m-auto drop-shadow-md fade-in', alt: '筆'
@@ -31,7 +31,7 @@
     | 画像・YouTube動画・カラー・パーツ
     br
     | 調べた内容・アイデアを
-    span.block.text-2xl.sm:text-4xl.my-14.sm:my-20.scroll-fade-in
+    span.block.text-3xl.sm:text-4xl.my-14.sm:my-20.scroll-fade-in
       | Nailierで一つに
   = image_tag 'summarize-info.svg', class: 'block mx-auto w-full sm:w-5/12 drop-shadow-md scroll-fade-in', alt: 'ネイルデザインの情報をまとめる'
   h2.mt-14.mb-8.text-lg.sm:mt-20.sm:mb-16.sm:text-xl
@@ -61,4 +61,4 @@
     .h-px.w-6.bg-gray-300.rotate-45
     | 利用は無料
     .h-px.w-6.bg-gray-300.-rotate-45
-  = link_to 'はじめてみる', new_user_registration_path, class: 'main-action-btn arrow-icon mb-4'
+  = link_to 'はじめてみる', new_user_registration_path, class: 'main-action-btn arrow-icon'

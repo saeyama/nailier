@@ -1,8 +1,6 @@
 <template>
   <div class="colors-input">
-    <label @click="showColorContent" class="text-lg border-solid"
-      >カラーイメージ</label
-    >
+    <label @click="showColorContent" class="text-lg">カラーイメージ</label>
     <div class="border border-gray-200 rounded mt-1">
       <div
         @click="showColorContent"
@@ -23,13 +21,13 @@
           <button
             :class="!showColorPicker ? 'switch-color-button' : ''"
             @click="switchToColorPicker"
-            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+            class="flex-1 text-white bg-gray-800 h-12 rounded-full shadow-lg">
             カラーピッカー
           </button>
           <button
             :class="!showColorPalette ? 'switch-color-button' : ''"
             @click="switchToColorPalette"
-            class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+            class="flex-1 text-white bg-gray-800 h-12 rounded-full shadow-lg">
             カラーパレット
           </button>
         </div>
@@ -37,7 +35,6 @@
           class="color-lame flex justify-start items-center w-10/12 sm:w-5/12 mx-auto mb-3">
           <label for="lame">
             <SparklesIcon
-              alt="ラメ"
               class="show-color-content w-5 h-5 stroke-1 text-gray-400" />
           </label>
           <div>

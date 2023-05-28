@@ -15,7 +15,7 @@
         </div>
         <div v-else>
           <div class="text-sm mb-2 flex justify-start items-center gap-1">
-            <InformationCircleIcon alt="情報" class="w-6 h-6" />
+            <InformationCircleIcon class="w-6 h-6" />
             画像をクリックすると拡大できます。
           </div>
           <div class="grid grid-cols-3 gap-1 md:grid-cols-4">
@@ -48,7 +48,7 @@
         <div v-else>
           <div class="text-sm mb-2">
             <h3 class="flex justify-start items-center gap-1">
-              <InformationCircleIcon alt="情報" class="w-6 h-6" />
+              <InformationCircleIcon class="w-6 h-6" />
               動画の再生方法
             </h3>
             <p class="text-xs">
@@ -117,9 +117,7 @@
               class="flex flex-wrap justify-start items-center gap-x-20 sm:gap-x-12">
               <div class="w-full sm:flex-1">
                 <div class="flex justify-start items-center gap-1.5">
-                  <SparklesIcon
-                    alt="情報"
-                    class="w-4 h-4 stroke-1 text-gray-400" />
+                  <SparklesIcon class="w-4 h-4 stroke-1 text-gray-400" />
                   {{ part.name }}
                 </div>
               </div>
@@ -162,7 +160,7 @@
           <div class="flex flex-wrap mt-2 gap-x-6 gap-y-2">
             <div v-for="tag in design.tags" :key="tag.id">
               <div class="text-lg flex justify-start items-end gap-1">
-                <TagIcon alt="情報" class="w-6 h-6 text-gray-300" />
+                <TagIcon class="w-6 h-6 text-gray-300" />
                 {{ tag.name }}
               </div>
             </div>

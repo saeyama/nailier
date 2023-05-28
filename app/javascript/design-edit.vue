@@ -76,11 +76,11 @@
           "
           class="my-6 text-sm">
           <div class="flex justify-start items-center gap-1">
-            <ExclamationTriangleIcon alt="注意" class="w-6 h-6" />
+            <ExclamationTriangleIcon class="w-6 h-6" />
             8枚を超えた画像は登録されません。
           </div>
           <div class="flex justify-start items-center gap-1">
-            <InformationCircleIcon alt="情報" class="w-6 h-6" />
+            <InformationCircleIcon class="w-6 h-6" />
             ドラッグ&amp;ドロップで並び替え可能です。
           </div>
         </div>
@@ -99,7 +99,6 @@
                 alt="登録画像"
                 class="aspect-[4/3] w-full object-cover" />
               <XMarkIcon
-                alt="削除アイコン"
                 class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
             </div>
           </template>
@@ -107,7 +106,7 @@
         <div v-if="design.imageToDelete.length > 0">
           <hr class="mb-2" />
           <div class="text-sm flex justify-start items-center gap-1 mb-6">
-            <ExclamationTriangleIcon alt="削除" class="w-6 h-6" />
+            <ExclamationTriangleIcon class="w-6 h-6" />
             以下の画像は保存されません。
           </div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
@@ -121,7 +120,6 @@
                 alt="削除画像"
                 class="aspect-[4/3] w-full object-cover opacity-60" />
               <ArrowUturnUpIcon
-                alt="削除取消アイコン"
                 class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
             </div>
           </div>
@@ -157,14 +155,13 @@
                 </YoutubeVue3>
               </div>
               <XMarkIcon
-                alt="削除アイコン"
                 class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
             </div>
           </div>
         </div>
         <div v-if="deleteYoutubeVideos.length > 0">
           <div class="text-sm flex justify-start items-center gap-1 my-6">
-            <ExclamationTriangleIcon alt="削除" class="w-6 h-6" />
+            <ExclamationTriangleIcon class="w-6 h-6" />
             以下のYouTube動画は保存されません。
           </div>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -183,7 +180,6 @@
                   </YoutubeVue3>
                 </div>
                 <ArrowUturnUpIcon
-                  alt="削除取消アイコン"
                   class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
               </div>
             </div>
@@ -213,15 +209,13 @@
                 </div>
               </div>
               <div v-else-if="!color.lame" class="absolute w-8 h-8"></div>
-              <XMarkIcon
-                alt="削除アイコン"
-                class="absolute ml-6 -mt-2 select-icon" />
+              <XMarkIcon class="absolute ml-6 -mt-2 select-icon" />
             </div>
           </div>
         </div>
         <div v-if="deleteColors.length > 0">
           <div class="text-sm flex justify-start items-center gap-1 my-6">
-            <ExclamationTriangleIcon alt="削除" class="w-6 h-6" />
+            <ExclamationTriangleIcon class="w-6 h-6" />
             以下のカラーイメージは保存されません。
           </div>
           <div class="grid grid-cols-5 sm:grid-cols-10">
@@ -240,9 +234,7 @@
                   </div>
                 </div>
                 <div v-else-if="!color.lame" class="absolute w-8 h-8"></div>
-                <ArrowUturnUpIcon
-                  alt="削除取消アイコン"
-                  class="absolute ml-6 -mt-2 select-icon" />
+                <ArrowUturnUpIcon class="absolute ml-6 -mt-2 select-icon" />
               </div>
             </div>
           </div>
@@ -276,7 +268,6 @@
               class="rounded-full shadow-md w-8 h-8"></div>
             <XMarkIcon
               @click="deletePart(part)"
-              alt="削除アイコン"
               class="select-icon cursor-pointer" />
           </div>
         </div>
@@ -311,7 +302,7 @@
               <div>
                 {{ tag.name }}
               </div>
-              <XMarkIcon alt="削除アイコン" class="select-icon" />
+              <XMarkIcon class="select-icon" />
             </div>
           </div>
         </div>

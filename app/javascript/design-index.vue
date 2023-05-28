@@ -90,12 +90,10 @@
                 <design-link :id="design.id" link="design-edit">
                   <PencilIcon
                     @click="editDesign(design.id)"
-                    alt="編集"
                     class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
                 </design-link>
                 <design-delete :id="design.id">
                   <TrashIcon
-                    alt="削除"
                     class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
                 </design-delete>
               </div>
