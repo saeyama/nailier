@@ -97,9 +97,9 @@ ja:
         cancel_my_account: アカウントを削除
         currently_waiting_confirmation_for_email: "%{email} の確認待ち"
         leave_blank_if_you_don_t_want_to_change_it: 空欄のままなら変更しません
-        title: アカウントを編集
+        title: アカウント情報を変更
         unhappy: 気に入りません
-        update: アカウントを更新
+        update: アカウント情報を更新
         we_need_your_current_password_to_confirm_your_changes: 更新には現在のパスワードが入力必須です
       new:
         sign_up: アカウントを登録

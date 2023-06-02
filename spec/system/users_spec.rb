@@ -96,7 +96,7 @@ RSpec.describe 'Users', type: :system do
       visit edit_user_registration_path
       fill_in 'メールアドレス', with: 'bob@example.com'
       fill_in '現在のパスワード', with: user.password
-      click_button 'アカウントを更新'
+      click_button 'アカウント情報を更新'
       expect(page).to have_content('アカウント情報')
       expect(page).to have_current_path my_account_path
     end
