@@ -12,7 +12,4 @@
     br
     | ご了承の程よろしくお願い申し上げます。
   .mt-14
-    - if user_signed_in?
-      = link_to 'ネイルデザインリストへ', designs_path, class: 'main-action-btn'
-    - else
-      = link_to 'TOPページに戻る', root_path, class: 'main-action-btn'
+    = link_to 'TOPページに戻る', user_signed_in? ? designs_path : root_path, class: 'main-action-btn'
