@@ -3,7 +3,7 @@
     <h1 class="design-title page-content-title">{{ design.title }}</h1>
     <div class="grid gap-y-12 sm:gap-y-10">
       <div
-        class="design-nailpart w-20 mx-auto text-center text-sm md:text-base bg-gray-800 text-white p-2 rounded">
+        class="design-nailpart w-20 mx-auto text-center bg-gray-800 text-white p-2 rounded">
         {{ design.nailPart }}
       </div>
       <div class="design-images">

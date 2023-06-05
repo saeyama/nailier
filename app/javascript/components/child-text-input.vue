@@ -11,7 +11,7 @@
         v-model="value"
         @input="inputValue" />
       <button
-        class="text-white bg-gray-800 w-24 h-12 rounded-full shadow-lg"
+        class="text-white bg-gray-800 w-24 h-11 rounded-full shadow-lg"
         @click="updateValue">
         決定
       </button>

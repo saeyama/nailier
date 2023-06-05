@@ -2,8 +2,7 @@
   <div>
     <h1 class="page-content-title">ネイルデザインを編集</h1>
     <div class="mb-8">
-      <div
-        class="flex justify-center items-center w-40 mx-auto border border-gray-200 rounded">
+      <div class="flex justify-center items-center gap-x-2 w-44 mx-auto">
         <label class="block flex-1 cursor-pointer">
           <input
             type="radio"
@@ -12,7 +11,7 @@
             value="ハンド"
             v-model="design.nailPart" />
           <span
-            class="nailpart-hand block text-center rounded-l p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
+            class="nailpart-hand block text-center border border-gray-200 rounded p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
             ハンド
           </span>
         </label>
@@ -24,7 +23,7 @@
             value="フット"
             v-model="design.nailPart" />
           <span
-            class="nailpart-foot block text-center rounded-r p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
+            class="nailpart-foot block text-center border border-gray-200 rounded p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
             フット
           </span>
         </label>
