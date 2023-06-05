@@ -19,15 +19,15 @@ https://github.com/saeyama/test/assets/64824195/bd68c4b0-be83-4bd2-875b-94a87a27
 
 - カラーピッカーorカラーパレットから簡単にデザインのカラーイメージを登録することが出来ます。
 
-![color-picker](https://github.com/saeyama/test/assets/64824195/d90d22ae-9660-40ff-878b-f1a74655b4da.png)
+![color-picker](https://github.com/saeyama/test/assets/64824195/d90d22ae-9660-40ff-878b-f1a74655b4da.png)  
 ![color-palette](https://github.com/saeyama/test/assets/64824195/454d2b98-e87e-465b-8e45-30539bf8aa91.png)
 
 <br>
 
 - 登録したデザイン情報は、簡単に編集・削除が可能です。  
-- 一覧からハンド・フット別、タグ検索で簡単に登録したデザイン情報を開くことが出来ます。  
+- 一覧からハンド・フット別、タグ検索で登録したデザイン情報を簡単に開くことが出来ます。  
 
-![image-index](https://github.com/saeyama/test/assets/64824195/01845d7f-a3f4-453c-854f-af382cda9a7f.png)
+![image-index](https://github.com/saeyama/test/assets/64824195/70ddbcf4-00f6-41f1-9d95-5bead6dd1c68.png)  
 
 ## 開発環境
 
