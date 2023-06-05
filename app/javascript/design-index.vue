@@ -5,25 +5,24 @@
       登録されておりません。
     </div>
     <div v-else>
-      <div
-        class="flex justify-around gap-2 sm:gap-4 w-11/12 sm:w-3/5 mb-10 max-w-lg mx-auto">
+      <div class="flex justify-around mb-2 w-44 mx-auto h-11">
         <button
           :class="!showHandDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToHandDesigns"
-          class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+          class="flex-1 rounded-l text-white bg-gray-800 shadow-lg">
           ハンド
         </button>
         <button
           :class="!showFootDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToFootDesigns"
-          class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+          class="flex-1 rounded-r text-white bg-gray-800 shadow-lg">
           フット
         </button>
       </div>
-      <div class="relative w-11/12 sm:w-3/5 max-w-lg mx-auto">
+      <div class="relative w-44 mx-auto mb-10 border-b border-gray-200">
         <select
           v-model="selectedTag"
-          class="block w-full appearance-none rounded border border-gray-200 text-gray-700 focus:border-gray-300 outline-none p-3 mb-8"
+          class="block w-full text-sm appearance-none bg-transparent text-gray-700 outline-none py-2 pl-2 pr-6 text-ellipsis overflow-hidden break-all whitespace-nowrap"
           id="design-tags">
           <option value="" selected>タグで絞り込む</option>
           <option v-for="tag in nailPartTags" :key="tag">
@@ -31,7 +30,7 @@
           </option>
         </select>
         <ChevronDownIcon
-          class="absolute top-2/4 right-3 -translate-y-2/4 w-5 h-5 stroke-1 pointer-events-none" />
+          class="absolute top-2/4 right-2 -translate-y-2/4 w-4 h-4 stroke-1 text-gray-500 pointer-events-none" />
       </div>
       <div v-if="nailPartDesigns.length === 0" class="text-center mt-10">
         登録されておりません。
@@ -96,7 +95,9 @@
       </div>
     </div>
     <div class="sticky bottom-0 py-10 bg-white/60">
-      <design-link link="design-new" class="new-design-link-btn main-action-btn">
+      <design-link
+        link="design-new"
+        class="new-design-link-btn main-action-btn">
         ネイルデザインを登録
       </design-link>
     </div>
