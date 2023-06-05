@@ -3,9 +3,12 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .nav-dropdown-menu {
+    @apply text-sm md:text-xs hidden group-hover:block rounded p-2 md:mt-1 md:shadow-lg md:absolute md:top-4 md:w-40 leading-10 md:leading-8;
+  }
   .page-content-title {
     @apply text-2xl mb-10 text-center
-  }  
+  }
   .form-field {
     @apply w-full rounded border border-gray-200 text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
   }
@@ -29,7 +32,7 @@
   }
   .external-link {
     @apply inline-flex justify-start items-start hover:text-gray-400 hover:underline;
-  }  
+  }
 }
 
 .form-field:focus {
