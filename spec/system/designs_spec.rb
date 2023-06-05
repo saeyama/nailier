@@ -164,7 +164,7 @@ RSpec.describe 'Designs', type: :system do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       click_button 'ログイン'
-      click_link 'ネイルデザインを登録'
+      find('.new-design-link-btn').click
       visit new_design_path
     end
 

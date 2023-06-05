@@ -1,12 +1,8 @@
 <template>
-  <div>
+  <div class="-mb-16 sm:-mb-20">
     <h1 class="page-content-title">ネイルデザインリスト</h1>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
-      <button class="main-action-btn mt-10 mb-2" @click="newDesign">
-        ネイルデザインを登録
-      </button>
-      <button class="text-btn" @click="inquiry">お問い合わせ</button>
     </div>
     <div v-else>
       <div
@@ -39,9 +35,6 @@
       </div>
       <div v-if="nailPartDesigns.length === 0" class="text-center mt-10">
         登録されておりません。
-        <button class="main-action-btn mt-10" @click="newDesign">
-          ネイルデザインを登録
-        </button>
       </div>
       <div
         class="design mx-[10%] sm:mx-auto sm:grid sm:gap-x-1 gap-y-2 sm:grid-cols-2 sm:max-w-lg md:grid-cols-3 md:max-w-3xl">
@@ -101,6 +94,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="sticky bottom-0 py-10 bg-white/60">
+      <design-link link="design-new" class="new-design-link-btn main-action-btn">
+        ネイルデザインを登録
+      </design-link>
     </div>
   </div>
 </template>
@@ -177,12 +175,6 @@ export default {
       this.footDesigns = response.data.designs.filter(
         (design) => design.nailPart === 'フット'
       )
-    },
-    newDesign() {
-      window.location.href = `/designs/new`
-    },
-    inquiry() {
-      window.location.href = `/inquiries/new`
     },
     switchToHandDesigns() {
       this.showHandDesigns = true

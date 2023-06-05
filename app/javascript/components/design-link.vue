@@ -8,7 +8,7 @@
 export default {
   name: 'DesignLink',
   props: {
-    id: { type: [String, Number], required: true },
+    id: { type: [String, Number] },
     link: { type: String, required: true }
   },
   methods: {
@@ -18,6 +18,9 @@ export default {
       }
       if (this.link === 'design-show') {
         window.location.href = `/designs/${this.id}`
+      }
+      if (this.link === 'design-new') {
+        window.location.href = '/designs/new'
       }
       if (this.link === 'design-edit') {
         window.location.href = `/designs/${this.id}/edit`
