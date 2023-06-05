@@ -14,20 +14,43 @@ RSpec.describe 'Designs', type: :system do
     end
 
     context 'ネイルデザインが登録されている場合' do
-      it 'タグ検索ができる' do
+      it 'ネイルデザインの編集ページに遷移できる' do
         create(:design, user:)
-        create(:design, :with_new_design, user:)
 
         visit designs_path
-        expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
-        expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
-        expect(page.all('.nailpart-design')[1]).to have_content('ワンカラー')
-        expect(page.all('.nailpart-design')[1]).to have_content('2023 01 11 11:11')
-        select 'グラデーションのタグ', from: 'design-tags'
-        expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
-        expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
-        expect(page.all('.nailpart-design')[1]).not_to have_content('ワンカラー')
-        expect(page.all('.nailpart-design')[1]).not_to have_content('2023 01 11 11:11')
+        all('.nailpart-design')[0].find('.kebab-menu').click
+        find('.design-edit-link').click
+        expect(page).to have_content('ネイルデザインを編集')
+      end
+
+      it 'ネイルデザインを削除することができる' do
+        create(:design, user:)
+
+        visit designs_path
+        all('.nailpart-design')[0].find('.kebab-menu').click
+        find('.delete-design').click
+        expect(page.accept_confirm).to eq 'この操作は取り消すことはできません。本当に削除しますか？'
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
+        expect(page).to have_content('登録されておりません。')
+        expect(page).to have_current_path designs_path
+      end
+
+      context 'タグが登録されている場合' do
+        it 'タグ検索ができる' do
+          create(:design, user:)
+          create(:design, :with_new_design, user:)
+
+          visit designs_path
+          expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
+          expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
+          expect(page.all('.nailpart-design')[1]).to have_content('ワンカラー')
+          expect(page.all('.nailpart-design')[1]).to have_content('2023 01 11 11:11')
+          select 'グラデーションのタグ', from: 'design-tags'
+          expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
+          expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
+          expect(page.all('.nailpart-design')[1]).not_to have_content('ワンカラー')
+          expect(page.all('.nailpart-design')[1]).not_to have_content('2023 01 11 11:11')
+        end
       end
 
       context '画像登録がある場合' do
@@ -96,7 +119,7 @@ RSpec.describe 'Designs', type: :system do
       end
 
       context '画像を登録している場合' do
-        it '画像を拡大表示することが出来る' do
+        it '画像を拡大表示することができる' do
           visit design_path(design.id)
           expect(page).not_to have_selector('.vel-modal')
           find('div.design-images').all('img')[0].click
@@ -179,7 +202,7 @@ RSpec.describe 'Designs', type: :system do
     end
 
     context '画像をデザインに登録する場合' do
-      it '画像が5MG以下で拡張子がjpeg、jpg、pngであれば、複数の画像のアップロードとD&Dが出来る状態でデザインに登録できる' do
+      it '画像が5MG以下で拡張子がjpeg、jpg、pngであれば、複数の画像のアップロードとD&Dができる状態でデザインに登録できる' do
         file_path1 = Rails.root.join('spec/factories/files/test-1mg.jpg')
         file_path2 = Rails.root.join('spec/factories/files/test-5mg.jpg')
         fill_in 'design-title', with: design.title

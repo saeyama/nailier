@@ -70,7 +70,7 @@
               class="relative"
               @click="designChangeActionsContent(design.id)">
               <EllipsisVerticalIcon
-                class="w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
+                class="kebab-menu w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
               <div
                 :class="
                   showDesignChangeActionsContent &&
@@ -82,11 +82,11 @@
                 <design-link :id="design.id" link="design-edit">
                   <PencilIcon
                     @click="editDesign(design.id)"
-                    class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                    class="design-edit-link w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
                 </design-link>
                 <design-delete :id="design.id">
                   <TrashIcon
-                    class="w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                    class="delete-design w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
                 </design-delete>
               </div>
             </div>
