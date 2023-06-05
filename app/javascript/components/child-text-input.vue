@@ -8,8 +8,7 @@
         :placeholder="placeholder"
         :name="name"
         :id="id"
-        v-model="value"
-        @input="inputValue" />
+        v-model="value" />
       <button
         class="text-white bg-gray-800 w-24 h-11 rounded-full shadow-lg"
         @click="updateValue">
@@ -26,9 +25,9 @@
 export default {
   name: 'ChildTextInput',
   props: {
-    placeholder: { type: String, required: false },
-    name: { type: String, required: false },
-    id: { type: String, required: false }
+    placeholder: { type: String, required: true },
+    name: { type: String, required: true },
+    id: { type: String, required: true }
   },
   data() {
     return {
@@ -36,9 +35,6 @@ export default {
     }
   },
   methods: {
-    inputValue(e) {
-      this.$emit('input-value', e.target.value)
-    },
     updateValue() {
       this.$emit('update-value', this.value)
       this.value = ''

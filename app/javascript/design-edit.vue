@@ -2,35 +2,10 @@
   <div>
     <h1 class="page-content-title">ネイルデザインを編集</h1>
     <div class="mb-8">
-      <div class="flex justify-center items-center gap-x-2 w-44 mx-auto">
-        <label class="block flex-1 cursor-pointer">
-          <input
-            type="radio"
-            class="peer sr-only"
-            name="design[nail_part]"
-            value="ハンド"
-            v-model="design.nailPart" />
-          <span
-            class="nailpart-hand block text-center border border-gray-200 rounded p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
-            ハンド
-          </span>
-        </label>
-        <label class="block flex-1 cursor-pointer">
-          <input
-            type="radio"
-            class="peer sr-only"
-            name="design[nail_part]"
-            value="フット"
-            v-model="design.nailPart" />
-          <span
-            class="nailpart-foot block text-center border border-gray-200 rounded p-2 transition peer-checked:bg-gray-800 peer-checked:text-white">
-            フット
-          </span>
-        </label>
-      </div>
-      <p class="text-xs text-center my-2">
-        ネイルパート：{{ design.nailPart }}
-      </p>
+      <nailpart-radio-btn
+        :options="nailParts"
+        name="design[nail_part]"
+        v-model="design.nailPart" />
     </div>
     <div class="grid gap-y-12">
       <div>
@@ -321,6 +296,7 @@ import ExternalLink from './components/external-link.vue'
 import ChildTextInput from './components/child-text-input.vue'
 import PartInput from './components/part-input.vue'
 import ColorInput from './components/color-input.vue'
+import NailpartRadioBtn from './components/nailpart-radio-btn.vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ArrowUturnUpIcon } from '@heroicons/vue/24/outline'
 import { InformationCircleIcon } from '@heroicons/vue/24/outline'
@@ -334,6 +310,7 @@ export default {
     ChildTextInput,
     PartInput,
     ColorInput,
+    NailpartRadioBtn,
     XMarkIcon,
     ArrowUturnUpIcon,
     InformationCircleIcon,
@@ -353,6 +330,10 @@ export default {
         parts: [],
         tags: []
       },
+      nailParts: [
+        { label: 'nailpart-hand', value: 'ハンド' },
+        { label: 'nailpart-foot', value: 'フット' }
+      ],
       value: 0,
       destroy: false
     }

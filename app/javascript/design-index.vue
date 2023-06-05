@@ -5,7 +5,7 @@
       登録されておりません。
     </div>
     <div v-else>
-      <div class="flex justify-around mb-2 w-44 mx-auto h-11">
+      <div class="flex justify-center w-44 h-10 mx-auto mb-2">
         <button
           :class="!showHandDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToHandDesigns"
@@ -24,7 +24,7 @@
           v-model="selectedTag"
           class="block w-full text-sm appearance-none bg-transparent text-gray-700 outline-none py-2 pl-2 pr-6 text-ellipsis overflow-hidden break-all whitespace-nowrap"
           id="design-tags">
-          <option value="" selected>タグで絞り込む</option>
+          <option value="" selected>タグで絞り込み</option>
           <option v-for="tag in nailPartTags" :key="tag">
             {{ tag }}
           </option>
