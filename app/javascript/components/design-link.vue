@@ -13,16 +13,16 @@ export default {
   },
   methods: {
     designLink() {
-      if (this.link === 'design-index') {
+      if (this.link === 'index') {
         window.location.href = '/designs'
       }
-      if (this.link === 'design-show') {
+      if (this.link === 'show') {
         window.location.href = `/designs/${this.id}`
       }
-      if (this.link === 'design-new') {
+      if (this.link === 'new') {
         window.location.href = '/designs/new'
       }
-      if (this.link === 'design-edit') {
+      if (this.link === 'edit') {
         window.location.href = `/designs/${this.id}/edit`
       }
     }

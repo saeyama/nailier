@@ -5,7 +5,7 @@
 <script>
 import apiClient from '../packs/api-client.js'
 export default {
-  name: 'DesignDelete',
+  name: 'DeleteDesign',
   props: {
     id: { type: [String, Number], required: true }
   },

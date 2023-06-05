@@ -159,10 +159,10 @@
         </div>
       </div>
       <div>
-        <external-link></external-link>
+        <external-links />
       </div>
       <div>
-        <color-input @update-color="updateColor"></color-input>
+        <input-color @update-color="updateColor" />
         <div
           v-if="design.colors.length > 0"
           class="grid grid-cols-5 sm:grid-cols-10 mt-6">
@@ -214,7 +214,7 @@
         </div>
       </div>
       <div>
-        <part-input @update-part="updatePart"></part-input>
+        <input-part @update-part="updatePart" />
         <div v-for="part in design.parts" :key="part" class="mt-4">
           <div class="flex flex-wrap justify-between items-center sm:gap-10">
             <div class="w-full sm:flex-1">{{ part.name }}</div>
@@ -291,10 +291,10 @@
 import apiClient from './packs/api-client.js'
 import draggable from 'vuedraggable'
 import { YoutubeVue3 } from 'youtube-vue3'
-import ExternalLink from './components/external-link.vue'
+import ExternalLinks from './components/external-links.vue'
 import ChildTextInput from './components/child-text-input.vue'
-import PartInput from './components/part-input.vue'
-import ColorInput from './components/color-input.vue'
+import InputPart from './components/input-part.vue'
+import InputColor from './components/input-color.vue'
 import NailpartRadioBtn from './components/nailpart-radio-btn.vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ArrowUturnUpIcon } from '@heroicons/vue/24/outline'
@@ -305,10 +305,10 @@ export default {
   components: {
     draggable,
     YoutubeVue3,
-    ExternalLink,
+    ExternalLinks,
     ChildTextInput,
-    PartInput,
-    ColorInput,
+    InputPart,
+    InputColor,
     NailpartRadioBtn,
     XMarkIcon,
     ArrowUturnUpIcon,
@@ -331,8 +331,8 @@ export default {
         tags: []
       },
       nailParts: [
-        { label: 'nailpart-hand', value: 'ハンド' },
-        { label: 'nailpart-foot', value: 'フット' }
+        { label: 'hand', value: 'ハンド' },
+        { label: 'foot', value: 'フット' }
       ]
     }
   },

@@ -168,13 +168,13 @@
         </div>
       </div>
     </div>
-    <design-link :id="design.id" link="design-edit" class="main-action-btn my-2"
+    <design-link :id="design.id" link="edit" class="main-action-btn my-2"
       >ネイルデザインを編集</design-link
     >
-    <design-delete :id="design.id" class="text-btn mb-8"
-      >ネイルデザインを削除</design-delete
+    <delete-design :id="design.id" class="text-btn mb-8"
+      >ネイルデザインを削除</delete-design
     >
-    <design-link :id="design.id" link="design-index" class="sub-action-btn"
+    <design-link :id="design.id" link="index" class="sub-action-btn"
       >ネイルデザイン一覧</design-link
     >
   </div>
@@ -183,7 +183,7 @@
 <script>
 import apiClient from './packs/api-client.js'
 import DesignLink from './components/design-link.vue'
-import DesignDelete from './components/design-delete.vue'
+import DeleteDesign from './components/delete-design.vue'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import { YoutubeVue3 } from 'youtube-vue3'
 import { InformationCircleIcon } from '@heroicons/vue/24/outline'
@@ -192,7 +192,7 @@ import { TagIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
     DesignLink,
-    DesignDelete,
+    DeleteDesign,
     VueEasyLightbox,
     YoutubeVue3,
     InformationCircleIcon,

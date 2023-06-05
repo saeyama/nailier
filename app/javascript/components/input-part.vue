@@ -108,7 +108,7 @@ export default {
     PlusIcon,
     ChevronRightIcon
   },
-  name: 'PartInput',
+  name: 'InputPart',
   data() {
     return {
       part: {

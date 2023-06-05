@@ -41,7 +41,7 @@
           class="nailpart-design p-2 mb-4 last:mb-0 sm:mb-0 shadow-lg max-w-sm mx-auto hover:shadow-xl"
           v-for="design in selectedNailPartDesigns"
           :key="design.id">
-          <design-link :id="design.id" link="design-show">
+          <design-link :id="design.id" link="show">
             <div class="hover:opacity-80 cursor-pointer sm:w-56">
               <h2
                 class="text-lg text-ellipsis overflow-hidden break-all whitespace-nowrap mt-1 mb-2">
@@ -79,15 +79,15 @@
                     : 'close-change-actions-content'
                 "
                 class="absolute -top-12 -left-14 flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer bg-white p-2 rounded shadow-lg">
-                <design-link :id="design.id" link="design-edit">
+                <design-link :id="design.id" link="edit">
                   <PencilIcon
                     @click="editDesign(design.id)"
                     class="design-edit-link w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
                 </design-link>
-                <design-delete :id="design.id">
+                <delete-design :id="design.id">
                   <TrashIcon
                     class="delete-design w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
-                </design-delete>
+                </delete-design>
               </div>
             </div>
           </div>
@@ -95,9 +95,7 @@
       </div>
     </div>
     <div class="sticky bottom-0 py-10 bg-white/60">
-      <design-link
-        link="design-new"
-        class="new-design-link-btn main-action-btn">
+      <design-link link="new" class="new-design-link-btn main-action-btn">
         ネイルデザインを登録
       </design-link>
     </div>
@@ -107,7 +105,7 @@
 <script>
 import apiClient from './packs/api-client.js'
 import DesignLink from './components/design-link.vue'
-import DesignDelete from './components/design-delete.vue'
+import DeleteDesign from './components/delete-design.vue'
 import { EllipsisVerticalIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 import { PencilIcon } from '@heroicons/vue/24/outline'
@@ -115,7 +113,7 @@ import { TrashIcon } from '@heroicons/vue/24/outline'
 export default {
   components: {
     DesignLink,
-    DesignDelete,
+    DeleteDesign,
     EllipsisVerticalIcon,
     ChevronDownIcon,
     PencilIcon,

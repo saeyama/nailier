@@ -42,6 +42,6 @@ export default {
   components: {
     ArrowTopRightOnSquareIcon
   },
-  name: 'ExternalLink'
+  name: 'ExternalLinks'
 }
 </script>

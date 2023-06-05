@@ -194,7 +194,7 @@ RSpec.describe 'Designs', type: :system do
     it 'タイトルの入力とネイルパートが選択されていればデザイン登録ができる' do
       fill_in 'design-title', with: design.title
       expect(page).to have_checked_field with: 'ハンド'
-      find('.nailpart-foot').click
+      find('.foot').click
       expect(page).to have_checked_field with: 'フット'
       click_button 'ネイルデザインを登録'
       expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
@@ -206,7 +206,7 @@ RSpec.describe 'Designs', type: :system do
         file_path1 = Rails.root.join('spec/factories/files/test-1mg.jpg')
         file_path2 = Rails.root.join('spec/factories/files/test-5mg.jpg')
         fill_in 'design-title', with: design.title
-        find('.nailpart-foot').click
+        find('.foot').click
         expect(page).to have_checked_field with: 'フット'
         attach_file 'design-image', [file_path1, file_path2], make_visible: true
         find('.files').all('div.item')[0].drag_to find('.files').all('div.item')[1]
@@ -231,7 +231,7 @@ RSpec.describe 'Designs', type: :system do
     context 'タグをデザインに登録する場合' do
       it 'タグ名をデザインに登録できる' do
         fill_in 'design-title', with: design.title
-        find('.nailpart-foot').click
+        find('.foot').click
         expect(page).to have_checked_field with: 'フット'
         fill_in 'design-tag', with: 'タグ'
         within '.tags-input' do
@@ -247,7 +247,7 @@ RSpec.describe 'Designs', type: :system do
       it 'アカウントコードをデザインに登録できる' do
         visit new_design_path
         fill_in 'design-title', with: design.title
-        find('.nailpart-foot').click
+        find('.foot').click
         expect(page).to have_checked_field with: 'フット'
         fill_in 'design-youtube', with: 'https://www.youtube.com/watch?v=MQJU9quj3l4'
         within '.youtube-input' do
@@ -263,7 +263,7 @@ RSpec.describe 'Designs', type: :system do
       it 'パーツ名・サイズ・個数・カラーをデザインに登録できる' do
         visit new_design_path
         fill_in 'design-title', with: design.title
-        find('.nailpart-foot').click
+        find('.foot').click
         expect(page).to have_checked_field with: 'フット'
         find('.show-part-content').click
         fill_in 'design-part-name', with: 'ラインストーン'
@@ -283,7 +283,7 @@ RSpec.describe 'Designs', type: :system do
       it 'パーツ名が無いとデザインに登録できない' do
         visit new_design_path
         fill_in 'design-title', with: design.title
-        find('.nailpart-foot').click
+        find('.foot').click
         expect(page).to have_checked_field with: 'フット'
         find('.show-part-content').click
         fill_in 'design-part-name', with: ''
@@ -301,7 +301,7 @@ RSpec.describe 'Designs', type: :system do
     context 'カラーをデザインに登録する場合' do
       it 'カラーピッカーでカラーをデザインに登録できる' do
         fill_in 'design-title', with: design.title
-        find('.nailpart-foot').click
+        find('.foot').click
         expect(page).to have_checked_field with: 'フット'
         find('.show-color-content').click
         expect(find('.color-lame')).to have_checked_field with: 'false', visible: :all
@@ -318,7 +318,7 @@ RSpec.describe 'Designs', type: :system do
 
       it 'カラーパレットでカラーをデザインに登録できる' do
         fill_in 'design-title', with: design.title
-        find('.nailpart-foot').click
+        find('.foot').click
         expect(page).to have_checked_field with: 'フット'
         find('.show-color-content').click
         expect(find('.color-lame')).to have_checked_field with: 'false', visible: :all

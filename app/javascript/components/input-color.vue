@@ -119,7 +119,7 @@ export default {
     PlusIcon,
     'chrome-picker': Chrome
   },
-  name: 'ColorInput',
+  name: 'InputColor',
   data() {
     return {
       color: {
