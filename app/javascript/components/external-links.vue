@@ -9,7 +9,7 @@
           target="_blank"
           rel="noopener">
           <span class="pr-1">TAT</span>
-          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1" />
+          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1 text-gray-600" />
         </a>
       </li>
       <li>
@@ -19,7 +19,7 @@
           target="_blank"
           rel="noopener">
           <span class="pr-1">ネイルパートナー</span>
-          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1" />
+          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1 text-gray-600" />
         </a>
       </li>
       <li>
@@ -29,7 +29,7 @@
           target="_blank"
           rel="noopener">
           <span class="pr-1">Nail Labo</span>
-          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1" />
+          <ArrowTopRightOnSquareIcon class="w-5 h-5 stroke-1 text-gray-600" />
         </a>
       </li>
     </ul>

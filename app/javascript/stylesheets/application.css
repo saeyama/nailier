@@ -34,7 +34,7 @@
     @apply w-5 h-5 stroke-1 bg-gray-800 text-white rounded-md;
   }
   .external-link {
-    @apply inline-flex justify-start items-start hover:text-gray-400 hover:underline;
+    @apply inline-flex justify-start items-start hover:text-gray-400 hover:underline hover:underline-offset-4 hover:decoration-gray-300;
   }
 }
 
