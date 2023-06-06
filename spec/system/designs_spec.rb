@@ -170,7 +170,7 @@ RSpec.describe 'Designs', type: :system do
     it 'ネイルデザインを編集できる' do
       visit edit_design_path(design.id)
       fill_in 'design-title', with: 'グラデーション'
-      attach_file 'design-image', Rails.root.join('spec/factories/files/test-1mg.jpg'), make_visible: true
+      attach_file 'design-images', Rails.root.join('spec/factories/files/test-1mg.jpg'), make_visible: true
       click_button 'ネイルデザインを更新'
       expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_content('グラデーション')
@@ -208,7 +208,7 @@ RSpec.describe 'Designs', type: :system do
         fill_in 'design-title', with: design.title
         find('.foot').click
         expect(page).to have_checked_field with: 'フット'
-        attach_file 'design-image', [file_path1, file_path2], make_visible: true
+        attach_file 'design-images', [file_path1, file_path2], make_visible: true
         find('.files').all('div.item')[0].drag_to find('.files').all('div.item')[1]
         click_button 'ネイルデザインを登録'
         expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
@@ -217,13 +217,13 @@ RSpec.describe 'Designs', type: :system do
 
       it '5MG超の画像はデザインに登録できない' do
         file_path = Rails.root.join('spec/factories/files/test-10mg.jpg')
-        attach_file 'design-image', file_path, make_visible: true
+        attach_file 'design-images', file_path, make_visible: true
         expect(page.accept_confirm).to eq '5MGを超えた画像はアップロードできません。'
       end
 
       it '拡張子がjpeg、jpg、png以外の画像はデザインに登録できない' do
         file_path = Rails.root.join('spec/factories/files/test.gif')
-        attach_file 'design-image', file_path, make_visible: true
+        attach_file 'design-images', file_path, make_visible: true
         expect(page.accept_confirm).to eq 'jpeg・jpg・png 以外は登録できません。'
       end
     end

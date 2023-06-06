@@ -23,26 +23,10 @@
           v-model="design.title" />
       </div>
       <div>
-        <label for="design-image" class="block text-lg"
-          >画像&nbsp;&#47;&nbsp;8枚まで</label
-        >
-        <div class="mt-1">
-          <label
-            class="inline-block p-2 bg-gray-100 border border-gray-300 text-gray-500 hover:opacity-70 rounded cursor-pointer">
-            <input
-              type="file"
-              name="design[images]"
-              id="design-image"
-              multiple="multiple"
-              accept="image/*"
-              @change="uploadFiles"
-              class="hidden" />
-            ファイルを選択
-          </label>
-          <p class="mt-0.5 text-xs text-gray-600 text-justify">
-            jpeg&#47;jpg&#47;png&middot;5MG以下
-          </p>
-        </div>
+        <upload-images
+          name="design[images]"
+          id="design-images"
+          @upload-images="uploadImages" />
         <div
           v-if="
             (design.images && design.images.length > 0) ||
@@ -297,6 +281,7 @@ import ChildTextInput from './components/child-text-input.vue'
 import InputPart from './components/input-part.vue'
 import InputColor from './components/input-color.vue'
 import NailpartRadioBtn from './components/nailpart-radio-btn.vue'
+import UploadImages from './components/upload-images.vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ArrowUturnUpIcon } from '@heroicons/vue/24/outline'
 import { InformationCircleIcon } from '@heroicons/vue/24/outline'
@@ -311,6 +296,7 @@ export default {
     InputPart,
     InputColor,
     NailpartRadioBtn,
+    UploadImages,
     XMarkIcon,
     ArrowUturnUpIcon,
     InformationCircleIcon,
@@ -386,32 +372,12 @@ export default {
       this.design.images =
         response.data.images !== null ? response.data.images : []
     },
-    uploadFiles(e) {
-      const files = e.target.files
-      if (files === 0) return
-      for (const file of files) {
-        const fileReader = new FileReader()
-        fileReader.readAsDataURL(file)
-        fileReader.onload = () => {
-          if (
-            fileReader.result.startsWith('data:image/jpeg') ||
-            fileReader.result.startsWith('data:image/jpg') ||
-            fileReader.result.startsWith('data:image/png')
-          ) {
-            if (file.size > 5000000)
-              alert('5MGを超えた画像はアップロードできません。')
-            if (file.size <= 5000000) {
-              this.design.images.push({
-                id: '',
-                url: fileReader.result,
-                _destroy: '0'
-              })
-            }
-          } else {
-            alert('jpeg・jpg・png 以外は登録できません。')
-          }
-        }
-      }
+    uploadImages(images) {
+      this.design.images.push({
+        id: '',
+        url: images,
+        _destroy: '0'
+      })
     },
     deleteImage(image) {
       image._destroy = '1'
