@@ -28,7 +28,7 @@ h1.page-content-title.mb-0
         svg[xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"]
           path[path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"]
         = t('.we_need_your_current_password_to_confirm_your_changes')
-      = f.label :current_password, class: "mb-2 block relative after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1 after:-mt-0.5" do
+      = f.label :current_password, class: 'mb-2 required-icon after:-mt-0.5' do
         = t('activerecord.attributes.user.current_password')
       = f.password_field :current_password, autocomplete: 'current-password', class: 'form-field'
   = f.submit t('.update'), class: 'main-action-btn mt-14 mb-2'

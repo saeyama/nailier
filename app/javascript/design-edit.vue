@@ -9,9 +9,7 @@
     </div>
     <div class="grid gap-y-12">
       <div>
-        <label
-          for="design-title"
-          class="block relative text-lg after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1">
+        <label for="design-title" class="text-lg required-icon">
           タイトル
         </label>
         <input
