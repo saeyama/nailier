@@ -9,4 +9,5 @@ class User < ApplicationRecord
   has_many :designs, dependent: :destroy
 
   validates :account_name, presence: true, uniqueness: true
+  validates :agreement_terms, acceptance: true, on: :create
 end

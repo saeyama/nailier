@@ -1,7 +1,7 @@
 - set_meta_tags title: 'お問い合わせ送信完了', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)のお問い合わせ送信完了ページ'
 
-.text-gray-600.py-10.w-11/12.mx-auto.text-center
-  h2.text-xl.sm:text-2xl.py-10
+.text-center
+  h1.page-content-title
     | お問い合わせを承りました。
   p.leading-6.text-sm
     | 一両日中にご連絡いたします。
@@ -11,7 +11,5 @@
     | お時間をいただく可能性がございます。
     br
     | ご了承の程よろしくお願い申し上げます。
-- if user_signed_in?
-  = link_to 'ネイルデザインリストへ', designs_path, class: 'main-action-btn'
-- else
-  = link_to 'ＴＯＰへ戻る', root_path, class: 'main-action-btn'
+  .mt-14
+    = link_to 'TOPページに戻る', user_signed_in? ? designs_path : root_path, class: 'main-action-btn'

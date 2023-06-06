@@ -7,7 +7,16 @@ module.exports = {
     './app/javascript/**/*.vue',    
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        base: [
+          'kinto-sans',
+          '"ヒラギノ角ゴシック"',
+          '"Yu Gothic"',
+          'sans-serif'
+        ]
+      }
+    },
   },
   plugins: [],
 }

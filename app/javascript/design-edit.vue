@@ -1,298 +1,264 @@
 <template>
-  <div class="text-gray-600 py-10 mx-auto mb-4">
-    <h2 class="text-2xl text-center py-10">ネイルデザインを編集</h2>
-    <div class="w-11/12 mx-auto">
-      <div class="p-2">
-        <lable class="text-lg">タイトル&#65288;入力必須&#65289;</lable>
+  <div>
+    <h1 class="page-content-title">ネイルデザインを編集</h1>
+    <div class="mb-8">
+      <nailpart-radio-btn
+        :options="nailParts"
+        name="design[nail_part]"
+        v-model="design.nailPart" />
+    </div>
+    <div class="grid gap-y-12">
+      <div>
+        <label for="design-title" class="text-lg required-icon">
+          タイトル
+        </label>
         <input
-          class="form-field"
+          class="form-field mt-1"
           type="text"
           name="design[title]"
           id="design-title"
-          placeholder="入力してください"
+          placeholder="デザイン名・&#x25CB;&#x25CB;検定など"
           v-model="design.title" />
       </div>
-      <div class="p-2 w-full text-lg">
-        <label
-          >ハンド&nbsp;
-          <input
-            class="w-4 h-4"
-            type="radio"
-            name="design[nail_part]"
-            value="ハンド"
-            id="hand"
-            v-model="design.nailPart" /> </label
-        >&emsp;
-        <label
-          >フット&nbsp;
-          <input
-            class="w-4 h-4"
-            type="radio"
-            name="design[nail_part]"
-            value="フット"
-            id="foot"
-            v-model="design.nailPart" />
-        </label>
-      </div>
-      <div class="p-2 w-full text-lg">
-        <lable class="block mb-2">
-          画像&#65288;8枚まで&#65289;<br class="sm:hidden" />
-          <span class="text-sm">jpeg&#47;jpg&#47;png&middot;5MG以下</span>
-        </lable>
-        <input
-          type="file"
+      <div>
+        <upload-images
           name="design[images]"
-          id="design-image"
-          multiple="multiple"
-          accept="image/*"
-          @change="uploadFiles"
-          class="text-sm w-64 md:text-lg md:w-full" />
+          id="design-images"
+          @upload-images="uploadImages" />
         <div
           v-if="
             (design.images && design.images.length > 0) ||
             design.imageToDelete.length > 0
           "
-          class="text-sm mt-6 flex gap-0.5 items-center">
-          <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-          <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
-          で登録する画像を選択できます。
-        </div>
-        <div
-          v-if="design.images && design.images.length"
-          class="text-sm mb-8 mt-1 leading-6">
-          <span class="underline decoration-dotted underline-offset-2"
-            >ドラッグ&amp;ドロップで並び替え可能です。</span
-          ><br />
-          <span class="inline-block mt-2"
-            >アップロード数は現在&nbsp;<span class="text-xl">{{
-              design.images.length
-            }}</span
-            >&nbsp;枚です。</span
-          ><br />
-          <span class="underline underline-offset-2"
-            >8枚を超えた画像は登録されません。</span
-          ><br />
+          class="my-6 text-sm">
+          <div class="flex justify-start items-center gap-1">
+            <ExclamationTriangleIcon class="w-6 h-6" />
+            8枚を超えた画像は登録されません。
+          </div>
+          <div class="flex justify-start items-center gap-1">
+            <InformationCircleIcon class="w-6 h-6" />
+            ドラッグ&amp;ドロップで並び替え可能です。
+          </div>
         </div>
         <draggable
+          v-if="design.images && design.images.length"
           v-model="design.images"
           draggable=".item"
           class="files grid grid-cols-3 md:grid-cols-4 gap-3">
           <template #item="{ element }">
-            <div class="item relative mb-4 md:mb-8" :key="element">
+            <div
+              @click="deleteImage(element)"
+              class="item relative mb-4 md:mb-8 cursor-pointer"
+              :key="element">
               <img
                 :src="element.url"
                 alt="登録画像"
-                class="z-0 aspect-[4/3] w-full object-cover" />
-              <div
-                @click="deleteImage(element)"
-                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
-              </div>
+                class="aspect-[4/3] w-full object-cover" />
+              <XMarkIcon
+                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
             </div>
           </template>
         </draggable>
         <div v-if="design.imageToDelete.length > 0">
-          <div class="text-sm my-4 md:my-8 md:text-base">削除する画像</div>
+          <hr class="mb-2" />
+          <div class="text-sm flex justify-start items-center gap-1 mb-6">
+            <ExclamationTriangleIcon class="w-6 h-6" />
+            以下の画像は保存されません。
+          </div>
           <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
             <div
-              class="relative mb-4 md:mb-8"
+              @click="saveImage(image)"
+              class="relative mb-4 md:mb-8 cursor-pointer"
               v-for="image in design.imageToDelete"
               :key="image">
               <img
                 :src="image.url"
                 alt="削除画像"
-                class="z-0 aspect-[4/3] w-full object-cover opacity-60" />
+                class="aspect-[4/3] w-full object-cover opacity-60" />
+              <ArrowUturnUpIcon
+                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <child-text-input
+          class="youtube-input"
+          placeholder="https://youtu.be/•••"
+          name="design[youtube_videos_attributes][][access_code]"
+          id="design-youtube"
+          @update-value="updateYoutubeVideo">
+          <template v-slot:label> YouTube動画 </template>
+          <template v-slot:description>
+            URLは動画内の共有&rarr;コピーより取得
+          </template>
+        </child-text-input>
+        <div
+          v-if="saveYoutubeVideos.length > 0"
+          class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 mb-4">
+          <div
+            v-for="youtubeVideo in saveYoutubeVideos"
+            :key="youtubeVideo"
+            class="relative">
+            <div
+              @click="deleteYoutubeVideo(youtubeVideo)"
+              class="cursor-pointer">
+              <div class="w-full aspect-video pointer-events-none">
+                <YoutubeVue3
+                  :videoid="youtubeVideo.accessCode"
+                  :autoplay="0"
+                  class="w-full h-full">
+                </YoutubeVue3>
+              </div>
+              <XMarkIcon
+                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
+            </div>
+          </div>
+        </div>
+        <div v-if="deleteYoutubeVideos.length > 0">
+          <div class="text-sm flex justify-start items-center gap-1 my-6">
+            <ExclamationTriangleIcon class="w-6 h-6" />
+            以下のYouTube動画は保存されません。
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div
+              v-for="youtubeVideo in deleteYoutubeVideos"
+              :key="youtubeVideo"
+              class="relative">
               <div
-                @click="saveImage(image)"
-                class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-                <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+                @click="saveYoutubeVideo(youtubeVideo)"
+                class="cursor-pointer">
+                <div class="w-full aspect-video pointer-events-none">
+                  <YoutubeVue3
+                    :videoid="youtubeVideo.accessCode"
+                    :autoplay="0"
+                    class="w-full h-full opacity-60">
+                  </YoutubeVue3>
+                </div>
+                <ArrowUturnUpIcon
+                  class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="p-2">
-        <child-text-input
-          placeholder="youtubeのURL"
-          name="design[youtube_videos_attributes][][access_code]"
-          id="design-youtube"
-          @update-value="updateYoutubeVideo">
-          <template v-slot:label>
-            YouTube動画<br />
-            <span class="text-sm"
-              >URLは動画内の共有&rarr;コピーで取得出来ます。</span
-            >
-          </template>
-        </child-text-input>
+      <div>
+        <external-links />
       </div>
-      <div
-        v-if="design.youtubeVideos.length > 0"
-        class="text-sm mt-2 mb-6 ml-2 flex gap-0.5 items-center">
-        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
-        で登録する動画を選択できます。
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
+      <div>
+        <input-color @update-color="updateColor" />
         <div
-          v-for="youtubeVideo in saveYoutubeVideos"
-          :key="youtubeVideo"
-          class="relative">
-          <div class="w-full aspect-video">
-            <YoutubeVue3
-              :videoid="youtubeVideo.accessCode"
-              :autoplay="0"
-              class="z-0 w-full h-full">
-            </YoutubeVue3>
-          </div>
+          v-if="saveColors.length > 0"
+          class="grid grid-cols-5 sm:grid-cols-10 mt-6">
           <div
-            @click="deleteYoutubeVideo(youtubeVideo)"
-            class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
-          </div>
-        </div>
-      </div>
-      <div v-if="deleteYoutubeVideos.length > 0">
-        <div class="text-sm ml-2 my-4 md:my-8 md:text-base">
-          削除するYouTube動画
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 mx-2">
-          <div
-            v-for="youtubeVideo in deleteYoutubeVideos"
-            :key="youtubeVideo"
-            class="relative">
-            <div class="w-full aspect-video">
-              <YoutubeVue3
-                :videoid="youtubeVideo.accessCode"
-                :autoplay="0"
-                class="z-0 w-full h-full opacity-60">
-              </YoutubeVue3>
-            </div>
-            <div
-              @click="saveYoutubeVideo(youtubeVideo)"
-              class="cursor-pointer absolute z-10 right-0 top-0 -mt-2.5 -mr-2.5">
-              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-2 text-lg">カラー・パーツ</div>
-      <external-link></external-link>
-      <color-input @update-color="updateColor"></color-input>
-      <div
-        v-if="design.colors.length > 0"
-        class="text-sm mt-4 mb-6 mx-2 flex gap-0.5 items-center">
-        <img src="~plus.svg" alt="プラスアイコン" class="w-4 h-4" />
-        <img src="~minus.svg" alt="マイナスアイコン" class="w-4 h-4" />
-        で登録するカラーを選択できます。
-      </div>
-      <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
-        <div
-          v-for="color in saveColors"
-          :key="color"
-          :style="colorShowHexNumber(color.hexNumber)"
-          class="w-8 h-8 rounded-full shadow-md mb-4">
-          <div v-if="color.lame" class="relative">
-            <img
-              src="~lame.png"
-              alt="ラメ"
-              class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
-          </div>
-          <div v-else-if="!color.lame"></div>
-          <div
-            class="ml-6 -mt-2 cursor-pointer absolute z-20"
-            @click="deleteColor(color)">
-            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
-          </div>
-        </div>
-      </div>
-      <div v-if="deleteColors.length > 0">
-        <div class="text-sm mx-2 my-4 md:my-8 md:text-base">削除するカラー</div>
-        <div class="grid grid-cols-5 mb-2 mx-2 sm:grid-cols-10">
-          <div
-            v-for="color in deleteColors"
+            v-for="color in saveColors"
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
             class="w-8 h-8 rounded-full shadow-md mb-4">
-            <div v-if="color.lame" class="relative">
-              <img
-                src="~lame.png"
-                alt="ラメ"
-                class="w-8 h-8 rounded-full opacity-80 absolute z-10" />
+            <div @click="deleteColor(color)" class="relative cursor-pointer">
+              <div v-if="color.lame" class="absolute w-8 h-8">
+                <div class="relative">
+                  <img
+                    src="~lame.png"
+                    alt="ラメ"
+                    class="absolute w-8 h-8 rounded-full opacity-80" />
+                </div>
+              </div>
+              <div v-else-if="!color.lame" class="absolute w-8 h-8"></div>
+              <XMarkIcon class="absolute ml-6 -mt-2 select-icon" />
             </div>
-            <div v-else-if="!color.lame"></div>
+          </div>
+        </div>
+        <div v-if="deleteColors.length > 0">
+          <div class="text-sm flex justify-start items-center gap-1 my-6">
+            <ExclamationTriangleIcon class="w-6 h-6" />
+            以下のカラーイメージは保存されません。
+          </div>
+          <div class="grid grid-cols-5 sm:grid-cols-10">
             <div
-              class="ml-6 -mt-2 cursor-pointer absolute z-20"
-              @click="saveColor(color)">
-              <img src="~plus.svg" alt="プラスアイコン" class="w-5 h-5" />
+              v-for="color in deleteColors"
+              :key="color"
+              :style="colorShowHexNumber(color.hexNumber)"
+              class="w-8 h-8 rounded-full shadow-md mb-4">
+              <div @click="saveColor(color)" class="cursor-pointer">
+                <div v-if="color.lame" class="absolute w-8 h-8">
+                  <div class="relative">
+                    <img
+                      src="~lame.png"
+                      alt="ラメ"
+                      class="absolute w-8 h-8 rounded-full opacity-80" />
+                  </div>
+                </div>
+                <div v-else-if="!color.lame" class="absolute w-8 h-8"></div>
+                <ArrowUturnUpIcon class="absolute ml-6 -mt-2 select-icon" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <part-input @update-part="updatePart"></part-input>
-      <div v-for="part in saveParts" :key="part" class="mb-4 mx-2">
-        <div class="flex justify-between items-center">
-          <div class="flex items-center">
-            <div class="mr-4">
-              <span class="font-semibold md:w-48 md:inline-block">{{
-                part.name
-              }}</span
-              ><br class="md:hidden" />
+      <div>
+        <input-part @update-part="updatePart" />
+        <div v-for="part in saveParts" :key="part" class="mt-4">
+          <div class="flex flex-wrap justify-between items-center sm:gap-10">
+            <div class="w-full sm:flex-1">{{ part.name }}</div>
+            <div>
               <input
-                class="text-sm md:text-base mr-1 rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 px-4 leading-8 duration-200 ease-in-out w-16 md:w-20"
+                class="form-field mr-2 rounded w-16 md:w-20 h-10"
                 type="text"
                 name="size"
                 v-model="part.size" />
               <input
-                class="text-sm md:text-base rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 md:py-2 pl-2 leading-8 duration-200 ease-in-out w-12 md:w-16"
+                class="form-field mr-1 rounded w-16 md:w-20 h-10"
                 type="number"
                 min="0"
                 onkeypress="return (event.charCode === 8 || event.charCode === 46) ? null : event.charCode >= 48 && event.charCode <= 57"
                 name="quantity"
                 placeholder="0"
-                v-model="part.quantity" />&nbsp;個
+                v-model="part.quantity" />
+              個
             </div>
-            <div v-if="!part.hexNumber" class="w-8 h-8 mt-6 md:mt-0"></div>
+            <div v-if="!part.hexNumber" class="w-8 h-8"></div>
             <div
               v-else
               :style="colorShowHexNumber(part.hexNumber)"
-              class="rounded-full shadow-md w-8 h-8 mt-6 md:mt-0"></div>
-          </div>
-          <div @click="deletePart(part)" class="cursor-pointer mt-6 md:mt-0">
-            <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+              class="rounded-full shadow-md w-8 h-8"></div>
+            <XMarkIcon
+              @click="deletePart(part)"
+              class="select-icon cursor-pointer" />
           </div>
         </div>
       </div>
-      <div class="p-2">
-        <lable class="text-lg">調べた内容・メモ</lable>
+      <div>
+        <label for="design-description" class="text-lg">調べた内容・メモ</label>
         <textarea
-          class="form-field"
-          placeholder="入力してください"
+          class="form-field mt-1"
+          placeholder="手順・カラー番号・注意点など"
           name="design[description]"
           id="design-description"
           v-model="design.description">
         </textarea>
       </div>
-      <div class="p-2 mb-8 tags-input">
+      <div>
         <child-text-input
-          placeholder="入力してください"
+          class="tags-input"
+          placeholder="カラー名・&#x25CB;&#x25CB;系など"
           name="design[tags_attributes][][name]"
           id="design-tag"
           @update-value="updateTag">
-          <template v-slot:label>
-            タグ<br />
-            <span class="text-sm">重複登録した分のタグは保存されません。</span>
+          <template v-slot:label> タグ </template>
+          <template v-slot:description>
+            重複登録した分のタグは保存されません。<br />リストからタグ検索ができます。
           </template>
         </child-text-input>
-        <div class="flex flex-wrap mt-2">
-          <div
-            v-for="tag in saveTags"
-            :key="tag"
-            class="mr-4 py-1 rounded flex justify-start items-center">
-            <div class="mr-2 font-semibold">
-              {{ tag.name }}
-            </div>
-            <div @click="deleteTag(tag)" class="cursor-pointer">
-              <img src="~minus.svg" alt="マイナスアイコン" class="w-5 h-5" />
+        <div class="flex flex-wrap mt-2 gap-x-6 gap-y-2">
+          <div v-for="tag in saveTags" :key="tag">
+            <div
+              @click="deleteTag(tag)"
+              class="flex justify-start items-center gap-x-1.5 cursor-pointer">
+              <div>
+                {{ tag.name }}
+              </div>
+              <XMarkIcon class="select-icon" />
             </div>
           </div>
         </div>
@@ -308,20 +274,31 @@
 import apiClient from './packs/api-client.js'
 import draggable from 'vuedraggable'
 import { YoutubeVue3 } from 'youtube-vue3'
-import ExternalLink from './components/external-link.vue'
+import ExternalLinks from './components/external-links.vue'
 import ChildTextInput from './components/child-text-input.vue'
-import PartInput from './components/part-input.vue'
-import ColorInput from './components/color-input.vue'
-import 'plus.svg'
-import 'minus.svg'
+import InputPart from './components/input-part.vue'
+import InputColor from './components/input-color.vue'
+import NailpartRadioBtn from './components/nailpart-radio-btn.vue'
+import UploadImages from './components/upload-images.vue'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
+import { ArrowUturnUpIcon } from '@heroicons/vue/24/outline'
+import { InformationCircleIcon } from '@heroicons/vue/24/outline'
+import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
+import 'lame.png'
 export default {
   components: {
     draggable,
     YoutubeVue3,
-    ExternalLink,
+    ExternalLinks,
     ChildTextInput,
-    PartInput,
-    ColorInput
+    InputPart,
+    InputColor,
+    NailpartRadioBtn,
+    UploadImages,
+    XMarkIcon,
+    ArrowUturnUpIcon,
+    InformationCircleIcon,
+    ExclamationTriangleIcon
   },
   data() {
     return {
@@ -337,6 +314,10 @@ export default {
         parts: [],
         tags: []
       },
+      nailParts: [
+        { label: 'hand', value: 'ハンド' },
+        { label: 'foot', value: 'フット' }
+      ],
       value: 0,
       destroy: false
     }
@@ -389,32 +370,12 @@ export default {
       this.design.images =
         response.data.images !== null ? response.data.images : []
     },
-    uploadFiles(e) {
-      const files = e.target.files
-      if (files === 0) return
-      for (const file of files) {
-        const fileReader = new FileReader()
-        fileReader.readAsDataURL(file)
-        fileReader.onload = () => {
-          if (
-            fileReader.result.startsWith('data:image/jpeg') ||
-            fileReader.result.startsWith('data:image/jpg') ||
-            fileReader.result.startsWith('data:image/png')
-          ) {
-            if (file.size > 5000000)
-              alert('5MGを超えた画像はアップロードできません。')
-            if (file.size <= 5000000) {
-              this.design.images.push({
-                id: '',
-                url: fileReader.result,
-                _destroy: '0'
-              })
-            }
-          } else {
-            alert('jpeg・jpg・png 以外は登録できません。')
-          }
-        }
-      }
+    uploadImages(images) {
+      this.design.images.push({
+        id: '',
+        url: images,
+        _destroy: '0'
+      })
     },
     deleteImage(image) {
       image._destroy = '1'

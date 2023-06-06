@@ -3,17 +3,38 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .nav-dropdown-menu {
+    @apply text-sm md:text-xs hidden group-hover:block rounded p-2 md:mt-1 md:shadow-lg md:absolute md:top-4 md:w-40 leading-10 md:leading-8;
+  }
+  .page-content-title {
+    @apply text-2xl mb-10 text-center
+  }
   .form-field {
-    @apply w-full rounded border border-gray-300 text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
+    @apply w-full rounded border border-gray-200 text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
   }
   .main-action-btn {
-    @apply flex justify-center items-center bg-gray-800 hover:bg-gradient-to-r hover:from-gray-500 text-white rounded-full w-56 h-12 md:w-80 mx-auto shadow-lg;
+    @apply flex justify-center items-center bg-gray-800 hover:bg-gradient-to-r hover:from-gray-500 text-white rounded-full w-56 h-11 md:w-64 mx-auto shadow-lg;
   }
   .sub-action-btn {
-    @apply flex justify-center items-center border border-gray-500 hover:bg-gray-800 hover:text-white text-gray-600 rounded-full w-56 h-12 md:w-80 mx-auto shadow-lg;
+    @apply flex justify-center items-center border border-gray-200 hover:bg-gray-800 hover:bg-gradient-to-r hover:from-gray-500 hover:text-white rounded-full w-56 h-11 md:w-64 mx-auto shadow-lg;
   }
-  .delete-btn {
-    @apply block mx-auto text-center underline text-gray-600 hover:text-gray-400;
+  .text-btn {
+    @apply block mx-auto text-center underline underline-offset-4 decoration-gray-300 decoration-1 hover:text-gray-400 hover:decoration-gray-300;
+  }
+  .toggle-btn {
+    @apply block w-8 h-4 cursor-pointer bg-gray-300 rounded-full border border-gray-300 box-content after:block after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:bg-gray-600 peer-checked:after:translate-x-full;
+  }
+  .arrow-icon {
+    @apply sm:text-lg relative text-center before:content-[''] before:absolute before:top-2/4 before:right-6 before:h-px before:w-8 before:bg-white hover:before:right-3 hover:before:w-12 before:ease-in before:delay-300 before:transition-all after:absolute after:top-5 after:right-6 hover:after:right-3 after:h-2.5 after:w-2.5 after:rotate-45 after:border-t after:border-r after:border-white after:content-[''] after:ease-in after:delay-300 after:transition-all;
+  }
+  .required-icon {
+    @apply block relative after:absolute after:content-['必須'] after:text-white after:text-xs after:bg-orange-500 after:py-1.5 after:px-2 after:rounded after:ml-1;
+  }    
+  .select-icon {
+    @apply w-5 h-5 stroke-1 bg-gray-800 text-white rounded-md;
+  }
+  .external-link {
+    @apply inline-flex justify-start items-start hover:text-gray-400 hover:underline hover:underline-offset-4 hover:decoration-gray-300;
   }
 }
 

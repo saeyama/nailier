@@ -1,97 +1,124 @@
 <template>
-  <div class="text-gray-600 py-10 mx-auto">
-    <h2 class="text-2xl text-center py-8 md:py-10">ネイルデザインリスト</h2>
+  <div class="-mb-16 sm:-mb-20">
+    <h1 class="page-content-title">ネイルデザインリスト</h1>
     <div v-if="design === undefined" class="text-center">
       登録されておりません。
-      <button class="main-action-btn mt-10 mb-6" @click="newDesign">
-        ネイルデザインを登録
-      </button>
-      <button class="sub-action-btn" @click="inquiry">お問い合わせ</button>
     </div>
     <div v-else>
-      <div
-        class="flex justify-around gap-2 md:gap-4 mb-10 max-w-xl mx-2 sm:mx-auto">
+      <div class="flex justify-center w-44 h-10 mx-auto mb-2">
         <button
           :class="!showHandDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToHandDesigns"
-          class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+          class="flex-1 rounded-l text-white bg-gray-800 shadow-lg">
           ハンド
         </button>
         <button
           :class="!showFootDesigns ? 'switch-nail-part-button' : ''"
           @click="switchToFootDesigns"
-          class="flex-1 text-white bg-gray-800 border-0 h-12 rounded-full shadow-lg">
+          class="flex-1 rounded-r text-white bg-gray-800 shadow-lg">
           フット
         </button>
       </div>
-      <select
-        v-model="selectedTag"
-        class="block w-5/6 md:w-1/2 mx-auto rounded border border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-300 outline-none text-gray-700 py-3 px-3 mb-4 leading-8 duration-200 ease-in-out"
-        id="design-tags">
-        <option value="" selected>タグで絞り込む</option>
-        <option v-for="tag in nailPartTags" :key="tag">
-          {{ tag }}
-        </option>
-      </select>
+      <div class="relative w-44 mx-auto mb-10 border-b border-gray-200">
+        <select
+          v-model="selectedTag"
+          class="block w-full text-sm appearance-none bg-transparent text-gray-700 outline-none py-2 pl-2 pr-6 text-ellipsis overflow-hidden break-all whitespace-nowrap"
+          id="design-tags">
+          <option value="" selected>タグで絞り込み</option>
+          <option v-for="tag in nailPartTags" :key="tag">
+            {{ tag }}
+          </option>
+        </select>
+        <ChevronDownIcon
+          class="absolute top-2/4 right-2 -translate-y-2/4 w-4 h-4 stroke-1 text-gray-500 pointer-events-none" />
+      </div>
       <div v-if="nailPartDesigns.length === 0" class="text-center mt-10">
         登録されておりません。
-        <button class="main-action-btn mt-10" @click="newDesign">
-          ネイルデザインを登録
-        </button>
       </div>
-      <div class="design md:grid md:grid-cols-3 max-w-3xl mx-auto">
+      <div
+        class="design mx-[10%] sm:mx-auto sm:grid sm:gap-x-1 gap-y-2 sm:grid-cols-2 sm:max-w-lg md:grid-cols-3 md:max-w-3xl">
         <div
-          class="nailpart-design m-4 p-2 shadow-xl max-w-xs mx-auto"
+          class="nailpart-design p-2 mb-4 last:mb-0 sm:mb-0 shadow-lg max-w-sm mx-auto hover:shadow-xl"
           v-for="design in selectedNailPartDesigns"
           :key="design.id">
-          <h2 class="text-lg">{{ design.title }}</h2>
-          <div class="flex gap-2 justify-center items-center md:block mb-1">
-            <div v-if="!design.image" class="flex-1">
-              <div
-                class="h-40 w-full md:h-48 md:w-56 text-lg leading-[10rem] md:leading-[12rem] bg-slate-200 drop-shadow-lg text-white text-center mx-auto md:text-2xl">
-                no image
+          <design-link :id="design.id" link="show">
+            <div class="hover:opacity-80 cursor-pointer sm:w-56">
+              <h2
+                class="text-ellipsis overflow-hidden break-all whitespace-nowrap mt-1 mb-2">
+                {{ design.title }}
+              </h2>
+              <div class="relative w-full pt-[85.714%] mb-2">
+                <div
+                  v-if="!design.image"
+                  class="absolute top-0 w-full h-full font-light bg-slate-200 text-white flex justify-center items-center">
+                  no image
+                </div>
+                <img
+                  v-else
+                  :src="design.image"
+                  alt="サムネイル画像"
+                  class="absolute top-0 w-full h-full object-cover" />
               </div>
             </div>
-            <div v-else class="flex-1">
-              <img
-                :src="design.image"
-                alt="サムネイル画像"
-                class="h-40 w-full md:h-48 md:w-56 drop-shadow-lg object-cover" />
+          </design-link>
+          <div class="flex justify-between items-center">
+            <div class="text-xs">
+              {{ design.humanCreatedAt }}&ensp;登録<br />
+              {{ design.humanUpdatedAt }}&ensp;更新
             </div>
-            <div class="md:flex md:justify-between md:my-2 md:gap-1 md:mt-4">
-              <button
-                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
-                @click="showDesign(design.id)">
-                詳細
-              </button>
-              <button
-                class="block px-8 my-2 md:my-0 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
-                @click="editDesign(design.id)">
-                編集
-              </button>
-              <button
-                class="block px-8 md:px-0 md:flex-1 text-gray-800 border border-gray-300 h-10 rounded-full shadow-lg hover:bg-gray-800 hover:text-white"
-                @click="deleteDesign(design.id)">
-                削除
-              </button>
+            <div
+              class="relative"
+              @click="designChangeActionsContent(design.id)">
+              <EllipsisVerticalIcon
+                class="kebab-menu w-6 h-6 stroke-1 hover:fill-gray-700 hover:drop-shadow-lg" />
+              <div
+                :class="
+                  showDesignChangeActionsContent &&
+                  design.id === designChangeActionsContentId
+                    ? 'open-change-actions-content'
+                    : 'close-change-actions-content'
+                "
+                class="absolute -top-12 -left-14 flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer bg-white p-2 rounded shadow-lg">
+                <design-link :id="design.id" link="edit">
+                  <PencilIcon
+                    @click="editDesign(design.id)"
+                    class="design-edit-link w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                </design-link>
+                <delete-design :id="design.id">
+                  <TrashIcon
+                    class="delete-design w-6 h-6 stroke-1 fill-gray-100 hover:fill-gray-800 hover:drop-shadow-lg" />
+                </delete-design>
+              </div>
             </div>
-          </div>
-          <div>
-            {{ design.humanCreatedAt }}&ensp;登録<br />
-            {{ design.humanUpdatedAt }}&ensp;更新
-          </div>
-          <div v-for="tag in design.tags" :key="tag">
-            <div class="hidden">{{ tag }}</div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="sticky bottom-0 py-10 bg-white/60">
+      <design-link link="new" class="new-design-link-btn main-action-btn">
+        ネイルデザインを登録
+      </design-link>
     </div>
   </div>
 </template>
 
 <script>
 import apiClient from './packs/api-client.js'
+import DesignLink from './components/design-link.vue'
+import DeleteDesign from './components/delete-design.vue'
+import { EllipsisVerticalIcon } from '@heroicons/vue/24/outline'
+import { ChevronDownIcon } from '@heroicons/vue/24/outline'
+import { PencilIcon } from '@heroicons/vue/24/outline'
+import { TrashIcon } from '@heroicons/vue/24/outline'
 export default {
+  components: {
+    DesignLink,
+    DeleteDesign,
+    EllipsisVerticalIcon,
+    ChevronDownIcon,
+    PencilIcon,
+    TrashIcon
+  },
   data() {
     return {
       design: '',
@@ -100,7 +127,9 @@ export default {
       selectedTag: '',
       showHandDesigns: false,
       showFootDesigns: false,
-      id: ''
+      id: '',
+      designChangeActionsContentId: '',
+      showDesignChangeActionsContent: false
     }
   },
   computed: {
@@ -146,30 +175,6 @@ export default {
         (design) => design.nailPart === 'フット'
       )
     },
-    newDesign() {
-      window.location.href = `/designs/new`
-    },
-    inquiry() {
-      window.location.href = `/inquiries/new`
-    },
-    showDesign(id) {
-      window.location.href = `/designs/${id}`
-    },
-    editDesign(id) {
-      window.location.href = `/designs/${id}/edit`
-    },
-    deleteDesign(id) {
-      const resultOfDesignDelete = confirm(
-        'この操作は取り消すことはできません。本当に削除しますか？'
-      )
-      if (resultOfDesignDelete) {
-        apiClient
-          .delete(`/api/designs/${id}`, {})
-          .then(() => (window.location.href = '/designs'))
-      } else {
-        return
-      }
-    },
     switchToHandDesigns() {
       this.showHandDesigns = true
       this.showFootDesigns = false
@@ -185,15 +190,29 @@ export default {
       const flatPartTags = [].concat(...nailPartTags)
       const deleteDuplicateTags = Array.from(new Set(flatPartTags))
       return deleteDuplicateTags
+    },
+    designChangeActionsContent(id) {
+      this.designChangeActionsContentId = id
+      this.showDesignChangeActionsContent = !this.showDesignChangeActionsContent
     }
   }
 }
 </script>
 
 <style scoped>
+.open-change-actions-content {
+  opacity: 100;
+  visibility: visible;
+  transition-duration: 0.3s;
+}
+.close-change-actions-content {
+  opacity: 0;
+  visibility: hidden;
+  transition-duration: 0.3s;
+}
 .switch-nail-part-button {
   background: #ffffff;
   color: #4b5563;
-  border: 1px solid #d1d5db;
+  border: 1px solid #e5e7eb;
 }
 </style>

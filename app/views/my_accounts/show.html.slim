@@ -1,29 +1,28 @@
 - set_meta_tags title: 'アカウント情報', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)のアカウント情報ページ'
 
-.text-gray-600.py-10.mb-4.max-w-xs.mx-auto
-  h2.text-center.text-2xl.py-8.md:py-10
+.max-w-md.mx-auto
+  h1.page-content-title
     | アカウント情報
-  ul.px-2
+  ul.grid.gap-y-10.border.border-gray-200.bg-slate-50.p-4.mx-4.rounded
     li
-      .text-lg
+      .mb-1
         | アカウント名
-      .mb-4.ml-1
+      .text-lg.ml-1.break-all
         = current_user.account_name
     li
-      .text-lg
+      .mb-1
         | メールアドレス
-      .mb-4.ml-1
+      .text-lg.ml-1.break-all
         = current_user.email
     li
-      .text-lg
+      .mb-1
         | ネイルデザイン
-      .mb-4.ml-1
-        |ハンド&nbsp;
+      .text-lg.ml-1
+        | ハンド&nbsp;
         = @hand.size
-        |&nbsp;件&ensp;
-        |フット&nbsp;
+        | ・
+        | フット&nbsp;
         = @foot.size
-        |&nbsp;件
-  = link_to 'アカウントを編集', edit_user_registration_path, class: 'main-action-btn mt-10 mb-2'
-  = link_to 'アカウントを削除', users_unsubscribe_path, class: 'delete-btn'
-  = link_to 'ネイルデザインを登録', new_design_path, class: 'sub-action-btn mt-8 mb-2'
+  = link_to 'アカウント情報を変更', edit_user_registration_path, class: 'main-action-btn mt-10 mb-2'
+  = link_to 'アカウントを削除', users_unsubscribe_path, class: 'text-btn'
+  = link_to 'TOPページに戻る', designs_path, class: 'sub-action-btn mt-8'

@@ -1,27 +1,33 @@
 - set_meta_tags title: 'アカウント登録', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)のアカウント登録ページ'
 
-.text-gray-600.py-10.w-11/12.mx-auto
-  h2.text-center.text-2xl.py-8.md:py-10
-    = t('.sign_up')
-  p.text-center.mb-6.text-sm.leading-6
-    | 規約にご同意の上で
-    br.sm:hidden
-    | アカウントの登録をお願い致します。
-    br
-    = link_to '利用規約', tos_path, target: '_blank', rel: 'noopener noreferrer', class: 'text-sm underline'
-    |	&nbsp;&middot;&nbsp;
-    = link_to 'プライバシーポリシー', privacy_policy_path, target: '_blank', rel: 'noopener noreferrer', class: 'underline'
-  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-    = render 'devise/shared/error_messages', resource: resource
-    = f.label :account_name
-    = f.text_field :account_name, autofocus: true, autocomplete: 'account_name', class: 'form-field mb-8 md:mb-12'
-    = f.label :email
-    = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-field mb-8 md:mb-12'
-    = f.label :password
-    - if @minimum_password_length
-      = t('devise.shared.minimum_password_length', count: @minimum_password_length)
-    = f.password_field :password, autocomplete: 'new-password', class: 'form-field mb-8 md:mb-12'
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-field mb-14'
-    = f.submit t('.sign_up'), class: 'main-action-btn mb-6'
-  = render 'devise/shared/links'
+h1.page-content-title.mb-0
+  = t('.sign_up')
+= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  .grid.gap-y-10
+    div
+      = render 'devise/shared/error_messages', resource: resource
+    div
+      = f.label :account_name
+      = f.text_field :account_name, placeholder: 'Nailier', autofocus: true, autocomplete: 'account_name', pattern: '.*[^\s]+.*', required: true, class: 'form-field'
+    div
+      = f.label :email
+      = f.email_field :email, autofocus: true, placeholder: 'mail-account@nailier.net', autocomplete: 'email', required: true, class: 'form-field'
+    div
+      = f.label :password
+      - if @minimum_password_length
+        = t('devise.shared.minimum_password_length', count: @minimum_password_length)
+      = f.password_field :password, placeholder: '••••••••', autocomplete: 'new-password', minlength: 8, required: true, class: 'form-field'
+    div
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, placeholder: '••••••••', autocomplete: 'new-password', minlength: 8, required: true, class: 'form-field'
+    .flex.justify-start.items-center.gap-2
+      = f.label :agreement_terms do
+        = f.check_box :agreement_terms, class: 'peer sr-only', required: true
+        span.agreement-toggle.toggle-btn
+      = f.label :agreement_terms, class: 'block text-sm' do
+        = link_to '利用規約', tos_path, target: '_blank', rel: 'noopener noreferrer', class: 'text-btn inline text-left'
+        | と
+        = link_to 'プライバシーポリシー', privacy_policy_path, target: '_blank', rel: 'noopener noreferrer', class: 'text-btn inline text-left'
+        | に同意
+  = f.submit t('.sign_up'), class: 'main-action-btn mt-14 mb-6'
+= render 'devise/shared/links'

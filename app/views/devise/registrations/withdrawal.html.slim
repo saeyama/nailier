@@ -1,16 +1,20 @@
 - set_meta_tags title: '退会手続完了', description: 'ネイリストのためのデザインメモ・Nailier(ネイリエ)の退会手続完了ページ'
 
-.text-gray-600.py-10.w-11/12.mx-auto.text-center
-  h2.text-2xl.py-8.md:py-10
+.text-center
+  h1.page-content-title
     | 退会手続完了
   p.leading-6.text-sm
     | ご利用いただきありがとうございました。
     br
-    | 再度、ご利用いただく場合はアカウント登録が必要となります。
+    | 再度、ご利用いただく場合は
+    br.sm:hidden
+    | アカウント登録が必要となります。
     br
-    | また機会がございましたら、よろしくお願い申し上げます。
-  = link_to 'ＴＯＰへ戻る', root_path, class: 'main-action-btn mt-8 mb-2'
-  p.leading-6.text-sm.my-4
+    | また機会がございましたら、
+    br.sm:hidden
+    | よろしくお願い申し上げます。
+  = link_to 'TOPページに戻る', root_path, class: 'main-action-btn mt-10'
+  p.leading-6.text-sm.mt-10.mb-2
     | ご意見・ご要望はお問い合わせから
     br
     | ご連絡をお願いいたします。

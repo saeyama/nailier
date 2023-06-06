@@ -14,20 +14,43 @@ RSpec.describe 'Designs', type: :system do
     end
 
     context 'ネイルデザインが登録されている場合' do
-      it 'タグ検索ができる' do
+      it 'ネイルデザインの編集ページに遷移できる' do
         create(:design, user:)
-        create(:design, :with_new_design, user:)
 
         visit designs_path
-        expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
-        expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
-        expect(page.all('.nailpart-design')[1]).to have_content('ワンカラー')
-        expect(page.all('.nailpart-design')[1]).to have_content('2023 01 11 11:11')
-        select 'グラデーションのタグ', from: 'design-tags'
-        expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
-        expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
-        expect(page.all('.nailpart-design')[1]).not_to have_content('ワンカラー')
-        expect(page.all('.nailpart-design')[1]).not_to have_content('2023 01 11 11:11')
+        all('.nailpart-design')[0].find('.kebab-menu').click
+        find('.design-edit-link').click
+        expect(page).to have_content('ネイルデザインを編集')
+      end
+
+      it 'ネイルデザインを削除することができる' do
+        create(:design, user:)
+
+        visit designs_path
+        all('.nailpart-design')[0].find('.kebab-menu').click
+        find('.delete-design').click
+        expect(page.accept_confirm).to eq 'この操作は取り消すことはできません。本当に削除しますか？'
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
+        expect(page).to have_content('登録されておりません。')
+        expect(page).to have_current_path designs_path
+      end
+
+      context 'タグが登録されている場合' do
+        it 'タグ検索ができる' do
+          create(:design, user:)
+          create(:design, :with_new_design, user:)
+
+          visit designs_path
+          expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
+          expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
+          expect(page.all('.nailpart-design')[1]).to have_content('ワンカラー')
+          expect(page.all('.nailpart-design')[1]).to have_content('2023 01 11 11:11')
+          select 'グラデーションのタグ', from: 'design-tags'
+          expect(page.all('.nailpart-design')[0]).to have_content('グラデーション')
+          expect(page.all('.nailpart-design')[0]).to have_content('2023 01 22 22:22')
+          expect(page.all('.nailpart-design')[1]).not_to have_content('ワンカラー')
+          expect(page.all('.nailpart-design')[1]).not_to have_content('2023 01 11 11:11')
+        end
       end
 
       context '画像登録がある場合' do
@@ -96,7 +119,7 @@ RSpec.describe 'Designs', type: :system do
       end
 
       context '画像を登録している場合' do
-        it '画像を拡大表示することが出来る' do
+        it '画像を拡大表示することができる' do
           visit design_path(design.id)
           expect(page).not_to have_selector('.vel-modal')
           find('div.design-images').all('img')[0].click
@@ -147,9 +170,9 @@ RSpec.describe 'Designs', type: :system do
     it 'ネイルデザインを編集できる' do
       visit edit_design_path(design.id)
       fill_in 'design-title', with: 'グラデーション'
-      attach_file 'design-image', Rails.root.join('spec/factories/files/test-1mg.jpg')
+      attach_file 'design-images', Rails.root.join('spec/factories/files/test-1mg.jpg'), make_visible: true
       click_button 'ネイルデザインを更新'
-      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+      expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_content('グラデーション')
       expect(page).to have_selector "img[alt = 'サムネイル画像']"
       expect(page).to have_current_path designs_path
@@ -164,41 +187,43 @@ RSpec.describe 'Designs', type: :system do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       click_button 'ログイン'
-      click_link 'ネイルデザインを登録'
+      find('.new-design-link-btn').click
       visit new_design_path
     end
 
     it 'タイトルの入力とネイルパートが選択されていればデザイン登録ができる' do
       fill_in 'design-title', with: design.title
       expect(page).to have_checked_field with: 'ハンド'
-      choose 'フット'
+      find('.foot').click
+      expect(page).to have_checked_field with: 'フット'
       click_button 'ネイルデザインを登録'
-      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+      expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_current_path designs_path
     end
 
     context '画像をデザインに登録する場合' do
-      it '画像が5MG以下で拡張子がjpeg、jpg、pngであれば、複数の画像のアップロードとD&Dが出来る状態でデザインに登録できる' do
+      it '画像が5MG以下で拡張子がjpeg、jpg、pngであれば、複数の画像のアップロードとD&Dができる状態でデザインに登録できる' do
         file_path1 = Rails.root.join('spec/factories/files/test-1mg.jpg')
         file_path2 = Rails.root.join('spec/factories/files/test-5mg.jpg')
         fill_in 'design-title', with: design.title
-        choose 'foot'
-        attach_file 'design-image', [file_path1, file_path2]
+        find('.foot').click
+        expect(page).to have_checked_field with: 'フット'
+        attach_file 'design-images', [file_path1, file_path2], make_visible: true
         find('.files').all('div.item')[0].drag_to find('.files').all('div.item')[1]
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
 
       it '5MG超の画像はデザインに登録できない' do
         file_path = Rails.root.join('spec/factories/files/test-10mg.jpg')
-        attach_file 'design-image', file_path
+        attach_file 'design-images', file_path, make_visible: true
         expect(page.accept_confirm).to eq '5MGを超えた画像はアップロードできません。'
       end
 
       it '拡張子がjpeg、jpg、png以外の画像はデザインに登録できない' do
-        file_path = Rails.root.join('spec/factories/files/test.pdf')
-        attach_file 'design-image', file_path
+        file_path = Rails.root.join('spec/factories/files/test.gif')
+        attach_file 'design-images', file_path, make_visible: true
         expect(page.accept_confirm).to eq 'jpeg・jpg・png 以外は登録できません。'
       end
     end
@@ -206,13 +231,14 @@ RSpec.describe 'Designs', type: :system do
     context 'タグをデザインに登録する場合' do
       it 'タグ名をデザインに登録できる' do
         fill_in 'design-title', with: design.title
-        choose 'foot'
+        find('.foot').click
+        expect(page).to have_checked_field with: 'フット'
         fill_in 'design-tag', with: 'タグ'
         within '.tags-input' do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
     end
@@ -221,13 +247,14 @@ RSpec.describe 'Designs', type: :system do
       it 'アカウントコードをデザインに登録できる' do
         visit new_design_path
         fill_in 'design-title', with: design.title
-        choose 'foot'
+        find('.foot').click
+        expect(page).to have_checked_field with: 'フット'
         fill_in 'design-youtube', with: 'https://www.youtube.com/watch?v=MQJU9quj3l4'
         within '.youtube-input' do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
     end
@@ -236,8 +263,9 @@ RSpec.describe 'Designs', type: :system do
       it 'パーツ名・サイズ・個数・カラーをデザインに登録できる' do
         visit new_design_path
         fill_in 'design-title', with: design.title
-        choose 'foot'
-        check 'show-part-content'
+        find('.foot').click
+        expect(page).to have_checked_field with: 'フット'
+        find('.show-part-content').click
         fill_in 'design-part-name', with: 'ラインストーン'
         fill_in 'design-part-size', with: 'ss20'
         expect(find('.parts-input')).to have_content(1)
@@ -248,15 +276,16 @@ RSpec.describe 'Designs', type: :system do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
 
       it 'パーツ名が無いとデザインに登録できない' do
         visit new_design_path
         fill_in 'design-title', with: design.title
-        choose 'foot'
-        check 'show-part-content'
+        find('.foot').click
+        expect(page).to have_checked_field with: 'フット'
+        find('.show-part-content').click
         fill_in 'design-part-name', with: ''
         fill_in 'design-part-size', with: 'ss20'
         fill_in 'design-part-quantity', with: 6
@@ -272,31 +301,34 @@ RSpec.describe 'Designs', type: :system do
     context 'カラーをデザインに登録する場合' do
       it 'カラーピッカーでカラーをデザインに登録できる' do
         fill_in 'design-title', with: design.title
-        choose 'foot'
-        check 'show-color-content'
-        expect(find('.colors-input')).to have_checked_field with: 'false'
-        choose 'true'
+        find('.foot').click
+        expect(page).to have_checked_field with: 'フット'
+        find('.show-color-content').click
+        expect(find('.color-lame')).to have_checked_field with: 'false', visible: :all
+        find('.lame-toggle').click
+        expect(find('.color-lame')).to have_checked_field with: 'true', visible: :all
         find('.vc-input__input').set('#000000')
         within '.colors-input' do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
 
       it 'カラーパレットでカラーをデザインに登録できる' do
         fill_in 'design-title', with: design.title
-        choose 'foot'
-        check 'show-color-content'
-        expect(find('.colors-input')).to have_checked_field with: 'false'
+        find('.foot').click
+        expect(page).to have_checked_field with: 'フット'
+        find('.show-color-content').click
+        expect(find('.color-lame')).to have_checked_field with: 'false', visible: :all
         click_on 'カラーパレット'
         find('ul.color-hexnumber').all('li')[0].click
         within '.colors-input' do
           click_button '決定'
         end
         click_button 'ネイルデザインを登録'
-        expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+        expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
         expect(page).to have_current_path designs_path
       end
     end
@@ -316,7 +348,7 @@ RSpec.describe 'Designs', type: :system do
       visit design_path(design.id)
       click_button 'ネイルデザインを削除'
       expect(page.accept_confirm).to eq 'この操作は取り消すことはできません。本当に削除しますか？'
-      expect(page).to have_selector('h2', text: 'ネイルデザインリスト')
+      expect(page).to have_selector('h1', text: 'ネイルデザインリスト')
       expect(page).to have_content('登録されておりません。')
       expect(page).to have_current_path designs_path
     end
