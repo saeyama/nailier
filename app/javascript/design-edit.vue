@@ -44,39 +44,40 @@
           v-if="design.images && design.images.length"
           v-model="design.images"
           draggable=".item"
-          class="files grid grid-cols-3 md:grid-cols-4 gap-3">
+          :handle="'.handle'"
+          class="files grid grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-4">
           <template #item="{ element }">
-            <div
-              @click="deleteImage(element)"
-              class="item relative mb-4 md:mb-8 cursor-pointer"
-              :key="element">
-              <img
-                :src="element.url"
-                alt="登録画像"
-                class="aspect-[4/3] w-full object-cover" />
-              <XMarkIcon
-                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
+            <div class="item" :key="element">
+              <div class="relative pt-[75%] cursor-pointer">
+                <img
+                  :src="element.url"
+                  alt="登録画像"
+                  class="handle absolute top-0 w-full h-full object-cover shadow-md" />
+                <XMarkIcon
+                  @click="deleteImage(element)"
+                  class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
+              </div>
             </div>
           </template>
         </draggable>
         <div v-if="design.imageToDelete.length > 0">
-          <hr class="mb-2" />
+          <hr class="mt-8 mb-3" />
           <div class="text-sm flex justify-start items-center gap-1 mb-6">
             <ExclamationTriangleIcon class="w-6 h-6" />
             以下の画像は保存されません。
           </div>
-          <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
-            <div
-              @click="saveImage(image)"
-              class="relative mb-4 md:mb-8 cursor-pointer"
-              v-for="image in design.imageToDelete"
-              :key="image">
-              <img
-                :src="image.url"
-                alt="削除画像"
-                class="aspect-[4/3] w-full object-cover opacity-60" />
-              <ArrowUturnUpIcon
-                class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
+          <div class="grid grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-4">
+            <div v-for="image in design.imageToDelete" :key="image">
+              <div
+                @click="saveImage(image)"
+                class="relative pt-[75%] cursor-pointer">
+                <img
+                  :src="image.url"
+                  alt="削除画像"
+                  class="absolute top-0 w-full h-full object-cover opacity-60 shadow-md" />
+                <ArrowUturnUpIcon
+                  class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
+              </div>
             </div>
           </div>
         </div>
@@ -95,21 +96,16 @@
         </child-text-input>
         <div
           v-if="saveYoutubeVideos.length > 0"
-          class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 mb-4">
-          <div
-            v-for="youtubeVideo in saveYoutubeVideos"
-            :key="youtubeVideo"
-            class="relative">
+          class="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-4 mt-6">
+          <div v-for="youtubeVideo in saveYoutubeVideos" :key="youtubeVideo">
             <div
               @click="deleteYoutubeVideo(youtubeVideo)"
-              class="cursor-pointer">
-              <div class="w-full aspect-video pointer-events-none">
-                <YoutubeVue3
-                  :videoid="youtubeVideo.accessCode"
-                  :autoplay="0"
-                  class="w-full h-full">
-                </YoutubeVue3>
-              </div>
+              class="relative pt-[56.25%] cursor-pointer">
+              <YoutubeVue3
+                :videoid="youtubeVideo.accessCode"
+                :autoplay="0"
+                class="absolute top-0 w-full h-full shadow-md pointer-events-none">
+              </YoutubeVue3>
               <XMarkIcon
                 class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
             </div>
@@ -120,21 +116,18 @@
             <ExclamationTriangleIcon class="w-6 h-6" />
             以下のYouTube動画は保存されません。
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-4">
             <div
               v-for="youtubeVideo in deleteYoutubeVideos"
-              :key="youtubeVideo"
-              class="relative">
+              :key="youtubeVideo">
               <div
                 @click="saveYoutubeVideo(youtubeVideo)"
-                class="cursor-pointer">
-                <div class="w-full aspect-video pointer-events-none">
-                  <YoutubeVue3
-                    :videoid="youtubeVideo.accessCode"
-                    :autoplay="0"
-                    class="w-full h-full opacity-60">
-                  </YoutubeVue3>
-                </div>
+                class="relative pt-[56.25%] cursor-pointer">
+                <YoutubeVue3
+                  :videoid="youtubeVideo.accessCode"
+                  :autoplay="0"
+                  class="absolute top-0 w-full h-full opacity-60 shadow-md pointer-events-none">
+                </YoutubeVue3>
                 <ArrowUturnUpIcon
                   class="absolute right-0 top-0 -mt-2.5 -mr-2.5 select-icon" />
               </div>
@@ -149,12 +142,12 @@
         <input-color @update-color="updateColor" />
         <div
           v-if="saveColors.length > 0"
-          class="grid grid-cols-5 sm:grid-cols-10 mt-6">
+          class="grid grid-cols-5 sm:grid-cols-10 gap-y-5 mt-6">
           <div
             v-for="color in saveColors"
             :key="color"
             :style="colorShowHexNumber(color.hexNumber)"
-            class="w-8 h-8 rounded-full shadow-md mb-4">
+            class="w-8 h-8 rounded-full shadow-md">
             <div @click="deleteColor(color)" class="relative cursor-pointer">
               <div v-if="color.lame" class="absolute w-8 h-8">
                 <div class="relative">
@@ -170,16 +163,16 @@
           </div>
         </div>
         <div v-if="deleteColors.length > 0">
-          <div class="text-sm flex justify-start items-center gap-1 my-6">
+          <div class="text-sm flex justify-start items-center gap-1 mt-6 mb-7">
             <ExclamationTriangleIcon class="w-6 h-6" />
             以下のカラーイメージは保存されません。
           </div>
-          <div class="grid grid-cols-5 sm:grid-cols-10">
+          <div class="grid grid-cols-5 sm:grid-cols-10 gap-y-5">
             <div
               v-for="color in deleteColors"
               :key="color"
               :style="colorShowHexNumber(color.hexNumber)"
-              class="w-8 h-8 rounded-full shadow-md mb-4">
+              class="w-8 h-8 rounded-full shadow-md">
               <div @click="saveColor(color)" class="cursor-pointer">
                 <div v-if="color.lame" class="absolute w-8 h-8">
                   <div class="relative">
