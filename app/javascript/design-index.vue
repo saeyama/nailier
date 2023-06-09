@@ -78,7 +78,7 @@
                     ? 'open-change-actions-content'
                     : 'close-change-actions-content'
                 "
-                class="absolute -top-12 -left-14 flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer bg-white p-2 rounded shadow-lg">
+                class="absolute -top-12 -left-[68px] sm:-left-14 flex justify-between gap-6 sm:gap-3 text-gray-400 cursor-pointer bg-white p-2 rounded shadow-lg">
                 <design-link :id="design.id" link="edit">
                   <PencilIcon
                     @click="editDesign(design.id)"
@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-    <div class="sticky bottom-0 py-10 bg-white/60">
+    <div class="sticky bottom-0 py-8 sm:py-10 bg-white/60">
       <design-link link="new" class="new-design-link-btn main-action-btn">
         ネイルデザインを登録
       </design-link>
