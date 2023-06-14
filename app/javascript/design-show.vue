@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="design-title page-content-title">{{ design.title }}</h1>
-    <div class="grid gap-y-12 sm:gap-y-10">
+    <div class="grid gap-y-14 sm:gap-y-10">
       <div
         class="design-nailpart w-20 h-10 flex justify-center items-center rounded mx-auto bg-gray-800 text-white">
         {{ design.nailPart }}
@@ -9,25 +9,25 @@
       <div class="design-images">
         <h2 class="text-lg mb-2">画像</h2>
         <div
-          class="text-sm ml-0.5 mb-2 sm:mb-6"
+          class="text-sm ml-0.5 sm:mb-6"
           v-if="!design.images || !design.images.length">
           登録されている画像はありません。
         </div>
         <div v-else>
-          <div class="text-sm mb-2 flex justify-start items-center gap-1">
+          <div class="text-sm mb-4 flex justify-start items-center gap-1">
             <InformationCircleIcon class="w-6 h-6" />
             画像をクリックすると拡大できます。
           </div>
-          <div class="grid grid-cols-3 gap-1 md:grid-cols-4">
+          <div class="grid grid-cols-3 md:grid-cols-4 gap-1.5">
             <div
-              class="drop-shadow-lg mb-2 md:mb-8"
+              class="relative pt-[75%] shadow-lg"
               v-for="(image, index) in design.images"
               :key="index"
               @click="showImages(index)">
               <img
                 :src="image"
                 alt="登録画像"
-                class="mt-2 aspect-[4/3] w-full object-cover" />
+                class="absolute top-0 w-full h-full object-cover" />
             </div>
           </div>
           <vue-easy-lightbox
@@ -41,12 +41,12 @@
       <div class="design-youtubevideos">
         <h2 class="text-lg mb-2">YouTube動画</h2>
         <div
-          class="text-sm ml-0.5 mb-2 sm:mb-6"
+          class="text-sm ml-0.5 sm:mb-6"
           v-if="design.youtubeVideos.length === 0">
           登録されているYouTube動画はありません。
         </div>
         <div v-else>
-          <div class="text-sm mb-2">
+          <div class="text-sm mb-4">
             <h3 class="flex justify-start items-center gap-1">
               <InformationCircleIcon class="w-6 h-6" />
               動画の再生方法
@@ -57,17 +57,16 @@
               アプリもしくはWEBブラウザに移動します。
             </p>
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-1">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5">
             <div
               v-for="youtubeVideo in design.youtubeVideos"
-              :key="youtubeVideo.id"
-              class="drop-shadow-lg mb-2 md:mb-8">
+              :key="youtubeVideo.id">
               <div class="hidden">{{ youtubeVideo.accessCode }}</div>
-              <div class="w-full aspect-video">
+              <div class="relative pt-[56.25%] w-full shadow-lg">
                 <YoutubeVue3
                   :videoid="youtubeVideo.accessCode"
                   :autoplay="0"
-                  class="mt-2 w-full h-full youtubevideo-accesscode">
+                  class="absolute top-0 w-full h-full youtubevideo-accesscode">
                 </YoutubeVue3>
               </div>
             </div>
@@ -76,18 +75,16 @@
       </div>
       <div class="design-colors">
         <h2 class="text-lg mb-2">カラー</h2>
-        <div
-          class="text-sm ml-0.5 mb-2 sm:mb-6"
-          v-if="design.colors.length === 0">
+        <div class="text-sm ml-0.5 sm:mb-6" v-if="design.colors.length === 0">
           登録されているカラーはありません。
         </div>
         <div v-else>
-          <div class="grid grid-cols-6 md:grid-cols-12">
+          <div class="grid grid-cols-6 md:grid-cols-12 gap-y-2.5">
             <div
               v-for="color in design.colors"
               :key="color.id"
               :style="colorShowHexNumber(color.hexNumber)"
-              class="w-8 h-8 rounded-full drop-shadow-lg mb-2 md:mb-8">
+              class="w-8 h-8 rounded-full shadow-md">
               <div class="hidden">{{ color.lame }}</div>
               <div class="hidden">{{ color.hexNumber }}</div>
               <div v-if="color.lame" class="relative">
@@ -103,9 +100,7 @@
       </div>
       <div class="design-parts">
         <h2 class="text-lg mb-2">パーツ</h2>
-        <div
-          class="text-sm ml-0.5 mb-2 sm:mb-6"
-          v-if="design.parts.length === 0">
+        <div class="text-sm ml-0.5 sm:mb-6" v-if="design.parts.length === 0">
           登録されているパーツはありません。
         </div>
         <div v-else class="mb-2 sm:mb-8">
@@ -139,7 +134,7 @@
       <div class="design-description">
         <h2 class="text-lg mb-2">調べた内容・メモ</h2>
         <div
-          class="text-sm ml-0.5 mb-2 sm:mb-6"
+          class="text-sm ml-0.5 sm:mb-6"
           v-if="design.description.length === 0">
           登録されているメモはありません。
         </div>
@@ -168,7 +163,7 @@
         </div>
       </div>
     </div>
-    <design-link :id="design.id" link="edit" class="main-action-btn my-2"
+    <design-link :id="design.id" link="edit" class="main-action-btn mb-2"
       >ネイルデザインを編集</design-link
     >
     <delete-design :id="design.id" class="text-btn mb-8"
